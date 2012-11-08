@@ -1,2 +1,0 @@
-xebia-mobile-backend-nodejs
-===========================

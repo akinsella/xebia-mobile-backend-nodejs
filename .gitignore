@@ -1,15 +1,18 @@
-lib-cov
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
+# NodeJS
+.DS_Store
+.#*
+*.swp
+bin
 
-pids
-logs
-results
+target
+release.properties
 
+*~
+.idea
+package-dev.json
 node_modules
-npm-debug.log
+tags
+
+#Redis
+dump.rdb
+
