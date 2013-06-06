@@ -16,3 +16,4 @@ tags
 #Redis
 dump.rdb
 
+npm-debug.log
