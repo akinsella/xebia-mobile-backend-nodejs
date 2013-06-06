@@ -1,0 +1,29 @@
+<h1>News List</h1>
+
+<table class="dataset">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Image Url</th>
+            <th>Target Url</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each news}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{title}}</td>
+                <td>{{content}}</td>
+                <td><a href="{{imageUrl}}">{{imageUrl}}</a></td>
+                <td><a href="{{targetUrl}}">{{targetUrl}}</a></td>
+                <td>
+                    <a href="/news/{{id}}/updateForm">Edit</a> -
+                    <a href="/news/{{id}}/delete">Delete</a>
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>

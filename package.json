@@ -1,0 +1,54 @@
+{
+  "name": "xebia-mobile",
+  "description": "Node.js proxy for Xebia mobile applications",
+  "version": "0.0.1",
+  "private": true,
+  "author": "Alexis Kinsella <alexis.kinsella@gmail.com>",
+  "engines": {
+    "node": ">= 0.10.0 < 0.11.0"
+  },
+  "keywords": [
+    "node.js",
+    "rest",
+    "api",
+    "proxy",
+    "express"
+  ],
+  "repository": "git@github.org:akinsella/xebia-mobile.git",
+  "main": "app",
+  "contributors": [
+    {
+      "name": "Alexis Kinsella",
+      "email": "alexis.kinsella@gmail.com"
+    }
+  ],
+  "dependencies": {
+    "express": "3.x",
+    "redis": "*",
+    "mysql": "*",
+    "underscore": "*",
+    "request": "*",
+    "ntwitter": "*",
+    "passport": "*",
+    "passport-google": "*",
+    "ect": "*",
+    "coffee-script": "*",
+    "uglify-js": "*",
+    "mongoose": "*",
+    "mongoose-pureautoinc": "*",
+    "connect-mongo": "*"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.4.3",
+    "grunt-contrib-nodeunit": "~0.1.2",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-watch": "~0.4.3",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-qunit": "~0.2.1"
+  },
+  "scripts": {
+    "prepublish": "npm prune",
+    "start": "node app"
+  }
+}

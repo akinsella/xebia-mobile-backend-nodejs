@@ -16,3 +16,6 @@ tags
 #Redis
 dump.rdb
 
+.sass-cache
+npm-debug.log
+
