@@ -25,7 +25,6 @@
   "dependencies": {
     "express": "3.x",
     "redis": "*",
-    "mysql": "*",
     "underscore": "*",
     "request": "*",
     "ntwitter": "*",
@@ -36,7 +35,8 @@
     "uglify-js": "*",
     "mongoose": "*",
     "mongoose-pureautoinc": "*",
-    "connect-mongo": "*"
+    "connect-mongo": "*",
+    "apn": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

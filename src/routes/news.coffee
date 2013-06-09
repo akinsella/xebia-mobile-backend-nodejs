@@ -8,10 +8,18 @@ list = (req, res) ->
 		utils.responseData(200, undefined, news, { req:req, res:res})
 		return
 
-item = (req, res) ->
+findById = (req, res) ->
 	News.findOne { id: req.params.id }, (err, news) ->
 		if (news)
 			utils.responseData(200, undefined, news, { req:req, res:res})
+		else
+			utils.responseData(404, "Not Found", undefined, { req:req, res:res})
+		return
+
+removeById = (req, res) ->
+	News.findOneAndRemove { id: req.params.id }, (err, news) ->
+		if (news)
+			utils.responseData(204, undefined, news, { req:req, res:res})
 		else
 			utils.responseData(404, "Not Found", undefined, { req:req, res:res})
 		return
@@ -27,5 +35,6 @@ create = (req, res) ->
 
 module.exports =
 	list : list,
-	item : item,
-	create : create
+	findById : findById,
+	create : create,
+	removeById : removeById

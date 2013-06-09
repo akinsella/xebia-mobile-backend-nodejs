@@ -4,7 +4,6 @@ express = require 'express'
 passport = require 'passport'
 util = require 'util'
 GoogleStrategy = require('passport-google').Strategy
-sass = require 'node-sass'
 MongoStore = require('connect-mongo')(express)
 mongo = require './lib/mongo'
 
@@ -22,6 +21,8 @@ eventbrite = require './routes/eventbrite'
 wordpress = require './routes/wordpress'
 auth = require './routes/auth'
 news = require './routes/news'
+device = require './routes/device'
+notification = require './routes/notification'
 
 ECT = require 'ect'
 ectRenderer = ECT
@@ -75,20 +76,9 @@ app.configure ->
 	console.log "Environment: #{app.get('env')}"
 	app.set 'port', config.cf.port or process.env.PORT or 9000
 
-	# JADE
 	app.set 'views', "#{__dirname}/views"
-#	app.set 'view engine', 'jade'
-#	app.set 'view options', {
-#		layout: false,
-#		pretty: true
-#	}
-	app.engine '.ect', ectRenderer.render
 
-#	app.use sass.middleware
-#		src: "#{__dirname}/sass",
-#		dest: "#{__dirname}/public",
-#		debug: false,
-#		outputStyle: 'compressed'
+	app.engine '.ect', ectRenderer.render
 
 	app.use '/images', express.static("#{__dirname}/public/images")
 	app.use '/scripts', express.static("#{__dirname}/public/scripts")
@@ -166,9 +156,21 @@ app.get '/api/wordpress/category/:category', wordpress.categoryPosts
 app.get '/api/wordpress/dates', wordpress.dates
 app.get '/api/wordpress/:year/:month', wordpress.datePosts
 
-app.post '/api/news/create', news.create
+app.delete '/api/news/:id', news.removeById
+app.post '/api/news', news.create
 app.get '/api/news/list', news.list
-app.get '/api/news/:id', news.item
+app.get '/api/news/:id', news.findById
+
+app.delete '/api/device/:id', device.removeById
+app.post '/api/device', device.create
+app.get '/api/device/list', device.list
+app.get '/api/device/:id', device.findById
+
+app.delete '/api/notification', notification.removeById
+app.post '/api/notification', notification.create
+app.get '/api/notification/list', notification.list
+app.get '/api/notification/:id', notification.findById
+app.get 'api/notification/push', notification.push
 
 app.get '/account', security.ensureAuthenticated, auth.account
 app.get '/login', auth.login
