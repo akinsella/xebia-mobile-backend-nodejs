@@ -7,6 +7,13 @@
   "engines": {
     "node": ">= 0.10.0 < 0.11.0"
   },
+  "bugs": {
+    "url": "http://github.com/akinsella/xebia-mobile-backend-nodejs/issues"
+  },
+  "licenses": [ {
+    "type": "MIT",
+    "url": "http://www.opensource.org/licenses/MIT"
+  } ],
   "keywords": [
     "node.js",
     "rest",
@@ -14,7 +21,7 @@
     "proxy",
     "express"
   ],
-  "repository": "git@github.org:akinsella/xebia-mobile.git",
+  "repository": "git@github.org:akinsella/xebia-mobile-backend-nodejs.git",
   "main": "app",
   "contributors": [
     {
@@ -30,13 +37,19 @@
     "ntwitter": "*",
     "passport": "*",
     "passport-google": "*",
+    "passport-local": "0.1.x",
+    "passport-http": "0.2.x",
+    "passport-http-bearer": "0.2.x",
+    "passport-oauth2-client-password": "0.1.x",
+    "connect-ensure-login": "0.1.x",
     "ect": "*",
     "coffee-script": "*",
     "uglify-js": "*",
     "mongoose": "*",
     "mongoose-pureautoinc": "*",
     "connect-mongo": "*",
-    "apn": "*"
+    "apn": "*",
+    "oauth2orize": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

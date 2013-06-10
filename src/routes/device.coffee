@@ -4,9 +4,10 @@ apn = require 'apn'
 Device = require "../model/device"
 
 create = (req, res) ->
+
 	device = new Device({
-		udid: req.params.udid,
-		token: req.params.token
+		udid: req.body.udid,
+		token: req.body.token
 	})
 
 	device.save (err) ->

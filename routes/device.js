@@ -13,8 +13,8 @@ create = function(req, res) {
   var device;
 
   device = new Device({
-    udid: req.params.udid,
-    token: req.params.token
+    udid: req.body.udid,
+    token: req.body.token
   });
   return device.save(function(err) {
     if (err) {

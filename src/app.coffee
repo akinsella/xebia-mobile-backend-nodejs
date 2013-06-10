@@ -1,11 +1,13 @@
 fs = require 'fs'
 path = require 'path'
-express = require 'express'
-passport = require 'passport'
 util = require 'util'
-GoogleStrategy = require('passport-google').Strategy
+express = require 'express'
+
 MongoStore = require('connect-mongo')(express)
 mongo = require './lib/mongo'
+
+passport = require 'passport'
+login = require 'connect-ensure-login'
 
 requestLogger = require './lib/requestLogger'
 allowCrossDomain = require './lib/allowCrossDomain'
@@ -19,10 +21,15 @@ github = require './routes/github'
 twitter = require './routes/twitter'
 eventbrite = require './routes/eventbrite'
 wordpress = require './routes/wordpress'
-auth = require './routes/auth'
+# auth = require './routes/auth'
 news = require './routes/news'
 device = require './routes/device'
 notification = require './routes/notification'
+user = require './routes/user'
+
+site = require './routes/site'
+oauth2 = require './oauth2'
+
 
 ECT = require 'ect'
 ectRenderer = ECT
@@ -33,41 +40,7 @@ ectRenderer = ECT
 console.log "Application Name: #{config.cf.app.name}"
 console.log "Env: #{JSON.stringify config.cf}"
 
-# Passport session setup.
-#   To support persistent login sessions, Passport needs to be able to
-#   serialize users into and deserialize users out of the session.  Typically,
-#   this will be as simple as storing the user ID when serializing, and finding
-#   the user by ID when deserializing.  However, since this example does not
-#   have a database of user records, the complete Google profile is serialized
-#   and deserialized.
-passport.serializeUser((user, done) =>
-	done(null, user)
-)
-
-passport.deserializeUser((obj, done) =>
-	done(null, obj)
-)
-
-# Use the GoogleStrategy within Passport.
-#   Strategies in passport require a `validate` function, which accept
-#   credentials (in this case, an OpenID identifier and profile), and invoke a
-#   callback with a user object.
-passport.use(
-	new GoogleStrategy({
-		returnURL: 'http://localhost:9000/auth/google/return',
-		realm: 'http://localhost:9000/'
-	}, (identifier, profile, done) =>
-		# asynchronous verification, for effect...
-		process.nextTick () =>
-
-			# To keep the example simple, the user's Google profile is returned to
-			# represent the logged-in user.  In a typical application, you would want
-			# to associate the Google account with a user record in your database,
-			# and return that user instead.
-			profile.identifier = identifier
-			done(null, profile)
-	)
-)
+require './auth'
 
 # Express
 app = express()
@@ -77,6 +50,7 @@ app.configure ->
 	app.set 'port', config.cf.port or process.env.PORT or 9000
 
 	app.set 'views', "#{__dirname}/views"
+	app.set 'view engine', 'ect'
 
 	app.engine '.ect', ectRenderer.render
 
@@ -172,11 +146,28 @@ app.get '/api/notification/list', notification.list
 app.get '/api/notification/:id', notification.findById
 app.get 'api/notification/push', notification.push
 
-app.get '/account', security.ensureAuthenticated, auth.account
-app.get '/login', auth.login
-app.get '/auth/google', passport.authenticate('google', { failureRedirect: '/login' }), auth.auth_google
-app.get '/auth/google/return', passport.authenticate('google', { failureRedirect: '/login' }), auth.auth_google_return
-app.get '/logout', auth.logout
+app.get '/api/user/me', passport.authenticate("bearer", session: false ), user.me
+
+
+app.get('/', site.index);
+app.get('/login', site.loginForm);
+app.post('/login', site.login);
+app.get('/logout', site.logout);
+app.get('/account', login.ensureLoggedIn(), site.account);
+
+app.get('/dialog/authorize', oauth2.authorization);
+app.post('/dialog/authorize/decision', oauth2.decision);
+app.post('/oauth/token', oauth2.token);
+
+app.get('/api/user/me', user.me);
+
+
+#app.get '/account', security.ensureAuthenticated, auth.account
+#app.get '/login', auth.login
+#app.get '/auth/google', passport.authenticate('google', { failureRedirect: '/login' }), auth.auth_google
+#app.get '/auth/google/return', passport.authenticate('google', { failureRedirect: '/login' }), auth.auth_google_return
+#app.get '/logout', auth.logout
+
 
 #app.get '*', routes.index
 
