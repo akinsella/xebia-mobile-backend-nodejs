@@ -4,9 +4,9 @@ var clients;
 clients = [
   {
     id: "1",
-    name: "Samplr",
-    clientId: "abc123",
-    clientSecret: "ssh-secret"
+    name: "Xebia-iOS",
+    clientId: "xebia-ios",
+    clientSecret: "1L3J1K4U930J.4LKlk1J4H1J34f!13H4KJ14Hlkj;31"
   }
 ];
 
