@@ -25,20 +25,6 @@ if !cf.app
 				disk: 2147483648
 			host: 'localhost'
 		services:
-			'redis-2.6': [
-				name: 'xebia-mobile-backend-redis',
-				label: 'redis-2.6',
-				plan: 'free',
-				credentials:
-					node_id: 'redis_node_2',
-					host: 'localhost',
-					hostname: 'localhost',
-					port: 6379,
-					password: 'Password123',
-					name: 'xebia-mobile-backend',
-					username: 'xebia-mobile-backend'
-				version: '2.2'
-			],
 			'mongo-2.4': [
 				name: 'xebia-mobile-backend-mongodb',
 				label: 'mongodb-2.4',
@@ -57,12 +43,9 @@ if !cf.app
 
 	cf = _.extend(cf, LOCAL_CF_CONFIG)
 
-
-redisConfig = cf.services["redis-2.6"][0]
 mongoConfig = cf.services["mongo-2.4"][0]
 
 module.exports =
 	cf: cf,
-	redisConfig: redisConfig,
 	mongoConfig: mongoConfig
 

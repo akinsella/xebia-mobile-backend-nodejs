@@ -31,7 +31,6 @@
   ],
   "dependencies": {
     "express": "3.x",
-    "redis": "*",
     "underscore": "*",
     "request": "*",
     "ntwitter": "*",
@@ -49,7 +48,8 @@
     "mongoose-pureautoinc": "*",
     "connect-mongo": "*",
     "apn": "*",
-    "oauth2orize": "*"
+    "oauth2orize": "*",
+    "moment": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

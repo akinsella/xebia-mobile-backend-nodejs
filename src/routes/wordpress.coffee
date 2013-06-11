@@ -1,11 +1,10 @@
 utils = require '../lib/utils'
-redis = require '../lib/redis'
 _ = require('underscore')._
 
 # To be refactored
 processRequest = (req, res, url, transform) ->
 
-	options = utils.buildOptions req, res, url, 5, transform
+	options = utils.buildOptions req, res, url, 5 * 60, transform
 	utils.processRequest options
 
 	return

@@ -7,11 +7,6 @@ applications:
   instances: 1
   url: xebia-mobile.${target-base}
   path: .
-  services: 
-    xebia-mobile-backend-redis:
-      vendor: redis
-      version: "2.6"
-      tier: free
   services:
     xebia-mobile-backend-mongodb:
       vendor: mongodb

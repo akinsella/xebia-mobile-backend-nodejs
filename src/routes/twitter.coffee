@@ -1,6 +1,6 @@
 twitter = require 'ntwitter'
 utils = require '../lib/utils'
-redis = require '../lib/redis'
+cache = require '../lib/cache'
 _ = require('underscore')._
 
 twit = new twitter({
@@ -52,7 +52,7 @@ user_timeline_authenticated = (req, res) ->
 	console.log "User: " + user
 	callback = getParameterByName(req.url, 'callback')
 
-	redis.client.get req.url, (err, data) ->
+	cache.get req.url, (err, data) ->
 		if !err && data
 			console.log "[" + req.url + "] A reply is in cache key: '" + utils.getCacheKey(req) + "', returning immediatly the reply"
 			utils.responseData(200, "", data, {  callback: callback, req: req, res: res })
@@ -74,8 +74,7 @@ user_timeline_authenticated = (req, res) ->
 
 					jsonData = JSON.stringify(tweetsShortened)
 
-					redis.client.set(utils.getCacheKey(req), jsonData)
-					redis.client.expire(utils.getCacheKey(req), 60 * 60)
+					cache.set(utils.getCacheKey(req), jsonData, 60 * 60)
 					console.log "[" + req.url + "] Fetched Response from url: " + jsonData
 					callback(200, "", jsonData, {  callback: callback, req: req, res: res })
 
@@ -85,7 +84,7 @@ user_timeline_authenticated = (req, res) ->
 # To be refactored
 processRequest = (req, res, url, transform) ->
 
-	options = utils.buildOptions req, res, url, 5, transform
+	options = utils.buildOptions req, res, url, 5 * 60, transform
 	utils.processRequest options
 
 	return

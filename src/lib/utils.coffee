@@ -1,5 +1,5 @@
-redis = require './redis'
 request = require 'request'
+cache = require './cache'
 
 removeParameters = (url, parameters) ->
 	for parameter in parameters
@@ -95,7 +95,7 @@ getData = (options) ->
 		else
 			console.log "[" + options.cacheKey + "] Cache Key is: " + options.cacheKey
 			console.log "Checking if data for cache key [" + options.cacheKey + "] is in cache"
-			redis.client.get options.cacheKey, (err, data) ->
+			cache.get options.cacheKey, (err, data) ->
 				if !err && data
 					console.log "[" + options.url + "] A reply is in cache key: '" + options.cacheKey + "', returning immediatly the reply"
 					options.callback(200, "", data, options)
@@ -126,8 +126,7 @@ fetchDataFromUrl = (options) ->
 			console.log "[" + options.url + "] Fetched Response from url: " + jsonData
 			options.callback(200, "", jsonData, options)
 			if useCache(options)
-				redis.client.set(options.cacheKey, jsonData)
-				redis.client.expire(options.cacheKey, if options.cacheTimeout then options.cacheTimeout else 60 * 60)
+				cache.set(options.cacheKey, jsonData, if options.cacheTimeout then options.cacheTimeout else 60 * 60)
 				return
 
 
