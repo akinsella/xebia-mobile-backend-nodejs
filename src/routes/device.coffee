@@ -14,7 +14,7 @@ create = (req, res) ->
 		if (err)
 			utils.responseData(500, "Could not save device", req.body, { req:req, res:res})
 		else
-			utils.responseData(204, "Created", device, { req:req, res:res})
+			utils.responseData(201, "Created", device, { req:req, res:res})
 		return
 
 list = (req, res) ->

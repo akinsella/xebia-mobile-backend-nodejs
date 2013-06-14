@@ -1,11 +1,24 @@
-tokens = {}
-exports.find = (key, done) ->
-	token = tokens[key]
-	done null, token
+utils = require '../lib/utils'
+_ = require('underscore')._
+apn = require 'apn'
+AccessToken = require "../model/accessToken"
+
+exports.find = (token, done) ->
+	AccessToken.find { token: token }, (err, accessToken) ->
+		if (err)
+			done err, null
+		else
+			done null, accessToken
 
 exports.save = (token, userID, clientID, done) ->
-	tokens[token] =
-		userID: userID
+	accessToken = new AccessToken({
+		userID: userID,
 		clientID: clientID
+	})
 
-	done null
+	accessToken.save (err) ->
+		if (err)
+			done err
+		else
+			done null
+

@@ -59,9 +59,9 @@ server.grant oauth2orize.grant.code((client, redirectURI, user, ares, done) ->
 # code.
 server.exchange oauth2orize.exchange.code((client, code, redirectURI, done) ->
 	db.authorizationCodes.find code, (err, authCode) ->
-		return done(err)  if err
-		return done(null, false)  if client.id isnt authCode.clientID
-		return done(null, false)  if redirectURI isnt authCode.redirectURI
+		return done(err) if err
+		return done(null, false) if client.id isnt authCode.clientID
+		return done(null, false) if redirectURI isnt authCode.redirectURI
 		token = utils.uid(256)
 		db.accessTokens.save token, authCode.userID, authCode.clientID, (err) ->
 			return done(err)  if err

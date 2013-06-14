@@ -127,7 +127,7 @@ create = function(req, res) {
         res: res
       });
     } else {
-      utils.responseData(204, "Created", notification, {
+      utils.responseData(201, "Created", notification, {
         req: req,
         res: res
       });

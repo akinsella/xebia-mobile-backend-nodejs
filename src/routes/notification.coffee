@@ -69,7 +69,7 @@ create = (req, res) ->
 		if (err)
 			utils.responseData(500, "Could not save notification", req.body, { req:req, res:res })
 		else
-			utils.responseData(204, "Created", notification, { req:req, res:res })
+			utils.responseData(201, "Created", notification, { req:req, res:res })
 		return
 
 module.exports =

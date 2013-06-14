@@ -1,30 +1,30 @@
-users = [
-	id: "1"
-	username: "bob"
-	password: "secret"
-	name: "Bob Smith"
-,
-	id: "2"
-	username: "joe"
-	password: "password"
-	name: "Joe Davis"
-]
+utils = require '../lib/utils'
+_ = require('underscore')._
+apn = require 'apn'
+User = require "../model/user"
+
+#users = [
+#	id: "1"
+#	username: "bob"
+#	password: "secret"
+#	name: "Bob Smith"
+#,
+#	id: "2"
+#	username: "joe"
+#	password: "password"
+#	name: "Joe Davis"
+#]
+
 exports.find = (id, done) ->
-	i = 0
-	len = users.length
+	User.find { id: id }, (err, user) ->
+		if (err)
+			done err, null
+		else
+			done null, user
 
-	while i < len
-		user = users[i]
-		return done(null, user)  if user.id is id
-		i++
-	done null, null
-
-exports.findByUsername = (username, done) ->
-	i = 0
-	len = users.length
-
-	while i < len
-		user = users[i]
-		return done(null, user)  if user.username is username
-		i++
-	done null, null
+exports.findByEmail = (email, done) ->
+	User.find { email: email }, (err, user) ->
+		if (err)
+			done err, null
+		else
+			done null, user

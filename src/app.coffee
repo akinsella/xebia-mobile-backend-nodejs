@@ -21,10 +21,11 @@ github = require './routes/github'
 twitter = require './routes/twitter'
 eventbrite = require './routes/eventbrite'
 wordpress = require './routes/wordpress'
-# auth = require './routes/auth'
+auth = require './routes/auth'
 news = require './routes/news'
 device = require './routes/device'
 notification = require './routes/notification'
+client = require './routes/client'
 user = require './routes/user'
 
 site = require './routes/site'
@@ -140,6 +141,16 @@ app.post '/api/device', device.create
 app.get '/api/device/list', device.list
 app.get '/api/device/:id', device.findById
 
+app.delete '/api/client/:id', client.removeById
+app.post '/api/client', client.create
+app.get '/api/client/list', client.list
+app.get '/api/client/:id', client.findById
+
+app.delete '/api/user/:id', user.removeById
+app.post '/api/user', user.create
+app.get '/api/user/list', user.list
+app.get '/api/user/:id', user.findById
+
 app.delete '/api/notification', notification.removeById
 app.post '/api/notification', notification.create
 app.get '/api/notification/list', notification.list
@@ -162,11 +173,11 @@ app.post('/oauth/token', oauth2.token);
 app.get('/api/user/me', user.me);
 
 
-#app.get '/account', security.ensureAuthenticated, auth.account
-#app.get '/login', auth.login
-#app.get '/auth/google', passport.authenticate('google', { failureRedirect: '/login' }), auth.auth_google
-#app.get '/auth/google/return', passport.authenticate('google', { failureRedirect: '/login' }), auth.auth_google_return
-#app.get '/logout', auth.logout
+app.get '/auth/account', security.ensureAuthenticated, auth.account
+app.get '/auth/login', auth.login
+app.get '/auth/google', passport.authenticate('google', { failureRedirect: '/login' }), auth.authGoogle
+app.get '/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), auth.authGoogleCallback
+app.get '/auth/logout', auth.logout
 
 
 #app.get '*', routes.index

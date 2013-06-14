@@ -30,7 +30,7 @@ create = (req, res) ->
 		if (err)
 			utils.responseData(500, "Could not save news", req.body, { req:req, res:res})
 		else
-			utils.responseData(204, "Created", news, { req:req, res:res})
+			utils.responseData(201, "Created", news, { req:req, res:res})
 		return
 
 module.exports =

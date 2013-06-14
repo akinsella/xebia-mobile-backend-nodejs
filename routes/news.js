@@ -63,7 +63,7 @@ create = function(req, res) {
         res: res
       });
     } else {
-      utils.responseData(204, "Created", news, {
+      utils.responseData(201, "Created", news, {
         req: req,
         res: res
       });

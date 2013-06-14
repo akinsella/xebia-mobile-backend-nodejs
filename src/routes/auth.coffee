@@ -17,18 +17,18 @@ login = (req, res) =>
 #   request.  The first step in Google authentication will involve redirecting
 #   the user to google.com.  After authenticating, Google will redirect the
 #   user back to this application at /auth/google/return
-auth_google = (req, res) =>
+authGoogle = (req, res) =>
 	res.redirect '/'
 	return
 
 
-# GET /auth/google/return
+# GET /auth/google/callback
 #   Use passport.authenticate() as route middleware to authenticate the
 #   request.  If authentication fails, the user will be redirected back to the
 #   login p
 # age.  Otherwise, the primary route function function will be called,
 #   which, in this example, will redirect the user to the home page.
-auth_google_return = (req, res) =>
+authGoogleCallback = (req, res) =>
 	res.redirect '/'
 	return
 
@@ -42,6 +42,6 @@ logout = (req, res) =>
 module.exports =
 	account : account,
 	login : login,
-	auth_google : auth_google,
-	auth_google_return : auth_google_return,
+	authGoogle : authGoogle,
+	authGoogleCallback : authGoogleCallback,
 	logout : logout

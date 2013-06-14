@@ -3,6 +3,6 @@ exports.users = require("./users");
 
 exports.clients = require("./clients");
 
-exports.accessTokens = require("./accesstokens");
+exports.accessTokens = require("./accessTokens");
 
-exports.authorizationCodes = require("./authorizationcodes");
+exports.authorizationCodes = require("./authorizationCodes");

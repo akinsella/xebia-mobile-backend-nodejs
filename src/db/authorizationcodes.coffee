@@ -1,13 +1,24 @@
-codes = {}
+utils = require '../lib/utils'
+_ = require('underscore')._
+apn = require 'apn'
+AuthorizationCode = require "../model/authorizationCode"
 
-exports.find = (key, done) ->
-  code = codes[key]
-  done null, code
+exports.find = (code, done) ->
+	AuthorizationCode.find { code: code }, (err, authorizationCode) ->
+		if (err)
+			done err, null
+		else
+			done null, authorizationCode
 
 exports.save = (code, clientID, redirectURI, userID, done) ->
-  codes[code] =
-    clientID: clientID
-    redirectURI: redirectURI
-    userID: userID
+	authorizationCode = new AuthorizationCode({
+		clientID: clientID,
+		redirectURI: redirectURI,
+		userID: userID
+	})
 
-  done null
+	authorizationCode.save (err) ->
+		if (err)
+			done err
+		else
+			done null
