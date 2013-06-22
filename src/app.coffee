@@ -16,19 +16,19 @@ security = require './lib/security'
 
 config = require './conf/config'
 
-routes = require './routes'
-github = require './routes/github'
-twitter = require './routes/twitter'
-eventbrite = require './routes/eventbrite'
-wordpress = require './routes/wordpress'
-auth = require './routes/auth'
-news = require './routes/news'
-device = require './routes/device'
-notification = require './routes/notification'
-client = require './routes/client'
-user = require './routes/user'
-
-site = require './routes/site'
+route = require './route'
+github = require './route/github'
+twitter = require './route/twitter'
+eventbrite = require './route/eventbrite'
+wordpress = require './route/wordpress'
+auth = require './route/auth'
+news = require './route/news'
+device = require './route/device'
+notification = require './route/notification'
+client = require './route/client'
+user = require './route/user'
+vimeo = require './route/vimeo'
+site = require './route/site'
 oauth2 = require './oauth2'
 
 
@@ -89,7 +89,6 @@ app.configure ->
 
 	app.use app.router
 
-
 	app.use (err, req, res, next) ->
 		console.error "Error: #{err}, Stacktrace: #{err.stack}"
 		res.send 500, "Something broke! Error: #{err}, Stacktrace: #{err.stack}"
@@ -109,7 +108,7 @@ app.configure 'production', () ->
 	return
 
 
-app.get '/', routes.index
+app.get '/', route.index
 
 app.get '/api/eventbrite/list', eventbrite.list
 
@@ -130,6 +129,12 @@ app.get '/api/wordpress/categories', wordpress.categories
 app.get '/api/wordpress/category/:category', wordpress.categoryPosts
 app.get '/api/wordpress/dates', wordpress.dates
 app.get '/api/wordpress/:year/:month', wordpress.datePosts
+
+
+app.get '/api/vimeo/auth', vimeo.auth
+app.get '/api/vimeo/auth/callback', vimeo.callback
+app.get '/api/vimeo/video', vimeo.videos
+
 
 app.delete '/api/news/:id', news.removeById
 app.post '/api/news', news.create
@@ -159,7 +164,6 @@ app.get 'api/notification/push', notification.push
 
 app.get '/api/user/me', passport.authenticate("bearer", session: false ), user.me
 
-
 app.get('/', site.index);
 app.get('/login', site.loginForm);
 app.post('/login', site.login);
@@ -172,7 +176,6 @@ app.post('/oauth/token', oauth2.token);
 
 app.get('/api/user/me', user.me);
 
-
 app.get '/auth/account', security.ensureAuthenticated, auth.account
 app.get '/auth/login', auth.login
 app.get '/auth/google', passport.authenticate('google', { failureRedirect: '/login' }), auth.authGoogle
@@ -180,7 +183,7 @@ app.get '/auth/google/callback', passport.authenticate('google', { failureRedire
 app.get '/auth/logout', auth.logout
 
 
-#app.get '*', routes.index
+#app.get '*', route.index
 
 process.on 'SIGTERM', () =>
 	console.log 'Got SIGTERM exiting...'
