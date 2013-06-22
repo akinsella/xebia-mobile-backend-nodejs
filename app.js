@@ -74,7 +74,7 @@ app = express();
 
 app.configure(function() {
   console.log("Environment: " + (app.get('env')));
-  app.set('port', config.cf.port || process.env.PORT || 9000);
+  app.set('port', config.cf.port || process.env.PORT || 8000);
   app.set('views', "" + __dirname + "/views");
   app.set('view engine', 'ect');
   app.engine('.ect', ectRenderer.render);

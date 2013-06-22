@@ -48,7 +48,7 @@ app = express()
 
 app.configure ->
 	console.log "Environment: #{app.get('env')}"
-	app.set 'port', config.cf.port or process.env.PORT or 9000
+	app.set 'port', config.cf.port or process.env.PORT or 8000
 
 	app.set 'views', "#{__dirname}/views"
 	app.set 'view engine', 'ect'

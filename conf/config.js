@@ -11,7 +11,7 @@ if (!cf.app) {
   LOCAL_CF_CONFIG = {
     cloud: false,
     host: 'localhost',
-    port: 9000,
+    port: 8000,
     app: {
       instance_id: '7bcc459686eda42a8d696b3b398ed6d1',
       instance_index: 0,
@@ -22,7 +22,7 @@ if (!cf.app) {
       start: '2012-08-29 00:09:39 +0000',
       runtime: 'node',
       state_timestamp: 1324796219,
-      port: 9000,
+      port: 8000,
       limits: {
         fds: 256,
         mem: 134217728,

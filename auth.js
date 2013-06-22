@@ -45,8 +45,8 @@ passport.use(new LocalStrategy(function(email, password, done) {
 }));
 
 passport.use(new GoogleStrategy({
-  returnURL: 'http://localhost:9000/auth/google/callback',
-  realm: 'http://localhost:9000/'
+  returnURL: 'http://localhost:8000/auth/google/callback',
+  realm: 'http://localhost:8000/'
 }, function(identifier, profile, done) {
   return process.nextTick(function() {
     profile.identifier = identifier;

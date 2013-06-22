@@ -19,7 +19,9 @@ organizerProps = ["id", "name", "url", "description"];
 venueProps = ["id", "name", "city", "region", "country", "country_code", "address", "address_2", "postal_code", "longitude", "latitude"];
 
 list = function(req, res) {
-  return processRequest(req, res, "https://www.eventbrite.com/json/organizer_list_events?app_key=EHHWMU473LTVEO4JFY&id=1627902102", function(data) {
+  var apiKey;
+  apiKey = process.env.EVENTBRITE_AUTH_KEY;
+  return processRequest(req, res, "https://www.eventbrite.com/json/organizer_list_events?app_key=" + apiKey + "&id=1627902102", function(data) {
     data = _(data.events).pluck("event").filter(function(event) {
       return event.status === "Live";
     });

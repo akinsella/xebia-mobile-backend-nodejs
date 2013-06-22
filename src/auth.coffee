@@ -29,8 +29,8 @@ passport.use new LocalStrategy((email, password, done) ->
 #   credentials (in this case, an OpenID identifier and profile), and invoke a
 #   callback with a user object.
 passport.use new GoogleStrategy({
-		returnURL: 'http://localhost:9000/auth/google/callback',
-		realm: 'http://localhost:9000/'
+		returnURL: 'http://localhost:8000/auth/google/callback',
+		realm: 'http://localhost:8000/'
 	}, (identifier, profile, done) =>
 		# asynchronous verification, for effect...
 		process.nextTick () =>
