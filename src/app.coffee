@@ -125,8 +125,8 @@ app.get '/', route.index
 
 app.get '/api/eventbrite/list', eventbrite.list
 
-app.get '/api/github/orgs/xebia-france/repos', github.repos
-app.get '/api/github/orgs/xebia-france/public_members', github.public_members
+app.get '/api/github/repository', github.repos
+app.get '/api/github/member', github.public_members
 
 # app.get '/api/twitter/auth/stream/XebiaFr', twitter.stream_xebiafr
 # app.get '/api/twitter/auth/user/:user', twitter.user_timeline_authenticated
@@ -178,17 +178,15 @@ app.get 'api/notification/push', notification.push
 
 app.get '/api/user/me', passport.authenticate("bearer", session: false), user.me
 
-app.get('/', site.index);
-app.get('/login', site.loginForm);
-app.post('/login', site.login);
-app.get('/logout', site.logout);
-app.get('/account', login.ensureLoggedIn(), site.account);
+app.get '/', site.index
+app.get '/login', site.loginForm
+app.post '/login', site.login
+app.get '/logout', site.logout
+app.get '/account', login.ensureLoggedIn(), site.account
 
-app.get('/dialog/authorize', oauth2.authorization);
-app.post('/dialog/authorize/decision', oauth2.decision);
-app.post('/oauth/token', oauth2.token);
-
-app.get('/api/user/me', user.me);
+app.get '/dialog/authorize', oauth2.authorization
+app.post '/dialog/authorize/decision', oauth2.decision
+app.post '/oauth/token', oauth2.token
 
 app.get '/auth/account', security.ensureAuthenticated, auth.account
 app.get '/auth/login', auth.login

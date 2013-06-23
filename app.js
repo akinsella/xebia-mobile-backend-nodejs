@@ -145,9 +145,9 @@ app.get('/', route.index);
 
 app.get('/api/eventbrite/list', eventbrite.list);
 
-app.get('/api/github/orgs/xebia-france/repos', github.repos);
+app.get('/api/github/repository', github.repos);
 
-app.get('/api/github/orgs/xebia-france/public_members', github.public_members);
+app.get('/api/github/member', github.public_members);
 
 app.get('/api/twitter/timeline', twitter.xebia_timeline);
 
@@ -238,8 +238,6 @@ app.get('/dialog/authorize', oauth2.authorization);
 app.post('/dialog/authorize/decision', oauth2.decision);
 
 app.post('/oauth/token', oauth2.token);
-
-app.get('/api/user/me', user.me);
 
 app.get('/auth/account', security.ensureAuthenticated, auth.account);
 
