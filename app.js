@@ -155,15 +155,15 @@ app.get('/api/wordpress/post/recent', wordpress.recentPosts);
 
 app.get('/api/wordpress/post/:id', wordpress.post);
 
-app.get('/api/wordpress/authors', wordpress.authors);
+app.get('/api/wordpress/author', wordpress.authors);
 
 app.get('/api/wordpress/author/:author', wordpress.authorPosts);
 
-app.get('/api/wordpress/tags', wordpress.tags);
+app.get('/api/wordpress/tag', wordpress.tags);
 
 app.get('/api/wordpress/tag/:tag', wordpress.tagPosts);
 
-app.get('/api/wordpress/categories', wordpress.categories);
+app.get('/api/wordpress/category', wordpress.categories);
 
 app.get('/api/wordpress/category/:category', wordpress.categoryPosts);
 
