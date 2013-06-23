@@ -36,7 +36,7 @@ ECT = require 'ect'
 ectRenderer = ECT
 	cache: true,
 	watch: true,
-	root:  "views"
+	root: "views"
 
 console.log "Application Name: #{config.cf.app.name}"
 console.log "Env: #{JSON.stringify config.cf}"
@@ -46,6 +46,13 @@ require './auth'
 # Express
 app = express()
 
+gracefullyClosing = false
+
+cacheMiddleware = (seconds) -> (req, res, next) ->
+    res.setHeader "Cache-Control", "public, max-age=#{seconds}"
+    next()
+
+
 app.configure ->
 	console.log "Environment: #{app.get('env')}"
 	app.set 'port', config.cf.port or process.env.PORT or 8000
@@ -54,6 +61,15 @@ app.configure ->
 	app.set 'view engine', 'ect'
 
 	app.engine '.ect', ectRenderer.render
+
+	app.use (req, res, next) ->
+		return next() unless gracefullyClosing
+		res.setHeader "Connection", "close"
+		res.send 502, "Server is in the process of restarting"
+
+	app.use (req, res, next) ->
+		req.forwardedSecure = (req.headers["x-forwarded-proto"] == "https")
+		next()
 
 	app.use '/images', express.static("#{__dirname}/public/images")
 	app.use '/scripts', express.static("#{__dirname}/public/scripts")
@@ -73,7 +89,7 @@ app.configure ->
 			password: config.mongoConfig.credentials.password,
 			collection: "sessions",
 			auto_reconnect: true
-		 )
+		)
 	)
 	app.use express.logger()
 	app.use express.methodOverride()
@@ -93,19 +109,16 @@ app.configure ->
 		console.error "Error: #{err}, Stacktrace: #{err.stack}"
 		res.send 500, "Something broke! Error: #{err}, Stacktrace: #{err.stack}"
 
-	return
 
 
 app.configure 'development', () ->
 	app.use express.errorHandler
 		dumpExceptions: true,
 		showStack: true
-	return
 
 
 app.configure 'production', () ->
 	app.use express.errorHandler()
-	return
 
 
 app.get '/', route.index
@@ -115,9 +128,10 @@ app.get '/api/eventbrite/list', eventbrite.list
 app.get '/api/github/orgs/xebia-france/repos', github.repos
 app.get '/api/github/orgs/xebia-france/public_members', github.public_members
 
-app.get '/api/twitter/auth/stream/XebiaFr', twitter.stream_xebiafr
-app.get '/api/twitter/auth/user/:user', twitter.user_timeline_authenticated
-app.get '/api/twitter/user/:user', twitter.user_timeline
+# app.get '/api/twitter/auth/stream/XebiaFr', twitter.stream_xebiafr
+# app.get '/api/twitter/auth/user/:user', twitter.user_timeline_authenticated
+#app.get '/api/twitter/user/:user', twitter.user_timeline
+app.get '/api/twitter/timeline', twitter.xebia_timeline
 
 app.get '/api/wordpress/post/recent', wordpress.recentPosts
 app.get '/api/wordpress/post/:id', wordpress.post
@@ -162,7 +176,7 @@ app.get '/api/notification/list', notification.list
 app.get '/api/notification/:id', notification.findById
 app.get 'api/notification/push', notification.push
 
-app.get '/api/user/me', passport.authenticate("bearer", session: false ), user.me
+app.get '/api/user/me', passport.authenticate("bearer", session: false), user.me
 
 app.get('/', site.index);
 app.get('/login', site.loginForm);
@@ -182,20 +196,25 @@ app.get '/auth/google', passport.authenticate('google', { failureRedirect: '/log
 app.get '/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), auth.authGoogleCallback
 app.get '/auth/logout', auth.logout
 
-
 #app.get '*', route.index
 
-process.on 'SIGTERM', () =>
-	console.log 'Got SIGTERM exiting...'
-	# do some cleanup here
-	process.exit 0
+
+httpServer = app.listen app.get('port')
+
+process.on 'SIGTERM', ->
+	console.log "Received kill signal (SIGTERM), shutting down gracefully."
+	gracefullyClosing = true
+	httpServer.close ->
+		console.log "Closed out remaining connections."
+		process.exit()
+
+	setTimeout ->
+		console.error "Could not close connections in time, forcefully shutting down"
+		process.exit(1)
+	, 30 * 1000
 
 process.on 'uncaughtException', (err) ->
 	console.error "An uncaughtException was found, the program will end. #{err}, stacktrace: #{err.stack}"
 	process.exit 1
 
-
 console.log "Express listening on port: #{app.get('port')}"
-app.listen app.get('port')
-
-console.log 'Initializing xebia-mobile-backend application'

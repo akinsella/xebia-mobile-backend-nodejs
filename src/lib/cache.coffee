@@ -9,21 +9,31 @@ get = (key, callback) ->
 		else
 			now = moment()
 			lastModified = moment(cacheEntry.lastModified)
-			lastModifiedWithTtl = lastModified.add('seconds', cacheEntry.ttl)
-			if (now.isAfter(lastModifiedWithTtl))
-				cacheEntry.remove()
+			if (cacheEntry.ttl == -1)
 				if (callback)
-					callback(err, undefined)
+					callback(err, JSON.parse(cacheEntry.data))
 			else
-				if (callback)
-					callback(err, cacheEntry.data)
+				lastModifiedWithTtl = lastModified.add('seconds', cacheEntry.ttl)
+				if (now.isAfter(lastModifiedWithTtl))
+					cacheEntry.remove()
+					if (callback)
+						callback(err, undefined)
+				else
+					if (callback)
+						callback(err, JSON.parse(cacheEntry.data))
 
 
 set = (key, data, ttl, callback) ->
-	cacheEntry = new CacheEntry({ key:key, data:data, ttl:ttl })
-	cacheEntry.save (err) ->
-		if (callback)
-			callback(err, if cacheEntry then cacheEntry.data else undefined)
+	cacheEntry = new CacheEntry({ key:key, data:JSON.stringify(data), ttl:ttl })
+	CacheEntry.remove({key:key}, (err) ->
+		if (err)
+			if (callback)
+				callback(err)
+		else
+			cacheEntry.save (err) ->
+				if (callback)
+					callback(err)
+	)
 
 remove = (key, callback) ->
 	CacheEntry.findOneAndRemove { key: key }, (err, cacheEntry) ->

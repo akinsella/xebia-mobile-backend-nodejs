@@ -26,7 +26,6 @@ removeParameters = (url, parameters) ->
 
 	url
 
-
 getParameterByName = (url, name) ->
 	#name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
 	name = name.replace(/[\[]/, "\\\\[").replace(/[\]]/, "\\\\]")
@@ -107,9 +106,10 @@ getData = (options) ->
 		options.callback(500, errorMessage, undefined, options)
 
 
-fetchDataFromUrl = (options) ->
-	console.log "[" + options.url + "] Fetching data from url"
-	request.get {url:options.url, json:true, headers:{"User-Agent":"Xebia-Mobile-Backend"}}, (error, response, data) ->
+processResponse = (options, error, data, response) ->
+	if (error)
+		options.callback(500, "", undefined, options)
+	else
 		contentType = getContentType(response)
 		console.log "[" + options.url + "] Http Response - Content-Type: " + contentType
 		console.log "[" + options.url + "] Http Response - Headers: ", response.headers
@@ -118,19 +118,30 @@ fetchDataFromUrl = (options) ->
 			console.log "[" + options.url + "] Content-Type is not json or javascript: Not caching data and returning response directly"
 			options.contentType = contentType
 			options.callback(500, "", undefined, options)
-			return
 		else
 			if options.transform
 				data = options.transform data
-			jsonData = JSON.stringify(data)
-			console.log "[" + options.url + "] Fetched Response from url: " + jsonData
-			options.callback(200, "", jsonData, options)
+			console.log "[" + options.url + "] Fetched Response from url: " + data.substring(0, 256)
+			options.callback(200, "", data, options)
 			if useCache(options)
-				cache.set(options.cacheKey, jsonData, if options.cacheTimeout then options.cacheTimeout else 60 * 60)
-				return
+				cache.set(options.cacheKey, data, if options.cacheTimeout then options.cacheTimeout else 60 * 60)
 
 
-buildOptions = (req, res, url, cacheTimeout = 5, transform) ->
+fetchDataFromUrl = (options) ->
+	console.log "[#{options.url}] Fetching data from url"
+
+	if (options.oauth)
+		options.oauth.get options.url, options.credentials.accessToken, options.credentials.accessTokenSecret, (error, data, response) -> processResponse(options, error, data, response)
+	else if (options.oauth2)
+		options.oauth2.get options.url, options.credentials.accessToken, (error, data, response) -> processResponse(options, error, data, response)
+	else
+		headers = { "User-Agent": "Xebia-Mobile-Backend" }
+		if options.accessToken
+			headers["Authorization"] = "Bearer " + options.accessToken
+		request.get {url:options.url, json:false, headers: headers}, (error, response, data) -> processResponse(options, error, data, response)
+
+
+buildOptions = (req, res, url, cacheTimeout = 5 * 60, transform, accessToken) ->
 
 	options =
 		req: req,
@@ -140,7 +151,8 @@ buildOptions = (req, res, url, cacheTimeout = 5, transform) ->
 		forceNoCache: getIfUseCache(req),
 		cacheTimeout: cacheTimeout,
 		callback: responseData,
-		transform: transform
+		transform: transform,
+		accessToken: accessToken
 
 	options
 

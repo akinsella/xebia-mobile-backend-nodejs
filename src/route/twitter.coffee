@@ -1,21 +1,37 @@
 twitter = require 'ntwitter'
 utils = require '../lib/utils'
+request = require 'request'
 cache = require '../lib/cache'
 _ = require('underscore')._
+OAuth = require 'OAuth'
+Cache = require '../lib/cache'
 
 twit = new twitter({
-	consumer_key: process.env.TWITTER_OAUTH_CONSUMER_KEY,
-	consumer_secret:  process.env.TWITTER_OAUTH_CONSUMER_SECRET,
-	access_token_key:  process.env.TWITTER_OAUTH_ACCESS_TOKEN_KEY,
-	access_token_secret: process.env.TWITTER_OAUTH_ACCESS_TOKEN_SECRET
+	consumer_key: process.env["TWITTER_OAUTH_CONSUMER_KEY"],
+	consumer_secret: process.env["TWITTER_OAUTH_CONSUMER_SECRET"],
+	access_token_key: process.env["TWITTER_OAUTH_ACCESS_TOKEN_KEY"],
+	access_token_secret: process.env["TWITTER_OAUTH_ACCESS_TOKEN_SECRET"]
 })
 
+
+OAuth2 = OAuth.OAuth2
+twitterConsumerKey = process.env["TWITTER_OAUTH_CONSUMER_KEY"]
+twitterConsumerSecret = process.env["TWITTER_OAUTH_CONSUMER_SECRET"]
+
+oauth2 = new OAuth2(
+	twitterConsumerKey,
+	twitterConsumerSecret,
+	'https://api.twitter.com/',
+	null,
+	'oauth2/token',
+	null
+)
+oauth2.useAuthorizationHeaderforGET(true)
 
 xebiaFrTweets = []
 
 # twit.stream('statuses/filter', { track: ['XebiaFR'] }, function(stream) {
 twit.stream 'user', { track: 'XebiaFr' }, (stream) ->
-
 	stream.on 'data', (data) ->
 		console.log data
 
@@ -33,18 +49,11 @@ twit.stream 'user', { track: 'XebiaFr' }, (stream) ->
 		# Handle a 'silent' disconnection from Twitter, no end/error event fired
 		console.log 'Twitter Stream Connection destroyed: ' + response
 
-	return
-
-
 
 #app.get('/twitter/:user', function(req, res) {
 stream_xebiafr = (req, res) ->
-
 	callback = getParameterByName(req.url, 'callback')
 	res.send(callback ? callback + "(" + JSON.stringify(xebiaFrTweets) + ");": JSON.stringify(xebiaFrTweets))
-
-	return
-
 
 
 user_timeline_authenticated = (req, res) ->
@@ -78,16 +87,55 @@ user_timeline_authenticated = (req, res) ->
 					console.log "[" + req.url + "] Fetched Response from url: " + jsonData
 					callback(200, "", jsonData, {  callback: callback, req: req, res: res })
 
-	return
-
 
 # To be refactored
-processRequest = (req, res, url, transform) ->
+processRequest = (req, res, url, oauth, credentials, transform) ->
+	options =
+		req: req,
+		res: res,
+		url: url,
+		cacheKey: utils.getCacheKey(req),
+		forceNoCache: utils.getIfUseCache(req),
+		cacheTimeout: 5 * 60,
+		callback: utils.responseData,
+		transform: transform,
+		oauth2: oauth2,
+		credentials: credentials
 
-	options = utils.buildOptions req, res, url, 5 * 60, transform
 	utils.processRequest options
 
-	return
+xebia_timeline = (req, res) ->
+	twitterUrl = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=XebiaFR&contributor_details=false&include_entities=true&include_rts=true&exclude_replies=false&count=50&exclude_replies=false"
+	console.log "Twitter Url: #{twitterUrl}"
+
+	Cache.get('twitter.credentials', (err, credentials) ->
+		if err
+			utils.responseData(500, "", err, { req: req, res: res })
+		else if (credentials)
+			fetchTwitterData(twitterUrl, credentials, req, res)
+		else
+			oauth2.getOAuthAccessToken('', {'grant_type': 'client_credentials'}, (err, accessToken, refreshToken, results) ->
+				credentials = { accessToken: accessToken }
+				if err
+					utils.responseData(500, "", err, { req: req, res: res })
+				else
+					Cache.set('twitter.credentials', credentials, -1, (err) ->
+						if (err)
+							utils.responseData(500, "", err, { req: req, res: res })
+						else
+							fetchTwitterData(twitterUrl, credentials, req, res)
+					)
+			)
+	)
+
+
+fetchTwitterData = (twitterUrl, credentials, req, res) ->
+	processRequest req, res, twitterUrl, oauth2, credentials, (data) ->
+		_(JSON.parse(data)).each((tweet) ->
+			shortenTweet(tweet)
+		)
+		data
+
 
 tweetProps = [
 	"id", "id_str", "created_at", "text", "favorited", "retweeted", "retweet_count", "entities", "retweeted_status", "user"
@@ -139,21 +187,7 @@ shortenTweet = (tweet) ->
 	tweet
 
 
-user_timeline = (req, res) ->
-
-	user = req.params.user
-	console.log "User: " + user
-	twitterUrl = "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=" + user + "&contributor_details=false&include_entities=true&include_rts=true&exclude_replies=false&count=50&exclude_replies=false"
-	console.log "Twitter Url: " + twitterUrl
-
-	processRequest req, res, twitterUrl, (data) ->
-		_(data).each((tweet) ->
-			shortenTweet(tweet)
-		)
-		data
-
-
 module.exports =
 	stream_xebiafr : stream_xebiafr,
 	user_timeline_authenticated : user_timeline_authenticated,
-	user_timeline : user_timeline
+	xebia_timeline : xebia_timeline
