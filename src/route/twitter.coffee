@@ -3,7 +3,7 @@ utils = require '../lib/utils'
 request = require 'request'
 cache = require '../lib/cache'
 _ = require('underscore')._
-OAuth = require 'OAuth'
+OAuth = require 'oauth'
 Cache = require '../lib/cache'
 
 twit = new twitter({
