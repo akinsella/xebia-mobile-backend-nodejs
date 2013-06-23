@@ -108,8 +108,6 @@ videos = function(req, res) {
 };
 
 transformVideo = function(video) {
-  video.identfier = video.id;
-  delete video.id;
   video.embedPrivacy = video.embed_privacy;
   delete video.embed_privacy;
   video.isHd = video.is_hd;
@@ -129,10 +127,10 @@ transformVideo = function(video) {
   video.commentCount = video.number_of_comments;
   delete video.number_of_comments;
   video.thumbnails = video.thumbnails.thumbnail;
+  video.owner.profileUrl = video.owner.profileurl;
+  delete video.owner.profileurl;
   video.owner.displayName = video.owner.display_name;
   delete video.owner.display_name;
-  video.owner.identifier = video.owner.id;
-  delete video.owner.id;
   video.owner.isPlus = video.owner.is_plus;
   delete video.owner.is_plus;
   video.owner.isPro = video.owner.is_pro;
