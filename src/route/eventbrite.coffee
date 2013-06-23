@@ -23,7 +23,7 @@ venueProps = [
 
 # To be refactored
 list = (req, res) ->
-	apiKey = process.env.EVENTBRITE_AUTH_KEY
+	apiKey = process.env["EVENTBRITE_AUTH_KEY"]
 	processRequest req, res, "https://www.eventbrite.com/json/organizer_list_events?app_key=#{apiKey}&id=1627902102", (data) ->
 		data = _(data.events).pluck("event").filter((event) -> event.status == "Live")
 		_(data).each((event) ->

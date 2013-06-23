@@ -143,7 +143,7 @@ app.configure('production', function() {
 
 app.get('/', route.index);
 
-app.get('/api/eventbrite/list', eventbrite.list);
+app.get('/api/eventbrite/event', eventbrite.list);
 
 app.get('/api/github/repository', github.repos);
 

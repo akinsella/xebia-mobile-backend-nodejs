@@ -20,7 +20,7 @@ venueProps = ["id", "name", "city", "region", "country", "country_code", "addres
 
 list = function(req, res) {
   var apiKey;
-  apiKey = process.env.EVENTBRITE_AUTH_KEY;
+  apiKey = process.env["EVENTBRITE_AUTH_KEY"];
   return processRequest(req, res, "https://www.eventbrite.com/json/organizer_list_events?app_key=" + apiKey + "&id=1627902102", function(data) {
     data = _(data.events).pluck("event").filter(function(event) {
       return event.status === "Live";
