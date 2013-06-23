@@ -116,12 +116,12 @@ transformVideo = function(video) {
   delete video.is_hd;
   video.isTranscoding = video.is_transcoding;
   delete video.is_transcoding;
-  video.isWatchLater = video.is_watch_later;
-  delete video.is_watch_later;
+  video.isWatchLater = video.is_watchlater;
+  delete video.is_watchlater;
   video.uploadDate = video.upload_date;
-  delete video.upload_date;
+  delete video.uploadDate;
   video.modifiedDate = video.modified_date;
-  delete video.modified_date;
+  delete video.modifiedDate;
   video.likeCount = video.number_of_likes;
   delete video.number_of_likes;
   video.playCount = video.number_of_plays;
