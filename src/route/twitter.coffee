@@ -191,6 +191,6 @@ shortenTweet = (tweet) ->
 
 
 module.exports =
-	stream_xebiafr : stream_xebiafr,
-	user_timeline_authenticated : user_timeline_authenticated,
+#	stream_xebiafr : stream_xebiafr,
+#	user_timeline_authenticated : user_timeline_authenticated,
 	xebia_timeline : xebia_timeline
