@@ -182,12 +182,10 @@ shortenTweet = function(tweet) {
       entities = _ref[eKey];
       indices = [];
       _(entities).each(function(entity) {
-        _(entity.indices).each(function(indice) {
-          return indices.push({
-            indice: indice
-          });
-        });
-        return entity.indices = indices;
+        return entity.indices = {
+          start: entity.indices[0],
+          end: entity.indices[1]
+        };
       });
     }
   }

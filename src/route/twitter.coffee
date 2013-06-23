@@ -163,10 +163,7 @@ shortenTweet = (tweet) ->
 		for eKey, entities of tweet.entities
 			indices = []
 			_(entities).each((entity) ->
-				_(entity.indices).each((indice)->
-					indices.push({indice:indice})
-				)
-				entity.indices = indices
+				entity.indices = {start:entity.indices[0], end:entity.indices[1]}
 			)
 	if tweet.user
 		for tuKey of tweet.user
