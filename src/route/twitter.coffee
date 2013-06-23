@@ -1,17 +1,18 @@
-twitter = require 'ntwitter'
+#twitter = require 'ntwitter'
 utils = require '../lib/utils'
 request = require 'request'
-cache = require '../lib/cache'
 _ = require('underscore')._
 OAuth = require 'oauth'
 Cache = require '../lib/cache'
 
+###
 twit = new twitter({
 	consumer_key: process.env["TWITTER_OAUTH_CONSUMER_KEY"],
 	consumer_secret: process.env["TWITTER_OAUTH_CONSUMER_SECRET"],
 	access_token_key: process.env["TWITTER_OAUTH_ACCESS_TOKEN_KEY"],
 	access_token_secret: process.env["TWITTER_OAUTH_ACCESS_TOKEN_SECRET"]
 })
+###
 
 
 OAuth2 = OAuth.OAuth2
@@ -28,6 +29,7 @@ oauth2 = new OAuth2(
 )
 oauth2.useAuthorizationHeaderforGET(true)
 
+###
 xebiaFrTweets = []
 
 # twit.stream('statuses/filter', { track: ['XebiaFR'] }, function(stream) {
@@ -61,7 +63,7 @@ user_timeline_authenticated = (req, res) ->
 	console.log "User: " + user
 	callback = getParameterByName(req.url, 'callback')
 
-	cache.get req.url, (err, data) ->
+	Cache.get req.url, (err, data) ->
 		if !err && data
 			console.log "[" + req.url + "] A reply is in cache key: '" + utils.getCacheKey(req) + "', returning immediatly the reply"
 			utils.responseData(200, "", data, {  callback: callback, req: req, res: res })
@@ -83,10 +85,11 @@ user_timeline_authenticated = (req, res) ->
 
 					jsonData = JSON.stringify(tweetsShortened)
 
-					cache.set(utils.getCacheKey(req), jsonData, 60 * 60)
+					Cache.set(utils.getCacheKey(req), jsonData, 60 * 60)
 					console.log "[" + req.url + "] Fetched Response from url: " + jsonData
 					callback(200, "", jsonData, {  callback: callback, req: req, res: res })
 
+###
 
 # To be refactored
 processRequest = (req, res, url, oauth, credentials, transform) ->
