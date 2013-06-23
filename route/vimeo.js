@@ -119,9 +119,9 @@ transformVideo = function(video) {
   video.isWatchLater = video.is_watchlater;
   delete video.is_watchlater;
   video.uploadDate = video.upload_date;
-  delete video.uploadDate;
+  delete video.upload_date;
   video.modifiedDate = video.modified_date;
-  delete video.modifiedDate;
+  delete video.modified_date;
   video.likeCount = video.number_of_likes;
   delete video.number_of_likes;
   video.playCount = video.number_of_plays;
