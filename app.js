@@ -171,9 +171,9 @@ app.get('/api/wordpress/dates', wordpress.dates);
 
 app.get('/api/wordpress/:year/:month', wordpress.datePosts);
 
-app.get('/api/vimeo/auth', vimeo.auth);
+app.get('/api/vimeo/oauth', vimeo.auth);
 
-app.get('/api/vimeo/auth/callback', vimeo.callback);
+app.get('/api/vimeo/oauth/callback', vimeo.callback);
 
 app.get('/api/vimeo/video', vimeo.videos);
 

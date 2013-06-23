@@ -28,7 +28,7 @@ oauth = new OAuth.OAuth(
 	process.env["VIMEO_OAUTH_CONSUMER_KEY"],
 	process.env["VIMEO_OAUTH_CONSUMER_SECRET"],
 	'1.0',
-	'http://localhost:8000/api/vimeo/auth/callback',
+	process.env["VIMEO_OAUTH_CALLBACK"],
 	'HMAC-SHA1'
 )
 

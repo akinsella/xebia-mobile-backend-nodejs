@@ -30,7 +30,7 @@ processRequest = function(req, res, url, oauth, credentials, transform) {
   return utils.processRequest(options);
 };
 
-oauth = new OAuth.OAuth('https://vimeo.com/oauth/request_token', 'https://vimeo.com/oauth/access_token', process.env["VIMEO_OAUTH_CONSUMER_KEY"], process.env["VIMEO_OAUTH_CONSUMER_SECRET"], '1.0', 'http://localhost:8000/api/vimeo/auth/callback', 'HMAC-SHA1');
+oauth = new OAuth.OAuth('https://vimeo.com/oauth/request_token', 'https://vimeo.com/oauth/access_token', process.env["VIMEO_OAUTH_CONSUMER_KEY"], process.env["VIMEO_OAUTH_CONSUMER_SECRET"], '1.0', process.env["VIMEO_OAUTH_CALLBACK"], 'HMAC-SHA1');
 
 auth = function(req, res) {
   return oauth.getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret, results) {
