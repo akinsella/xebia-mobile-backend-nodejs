@@ -107,7 +107,7 @@ getData = (options) ->
 
 
 processResponse = (options, error, data, response) ->
-	if (error)
+	if (error || (data && data.error))
 		options.callback(500, "", undefined, options)
 	else
 		contentType = getContentType(response)
