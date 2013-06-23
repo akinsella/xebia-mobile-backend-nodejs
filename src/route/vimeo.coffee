@@ -78,9 +78,54 @@ videos = (req, res) ->
 		else if (!credentials)
 			utils.responseData 500, "Error No Credentials stored", undefined, {req: req, res: res}
 		else
-			processRequest req, res, url, oauth, credentials, (data) -> data
+			processRequest req, res, url, oauth, credentials, (data) ->
+				_(data.videos.video).each((video) -> transformVideo(video) )
+				data
 	)
 
+transformVideo = (video) ->
+	video.identfier = video.id
+	delete video.id
+	video.embedPrivacy = video.embed_privacy
+	delete video.embed_privacy
+	video.isHd = video.is_hd
+	delete video.is_hd
+	video.isTranscoding = video.is_transcoding
+	delete video.is_transcoding
+	video.isWatchLater = video.is_watch_later
+	delete video.is_watch_later
+	video.uploadDate = video.upload_date
+	delete video.uploadDate
+	video.modifiedDate = video.modified_date
+	delete video.modifiedDate
+	video.likeCount = video.number_of_likes
+	delete video.number_of_likes
+	video.playCount = video.number_of_plays
+	delete video.number_of_plays
+	video.commentCount = video.number_of_comments
+	delete video.number_of_comments
+	video.thumbnails = video.thumbnails.thumbnail
+
+	video.owner.displayName = video.owner.display_name
+	delete video.owner.display_name
+	video.owner.identifier = video.owner.id
+	delete video.owner.id
+	video.owner.isPlus = video.owner.is_plus
+	delete video.owner.is_plus
+	video.owner.isPro = video.owner.is_pro
+	delete video.owner.is_pro
+	video.owner.isStaff = video.owner.is_staff
+	delete video.owner.is_staff
+	video.owner.realName = video.owner.realname
+	delete video.owner.realname
+	video.owner.videosUrl = video.owner.videosurl
+	delete video.owner.videosurl
+
+	_(video.thumbnails).each((thumbnail) ->
+		thumbnail.url = thumbnail._content
+		delete thumbnail._content
+	)
+	video
 
 module.exports =
 	auth: auth,
