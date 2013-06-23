@@ -27,7 +27,7 @@ list = (req, res) ->
 	processRequest req, res, "https://www.eventbrite.com/json/organizer_list_events?app_key=#{apiKey}&id=1627902102", (data) ->
 		data = _(data.events).pluck("event").filter((event) -> event.status == "Live")
 		_(data).each((event) ->
-			event.description_plain_text = if event.description then event.description.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '') else event.description
+			event.description_plain_text = if event.description then event.description.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '').replace(/<!--[\s\S]*?-->/g, '') else event.description
 			for key of event
 				if !(key in eventProps) then delete event[key]
 				for vKey of event.venue
