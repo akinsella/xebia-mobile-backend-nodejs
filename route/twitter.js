@@ -154,7 +154,7 @@ xebia_timeline = function(req, res) {
 
 fetchTwitterData = function(twitterUrl, credentials, req, res) {
   return processRequest(req, res, twitterUrl, oauth2, credentials, function(data) {
-    _(JSON.parse(data)).each(function(tweet) {
+    _(data).each(function(tweet) {
       return shortenTweet(tweet);
     });
     return data;

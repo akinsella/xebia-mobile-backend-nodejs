@@ -121,8 +121,9 @@ processResponse = (options, error, data, response) ->
 		else
 			if options.transform
 				data = options.transform data
-			console.log "[" + options.url + "] Fetched Response from url: " + data.substring(0, 256)
-			options.callback(200, "", data, options)
+			jsonData = JSON.stringify(data)
+			console.log "[" + options.url + "] Fetched Response from url: " + jsonData.substr(0, 256)
+			options.callback(200, "", jsonData, options)
 			if useCache(options)
 				cache.set(options.cacheKey, data, if options.cacheTimeout then options.cacheTimeout else 60 * 60)
 
@@ -131,14 +132,14 @@ fetchDataFromUrl = (options) ->
 	console.log "[#{options.url}] Fetching data from url"
 
 	if (options.oauth)
-		options.oauth.get options.url, options.credentials.accessToken, options.credentials.accessTokenSecret, (error, data, response) -> processResponse(options, error, data, response)
+		options.oauth.get options.url, options.credentials.accessToken, options.credentials.accessTokenSecret, (error, data, response) -> processResponse(options, error, JSON.parse(data), response)
 	else if (options.oauth2)
-		options.oauth2.get options.url, options.credentials.accessToken, (error, data, response) -> processResponse(options, error, data, response)
+		options.oauth2.get options.url, options.credentials.accessToken, (error, data, response) -> processResponse(options, error, JSON.parse(data), response)
 	else
 		headers = { "User-Agent": "Xebia-Mobile-Backend" }
 		if options.accessToken
 			headers["Authorization"] = "Bearer " + options.accessToken
-		request.get {url:options.url, json:false, headers: headers}, (error, response, data) -> processResponse(options, error, data, response)
+		request.get {url:options.url, json:true, headers: headers}, (error, response, data) -> processResponse(options, error, data, response)
 
 
 buildOptions = (req, res, url, cacheTimeout = 5 * 60, transform, accessToken) ->
