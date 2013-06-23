@@ -27,7 +27,7 @@ list = function(req, res) {
     });
     _(data).each(function(event) {
       var key, oKey, vKey;
-      event.description_plain_text = event.description ? event.description.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '').replace(/<!--[\s\S]*?-->/g, '') : event.description;
+      event.description_plain_text = event.description ? event.description.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '').replace(/<!--(.*?)-->/, '') : event.description;
       for (key in event) {
         if (!(__indexOf.call(eventProps, key) >= 0)) {
           delete event[key];
