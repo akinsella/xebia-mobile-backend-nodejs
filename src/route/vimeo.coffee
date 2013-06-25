@@ -86,21 +86,21 @@ videos = (req, res) ->
 transformVideo = (video) ->
 	video.embedPrivacy = video.embed_privacy
 	delete video.embed_privacy
-	video.isHd = video.is_hd
+	video.isHd = Number(video.is_hd) > 0
 	delete video.is_hd
-	video.isTranscoding = video.is_transcoding
+	video.isTranscoding = Number(video.is_transcoding) > 0
 	delete video.is_transcoding
-	video.isWatchLater = video.is_watchlater
+	video.isWatchLater = Number(video.is_watchlater) > 0
 	delete video.is_watchlater
 	video.uploadDate = video.upload_date
 	delete video.upload_date
 	video.modifiedDate = video.modified_date
 	delete video.modified_date
-	video.likeCount = video.number_of_likes
+	video.likeCount = Number(video.number_of_likes)
 	delete video.number_of_likes
-	video.playCount = video.number_of_plays
+	video.playCount = Number(video.number_of_plays)
 	delete video.number_of_plays
-	video.commentCount = video.number_of_comments
+	video.commentCount = Number(video.number_of_comments)
 	delete video.number_of_comments
 	video.thumbnails = video.thumbnails.thumbnail
 
@@ -108,11 +108,11 @@ transformVideo = (video) ->
 	delete video.owner.profileurl
 	video.owner.displayName = video.owner.display_name
 	delete video.owner.display_name
-	video.owner.isPlus = video.owner.is_plus
+	video.owner.isPlus = Number(video.owner.is_plus) > 0
 	delete video.owner.is_plus
-	video.owner.isPro = video.owner.is_pro
+	video.owner.isPro = Number(video.owner.is_pro) > 0
 	delete video.owner.is_pro
-	video.owner.isStaff = video.owner.is_staff
+	video.owner.isStaff = Number(video.owner.is_staff) > 0
 	delete video.owner.is_staff
 	video.owner.realName = video.owner.realname
 	delete video.owner.realname
@@ -120,6 +120,8 @@ transformVideo = (video) ->
 	delete video.owner.videosurl
 
 	_(video.thumbnails).each((thumbnail) ->
+		thumbnail.width = Number(thumbnail.width)
+		thumbnail.height = Number(thumbnail.height)
 		thumbnail.url = thumbnail._content
 		delete thumbnail._content
 	)
