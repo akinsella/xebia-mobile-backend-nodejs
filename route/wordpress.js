@@ -63,7 +63,7 @@ dates = function(req, res) {
 
 post = function(req, res) {
   var postId;
-  postId = req.params.id;
+  postId = req.params.postId;
   return processRequest(req, res, "http://blog.xebia.fr/wp-json-api/get_post?post_id=" + postId, function(data) {
     delete data.status;
     delete data.previous_url;
@@ -117,7 +117,7 @@ authorPosts = function(req, res) {
 tagPosts = function(req, res) {
   var tagId;
   tagId = req.params.tagId;
-  return processRequest(req, res, "http://blog.xebia.fr/wp-json-api/get_category_posts?id=" + tagId);
+  return processRequest(req, res, "http://blog.xebia.fr/wp-json-api/get_tag_posts?id=" + tagId);
 };
 
 categoryPosts = function(req, res) {

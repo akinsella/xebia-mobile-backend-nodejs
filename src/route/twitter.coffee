@@ -4,6 +4,7 @@ request = require 'request'
 _ = require('underscore')._
 OAuth = require 'oauth'
 Cache = require '../lib/cache'
+moment = require 'moment'
 
 ###
 twit = new twitter({
@@ -159,6 +160,7 @@ retweetedStatusUserProps = [
 shortenTweet = (tweet) ->
 	for tKey of tweet
 		if !(tKey in tweetProps) then delete tweet[tKey]
+	tweet.created_at = moment(tweet.created_at, "ddd MMM DD HH:mm:ss ZZZ YYYY").format("YYYY-MM-DD HH:mm:ss")
 	if tweet.entities
 		for eKey, entities of tweet.entities
 			indices = []
@@ -169,6 +171,7 @@ shortenTweet = (tweet) ->
 		for tuKey of tweet.user
 			if !(tuKey in tweetUserProps) then delete tweet.user[tuKey]
 	if tweet.retweeted_status
+		tweet.retweeted_status.created_at = moment(tweet.retweeted_status.created_at, "ddd MMM DD HH:mm:ss ZZZ YYYY").format("YYYY-MM-DD HH:mm:ss")
 		if tweet.retweeted_status.entities
 			for eKey, entities of tweet.retweeted_status.entities
 				indices = []

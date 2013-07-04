@@ -134,13 +134,13 @@ app.get '/api/github/member', github.public_members
 app.get '/api/twitter/timeline', twitter.xebia_timeline
 
 app.get '/api/wordpress/post/recent', wordpress.recentPosts
-app.get '/api/wordpress/post/:id', wordpress.post
+app.get '/api/wordpress/post/:postId', wordpress.post
 app.get '/api/wordpress/author', wordpress.authors
-app.get '/api/wordpress/author/:author', wordpress.authorPosts
+app.get '/api/wordpress/author/:authorId', wordpress.authorPosts
 app.get '/api/wordpress/tag', wordpress.tags
-app.get '/api/wordpress/tag/:tag', wordpress.tagPosts
+app.get '/api/wordpress/tag/:tagId', wordpress.tagPosts
 app.get '/api/wordpress/category', wordpress.categories
-app.get '/api/wordpress/category/:category', wordpress.categoryPosts
+app.get '/api/wordpress/category/:categoryId', wordpress.categoryPosts
 app.get '/api/wordpress/dates', wordpress.dates
 app.get '/api/wordpress/:year/:month', wordpress.datePosts
 

@@ -63,7 +63,7 @@ dates = (req, res) ->
 
 
 post = (req, res) ->
-	postId = req.params.id
+	postId = req.params.postId
 	processRequest req, res, "http://blog.xebia.fr/wp-json-api/get_post?post_id=#{postId}", (data) ->
 		delete data.status
 		delete data.previous_url
@@ -110,7 +110,7 @@ authorPosts = (req, res) ->
 
 tagPosts = (req, res) ->
 	tagId = req.params.tagId
-	processRequest req, res, "http://blog.xebia.fr/wp-json-api/get_category_posts?id=#{tagId}"
+	processRequest req, res, "http://blog.xebia.fr/wp-json-api/get_tag_posts?id=#{tagId}"
 
 
 categoryPosts = (req, res) ->
