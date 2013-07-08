@@ -28,6 +28,7 @@ notification = require './route/notification'
 client = require './route/client'
 user = require './route/user'
 vimeo = require './route/vimeo'
+card = require './route/card'
 site = require './route/site'
 oauth2 = require './oauth2'
 
@@ -152,27 +153,29 @@ app.get '/api/vimeo/video', vimeo.videos
 
 app.delete '/api/news/:id', news.removeById
 app.post '/api/news', news.create
-app.get '/api/news/list', news.list
+app.get '/api/news', news.list
 app.get '/api/news/:id', news.findById
 
 app.delete '/api/device/:id', device.removeById
 app.post '/api/device', device.create
-app.get '/api/device/list', device.list
+app.get '/api/device', device.list
 app.get '/api/device/:id', device.findById
 
 app.delete '/api/client/:id', client.removeById
 app.post '/api/client', client.create
-app.get '/api/client/list', client.list
+app.get '/api/client', client.list
 app.get '/api/client/:id', client.findById
 
 app.delete '/api/user/:id', user.removeById
 app.post '/api/user', user.create
-app.get '/api/user/list', user.list
+app.get '/api/user', user.list
 app.get '/api/user/:id', user.findById
+
+app.get '/api/card', card.cards
 
 app.delete '/api/notification', notification.removeById
 app.post '/api/notification', notification.create
-app.get '/api/notification/list', notification.list
+app.get '/api/notification', notification.list
 app.get '/api/notification/:id', notification.findById
 app.get 'api/notification/push', notification.push
 
