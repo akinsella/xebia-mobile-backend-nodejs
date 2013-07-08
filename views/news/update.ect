@@ -1,0 +1,53 @@
+<h1>Create a news <small>or edit an existing news</small></h1>
+
+{{#if newsForm.hasErrors}}
+    <div class="alert-message error">
+        <p><strong>Oops</strong> Please fix all errors</p>
+
+        <ul>
+            {{#each}}
+                <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </div>
+{{/if}}
+
+{{#with news}}
+    <form action="/update?id={{id}}" id="createNewsForm">
+
+        <h1>General informations</h1>
+
+        <fieldset>
+            <label for="title">Title:</label>
+            <input id="title" type="text" value="{{title}}" />
+
+            <label for="content">Content:</label>
+            <textarea id="content">{{content}}</textarea>
+
+            <label for="imageUrl">Image Url:</label>
+            <input id="imageUrl" type="text" value="{{imageUrl}}" />
+
+            <label for="targetUrl">Target Url:</label>
+            <input id="targetUrl" type="text" value="{{targetUrl}}"/>
+
+            <label for="draft">Draft:</label>
+            <input id="draft" type="checkbox" {{#if draft}}checked="true"{{/if}}/>
+
+            <label for="publicationDate">Date de publication:</label>
+            <input id="publicationDate" type="checkbox" value="{{publicationDate}}"/>
+
+        </fieldset>
+
+        <div class="actions">
+            <a href="/index" class="button">Cancel</a>
+            <input type="submit" class="button primary" value="Update" />
+        </div>
+
+        <script>
+            $('#publicationDate').datetimepicker({
+                dateFormat: "yy-mm-dd",
+                timeFormat: "HH:mm:ss"
+            });
+        </script>
+    </form>
+{{/with}}

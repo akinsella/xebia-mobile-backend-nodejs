@@ -16,7 +16,6 @@ tags
 #Redis
 dump.rdb
 
-npm-debug.log
 .sass-cache
+npm-debug.log
 cert
-
