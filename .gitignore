@@ -17,3 +17,6 @@ tags
 dump.rdb
 
 npm-debug.log
+.sass-cache
+cert
+
