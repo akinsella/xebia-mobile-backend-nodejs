@@ -6,43 +6,37 @@
                 "id": "process",
                 "label": "Process",
                 "color": "#DD0025",
-                "background-color": "#BB312C",
-                "cmyk": "0 100 70 10"
+                "backgroundColor": "#BB312C"
             },
             {
                 "id": "architecture-design",
                 "label": "Architecture and Design",
-                "background-color": "#ED7738",
-                "color": "#FC7A25",
-                "cmyk": "0 35 85 0"
+                "backgroundColor": "#ED7738",
+                "color": "#FC7A25"
             },
             {
                 "id": "mindset",
                 "label": "Mindset",
                 "color": "#F80068",
-                "background-color": "#7D2D65",
-                "cmyk": "15 100 0 10"
+                "backgroundColor": "#7D2D65"
             },
             {
                 "id": "distributed-agile",
                 "label": "Distributed Agile",
                 "color": "#454285",
-                "background-color": "#0C2164",
-                "cmyk": "65 70 0 10"
+                "backgroundColor": "#0C2164"
             },
             {
                 "id": "code",
                 "label": "Code",
                 "color": "#107FD5",
-                "background-color": "#1B4E80",
-                "cmyk": "95 25 0 10"
+                "backgroundColor": "#1B4E80"
             },
             {
                 "id": "test",
                 "label": "Test",
                 "color": "#6DC726",
-                "background-color": "#378241",
-                "cmyk": "75 0 75 0"
+                "backgroundColor": "#378241"
             }
         ],
         "cards": [
