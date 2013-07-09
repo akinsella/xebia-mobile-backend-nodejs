@@ -19,13 +19,13 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "bitly": "http://bit.ly/eG5fsb",
       "front": {
         "para": "If something is too complex to understand, it must be wrong"
       },
       "back": {
         "para": "...and it&apos;s your job to prove it wrong. Also known as the 'Poutsma Principle'."
-      }
+      },
+      "url": "http://bit.ly/eG5fsb"
     },
     {
       "id": "fail-fast",
@@ -48,13 +48,13 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "bitly": "http://bit.ly/hOXhny",
       "front": {
         "para": "Fail fast"
       },
       "back": {
         "para": "Address risks early on in the project. Don&apos;t postponedifficult tasks, because they provide you with an opportunityto learn. Tackle them head-on, and get it over with."
-      }
+      },
+      "url": "http://bit.ly/hOXhny"
     },
     {
       "id": "dry-principle",
@@ -77,7 +77,6 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "bitly": "http://bit.ly/fh7McI",
       "front": {
         "para": "Don&apos;t Repeat Yourself"
       },
@@ -86,7 +85,8 @@
           "para": "Every piece of knowledge must have a single, unambiguous, authoritative representation within a system.",
           "attribution": "Andy Hunt and Dave Thomas"
         }
-      }
+      },
+      "url": "http://bit.ly/fh7McI"
     },
     {
       "altid": "composition-over-inheritance",
@@ -116,13 +116,13 @@
         "color": "#FC7A25",
         "backgroundColor": "#ED7738"
       },
-      "bitly": "http://bit.ly/hzKtcb",
       "front": {
         "para": "Favor composition over inheritance"
       },
       "back": {
         "para": "Also known as the &apos;composite reuse principle'. Favorcomposition over inheritance to achieve polymorphism."
-      }
+      },
+      "url": "http://bit.ly/hzKtcb"
     },
     {
       "altid": "focused-interfaces",
@@ -152,13 +152,13 @@
         "color": "#FC7A25",
         "backgroundColor": "#ED7738"
       },
-      "bitly": "http://bit.ly/gkrskx",
       "front": {
         "para": "Write small and focused interfaces"
       },
       "back": {
         "para": "Also known as the &apos;interface segregation principle'. Manyspecific interfaces are better than one combined generalinterface."
-      }
+      },
+      "url": "http://bit.ly/gkrskx"
     },
     {
       "altid": "thread-safe",
@@ -182,7 +182,6 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "bitly": "http://bit.ly/gbXjXc",
       "front": {
         "para": "Aim for thread safety"
       },
@@ -196,7 +195,8 @@
             "Not thread safe"
           ]
         }
-      }
+      },
+      "url": "http://bit.ly/gbXjXc"
     },
     {
       "id": "the-zone",
@@ -216,7 +216,6 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "bitly": "http://bit.ly/fkrkGA",
       "front": {
         "para": "Respect the zone"
       },
@@ -228,7 +227,8 @@
       },
       "ulink": {
         "url": "http://en.wikipedia.org/wiki/Flow_(psychology)"
-      }
+      },
+      "url": "http://bit.ly/fkrkGA"
     },
     {
       "id": "team-rhythm",
@@ -248,13 +248,13 @@
         "color": "#DD0025",
         "backgroundColor": "#BB312C"
       },
-      "bitly": "http://bit.ly/gfk6pL",
       "front": {
         "para": "Get the team in a rhythm"
       },
       "back": {
         "para": "A team that works according to a defined heartbeat is muchmore effective since it doesn&apos;t waste time organizing meetingsor spend time thinking about and planning what to do when."
-      }
+      },
+      "url": "http://bit.ly/gfk6pL"
     },
     {
       "altid": "clean-logs",
@@ -275,7 +275,6 @@
         "color": "#DD0025",
         "backgroundColor": "#BB312C"
       },
-      "bitly": "http://bit.ly/h8r0nQ",
       "front": {
         "para": "Keep your logs clean"
       },
@@ -290,7 +289,8 @@
             "Don&apos;t cry wolf"
           ]
         }
-      }
+      },
+      "url": "http://bit.ly/h8r0nQ"
     },
     {
       "id": "kiss",
@@ -313,7 +313,6 @@
         "color": "#FC7A25",
         "backgroundColor": "#ED7738"
       },
-      "bitly": "http://bit.ly/h79VId",
       "front": {
         "para": "Your solution should not be more complicated than theproblem"
       },
@@ -327,7 +326,8 @@
             "You Ain&apos;t Gonna Need It &amp;&#35;40;YAGNI&#41;"
           ]
         }
-      }
+      },
+      "url": "http://bit.ly/h79VId"
     },
     {
       "id": "code-review",
@@ -353,7 +353,6 @@
         "color": "#DD0025",
         "backgroundColor": "#BB312C"
       },
-      "bitly": "http://bit.ly/gOpcIU",
       "front": {
         "para": "Review code"
       },
@@ -362,7 +361,8 @@
           "The primary goal of code review is to increase itsquality. Can be used as an additional safety net alongside pairprogramming.",
           "It is also a good way to share knowledge and pick up somenew tricks."
         ]
-      }
+      },
+      "url": "http://bit.ly/gOpcIU"
     },
     {
       "id": "team-member-equality",
@@ -391,13 +391,13 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "bitly": "http://bit.ly/hPhC0V",
       "front": {
         "para": "Everybody in a project team is equal"
       },
       "back": {
         "para": "We distinguish on the validity of the ideas, not on roles,authority or location."
-      }
+      },
+      "url": "http://bit.ly/hPhC0V"
     },
     {
       "id": "no-broken-windows",
@@ -417,13 +417,13 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "bitly": "http://bit.ly/h1Bm7v",
       "front": {
         "para": "No broken windows"
       },
       "back": {
         "para": "If something is broken, then fix it now, otherwise it willcome back to haunt you in the future."
-      }
+      },
+      "url": "http://bit.ly/h1Bm7v"
     },
     {
       "altid": "no-anemic-domain-model",
@@ -444,7 +444,6 @@
         "color": "#FC7A25",
         "backgroundColor": "#ED7738"
       },
-      "bitly": "http://bit.ly/hfjbRD",
       "front": {
         "para": "Beware of anemic domain models"
       },
@@ -457,7 +456,8 @@
       "ulink": {
         "url": "http://www.domaindrivendesign.org/resources/what_is_ddd"
       },
-      "note": "This is an anti-pattern: should be rephrased into something like &apos;vibrant' domain models."
+      "note": "This is an anti-pattern: should be rephrased into something like &apos;vibrant' domain models.",
+      "url": "http://bit.ly/hfjbRD"
     },
     {
       "id": "no-test-no-bugfix",
@@ -477,7 +477,6 @@
           "id": "ifuld"
         }
       ],
-      "bitly": "http://bit.ly/fMf3Lo",
       "front": {
         "para": "Don&apos;t change code without a test"
       },
@@ -489,7 +488,8 @@
             "Don&apos;t refactor before you have sufficient test coverage"
           ]
         }
-      }
+      },
+      "url": "http://bit.ly/fMf3Lo"
     },
     {
       "id": "assertions",
@@ -509,7 +509,6 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "bitly": "http://bit.ly/ejk4l4",
       "front": {
         "para": "Assert against improper behaviour"
       },
@@ -518,7 +517,8 @@
           "para": "If it can&apos;t happen, use assertions to assure it won't.",
           "attribution": "Andrew Hunt, David Thomas"
         }
-      }
+      },
+      "url": "http://bit.ly/ejk4l4"
     },
     {
       "altid": "thirty-minute-methods",
@@ -539,13 +539,13 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "bitly": "http://bit.ly/fIHSOX",
       "front": {
         "para": "Split functionality into small units"
       },
       "back": {
         "para": "A function should be replaceable by one of your colleagues in less than thirty minutes."
-      }
+      },
+      "url": "http://bit.ly/fIHSOX"
     },
     {
       "id": "alone-time",
@@ -568,13 +568,13 @@
         "color": "#DD0025",
         "backgroundColor": "#BB312C"
       },
-      "bitly": "http://bit.ly/ghjkXd",
       "front": {
         "para": "Alone time"
       },
       "back": {
         "para": "For some situations pair programming is not effective. Be prepared to allow yourself and your team members to have some time alone."
-      }
+      },
+      "url": "http://bit.ly/ghjkXd"
     },
     {
       "id": "fallacies-distributed-computing",
@@ -597,7 +597,6 @@
         "color": "#FC7A25",
         "backgroundColor": "#ED7738"
       },
-      "bitly": "http://bit.ly/eEc5jq",
       "front": {
         "para": "Remember the fallacies of distributed computing"
       },
@@ -620,7 +619,8 @@
       },
       "ulink": {
         "url": "http://en.wikipedia.org/wiki/Fallacies_of_Distributed_Computing"
-      }
+      },
+      "url": "http://bit.ly/eEc5jq"
     },
     {
       "id": "small-increments",
@@ -640,13 +640,13 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "bitly": "http://bit.ly/g5LPEg",
       "front": {
         "para": "Work in small increments"
       },
       "back": {
         "para": "Every commit should be a change from one stable state of the system to another stable state of the system, and should not represent more than two hours of work."
-      }
+      },
+      "url": "http://bit.ly/g5LPEg"
     },
     {
       "id": "one-change-at-a-time",
@@ -666,13 +666,13 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "bitly": "http://bit.ly/e00q9B",
       "front": {
         "para": "One change at a time"
       },
       "back": {
         "para": "A single commit should contain only changes related to a single user story/issue. For instance, don&apos;t mix formatting changes with bug fixes."
-      }
+      },
+      "url": "http://bit.ly/e00q9B"
     },
     {
       "id": "no-broken-builds",
@@ -695,13 +695,13 @@
         "color": "#DD0025",
         "backgroundColor": "#BB312C"
       },
-      "bitly": "http://bit.ly/ejXw87",
       "front": {
         "para": "Nobody goes home if the build is broken"
       },
       "back": {
         "para": "It&apos;s the team's code; it's also the team's responsibility to have a running build. If the person who broke the build isn't around, that's no excuse."
-      }
+      },
+      "url": "http://bit.ly/ejXw87"
     },
     {
       "altid": "do-the-right-thing",
@@ -722,13 +722,13 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "bitly": "http://bit.ly/h3fZ4X",
       "front": {
         "para": "Do what you think is right, not always what you were toldto do"
       },
       "back": {
         "para": "Dare to push back. You are a professional, not a robot."
-      }
+      },
+      "url": "http://bit.ly/h3fZ4X"
     },
     {
       "id": "timebox",
@@ -754,7 +754,6 @@
         "color": "#DD0025",
         "backgroundColor": "#BB312C"
       },
-      "bitly": "http://bit.ly/ePLE2z",
       "front": {
         "para": "Timebox the unknown"
       },
@@ -765,7 +764,8 @@
             "Communicate the results to the product owner / scrum master in order to have accurate estimates."
           ]
         }
-      }
+      },
+      "url": "http://bit.ly/ePLE2z"
     },
     {
       "id": "boy-scout-rule",
@@ -785,13 +785,13 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "bitly": "http://bit.ly/hIOozD",
       "front": {
         "para": "Leave the campground cleaner than you found it"
       },
       "back": {
         "para": "Also known as the Boy Scout Rule, after the Boy Scouts ofAmerica. Applied to programming: Always check in code in acleaner state than when you checked it out."
-      }
+      },
+      "url": "http://bit.ly/hIOozD"
     },
     {
       "id": "no-blame-no-mercy",
@@ -814,13 +814,13 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "bitly": "http://bit.ly/dYMaJJ",
       "front": {
         "para": "No blame, but no mercy"
       },
       "back": {
         "para": "Feel free to make mistakes, be obliged to learn from them.Take time to look back and learn from what you&apos;re doing so youcan actively improve. We criticize bad code, we don&apos;tcriticize people. Don&apos;t just fix it; discuss it as well."
-      }
+      },
+      "url": "http://bit.ly/dYMaJJ"
     },
     {
       "id": "heisenbergs-principle",
@@ -843,7 +843,6 @@
           "id": "wspringer"
         }
       ],
-      "bitly": "http://bit.ly/euBFXg",
       "front": {
         "para": "Beware of Heisenbugs"
       },
@@ -853,7 +852,8 @@
           "attribution": "Werner Heisenberg"
         },
         "para": "Similarly, inspecting a running program might alter the behaviour of the program, known as a Heisenbug."
-      }
+      },
+      "url": "http://bit.ly/euBFXg"
     },
     {
       "id": "dare-to-say-no",
@@ -873,7 +873,6 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "bitly": "http://bit.ly/g4NpmH",
       "front": {
         "para": "Dare to say no"
       },
@@ -887,7 +886,8 @@
         {
           "url": "http://www.infoq.com/presentations/craftmanship-ethics"
         }
-      ]
+      ],
+      "url": "http://bit.ly/g4NpmH"
     },
     {
       "id": "two-minute-rule",
@@ -910,13 +910,13 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "bitly": "http://bit.ly/fmam2x",
       "front": {
         "para": "If you are stuck developing for more than two minutes, youMUST ask somebody else"
       },
       "back": {
         "para": "It&apos;s not professional to waste time by trying to solvesomething on your own that is quicker solved with help."
-      }
+      },
+      "url": "http://bit.ly/fmam2x"
     },
     {
       "id": "readable-code",
@@ -942,7 +942,6 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "bitly": "http://bit.ly/gsNtRt",
       "front": {
         "para": "Write code that humans can easily understand"
       },
@@ -957,7 +956,8 @@
           },
           "attribution": "Martin Fowler"
         }
-      }
+      },
+      "url": "http://bit.ly/gsNtRt"
     },
     {
       "id": "separation-of-concerns",
@@ -977,7 +977,6 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "bitly": "http://bit.ly/ehkmTM",
       "front": {
         "para": "Separation of concerns"
       },
@@ -989,7 +988,8 @@
       },
       "ulink": {
         "url": "http://en.wikipedia.org/wiki/Separation_of_concerns"
-      }
+      },
+      "url": "http://bit.ly/ehkmTM"
     },
     {
       "altid": "clean-build",
@@ -1010,7 +1010,6 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "bitly": "http://bit.ly/gSzxew",
       "front": {
         "para": "Keep the build clean"
       },
@@ -1019,7 +1018,8 @@
           "para": "Keeping the build clean is not just about keeping it free of compilation errors or test failures. Warnings are also an important and critical part of code hygiene.",
           "attribution": "Johannes Brodwall"
         }
-      }
+      },
+      "url": "http://bit.ly/gSzxew"
     },
     {
       "id": "time-for-tech-debt",
@@ -1039,13 +1039,13 @@
         "color": "#DD0025",
         "backgroundColor": "#BB312C"
       },
-      "bitly": "http://bit.ly/fWNq5P",
       "front": {
         "para": "Fight for time to tackle tech debt"
       },
       "back": {
         "para": "Make your Product Owner understand why it is critical tospend time on technical debt, even if it doesn&apos;t provide newfunctionality."
-      }
+      },
+      "url": "http://bit.ly/fWNq5P"
     },
     {
       "id": "three-strikes",
@@ -1065,7 +1065,6 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "bitly": "http://bit.ly/gKF9po",
       "front": {
         "para": "Three strikes and you automate"
       },
@@ -1077,7 +1076,8 @@
             "The third time you do something similar, you automate"
           ]
         }
-      }
+      },
+      "url": "http://bit.ly/gKF9po"
     },
     {
       "id": "curiosity",
@@ -1093,7 +1093,6 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "bitly": "http://bit.ly/g1oGb1",
       "front": {
         "para": "Be curious"
       },
@@ -1104,7 +1103,8 @@
         },
         "para": "Curiosity is one of the main sources of creativity."
       },
-      "tags": []
+      "tags": [],
+      "url": "http://bit.ly/g1oGb1"
     },
     {
       "altid": "shared-design-understanding",
@@ -1131,13 +1131,13 @@
         "color": "#FC7A25",
         "backgroundColor": "#ED7738"
       },
-      "bitly": "http://bit.ly/hV9Kxv",
       "front": {
         "para": "Shared understanding of the design"
       },
       "back": {
         "para": "Everyone in the team should be aware of the core designideas that have given shape and structure to the software sofar, and understand the underlying intent."
-      }
+      },
+      "url": "http://bit.ly/hV9Kxv"
     },
     {
       "altid": "master-your-tools",
@@ -1161,7 +1161,6 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "bitly": "http://bit.ly/fmYabp",
       "front": {
         "para": "Master your tools"
       },
@@ -1179,7 +1178,8 @@
           ]
         }
       },
-      "note": "Samurai and his sword are one. See the zone."
+      "note": "Samurai and his sword are one. See the zone.",
+      "url": "http://bit.ly/fmYabp"
     },
     {
       "altid": "diagnose-before-cure",
@@ -1203,7 +1203,6 @@
         "color": "#DD0025",
         "backgroundColor": "#BB312C"
       },
-      "bitly": "http://bit.ly/fH3Ru4",
       "front": {
         "para": "Diagnose before cure"
       },
@@ -1212,7 +1211,8 @@
           "Measure first, make an isolated change, repeat until satisfied.",
           "Before you tune performance, first measure it. Then fix the worst bottleneck and measure again. Commonly you will find that bottlenecks shift, and you are most effective when continuously measuring your progress."
         ]
-      }
+      },
+      "url": "http://bit.ly/fH3Ru4"
     },
     {
       "altid": "rich-communication",
@@ -1233,7 +1233,6 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "bitly": "http://bit.ly/dKLvjK",
       "front": {
         "para": "Prefer rich modes of communication"
       },
@@ -1249,7 +1248,8 @@
       },
       "ulink": {
         "url": "http://www.agilemodeling.com/essays/communication.htm#HowDoWeCommunicate"
-      }
+      },
+      "url": "http://bit.ly/dKLvjK"
     },
     {
       "id": "non-functionals",
@@ -1272,13 +1272,13 @@
         "color": "#FC7A25",
         "backgroundColor": "#ED7738"
       },
-      "bitly": "http://bit.ly/ePpC8W",
       "front": {
         "para": "Deal with non-functionals"
       },
       "back": {
         "para": "Work all your non-functional requirements into goals on aclearly defined scale and put them on the backlog, either aspart of the &apos;definition of done' or as separate userstories."
-      }
+      },
+      "url": "http://bit.ly/ePpC8W"
     },
     {
       "id": "no-museum",
@@ -1298,7 +1298,6 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "bitly": "http://bit.ly/ifpmb5",
       "front": {
         "para": "Prevent your code base from turning into a museum"
       },
@@ -1307,7 +1306,8 @@
           "There is no point in keeping dead code lying around inyour code base. Get rid of it. Your version history will alwaysallow you to get it back if you need to. The same goes forcommented-out code: get rid of it.",
           "Keeping your codebase free of reminiscences of the pastwill make it easier to navigate and understand."
         ]
-      }
+      },
+      "url": "http://bit.ly/ifpmb5"
     },
     {
       "altid": "comment-with-care",
@@ -1331,7 +1331,6 @@
           "id": "code"
         }
       ],
-      "bitly": "http://bit.ly/fdHw86",
       "front": {
         "para": "Comment with care"
       },
@@ -1344,7 +1343,8 @@
             "Make every comment count"
           ]
         }
-      }
+      },
+      "url": "http://bit.ly/fdHw86"
     },
     {
       "id": "context-over-habit",
@@ -1359,7 +1359,6 @@
           "id": "process"
         }
       ],
-      "bitly": "http://bit.ly/hNswdJ",
       "sponsors": [
         {
           "id": "ldijkhuis"
@@ -1370,7 +1369,8 @@
       },
       "back": {
         "para": "With all &quot;best practices\", principles and experience,you should always keep an eye on the context: does what used to workthere and then work here now? Keep thinking, keep looking."
-      }
+      },
+      "url": "http://bit.ly/hNswdJ"
     },
     {
       "altid": "make-it-work-right-fast",
@@ -1386,7 +1386,6 @@
           "id": "mindset"
         }
       ],
-      "bitly": "http://bit.ly/hnENEg",
       "sponsors": [
         {
           "id": "lbonnema"
@@ -1401,7 +1400,8 @@
       },
       "back": {
         "para": "To prevent analysis paralysis, follow these simple steps incase a problem seems too big to tackle. First simply make itwork. Don&apos;t pay attention to craftsmanship principles. Second, make it right, by making your code compliantwith craftsmanship principles. Finally, make it fast if reallyneeded."
-      }
+      },
+      "url": "http://bit.ly/hnENEg"
     },
     {
       "id": "focus-on-flow",
@@ -1421,7 +1421,6 @@
           "id": "omaassen"
         }
       ],
-      "bitly": "http://bit.ly/i9fenO",
       "front": {
         "para": "Focus on flow"
       },
@@ -1430,7 +1429,8 @@
           "Focus on banishing costs increases costs.",
           "Focus on flow decreases costs."
         ]
-      }
+      },
+      "url": "http://bit.ly/i9fenO"
     },
     {
       "id": "brutal-transparency",
@@ -1450,13 +1450,13 @@
           "id": "omaassen"
         }
       ],
-      "bitly": "http://bit.ly/dK5OCf",
       "front": {
         "para": "Brutal transparency"
       },
       "back": {
         "para": "The only way to build trust is to be honest and transparent under all circumstances."
-      }
+      },
+      "url": "http://bit.ly/dK5OCf"
     },
     {
       "id": "test-code-one",
@@ -1476,7 +1476,6 @@
           "id": "wspringer"
         }
       ],
-      "bitly": "http://bit.ly/hw4BK8",
       "front": {
         "para": "Think of code and test as one"
       },
@@ -1489,7 +1488,8 @@
           ],
           "attribution": "Testivus"
         }
-      }
+      },
+      "url": "http://bit.ly/hw4BK8"
     },
     {
       "id": "test-everything",
@@ -1509,13 +1509,13 @@
           "id": "cwortel"
         }
       ],
-      "bitly": "http://bit.ly/gu1Lq3",
       "front": {
         "para": "When you can&apos;t test everything, you're building too much"
       },
       "back": {
         "para": "When a story isn&apos;t tested, it simply is not ready forproduction.  This means that focus should be on testingthroughout the sprint, by the whole team.  No new work should bepicked up if there is still unfinished test work."
-      }
+      },
+      "url": "http://bit.ly/gu1Lq3"
     },
     {
       "id": "maximize-cohesion-minimize-coupling",
@@ -1530,7 +1530,6 @@
           "id": "wspringer"
         }
       ],
-      "bitly": "http://bit.ly/euvBUZ",
       "front": {
         "para": [
           "Maximize cohesion",
@@ -1540,7 +1539,8 @@
       "back": {
         "para": "Maximizing cohesion and minimizing coupling reduces complexity and increases testability."
       },
-      "tags": []
+      "tags": [],
+      "url": "http://bit.ly/euvBUZ"
     },
     {
       "id": "make-it-visible",
@@ -1558,14 +1558,14 @@
           "id": "wspringer"
         }
       ],
-      "bitly": "http://bit.ly/h0b8NA",
       "front": {
         "para": "Make it visible"
       },
       "back": {
         "para": "The most effective way to get a message across is byvisualizing it. Use simple charts and diagrams in favor ofspreadsheets, and pictures instead of prose."
       },
-      "tags": []
+      "tags": [],
+      "url": "http://bit.ly/h0b8NA"
     },
     {
       "id": "one-feature-at-a-time",
@@ -1583,14 +1583,14 @@
           "id": "wspringer"
         }
       ],
-      "bitly": "http://bit.ly/hjPWim",
       "front": {
         "para": "One feature at a time"
       },
       "back": {
         "para": "First complete what you started before starting somethingnew. It decreases time to market and allows you to applyexperience gained during development of the first feature in thedevelopment of the next one."
       },
-      "tags": []
+      "tags": [],
+      "url": "http://bit.ly/hjPWim"
     },
     {
       "id": "done",
@@ -1605,14 +1605,14 @@
           "id": "gbossuyt"
         }
       ],
-      "bitly": "http://bit.ly/eRw2Hq",
       "front": {
         "para": "It ain&apos;t over till it's done"
       },
       "back": {
         "para": "Create a clear definition of done to have a firm agreement onwhether a task is finished or not."
       },
-      "tags": []
+      "tags": [],
+      "url": "http://bit.ly/eRw2Hq"
     },
     {
       "altid": "honor-the-timebox",
@@ -1628,14 +1628,14 @@
           "id": "gbossuyt"
         }
       ],
-      "bitly": "http://bit.ly/eFftF0",
       "front": {
         "para": "Honor the timebox"
       },
       "back": {
         "para": "You cannot stretch the boundaries of a timebox. Thepromise of having at least something at the end of a timeboxshould never be broken."
       },
-      "tags": []
+      "tags": [],
+      "url": "http://bit.ly/eFftF0"
     },
     {
       "id": "have-fun",
@@ -1653,14 +1653,14 @@
           "id": "ifuld"
         }
       ],
-      "bitly": "http://bit.ly/f37zxa",
       "front": {
         "para": "Have fun"
       },
       "back": {
         "para": "If it ain&apos;t fun, it probably ain't right."
       },
-      "tags": []
+      "tags": [],
+      "url": "http://bit.ly/f37zxa"
     },
     {
       "id": "eliminate-waste",
@@ -1678,7 +1678,6 @@
           "id": "wspringer"
         }
       ],
-      "bitly": "http://bit.ly/fAE0fA",
       "front": {
         "para": "Eliminate waste"
       },
@@ -1696,7 +1695,8 @@
           ]
         }
       },
-      "tags": []
+      "tags": [],
+      "url": "http://bit.ly/fAE0fA"
     },
     {
       "id": "improve-continuously",
@@ -1711,7 +1711,6 @@
           "id": "wspringer"
         }
       ],
-      "bitly": "http://bit.ly/e1p3oQ",
       "front": {
         "para": "Favor continuous improvement over delayed perfection"
       },
@@ -1722,7 +1721,8 @@
           "attribution": "Bruce Hamilton"
         }
       },
-      "tags": []
+      "tags": [],
+      "url": "http://bit.ly/e1p3oQ"
     },
     {
       "id": "genchi-genbutsu",
@@ -1737,7 +1737,6 @@
           "id": "wspringer"
         }
       ],
-      "bitly": "http://bit.ly/fHdeNm",
       "front": {
         "para": "Genchi genbutsu"
       },
@@ -1747,7 +1746,8 @@
           "Don&apos;t rely on second-hand reports or tables and charts ofdata to achieve a true understanding. Instead go to the place&amp;&#35;40;gemba&#41; where you can watch, observe, and &apos;ask why five times'."
         ]
       },
-      "tags": []
+      "tags": [],
+      "url": "http://bit.ly/fHdeNm"
     },
     {
       "altid": "pair-programming",
@@ -1763,14 +1763,14 @@
           "id": "wspringer"
         }
       ],
-      "bitly": "http://bit.ly/dNoAYS",
       "front": {
         "para": "Pair programming"
       },
       "back": {
         "para": "Pairing improves focus and fosters collective ownershipmore effectively than group discussions, documentation andreviews."
       },
-      "tags": []
+      "tags": [],
+      "url": "http://bit.ly/dNoAYS"
     },
     {
       "id": "apis-are-forever",
@@ -1785,7 +1785,6 @@
           "id": "wspringer"
         }
       ],
-      "bitly": "http://bit.ly/hJOvvL",
       "front": {
         "para": "APIs, like diamonds, are forever"
       },
@@ -1803,7 +1802,8 @@
           "attribution": "Joshua Bloch"
         }
       },
-      "tags": []
+      "tags": [],
+      "url": "http://bit.ly/hJOvvL"
     }
   ]
 }
