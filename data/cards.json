@@ -186,7 +186,7 @@
         "url": "http://en.wikipedia.org/wiki/Flow_(psychology)"
       },
       "title": "Respect the zone",
-      "description": "<p>&apos;The zone' is a mode of consciousness that is associatedwith higher capabilities. When in the zone a developer is moreproductive.,When a developer is in the zone, avoid disruptions.</p>",
+      "description": "&apos;The zone' is a mode of consciousness that is associatedwith higher capabilities. When in the zone a developer is moreproductive.,When a developer is in the zone, avoid disruptions.",
       "url": "http://bit.ly/fkrkGA"
     },
     {
@@ -284,7 +284,7 @@
         "backgroundColor": "#BB312C"
       },
       "title": "Review code",
-      "description": "<p>The primary goal of code review is to increase itsquality. Can be used as an additional safety net alongside pairprogramming.,It is also a good way to share knowledge and pick up somenew tricks.</p>",
+      "description": "The primary goal of code review is to increase itsquality. Can be used as an additional safety net alongside pairprogramming.,It is also a good way to share knowledge and pick up somenew tricks.",
       "url": "http://bit.ly/gOpcIU"
     },
     {
@@ -364,7 +364,7 @@
       },
       "note": "This is an anti-pattern: should be rephrased into something like &apos;vibrant' domain models.",
       "title": "Beware of anemic domain models",
-      "description": "<p>Anemic domain models are data structures without any behaviour.,Domain-Driven Design &amp;&#35;40;Eric Evans&#41; is an alternative thatimproves code maintainability.</p>",
+      "description": "Anemic domain models are data structures without any behaviour.,Domain-Driven Design &amp;&#35;40;Eric Evans&#41; is an alternative thatimproves code maintainability.",
       "url": "http://bit.ly/hfjbRD"
     },
     {
@@ -926,7 +926,7 @@
       },
       "note": "Samurai and his sword are one. See the zone.",
       "title": "Master your tools",
-      "description": "<p>Expect unprecedented productivity gain when investing timein mastering your tools. Tools will help you to:,Tools include your IDE, commandline tools, desktop tools,editors, etc.</p><ul><li>Accelerate</li>,<li>Focus</li>,<li>Avoid repetitive tasks</li>,<li>Eliminate duplication</li></ul>",
+      "description": "Expect unprecedented productivity gain when investing timein mastering your tools. Tools will help you to:,Tools include your IDE, commandline tools, desktop tools,editors, etc.<ul><li>Accelerate</li>,<li>Focus</li>,<li>Avoid repetitive tasks</li>,<li>Eliminate duplication</li></ul>",
       "url": "http://bit.ly/fmYabp"
     },
     {
@@ -952,7 +952,7 @@
         "backgroundColor": "#BB312C"
       },
       "title": "Diagnose before cure",
-      "description": "<p>Measure first, make an isolated change, repeat until satisfied.,Before you tune performance, first measure it. Then fix the worst bottleneck and measure again. Commonly you will find that bottlenecks shift, and you are most effective when continuously measuring your progress.</p>",
+      "description": "Measure first, make an isolated change, repeat until satisfied.,Before you tune performance, first measure it. Then fix the worst bottleneck and measure again. Commonly you will find that bottlenecks shift, and you are most effective when continuously measuring your progress.",
       "url": "http://bit.ly/fH3Ru4"
     },
     {
@@ -1025,7 +1025,7 @@
         "backgroundColor": "#1B4E80"
       },
       "title": "Prevent your code base from turning into a museum",
-      "description": "<p>There is no point in keeping dead code lying around inyour code base. Get rid of it. Your version history will alwaysallow you to get it back if you need to. The same goes forcommented-out code: get rid of it.,Keeping your codebase free of reminiscences of the pastwill make it easier to navigate and understand.</p>",
+      "description": "There is no point in keeping dead code lying around inyour code base. Get rid of it. Your version history will alwaysallow you to get it back if you need to. The same goes forcommented-out code: get rid of it.,Keeping your codebase free of reminiscences of the pastwill make it easier to navigate and understand.",
       "url": "http://bit.ly/ifpmb5"
     },
     {
@@ -1095,11 +1095,7 @@
           "id": "lbonnema"
         }
       ],
-      "title": [
-        "Make it work",
-        "Make it right",
-        "Make it fast"
-      ],
+      "title": "Make it work, Make it right, Make it fast",
       "description": "<p>To prevent analysis paralysis, follow these simple steps incase a problem seems too big to tackle. First simply make itwork. Don&apos;t pay attention to craftsmanship principles. Second, make it right, by making your code compliantwith craftsmanship principles. Finally, make it fast if reallyneeded.</p>",
       "url": "http://bit.ly/hnENEg"
     },
@@ -1122,7 +1118,7 @@
         }
       ],
       "title": "Focus on flow",
-      "description": "<p>Focus on banishing costs increases costs.,Focus on flow decreases costs.</p>",
+      "description": "Focus on banishing costs increases costs.,Focus on flow decreases costs.",
       "url": "http://bit.ly/i9fenO"
     },
     {
@@ -1166,7 +1162,7 @@
         }
       ],
       "title": "Think of code and test as one",
-      "description": "<blockquote><p>When writing the code, think of the test.,When writing the test, think of the code.,When you think of code and test as one, testing is easy and code is beautiful.</p></blockquote>",
+      "description": "<blockquote>When writing the code, think of the test.,When writing the test, think of the code.,When you think of code and test as one, testing is easy and code is beautiful.</blockquote>",
       "url": "http://bit.ly/hw4BK8"
     },
     {
@@ -1205,10 +1201,7 @@
         }
       ],
       "tags": [],
-      "title": [
-        "Maximize cohesion",
-        "Minimize coupling"
-      ],
+      "title": "Maximize cohesion, Minimize coupling",
       "description": "<p>Maximizing cohesion and minimizing coupling reduces complexity and increases testability.</p>",
       "url": "http://bit.ly/euvBUZ"
     },
@@ -1366,7 +1359,7 @@
       ],
       "tags": [],
       "title": "Genchi genbutsu",
-      "description": "<p>Genchi genbutsu is the Japanese expression for a practiceof finding your answers right down at the source.,Don&apos;t rely on second-hand reports or tables and charts ofdata to achieve a true understanding. Instead go to the place&amp;&#35;40;gemba&#41; where you can watch, observe, and &apos;ask why five times'.</p>",
+      "description": "Genchi genbutsu is the Japanese expression for a practiceof finding your answers right down at the source.,Don&apos;t rely on second-hand reports or tables and charts ofdata to achieve a true understanding. Instead go to the place&amp;&#35;40;gemba&#41; where you can watch, observe, and &apos;ask why five times'.",
       "url": "http://bit.ly/fHdeNm"
     },
     {
