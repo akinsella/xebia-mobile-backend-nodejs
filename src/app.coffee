@@ -135,13 +135,13 @@ app.get '/api/github/member', github.public_members
 app.get '/api/twitter/timeline', twitter.xebia_timeline
 
 app.get '/api/wordpress/post/recent', wordpress.recentPosts
-app.get '/api/wordpress/post/:postId', wordpress.post
+app.get '/api/wordpress/post/:id', wordpress.post
 app.get '/api/wordpress/author', wordpress.authors
-app.get '/api/wordpress/author/:authorId', wordpress.authorPosts
+app.get '/api/wordpress/author/:id', wordpress.authorPosts
 app.get '/api/wordpress/tag', wordpress.tags
-app.get '/api/wordpress/tag/:tagId', wordpress.tagPosts
+app.get '/api/wordpress/tag/:id', wordpress.tagPosts
 app.get '/api/wordpress/category', wordpress.categories
-app.get '/api/wordpress/category/:categoryId', wordpress.categoryPosts
+app.get '/api/wordpress/category/:id', wordpress.categoryPosts
 app.get '/api/wordpress/dates', wordpress.dates
 app.get '/api/wordpress/:year/:month', wordpress.datePosts
 
@@ -172,7 +172,9 @@ app.get '/api/user', user.list
 app.get '/api/user/:id', user.findById
 
 app.get '/api/essentials/card', card.cards
+app.get '/api/essentials/card/:id', card.cardById
 app.get '/api/essentials/category', card.categories
+app.get '/api/essentials/category/:id', card.cardsByCategoryId
 
 app.delete '/api/notification', notification.removeById
 app.post '/api/notification', notification.create
