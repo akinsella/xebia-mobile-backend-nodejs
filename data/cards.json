@@ -1,3 +1,4 @@
+
 {
   "title": "First Printed Deck",
   "cards": [
@@ -19,12 +20,8 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "front": {
-        "para": "If something is too complex to understand, it must be wrong"
-      },
-      "back": {
-        "para": "...and it&apos;s your job to prove it wrong. Also known as the 'Poutsma Principle'."
-      },
+      "title": "If something is too complex to understand, it must be wrong",
+      "description": "<p>...and it&apos;s your job to prove it wrong. Also known as the 'Poutsma Principle'.</p>",
       "url": "http://bit.ly/eG5fsb"
     },
     {
@@ -48,12 +45,8 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "front": {
-        "para": "Fail fast"
-      },
-      "back": {
-        "para": "Address risks early on in the project. Don&apos;t postponedifficult tasks, because they provide you with an opportunityto learn. Tackle them head-on, and get it over with."
-      },
+      "title": "Fail fast",
+      "description": "<p>Address risks early on in the project. Don&apos;t postponedifficult tasks, because they provide you with an opportunityto learn. Tackle them head-on, and get it over with.</p>",
       "url": "http://bit.ly/hOXhny"
     },
     {
@@ -77,15 +70,8 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "front": {
-        "para": "Don&apos;t Repeat Yourself"
-      },
-      "back": {
-        "blockquote": {
-          "para": "Every piece of knowledge must have a single, unambiguous, authoritative representation within a system.",
-          "attribution": "Andy Hunt and Dave Thomas"
-        }
-      },
+      "title": "Don&apos;t Repeat Yourself",
+      "description": "<blockquote><p>Every piece of knowledge must have a single, unambiguous, authoritative representation within a system.</p></blockquote>",
       "url": "http://bit.ly/fh7McI"
     },
     {
@@ -116,12 +102,8 @@
         "color": "#FC7A25",
         "backgroundColor": "#ED7738"
       },
-      "front": {
-        "para": "Favor composition over inheritance"
-      },
-      "back": {
-        "para": "Also known as the &apos;composite reuse principle'. Favorcomposition over inheritance to achieve polymorphism."
-      },
+      "title": "Favor composition over inheritance",
+      "description": "<p>Also known as the &apos;composite reuse principle'. Favorcomposition over inheritance to achieve polymorphism.</p>",
       "url": "http://bit.ly/hzKtcb"
     },
     {
@@ -152,12 +134,8 @@
         "color": "#FC7A25",
         "backgroundColor": "#ED7738"
       },
-      "front": {
-        "para": "Write small and focused interfaces"
-      },
-      "back": {
-        "para": "Also known as the &apos;interface segregation principle'. Manyspecific interfaces are better than one combined generalinterface."
-      },
+      "title": "Write small and focused interfaces",
+      "description": "<p>Also known as the &apos;interface segregation principle'. Manyspecific interfaces are better than one combined generalinterface.</p>",
       "url": "http://bit.ly/gkrskx"
     },
     {
@@ -182,20 +160,8 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "front": {
-        "para": "Aim for thread safety"
-      },
-      "back": {
-        "para": "In order of decreasing safety:",
-        "ul": {
-          "li": [
-            "Stateless services",
-            "Immutable objects",
-            "Encapsulated locks",
-            "Not thread safe"
-          ]
-        }
-      },
+      "title": "Aim for thread safety",
+      "description": "<p>In order of decreasing safety:</p><ul><li>Stateless services</li>,<li>Immutable objects</li>,<li>Encapsulated locks</li>,<li>Not thread safe</li></ul>",
       "url": "http://bit.ly/gbXjXc"
     },
     {
@@ -216,18 +182,11 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "front": {
-        "para": "Respect the zone"
-      },
-      "back": {
-        "para": [
-          "&apos;The zone' is a mode of consciousness that is associatedwith higher capabilities. When in the zone a developer is moreproductive.",
-          "When a developer is in the zone, avoid disruptions."
-        ]
-      },
       "ulink": {
         "url": "http://en.wikipedia.org/wiki/Flow_(psychology)"
       },
+      "title": "Respect the zone",
+      "description": "<p>&apos;The zone' is a mode of consciousness that is associatedwith higher capabilities. When in the zone a developer is moreproductive.,When a developer is in the zone, avoid disruptions.</p>",
       "url": "http://bit.ly/fkrkGA"
     },
     {
@@ -248,12 +207,8 @@
         "color": "#DD0025",
         "backgroundColor": "#BB312C"
       },
-      "front": {
-        "para": "Get the team in a rhythm"
-      },
-      "back": {
-        "para": "A team that works according to a defined heartbeat is muchmore effective since it doesn&apos;t waste time organizing meetingsor spend time thinking about and planning what to do when."
-      },
+      "title": "Get the team in a rhythm",
+      "description": "<p>A team that works according to a defined heartbeat is muchmore effective since it doesn&apos;t waste time organizing meetingsor spend time thinking about and planning what to do when.</p>",
       "url": "http://bit.ly/gfk6pL"
     },
     {
@@ -275,21 +230,8 @@
         "color": "#DD0025",
         "backgroundColor": "#BB312C"
       },
-      "front": {
-        "para": "Keep your logs clean"
-      },
-      "back": {
-        "para": "Log everything you need, but nothing more:",
-        "ul": {
-          "li": [
-            "Log at the right level",
-            "Log every message once",
-            "Categorize if needed",
-            "Throw meaningful exceptions",
-            "Don&apos;t cry wolf"
-          ]
-        }
-      },
+      "title": "Keep your logs clean",
+      "description": "<p>Log everything you need, but nothing more:</p><ul><li>Log at the right level</li>,<li>Log every message once</li>,<li>Categorize if needed</li>,<li>Throw meaningful exceptions</li>,<li>Don&apos;t cry wolf</li></ul>",
       "url": "http://bit.ly/h8r0nQ"
     },
     {
@@ -313,20 +255,8 @@
         "color": "#FC7A25",
         "backgroundColor": "#ED7738"
       },
-      "front": {
-        "para": "Your solution should not be more complicated than theproblem"
-      },
-      "back": {
-        "para": "Also known as:",
-        "ul": {
-          "li": [
-            "The simplest thing that could possibly work",
-            "Keep It Simple Stupid &amp;&#35;40;KISS&#41;",
-            "Less is more",
-            "You Ain&apos;t Gonna Need It &amp;&#35;40;YAGNI&#41;"
-          ]
-        }
-      },
+      "title": "Your solution should not be more complicated than theproblem",
+      "description": "<p>Also known as:</p><ul><li>The simplest thing that could possibly work</li>,<li>Keep It Simple Stupid &amp;&#35;40;KISS&#41;</li>,<li>Less is more</li>,<li>You Ain&apos;t Gonna Need It &amp;&#35;40;YAGNI&#41;</li></ul>",
       "url": "http://bit.ly/h79VId"
     },
     {
@@ -353,15 +283,8 @@
         "color": "#DD0025",
         "backgroundColor": "#BB312C"
       },
-      "front": {
-        "para": "Review code"
-      },
-      "back": {
-        "para": [
-          "The primary goal of code review is to increase itsquality. Can be used as an additional safety net alongside pairprogramming.",
-          "It is also a good way to share knowledge and pick up somenew tricks."
-        ]
-      },
+      "title": "Review code",
+      "description": "<p>The primary goal of code review is to increase itsquality. Can be used as an additional safety net alongside pairprogramming.,It is also a good way to share knowledge and pick up somenew tricks.</p>",
       "url": "http://bit.ly/gOpcIU"
     },
     {
@@ -391,12 +314,8 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "front": {
-        "para": "Everybody in a project team is equal"
-      },
-      "back": {
-        "para": "We distinguish on the validity of the ideas, not on roles,authority or location."
-      },
+      "title": "Everybody in a project team is equal",
+      "description": "<p>We distinguish on the validity of the ideas, not on roles,authority or location.</p>",
       "url": "http://bit.ly/hPhC0V"
     },
     {
@@ -417,12 +336,8 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "front": {
-        "para": "No broken windows"
-      },
-      "back": {
-        "para": "If something is broken, then fix it now, otherwise it willcome back to haunt you in the future."
-      },
+      "title": "No broken windows",
+      "description": "<p>If something is broken, then fix it now, otherwise it willcome back to haunt you in the future.</p>",
       "url": "http://bit.ly/h1Bm7v"
     },
     {
@@ -444,19 +359,12 @@
         "color": "#FC7A25",
         "backgroundColor": "#ED7738"
       },
-      "front": {
-        "para": "Beware of anemic domain models"
-      },
-      "back": {
-        "para": [
-          "Anemic domain models are data structures without any behaviour.",
-          "Domain-Driven Design &amp;&#35;40;Eric Evans&#41; is an alternative thatimproves code maintainability."
-        ]
-      },
       "ulink": {
         "url": "http://www.domaindrivendesign.org/resources/what_is_ddd"
       },
       "note": "This is an anti-pattern: should be rephrased into something like &apos;vibrant' domain models.",
+      "title": "Beware of anemic domain models",
+      "description": "<p>Anemic domain models are data structures without any behaviour.,Domain-Driven Design &amp;&#35;40;Eric Evans&#41; is an alternative thatimproves code maintainability.</p>",
       "url": "http://bit.ly/hfjbRD"
     },
     {
@@ -477,18 +385,8 @@
           "id": "ifuld"
         }
       ],
-      "front": {
-        "para": "Don&apos;t change code without a test"
-      },
-      "back": {
-        "ul": {
-          "li": [
-            "Don&apos;t fix a bug before you have a broken test",
-            "A feature is only considered done once you havetests for it",
-            "Don&apos;t refactor before you have sufficient test coverage"
-          ]
-        }
-      },
+      "title": "Don&apos;t change code without a test",
+      "description": "<ul><li>Don&apos;t fix a bug before you have a broken test</li>,<li>A feature is only considered done once you havetests for it</li>,<li>Don&apos;t refactor before you have sufficient test coverage</li></ul>",
       "url": "http://bit.ly/fMf3Lo"
     },
     {
@@ -509,15 +407,8 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "front": {
-        "para": "Assert against improper behaviour"
-      },
-      "back": {
-        "blockquote": {
-          "para": "If it can&apos;t happen, use assertions to assure it won't.",
-          "attribution": "Andrew Hunt, David Thomas"
-        }
-      },
+      "title": "Assert against improper behaviour",
+      "description": "<blockquote><p>If it can&apos;t happen, use assertions to assure it won't.</p></blockquote>",
       "url": "http://bit.ly/ejk4l4"
     },
     {
@@ -539,12 +430,8 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "front": {
-        "para": "Split functionality into small units"
-      },
-      "back": {
-        "para": "A function should be replaceable by one of your colleagues in less than thirty minutes."
-      },
+      "title": "Split functionality into small units",
+      "description": "<p>A function should be replaceable by one of your colleagues in less than thirty minutes.</p>",
       "url": "http://bit.ly/fIHSOX"
     },
     {
@@ -568,12 +455,8 @@
         "color": "#DD0025",
         "backgroundColor": "#BB312C"
       },
-      "front": {
-        "para": "Alone time"
-      },
-      "back": {
-        "para": "For some situations pair programming is not effective. Be prepared to allow yourself and your team members to have some time alone."
-      },
+      "title": "Alone time",
+      "description": "<p>For some situations pair programming is not effective. Be prepared to allow yourself and your team members to have some time alone.</p>",
       "url": "http://bit.ly/ghjkXd"
     },
     {
@@ -597,29 +480,11 @@
         "color": "#FC7A25",
         "backgroundColor": "#ED7738"
       },
-      "front": {
-        "para": "Remember the fallacies of distributed computing"
-      },
-      "back": {
-        "blockquote": {
-          "ul": {
-            "li": [
-              "The network is reliable",
-              "Latency is zero",
-              "Bandwidth is infinite",
-              "The network is secure",
-              "Topology doesn&apos;t change",
-              "There is one administrator",
-              "Transport cost is zero",
-              "The network is homogeneous"
-            ]
-          },
-          "attribution": "Peter Deutsch"
-        }
-      },
       "ulink": {
         "url": "http://en.wikipedia.org/wiki/Fallacies_of_Distributed_Computing"
       },
+      "title": "Remember the fallacies of distributed computing",
+      "description": "<blockquote><ul><li>The network is reliable</li>,<li>Latency is zero</li>,<li>Bandwidth is infinite</li>,<li>The network is secure</li>,<li>Topology doesn&apos;t change</li>,<li>There is one administrator</li>,<li>Transport cost is zero</li>,<li>The network is homogeneous</li></ul></blockquote>",
       "url": "http://bit.ly/eEc5jq"
     },
     {
@@ -640,12 +505,8 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "front": {
-        "para": "Work in small increments"
-      },
-      "back": {
-        "para": "Every commit should be a change from one stable state of the system to another stable state of the system, and should not represent more than two hours of work."
-      },
+      "title": "Work in small increments",
+      "description": "<p>Every commit should be a change from one stable state of the system to another stable state of the system, and should not represent more than two hours of work.</p>",
       "url": "http://bit.ly/g5LPEg"
     },
     {
@@ -666,12 +527,8 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "front": {
-        "para": "One change at a time"
-      },
-      "back": {
-        "para": "A single commit should contain only changes related to a single user story/issue. For instance, don&apos;t mix formatting changes with bug fixes."
-      },
+      "title": "One change at a time",
+      "description": "<p>A single commit should contain only changes related to a single user story/issue. For instance, don&apos;t mix formatting changes with bug fixes.</p>",
       "url": "http://bit.ly/e00q9B"
     },
     {
@@ -695,12 +552,8 @@
         "color": "#DD0025",
         "backgroundColor": "#BB312C"
       },
-      "front": {
-        "para": "Nobody goes home if the build is broken"
-      },
-      "back": {
-        "para": "It&apos;s the team's code; it's also the team's responsibility to have a running build. If the person who broke the build isn't around, that's no excuse."
-      },
+      "title": "Nobody goes home if the build is broken",
+      "description": "<p>It&apos;s the team's code; it's also the team's responsibility to have a running build. If the person who broke the build isn't around, that's no excuse.</p>",
       "url": "http://bit.ly/ejXw87"
     },
     {
@@ -722,12 +575,8 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "front": {
-        "para": "Do what you think is right, not always what you were toldto do"
-      },
-      "back": {
-        "para": "Dare to push back. You are a professional, not a robot."
-      },
+      "title": "Do what you think is right, not always what you were toldto do",
+      "description": "<p>Dare to push back. You are a professional, not a robot.</p>",
       "url": "http://bit.ly/h3fZ4X"
     },
     {
@@ -754,17 +603,8 @@
         "color": "#DD0025",
         "backgroundColor": "#BB312C"
       },
-      "front": {
-        "para": "Timebox the unknown"
-      },
-      "back": {
-        "ul": {
-          "li": [
-            "Timebox a story/task which can&apos;t be estimated duringplanning.",
-            "Communicate the results to the product owner / scrum master in order to have accurate estimates."
-          ]
-        }
-      },
+      "title": "Timebox the unknown",
+      "description": "<ul><li>Timebox a story/task which can&apos;t be estimated duringplanning.</li>,<li>Communicate the results to the product owner / scrum master in order to have accurate estimates.</li></ul>",
       "url": "http://bit.ly/ePLE2z"
     },
     {
@@ -785,12 +625,8 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "front": {
-        "para": "Leave the campground cleaner than you found it"
-      },
-      "back": {
-        "para": "Also known as the Boy Scout Rule, after the Boy Scouts ofAmerica. Applied to programming: Always check in code in acleaner state than when you checked it out."
-      },
+      "title": "Leave the campground cleaner than you found it",
+      "description": "<p>Also known as the Boy Scout Rule, after the Boy Scouts ofAmerica. Applied to programming: Always check in code in acleaner state than when you checked it out.</p>",
       "url": "http://bit.ly/hIOozD"
     },
     {
@@ -814,12 +650,8 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "front": {
-        "para": "No blame, but no mercy"
-      },
-      "back": {
-        "para": "Feel free to make mistakes, be obliged to learn from them.Take time to look back and learn from what you&apos;re doing so youcan actively improve. We criticize bad code, we don&apos;tcriticize people. Don&apos;t just fix it; discuss it as well."
-      },
+      "title": "No blame, but no mercy",
+      "description": "<p>Feel free to make mistakes, be obliged to learn from them.Take time to look back and learn from what you&apos;re doing so youcan actively improve. We criticize bad code, we don&apos;tcriticize people. Don&apos;t just fix it; discuss it as well.</p>",
       "url": "http://bit.ly/dYMaJJ"
     },
     {
@@ -843,16 +675,8 @@
           "id": "wspringer"
         }
       ],
-      "front": {
-        "para": "Beware of Heisenbugs"
-      },
-      "back": {
-        "blockquote": {
-          "para": "The measurement of position necessarily disturbs a particle&apos;s momentum, and vice versa.",
-          "attribution": "Werner Heisenberg"
-        },
-        "para": "Similarly, inspecting a running program might alter the behaviour of the program, known as a Heisenbug."
-      },
+      "title": "Beware of Heisenbugs",
+      "description": "<blockquote><p>The measurement of position necessarily disturbs a particle&apos;s momentum, and vice versa.</p></blockquote><p>Similarly, inspecting a running program might alter the behaviour of the program, known as a Heisenbug.</p>",
       "url": "http://bit.ly/euBFXg"
     },
     {
@@ -873,12 +697,6 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "front": {
-        "para": "Dare to say no"
-      },
-      "back": {
-        "para": "In Software Engineering, some things are just notpossible. Stand up for your values as a professional and refuseto do them! A good doctor will not promise to heal everythingeither."
-      },
       "ulink": [
         {
           "url": "http://manifesto.softwarecraftsmanship.org/"
@@ -887,6 +705,8 @@
           "url": "http://www.infoq.com/presentations/craftmanship-ethics"
         }
       ],
+      "title": "Dare to say no",
+      "description": "<p>In Software Engineering, some things are just notpossible. Stand up for your values as a professional and refuseto do them! A good doctor will not promise to heal everythingeither.</p>",
       "url": "http://bit.ly/g4NpmH"
     },
     {
@@ -910,12 +730,8 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "front": {
-        "para": "If you are stuck developing for more than two minutes, youMUST ask somebody else"
-      },
-      "back": {
-        "para": "It&apos;s not professional to waste time by trying to solvesomething on your own that is quicker solved with help."
-      },
+      "title": "If you are stuck developing for more than two minutes, youMUST ask somebody else",
+      "description": "<p>It&apos;s not professional to waste time by trying to solvesomething on your own that is quicker solved with help.</p>",
       "url": "http://bit.ly/fmam2x"
     },
     {
@@ -942,21 +758,8 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "front": {
-        "para": "Write code that humans can easily understand"
-      },
-      "back": {
-        "blockquote": {
-          "ul": {
-            "li": [
-              "Any fool can write code that a computer canunderstand. Good programmers write code that humans canunderstand.",
-              "A simple, readable implementation is head and shouldersabove a clever-but-confusing, look-at-me implementation.",
-              "Things to keep in mind are readability, maintainability and speed of development."
-            ]
-          },
-          "attribution": "Martin Fowler"
-        }
-      },
+      "title": "Write code that humans can easily understand",
+      "description": "<blockquote><ul><li>Any fool can write code that a computer canunderstand. Good programmers write code that humans canunderstand.</li>,<li>A simple, readable implementation is head and shouldersabove a clever-but-confusing, look-at-me implementation.</li>,<li>Things to keep in mind are readability, maintainability and speed of development.</li></ul></blockquote>",
       "url": "http://bit.ly/gsNtRt"
     },
     {
@@ -977,18 +780,11 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "front": {
-        "para": "Separation of concerns"
-      },
-      "back": {
-        "blockquote": {
-          "para": "Separate a program into non-overlapping concerns.",
-          "attribution": "Edsger W. Dijkstra"
-        }
-      },
       "ulink": {
         "url": "http://en.wikipedia.org/wiki/Separation_of_concerns"
       },
+      "title": "Separation of concerns",
+      "description": "<blockquote><p>Separate a program into non-overlapping concerns.</p></blockquote>",
       "url": "http://bit.ly/ehkmTM"
     },
     {
@@ -1010,15 +806,8 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "front": {
-        "para": "Keep the build clean"
-      },
-      "back": {
-        "blockquote": {
-          "para": "Keeping the build clean is not just about keeping it free of compilation errors or test failures. Warnings are also an important and critical part of code hygiene.",
-          "attribution": "Johannes Brodwall"
-        }
-      },
+      "title": "Keep the build clean",
+      "description": "<blockquote><p>Keeping the build clean is not just about keeping it free of compilation errors or test failures. Warnings are also an important and critical part of code hygiene.</p></blockquote>",
       "url": "http://bit.ly/gSzxew"
     },
     {
@@ -1039,12 +828,8 @@
         "color": "#DD0025",
         "backgroundColor": "#BB312C"
       },
-      "front": {
-        "para": "Fight for time to tackle tech debt"
-      },
-      "back": {
-        "para": "Make your Product Owner understand why it is critical tospend time on technical debt, even if it doesn&apos;t provide newfunctionality."
-      },
+      "title": "Fight for time to tackle tech debt",
+      "description": "<p>Make your Product Owner understand why it is critical tospend time on technical debt, even if it doesn&apos;t provide newfunctionality.</p>",
       "url": "http://bit.ly/fWNq5P"
     },
     {
@@ -1065,18 +850,8 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "front": {
-        "para": "Three strikes and you automate"
-      },
-      "back": {
-        "ul": {
-          "li": [
-            "The first time you do something, you just do it manually",
-            "The second time you do something similar, you wince at the repetition, but you do it anyway",
-            "The third time you do something similar, you automate"
-          ]
-        }
-      },
+      "title": "Three strikes and you automate",
+      "description": "<ul><li>The first time you do something, you just do it manually</li>,<li>The second time you do something similar, you wince at the repetition, but you do it anyway</li>,<li>The third time you do something similar, you automate</li></ul>",
       "url": "http://bit.ly/gKF9po"
     },
     {
@@ -1093,17 +868,9 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "front": {
-        "para": "Be curious"
-      },
-      "back": {
-        "blockquote": {
-          "para": "Curiouser and curiouser!",
-          "attribution": "Alice in Wonderland"
-        },
-        "para": "Curiosity is one of the main sources of creativity."
-      },
       "tags": [],
+      "title": "Be curious",
+      "description": "<blockquote><p>Curiouser and curiouser!</p></blockquote><p>Curiosity is one of the main sources of creativity.</p>",
       "url": "http://bit.ly/g1oGb1"
     },
     {
@@ -1131,12 +898,8 @@
         "color": "#FC7A25",
         "backgroundColor": "#ED7738"
       },
-      "front": {
-        "para": "Shared understanding of the design"
-      },
-      "back": {
-        "para": "Everyone in the team should be aware of the core designideas that have given shape and structure to the software sofar, and understand the underlying intent."
-      },
+      "title": "Shared understanding of the design",
+      "description": "<p>Everyone in the team should be aware of the core designideas that have given shape and structure to the software sofar, and understand the underlying intent.</p>",
       "url": "http://bit.ly/hV9Kxv"
     },
     {
@@ -1161,24 +924,9 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "front": {
-        "para": "Master your tools"
-      },
-      "back": {
-        "para": [
-          "Expect unprecedented productivity gain when investing timein mastering your tools. Tools will help you to:",
-          "Tools include your IDE, commandline tools, desktop tools,editors, etc."
-        ],
-        "ul": {
-          "li": [
-            "Accelerate",
-            "Focus",
-            "Avoid repetitive tasks",
-            "Eliminate duplication"
-          ]
-        }
-      },
       "note": "Samurai and his sword are one. See the zone.",
+      "title": "Master your tools",
+      "description": "<p>Expect unprecedented productivity gain when investing timein mastering your tools. Tools will help you to:,Tools include your IDE, commandline tools, desktop tools,editors, etc.</p><ul><li>Accelerate</li>,<li>Focus</li>,<li>Avoid repetitive tasks</li>,<li>Eliminate duplication</li></ul>",
       "url": "http://bit.ly/fmYabp"
     },
     {
@@ -1203,15 +951,8 @@
         "color": "#DD0025",
         "backgroundColor": "#BB312C"
       },
-      "front": {
-        "para": "Diagnose before cure"
-      },
-      "back": {
-        "para": [
-          "Measure first, make an isolated change, repeat until satisfied.",
-          "Before you tune performance, first measure it. Then fix the worst bottleneck and measure again. Commonly you will find that bottlenecks shift, and you are most effective when continuously measuring your progress."
-        ]
-      },
+      "title": "Diagnose before cure",
+      "description": "<p>Measure first, make an isolated change, repeat until satisfied.,Before you tune performance, first measure it. Then fix the worst bottleneck and measure again. Commonly you will find that bottlenecks shift, and you are most effective when continuously measuring your progress.</p>",
       "url": "http://bit.ly/fH3Ru4"
     },
     {
@@ -1233,22 +974,11 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "front": {
-        "para": "Prefer rich modes of communication"
-      },
-      "back": {
-        "ul": {
-          "li": [
-            "Personal conversation over telephone call",
-            "Telephone call over chat",
-            "Chat over email",
-            "Email over voice mail"
-          ]
-        }
-      },
       "ulink": {
         "url": "http://www.agilemodeling.com/essays/communication.htm#HowDoWeCommunicate"
       },
+      "title": "Prefer rich modes of communication",
+      "description": "<ul><li>Personal conversation over telephone call</li>,<li>Telephone call over chat</li>,<li>Chat over email</li>,<li>Email over voice mail</li></ul>",
       "url": "http://bit.ly/dKLvjK"
     },
     {
@@ -1272,12 +1002,8 @@
         "color": "#FC7A25",
         "backgroundColor": "#ED7738"
       },
-      "front": {
-        "para": "Deal with non-functionals"
-      },
-      "back": {
-        "para": "Work all your non-functional requirements into goals on aclearly defined scale and put them on the backlog, either aspart of the &apos;definition of done' or as separate userstories."
-      },
+      "title": "Deal with non-functionals",
+      "description": "<p>Work all your non-functional requirements into goals on aclearly defined scale and put them on the backlog, either aspart of the &apos;definition of done' or as separate userstories.</p>",
       "url": "http://bit.ly/ePpC8W"
     },
     {
@@ -1298,15 +1024,8 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "front": {
-        "para": "Prevent your code base from turning into a museum"
-      },
-      "back": {
-        "para": [
-          "There is no point in keeping dead code lying around inyour code base. Get rid of it. Your version history will alwaysallow you to get it back if you need to. The same goes forcommented-out code: get rid of it.",
-          "Keeping your codebase free of reminiscences of the pastwill make it easier to navigate and understand."
-        ]
-      },
+      "title": "Prevent your code base from turning into a museum",
+      "description": "<p>There is no point in keeping dead code lying around inyour code base. Get rid of it. Your version history will alwaysallow you to get it back if you need to. The same goes forcommented-out code: get rid of it.,Keeping your codebase free of reminiscences of the pastwill make it easier to navigate and understand.</p>",
       "url": "http://bit.ly/ifpmb5"
     },
     {
@@ -1331,19 +1050,8 @@
           "id": "code"
         }
       ],
-      "front": {
-        "para": "Comment with care"
-      },
-      "back": {
-        "ul": {
-          "li": [
-            "Don&apos;t document bad code – rewrite it",
-            "Don&apos;t repeat the code – clarify its intent",
-            "Document surprises and workarounds",
-            "Make every comment count"
-          ]
-        }
-      },
+      "title": "Comment with care",
+      "description": "<ul><li>Don&apos;t document bad code â€“ rewrite it</li>,<li>Don&apos;t repeat the code â€“ clarify its intent</li>,<li>Document surprises and workarounds</li>,<li>Make every comment count</li></ul>",
       "url": "http://bit.ly/fdHw86"
     },
     {
@@ -1364,12 +1072,8 @@
           "id": "ldijkhuis"
         }
       ],
-      "front": {
-        "para": "Context over habit&amp;best practice"
-      },
-      "back": {
-        "para": "With all &quot;best practices\", principles and experience,you should always keep an eye on the context: does what used to workthere and then work here now? Keep thinking, keep looking."
-      },
+      "title": "Context over habit&amp;best practice",
+      "description": "<p>With all &quot;best practices\", principles and experience,you should always keep an eye on the context: does what used to workthere and then work here now? Keep thinking, keep looking.</p>",
       "url": "http://bit.ly/hNswdJ"
     },
     {
@@ -1391,16 +1095,12 @@
           "id": "lbonnema"
         }
       ],
-      "front": {
-        "para": [
-          "Make it work",
-          "Make it right",
-          "Make it fast"
-        ]
-      },
-      "back": {
-        "para": "To prevent analysis paralysis, follow these simple steps incase a problem seems too big to tackle. First simply make itwork. Don&apos;t pay attention to craftsmanship principles. Second, make it right, by making your code compliantwith craftsmanship principles. Finally, make it fast if reallyneeded."
-      },
+      "title": [
+        "Make it work",
+        "Make it right",
+        "Make it fast"
+      ],
+      "description": "<p>To prevent analysis paralysis, follow these simple steps incase a problem seems too big to tackle. First simply make itwork. Don&apos;t pay attention to craftsmanship principles. Second, make it right, by making your code compliantwith craftsmanship principles. Finally, make it fast if reallyneeded.</p>",
       "url": "http://bit.ly/hnENEg"
     },
     {
@@ -1421,15 +1121,8 @@
           "id": "omaassen"
         }
       ],
-      "front": {
-        "para": "Focus on flow"
-      },
-      "back": {
-        "para": [
-          "Focus on banishing costs increases costs.",
-          "Focus on flow decreases costs."
-        ]
-      },
+      "title": "Focus on flow",
+      "description": "<p>Focus on banishing costs increases costs.,Focus on flow decreases costs.</p>",
       "url": "http://bit.ly/i9fenO"
     },
     {
@@ -1450,12 +1143,8 @@
           "id": "omaassen"
         }
       ],
-      "front": {
-        "para": "Brutal transparency"
-      },
-      "back": {
-        "para": "The only way to build trust is to be honest and transparent under all circumstances."
-      },
+      "title": "Brutal transparency",
+      "description": "<p>The only way to build trust is to be honest and transparent under all circumstances.</p>",
       "url": "http://bit.ly/dK5OCf"
     },
     {
@@ -1476,19 +1165,8 @@
           "id": "wspringer"
         }
       ],
-      "front": {
-        "para": "Think of code and test as one"
-      },
-      "back": {
-        "blockquote": {
-          "para": [
-            "When writing the code, think of the test.",
-            "When writing the test, think of the code.",
-            "When you think of code and test as one, testing is easy and code is beautiful."
-          ],
-          "attribution": "Testivus"
-        }
-      },
+      "title": "Think of code and test as one",
+      "description": "<blockquote><p>When writing the code, think of the test.,When writing the test, think of the code.,When you think of code and test as one, testing is easy and code is beautiful.</p></blockquote>",
       "url": "http://bit.ly/hw4BK8"
     },
     {
@@ -1509,12 +1187,8 @@
           "id": "cwortel"
         }
       ],
-      "front": {
-        "para": "When you can&apos;t test everything, you're building too much"
-      },
-      "back": {
-        "para": "When a story isn&apos;t tested, it simply is not ready forproduction.  This means that focus should be on testingthroughout the sprint, by the whole team.  No new work should bepicked up if there is still unfinished test work."
-      },
+      "title": "When you can&apos;t test everything, you're building too much",
+      "description": "<p>When a story isn&apos;t tested, it simply is not ready forproduction.  This means that focus should be on testingthroughout the sprint, by the whole team.  No new work should bepicked up if there is still unfinished test work.</p>",
       "url": "http://bit.ly/gu1Lq3"
     },
     {
@@ -1530,16 +1204,12 @@
           "id": "wspringer"
         }
       ],
-      "front": {
-        "para": [
-          "Maximize cohesion",
-          "Minimize coupling"
-        ]
-      },
-      "back": {
-        "para": "Maximizing cohesion and minimizing coupling reduces complexity and increases testability."
-      },
       "tags": [],
+      "title": [
+        "Maximize cohesion",
+        "Minimize coupling"
+      ],
+      "description": "<p>Maximizing cohesion and minimizing coupling reduces complexity and increases testability.</p>",
       "url": "http://bit.ly/euvBUZ"
     },
     {
@@ -1558,13 +1228,9 @@
           "id": "wspringer"
         }
       ],
-      "front": {
-        "para": "Make it visible"
-      },
-      "back": {
-        "para": "The most effective way to get a message across is byvisualizing it. Use simple charts and diagrams in favor ofspreadsheets, and pictures instead of prose."
-      },
       "tags": [],
+      "title": "Make it visible",
+      "description": "<p>The most effective way to get a message across is byvisualizing it. Use simple charts and diagrams in favor ofspreadsheets, and pictures instead of prose.</p>",
       "url": "http://bit.ly/h0b8NA"
     },
     {
@@ -1583,13 +1249,9 @@
           "id": "wspringer"
         }
       ],
-      "front": {
-        "para": "One feature at a time"
-      },
-      "back": {
-        "para": "First complete what you started before starting somethingnew. It decreases time to market and allows you to applyexperience gained during development of the first feature in thedevelopment of the next one."
-      },
       "tags": [],
+      "title": "One feature at a time",
+      "description": "<p>First complete what you started before starting somethingnew. It decreases time to market and allows you to applyexperience gained during development of the first feature in thedevelopment of the next one.</p>",
       "url": "http://bit.ly/hjPWim"
     },
     {
@@ -1605,13 +1267,9 @@
           "id": "gbossuyt"
         }
       ],
-      "front": {
-        "para": "It ain&apos;t over till it's done"
-      },
-      "back": {
-        "para": "Create a clear definition of done to have a firm agreement onwhether a task is finished or not."
-      },
       "tags": [],
+      "title": "It ain&apos;t over till it's done",
+      "description": "<p>Create a clear definition of done to have a firm agreement onwhether a task is finished or not.</p>",
       "url": "http://bit.ly/eRw2Hq"
     },
     {
@@ -1628,13 +1286,9 @@
           "id": "gbossuyt"
         }
       ],
-      "front": {
-        "para": "Honor the timebox"
-      },
-      "back": {
-        "para": "You cannot stretch the boundaries of a timebox. Thepromise of having at least something at the end of a timeboxshould never be broken."
-      },
       "tags": [],
+      "title": "Honor the timebox",
+      "description": "<p>You cannot stretch the boundaries of a timebox. Thepromise of having at least something at the end of a timeboxshould never be broken.</p>",
       "url": "http://bit.ly/eFftF0"
     },
     {
@@ -1653,13 +1307,9 @@
           "id": "ifuld"
         }
       ],
-      "front": {
-        "para": "Have fun"
-      },
-      "back": {
-        "para": "If it ain&apos;t fun, it probably ain't right."
-      },
       "tags": [],
+      "title": "Have fun",
+      "description": "<p>If it ain&apos;t fun, it probably ain't right.</p>",
       "url": "http://bit.ly/f37zxa"
     },
     {
@@ -1678,24 +1328,9 @@
           "id": "wspringer"
         }
       ],
-      "front": {
-        "para": "Eliminate waste"
-      },
-      "back": {
-        "para": "Sources of waste in software development include:",
-        "ul": {
-          "li": [
-            "Partially done work",
-            "Extra processes",
-            "Extra features",
-            "Task switching",
-            "Waiting",
-            "Motion",
-            "Defects"
-          ]
-        }
-      },
       "tags": [],
+      "title": "Eliminate waste",
+      "description": "<p>Sources of waste in software development include:</p><ul><li>Partially done work</li>,<li>Extra processes</li>,<li>Extra features</li>,<li>Task switching</li>,<li>Waiting</li>,<li>Motion</li>,<li>Defects</li></ul>",
       "url": "http://bit.ly/fAE0fA"
     },
     {
@@ -1711,17 +1346,9 @@
           "id": "wspringer"
         }
       ],
-      "front": {
-        "para": "Favor continuous improvement over delayed perfection"
-      },
-      "back": {
-        "para": "If you don&apos;t get better, you get worse.",
-        "blockquote": {
-          "para": "Continuous improvement is not about the things you dowell - that&apos;s work. Continuous improvement is about removingthe things that get in the way of your work. The headaches,the things that slow you down, that’s what continuousimprovement is all about.",
-          "attribution": "Bruce Hamilton"
-        }
-      },
       "tags": [],
+      "title": "Favor continuous improvement over delayed perfection",
+      "description": "<p>If you don&apos;t get better, you get worse.</p><blockquote><p>Continuous improvement is not about the things you dowell - that&apos;s work. Continuous improvement is about removingthe things that get in the way of your work. The headaches,the things that slow you down, thatâ€™s what continuousimprovement is all about.</p></blockquote>",
       "url": "http://bit.ly/e1p3oQ"
     },
     {
@@ -1737,16 +1364,9 @@
           "id": "wspringer"
         }
       ],
-      "front": {
-        "para": "Genchi genbutsu"
-      },
-      "back": {
-        "para": [
-          "Genchi genbutsu is the Japanese expression for a practiceof finding your answers right down at the source.",
-          "Don&apos;t rely on second-hand reports or tables and charts ofdata to achieve a true understanding. Instead go to the place&amp;&#35;40;gemba&#41; where you can watch, observe, and &apos;ask why five times'."
-        ]
-      },
       "tags": [],
+      "title": "Genchi genbutsu",
+      "description": "<p>Genchi genbutsu is the Japanese expression for a practiceof finding your answers right down at the source.,Don&apos;t rely on second-hand reports or tables and charts ofdata to achieve a true understanding. Instead go to the place&amp;&#35;40;gemba&#41; where you can watch, observe, and &apos;ask why five times'.</p>",
       "url": "http://bit.ly/fHdeNm"
     },
     {
@@ -1763,13 +1383,9 @@
           "id": "wspringer"
         }
       ],
-      "front": {
-        "para": "Pair programming"
-      },
-      "back": {
-        "para": "Pairing improves focus and fosters collective ownershipmore effectively than group discussions, documentation andreviews."
-      },
       "tags": [],
+      "title": "Pair programming",
+      "description": "<p>Pairing improves focus and fosters collective ownershipmore effectively than group discussions, documentation andreviews.</p>",
       "url": "http://bit.ly/dNoAYS"
     },
     {
@@ -1785,24 +1401,9 @@
           "id": "wspringer"
         }
       ],
-      "front": {
-        "para": "APIs, like diamonds, are forever"
-      },
-      "back": {
-        "para": "So craft them carefully:",
-        "blockquote": {
-          "ul": {
-            "li": [
-              "APIs should be self-documenting",
-              "Obey the principle of least astonishment",
-              "Use consistent parameter ordering across methods",
-              "APIs should be easy to use, and hard to misuse"
-            ]
-          },
-          "attribution": "Joshua Bloch"
-        }
-      },
       "tags": [],
+      "title": "APIs, like diamonds, are forever",
+      "description": "<p>So craft them carefully:</p><blockquote><ul><li>APIs should be self-documenting</li>,<li>Obey the principle of least astonishment</li>,<li>Use consistent parameter ordering across methods</li>,<li>APIs should be easy to use, and hard to misuse</li></ul></blockquote>",
       "url": "http://bit.ly/hJOvvL"
     }
   ]
