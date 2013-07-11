@@ -172,6 +172,7 @@ app.get '/api/user', user.list
 app.get '/api/user/:id', user.findById
 
 app.get '/api/card', card.cards
+app.get '/api/categories', card.categories
 
 app.delete '/api/notification', notification.removeById
 app.post '/api/notification', notification.create
