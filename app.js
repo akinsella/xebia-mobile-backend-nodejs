@@ -213,7 +213,7 @@ app.get('/api/user/:id', user.findById);
 
 app.get('/api/card', card.cards);
 
-app.get('/api/categories', card.categories);
+app.get('/api/category', card.categories);
 
 app["delete"]('/api/notification', notification.removeById);
 
