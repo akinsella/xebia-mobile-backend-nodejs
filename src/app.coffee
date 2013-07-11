@@ -171,8 +171,8 @@ app.post '/api/user', user.create
 app.get '/api/user', user.list
 app.get '/api/user/:id', user.findById
 
-app.get '/api/card', card.cards
-app.get '/api/category', card.categories
+app.get '/api/essentials/card', card.cards
+app.get '/api/essentials/category', card.categories
 
 app.delete '/api/notification', notification.removeById
 app.post '/api/notification', notification.create
