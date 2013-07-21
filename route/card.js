@@ -24,12 +24,19 @@ categories = function(req, res) {
 };
 
 cardsByCategoryId = function(req, res) {
-  var categoryId;
+  var category, categoryId, data;
   categoryId = req.params.id;
+  category = _(Card.categories().categories).find(function(category) {
+    return category.id === categoryId;
+  });
   cards = _(Card.cards().cards).filter(function(card) {
     return card.category.id === categoryId;
   });
-  return utils.responseData(200, "", cards, {
+  data = {
+    category: category,
+    cards: cards
+  };
+  return utils.responseData(200, "", data, {
     req: req,
     res: res
   });

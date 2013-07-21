@@ -21,7 +21,8 @@
         "backgroundColor": "#7D2D65"
       },
       "title": "If something is too complex to understand, it must be wrong",
-      "description": "<p>...and it&apos;s your job to prove it wrong. Also known as the 'Poutsma Principle'.</p>",
+      "description": "<p>...and it's your job to prove it wrong. Also known as the 'Poutsma Principle'.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/eG5fsb"
     },
     {
@@ -46,7 +47,8 @@
         "backgroundColor": "#7D2D65"
       },
       "title": "Fail fast",
-      "description": "<p>Address risks early on in the project. Don&apos;t postponedifficult tasks, because they provide you with an opportunityto learn. Tackle them head-on, and get it over with.</p>",
+      "description": "<p>Address risks early on in the project. Don't postponedifficult tasks, because they provide you with an opportunityto learn. Tackle them head-on, and get it over with.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/hOXhny"
     },
     {
@@ -70,8 +72,9 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "title": "Don&apos;t Repeat Yourself",
+      "title": "Don't Repeat Yourself",
       "description": "<blockquote><p>Every piece of knowledge must have a single, unambiguous, authoritative representation within a system.</p></blockquote>",
+      "ulinks": [],
       "url": "http://bit.ly/fh7McI"
     },
     {
@@ -103,7 +106,8 @@
         "backgroundColor": "#ED7738"
       },
       "title": "Favor composition over inheritance",
-      "description": "<p>Also known as the &apos;composite reuse principle'. Favorcomposition over inheritance to achieve polymorphism.</p>",
+      "description": "<p>Also known as the 'composite reuse principle'. Favorcomposition over inheritance to achieve polymorphism.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/hzKtcb"
     },
     {
@@ -135,7 +139,8 @@
         "backgroundColor": "#ED7738"
       },
       "title": "Write small and focused interfaces",
-      "description": "<p>Also known as the &apos;interface segregation principle'. Manyspecific interfaces are better than one combined generalinterface.</p>",
+      "description": "<p>Also known as the 'interface segregation principle'. Manyspecific interfaces are better than one combined generalinterface.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/gkrskx"
     },
     {
@@ -161,7 +166,8 @@
         "backgroundColor": "#1B4E80"
       },
       "title": "Aim for thread safety",
-      "description": "<p>In order of decreasing safety:</p><ul><li>Stateless services</li>,<li>Immutable objects</li>,<li>Encapsulated locks</li>,<li>Not thread safe</li></ul>",
+      "description": "<p>In order of decreasing safety:</p><ul><li>Stateless services</li><li>Immutable objects</li><li>Encapsulated locks</li><li>Not thread safe</li></ul>",
+      "ulinks": [],
       "url": "http://bit.ly/gbXjXc"
     },
     {
@@ -182,11 +188,13 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "ulink": {
-        "url": "http://en.wikipedia.org/wiki/Flow_(psychology)"
-      },
       "title": "Respect the zone",
-      "description": "&apos;The zone' is a mode of consciousness that is associatedwith higher capabilities. When in the zone a developer is moreproductive.,When a developer is in the zone, avoid disruptions.",
+      "description": "'The zone' is a mode of consciousness that is associatedwith higher capabilities. When in the zone a developer is moreproductive. When a developer is in the zone, avoid disruptions.",
+      "ulinks": [
+        {
+          "url": "http://en.wikipedia.org/wiki/Flow_(psychology)"
+        }
+      ],
       "url": "http://bit.ly/fkrkGA"
     },
     {
@@ -208,7 +216,8 @@
         "backgroundColor": "#BB312C"
       },
       "title": "Get the team in a rhythm",
-      "description": "<p>A team that works according to a defined heartbeat is muchmore effective since it doesn&apos;t waste time organizing meetingsor spend time thinking about and planning what to do when.</p>",
+      "description": "<p>A team that works according to a defined heartbeat is muchmore effective since it doesn't waste time organizing meetingsor spend time thinking about and planning what to do when.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/gfk6pL"
     },
     {
@@ -231,7 +240,8 @@
         "backgroundColor": "#BB312C"
       },
       "title": "Keep your logs clean",
-      "description": "<p>Log everything you need, but nothing more:</p><ul><li>Log at the right level</li>,<li>Log every message once</li>,<li>Categorize if needed</li>,<li>Throw meaningful exceptions</li>,<li>Don&apos;t cry wolf</li></ul>",
+      "description": "<p>Log everything you need, but nothing more:</p><ul><li>Log at the right level</li><li>Log every message once</li><li>Categorize if needed</li><li>Throw meaningful exceptions</li><li>Don't cry wolf</li></ul>",
+      "ulinks": [],
       "url": "http://bit.ly/h8r0nQ"
     },
     {
@@ -256,7 +266,8 @@
         "backgroundColor": "#ED7738"
       },
       "title": "Your solution should not be more complicated than theproblem",
-      "description": "<p>Also known as:</p><ul><li>The simplest thing that could possibly work</li>,<li>Keep It Simple Stupid &amp;&#35;40;KISS&#41;</li>,<li>Less is more</li>,<li>You Ain&apos;t Gonna Need It &amp;&#35;40;YAGNI&#41;</li></ul>",
+      "description": "<p>Also known as:</p><ul><li>The simplest thing that could possibly work</li><li>Keep It Simple Stupid &amp;&#35;40;KISS&#41;</li><li>Less is more</li><li>You Ain't Gonna Need It &amp;&#35;40;YAGNI&#41;</li></ul>",
+      "ulinks": [],
       "url": "http://bit.ly/h79VId"
     },
     {
@@ -284,7 +295,8 @@
         "backgroundColor": "#BB312C"
       },
       "title": "Review code",
-      "description": "The primary goal of code review is to increase itsquality. Can be used as an additional safety net alongside pairprogramming.,It is also a good way to share knowledge and pick up somenew tricks.",
+      "description": "The primary goal of code review is to increase itsquality. Can be used as an additional safety net alongside pairprogramming. It is also a good way to share knowledge and pick up somenew tricks.",
+      "ulinks": [],
       "url": "http://bit.ly/gOpcIU"
     },
     {
@@ -316,6 +328,7 @@
       },
       "title": "Everybody in a project team is equal",
       "description": "<p>We distinguish on the validity of the ideas, not on roles,authority or location.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/hPhC0V"
     },
     {
@@ -338,6 +351,7 @@
       },
       "title": "No broken windows",
       "description": "<p>If something is broken, then fix it now, otherwise it willcome back to haunt you in the future.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/h1Bm7v"
     },
     {
@@ -359,12 +373,14 @@
         "color": "#FC7A25",
         "backgroundColor": "#ED7738"
       },
-      "ulink": {
-        "url": "http://www.domaindrivendesign.org/resources/what_is_ddd"
-      },
-      "note": "This is an anti-pattern: should be rephrased into something like &apos;vibrant' domain models.",
+      "note": "This is an anti-pattern: should be rephrased into something like 'vibrant' domain models.",
       "title": "Beware of anemic domain models",
-      "description": "Anemic domain models are data structures without any behaviour.,Domain-Driven Design &amp;&#35;40;Eric Evans&#41; is an alternative thatimproves code maintainability.",
+      "description": "Anemic domain models are data structures without any behaviour. Domain-Driven Design &amp;&#35;40;Eric Evans&#41; is an alternative thatimproves code maintainability.",
+      "ulinks": [
+        {
+          "url": "http://www.domaindrivendesign.org/resources/what_is_ddd"
+        }
+      ],
       "url": "http://bit.ly/hfjbRD"
     },
     {
@@ -385,8 +401,9 @@
           "id": "ifuld"
         }
       ],
-      "title": "Don&apos;t change code without a test",
-      "description": "<ul><li>Don&apos;t fix a bug before you have a broken test</li>,<li>A feature is only considered done once you havetests for it</li>,<li>Don&apos;t refactor before you have sufficient test coverage</li></ul>",
+      "title": "Don't change code without a test",
+      "description": "<ul><li>Don't fix a bug before you have a broken test</li><li>A feature is only considered done once you have tests for it</li><li>Don&apos;t refactor before you have sufficient test coverage</li></ul>",
+      "ulinks": [],
       "url": "http://bit.ly/fMf3Lo"
     },
     {
@@ -408,7 +425,8 @@
         "backgroundColor": "#1B4E80"
       },
       "title": "Assert against improper behaviour",
-      "description": "<blockquote><p>If it can&apos;t happen, use assertions to assure it won't.</p></blockquote>",
+      "description": "<blockquote><p>If it can't happen, use assertions to assure it won't.</p></blockquote>",
+      "ulinks": [],
       "url": "http://bit.ly/ejk4l4"
     },
     {
@@ -432,6 +450,7 @@
       },
       "title": "Split functionality into small units",
       "description": "<p>A function should be replaceable by one of your colleagues in less than thirty minutes.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/fIHSOX"
     },
     {
@@ -457,6 +476,7 @@
       },
       "title": "Alone time",
       "description": "<p>For some situations pair programming is not effective. Be prepared to allow yourself and your team members to have some time alone.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/ghjkXd"
     },
     {
@@ -480,11 +500,13 @@
         "color": "#FC7A25",
         "backgroundColor": "#ED7738"
       },
-      "ulink": {
-        "url": "http://en.wikipedia.org/wiki/Fallacies_of_Distributed_Computing"
-      },
       "title": "Remember the fallacies of distributed computing",
-      "description": "<blockquote><ul><li>The network is reliable</li>,<li>Latency is zero</li>,<li>Bandwidth is infinite</li>,<li>The network is secure</li>,<li>Topology doesn&apos;t change</li>,<li>There is one administrator</li>,<li>Transport cost is zero</li>,<li>The network is homogeneous</li></ul></blockquote>",
+      "description": "<blockquote><ul><li>The network is reliable</li><li>Latency is zero</li><li>Bandwidth is infinite</li><li>The network is secure</li><li>Topology doesn't change</li><li>There is one administrator</li><li>Transport cost is zero</li><li>The network is homogeneous</li></ul></blockquote>",
+      "ulinks": [
+        {
+          "url": "http://en.wikipedia.org/wiki/Fallacies_of_Distributed_Computing"
+        }
+      ],
       "url": "http://bit.ly/eEc5jq"
     },
     {
@@ -507,6 +529,7 @@
       },
       "title": "Work in small increments",
       "description": "<p>Every commit should be a change from one stable state of the system to another stable state of the system, and should not represent more than two hours of work.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/g5LPEg"
     },
     {
@@ -528,7 +551,8 @@
         "backgroundColor": "#1B4E80"
       },
       "title": "One change at a time",
-      "description": "<p>A single commit should contain only changes related to a single user story/issue. For instance, don&apos;t mix formatting changes with bug fixes.</p>",
+      "description": "<p>A single commit should contain only changes related to a single user story/issue. For instance, don't mix formatting changes with bug fixes.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/e00q9B"
     },
     {
@@ -553,7 +577,8 @@
         "backgroundColor": "#BB312C"
       },
       "title": "Nobody goes home if the build is broken",
-      "description": "<p>It&apos;s the team's code; it's also the team's responsibility to have a running build. If the person who broke the build isn't around, that's no excuse.</p>",
+      "description": "<p>It's the team's code; it's also the team's responsibility to have a running build. If the person who broke the build isn't around, that's no excuse.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/ejXw87"
     },
     {
@@ -577,6 +602,7 @@
       },
       "title": "Do what you think is right, not always what you were toldto do",
       "description": "<p>Dare to push back. You are a professional, not a robot.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/h3fZ4X"
     },
     {
@@ -604,7 +630,8 @@
         "backgroundColor": "#BB312C"
       },
       "title": "Timebox the unknown",
-      "description": "<ul><li>Timebox a story/task which can&apos;t be estimated duringplanning.</li>,<li>Communicate the results to the product owner / scrum master in order to have accurate estimates.</li></ul>",
+      "description": "<ul><li>Timebox a story/task which can't be estimated duringplanning.</li><li>Communicate the results to the product owner / scrum master in order to have accurate estimates.</li></ul>",
+      "ulinks": [],
       "url": "http://bit.ly/ePLE2z"
     },
     {
@@ -627,6 +654,7 @@
       },
       "title": "Leave the campground cleaner than you found it",
       "description": "<p>Also known as the Boy Scout Rule, after the Boy Scouts ofAmerica. Applied to programming: Always check in code in acleaner state than when you checked it out.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/hIOozD"
     },
     {
@@ -651,7 +679,8 @@
         "backgroundColor": "#7D2D65"
       },
       "title": "No blame, but no mercy",
-      "description": "<p>Feel free to make mistakes, be obliged to learn from them.Take time to look back and learn from what you&apos;re doing so youcan actively improve. We criticize bad code, we don&apos;tcriticize people. Don&apos;t just fix it; discuss it as well.</p>",
+      "description": "<p>Feel free to make mistakes, be obliged to learn from them.Take time to look back and learn from what you're doing so youcan actively improve. We criticize bad code, we don&apos;tcriticize people. Don&apos;t just fix it; discuss it as well.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/dYMaJJ"
     },
     {
@@ -676,7 +705,8 @@
         }
       ],
       "title": "Beware of Heisenbugs",
-      "description": "<blockquote><p>The measurement of position necessarily disturbs a particle&apos;s momentum, and vice versa.</p></blockquote><p>Similarly, inspecting a running program might alter the behaviour of the program, known as a Heisenbug.</p>",
+      "description": "<blockquote><p>The measurement of position necessarily disturbs a particle's momentum, and vice versa.</p></blockquote><p>Similarly, inspecting a running program might alter the behaviour of the program, known as a Heisenbug.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/euBFXg"
     },
     {
@@ -697,7 +727,9 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "ulink": [
+      "title": "Dare to say no",
+      "description": "<p>In Software Engineering, some things are just notpossible. Stand up for your values as a professional and refuseto do them! A good doctor will not promise to heal everythingeither.</p>",
+      "ulinks": [
         {
           "url": "http://manifesto.softwarecraftsmanship.org/"
         },
@@ -705,8 +737,6 @@
           "url": "http://www.infoq.com/presentations/craftmanship-ethics"
         }
       ],
-      "title": "Dare to say no",
-      "description": "<p>In Software Engineering, some things are just notpossible. Stand up for your values as a professional and refuseto do them! A good doctor will not promise to heal everythingeither.</p>",
       "url": "http://bit.ly/g4NpmH"
     },
     {
@@ -731,7 +761,8 @@
         "backgroundColor": "#7D2D65"
       },
       "title": "If you are stuck developing for more than two minutes, youMUST ask somebody else",
-      "description": "<p>It&apos;s not professional to waste time by trying to solvesomething on your own that is quicker solved with help.</p>",
+      "description": "<p>It's not professional to waste time by trying to solvesomething on your own that is quicker solved with help.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/fmam2x"
     },
     {
@@ -759,7 +790,8 @@
         "backgroundColor": "#1B4E80"
       },
       "title": "Write code that humans can easily understand",
-      "description": "<blockquote><ul><li>Any fool can write code that a computer canunderstand. Good programmers write code that humans canunderstand.</li>,<li>A simple, readable implementation is head and shouldersabove a clever-but-confusing, look-at-me implementation.</li>,<li>Things to keep in mind are readability, maintainability and speed of development.</li></ul></blockquote>",
+      "description": "<blockquote><ul><li>Any fool can write code that a computer canunderstand. Good programmers write code that humans canunderstand.</li><li>A simple, readable implementation is head and shouldersabove a clever-but-confusing, look-at-me implementation.</li><li>Things to keep in mind are readability, maintainability and speed of development.</li></ul></blockquote>",
+      "ulinks": [],
       "url": "http://bit.ly/gsNtRt"
     },
     {
@@ -780,11 +812,13 @@
         "color": "#107FD5",
         "backgroundColor": "#1B4E80"
       },
-      "ulink": {
-        "url": "http://en.wikipedia.org/wiki/Separation_of_concerns"
-      },
       "title": "Separation of concerns",
       "description": "<blockquote><p>Separate a program into non-overlapping concerns.</p></blockquote>",
+      "ulinks": [
+        {
+          "url": "http://en.wikipedia.org/wiki/Separation_of_concerns"
+        }
+      ],
       "url": "http://bit.ly/ehkmTM"
     },
     {
@@ -808,6 +842,7 @@
       },
       "title": "Keep the build clean",
       "description": "<blockquote><p>Keeping the build clean is not just about keeping it free of compilation errors or test failures. Warnings are also an important and critical part of code hygiene.</p></blockquote>",
+      "ulinks": [],
       "url": "http://bit.ly/gSzxew"
     },
     {
@@ -829,7 +864,8 @@
         "backgroundColor": "#BB312C"
       },
       "title": "Fight for time to tackle tech debt",
-      "description": "<p>Make your Product Owner understand why it is critical tospend time on technical debt, even if it doesn&apos;t provide newfunctionality.</p>",
+      "description": "<p>Make your Product Owner understand why it is critical tospend time on technical debt, even if it doesn't provide newfunctionality.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/fWNq5P"
     },
     {
@@ -851,7 +887,8 @@
         "backgroundColor": "#7D2D65"
       },
       "title": "Three strikes and you automate",
-      "description": "<ul><li>The first time you do something, you just do it manually</li>,<li>The second time you do something similar, you wince at the repetition, but you do it anyway</li>,<li>The third time you do something similar, you automate</li></ul>",
+      "description": "<ul><li>The first time you do something, you just do it manually</li><li>The second time you do something similar, you wince at the repetition, but you do it anyway</li><li>The third time you do something similar, you automate</li></ul>",
+      "ulinks": [],
       "url": "http://bit.ly/gKF9po"
     },
     {
@@ -871,6 +908,7 @@
       "tags": [],
       "title": "Be curious",
       "description": "<blockquote><p>Curiouser and curiouser!</p></blockquote><p>Curiosity is one of the main sources of creativity.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/g1oGb1"
     },
     {
@@ -900,6 +938,7 @@
       },
       "title": "Shared understanding of the design",
       "description": "<p>Everyone in the team should be aware of the core designideas that have given shape and structure to the software sofar, and understand the underlying intent.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/hV9Kxv"
     },
     {
@@ -926,7 +965,8 @@
       },
       "note": "Samurai and his sword are one. See the zone.",
       "title": "Master your tools",
-      "description": "Expect unprecedented productivity gain when investing timein mastering your tools. Tools will help you to:,Tools include your IDE, commandline tools, desktop tools,editors, etc.<ul><li>Accelerate</li>,<li>Focus</li>,<li>Avoid repetitive tasks</li>,<li>Eliminate duplication</li></ul>",
+      "description": "Expect unprecedented productivity gain when investing timein mastering your tools. Tools will help you to: Tools include your IDE, commandline tools, desktop tools,editors, etc.<ul><li>Accelerate</li><li>Focus</li><li>Avoid repetitive tasks</li><li>Eliminate duplication</li></ul>",
+      "ulinks": [],
       "url": "http://bit.ly/fmYabp"
     },
     {
@@ -952,7 +992,8 @@
         "backgroundColor": "#BB312C"
       },
       "title": "Diagnose before cure",
-      "description": "Measure first, make an isolated change, repeat until satisfied.,Before you tune performance, first measure it. Then fix the worst bottleneck and measure again. Commonly you will find that bottlenecks shift, and you are most effective when continuously measuring your progress.",
+      "description": "Measure first, make an isolated change, repeat until satisfied. Before you tune performance, first measure it. Then fix the worst bottleneck and measure again. Commonly you will find that bottlenecks shift, and you are most effective when continuously measuring your progress.",
+      "ulinks": [],
       "url": "http://bit.ly/fH3Ru4"
     },
     {
@@ -974,11 +1015,13 @@
         "color": "#F80068",
         "backgroundColor": "#7D2D65"
       },
-      "ulink": {
-        "url": "http://www.agilemodeling.com/essays/communication.htm#HowDoWeCommunicate"
-      },
       "title": "Prefer rich modes of communication",
-      "description": "<ul><li>Personal conversation over telephone call</li>,<li>Telephone call over chat</li>,<li>Chat over email</li>,<li>Email over voice mail</li></ul>",
+      "description": "<ul><li>Personal conversation over telephone call</li><li>Telephone call over chat</li><li>Chat over email</li><li>Email over voice mail</li></ul>",
+      "ulinks": [
+        {
+          "url": "http://www.agilemodeling.com/essays/communication.htm#HowDoWeCommunicate"
+        }
+      ],
       "url": "http://bit.ly/dKLvjK"
     },
     {
@@ -1003,7 +1046,8 @@
         "backgroundColor": "#ED7738"
       },
       "title": "Deal with non-functionals",
-      "description": "<p>Work all your non-functional requirements into goals on aclearly defined scale and put them on the backlog, either aspart of the &apos;definition of done' or as separate userstories.</p>",
+      "description": "<p>Work all your non-functional requirements into goals on aclearly defined scale and put them on the backlog, either aspart of the 'definition of done' or as separate userstories.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/ePpC8W"
     },
     {
@@ -1025,7 +1069,8 @@
         "backgroundColor": "#1B4E80"
       },
       "title": "Prevent your code base from turning into a museum",
-      "description": "There is no point in keeping dead code lying around inyour code base. Get rid of it. Your version history will alwaysallow you to get it back if you need to. The same goes forcommented-out code: get rid of it.,Keeping your codebase free of reminiscences of the pastwill make it easier to navigate and understand.",
+      "description": "There is no point in keeping dead code lying around inyour code base. Get rid of it. Your version history will alwaysallow you to get it back if you need to. The same goes forcommented-out code: get rid of it. Keeping your codebase free of reminiscences of the pastwill make it easier to navigate and understand.",
+      "ulinks": [],
       "url": "http://bit.ly/ifpmb5"
     },
     {
@@ -1051,7 +1096,8 @@
         }
       ],
       "title": "Comment with care",
-      "description": "<ul><li>Don&apos;t document bad code â€“ rewrite it</li>,<li>Don&apos;t repeat the code â€“ clarify its intent</li>,<li>Document surprises and workarounds</li>,<li>Make every comment count</li></ul>",
+      "description": "<ul><li>Don't document bad code â€“ rewrite it</li><li>Don&apos;t repeat the code â€“ clarify its intent</li><li>Document surprises and workarounds</li><li>Make every comment count</li></ul>",
+      "ulinks": [],
       "url": "http://bit.ly/fdHw86"
     },
     {
@@ -1074,6 +1120,7 @@
       ],
       "title": "Context over habit&amp;best practice",
       "description": "<p>With all &quot;best practices\", principles and experience,you should always keep an eye on the context: does what used to workthere and then work here now? Keep thinking, keep looking.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/hNswdJ"
     },
     {
@@ -1096,7 +1143,8 @@
         }
       ],
       "title": "Make it work, Make it right, Make it fast",
-      "description": "<p>To prevent analysis paralysis, follow these simple steps incase a problem seems too big to tackle. First simply make itwork. Don&apos;t pay attention to craftsmanship principles. Second, make it right, by making your code compliantwith craftsmanship principles. Finally, make it fast if reallyneeded.</p>",
+      "description": "<p>To prevent analysis paralysis, follow these simple steps incase a problem seems too big to tackle. First simply make itwork. Don't pay attention to craftsmanship principles. Second, make it right, by making your code compliantwith craftsmanship principles. Finally, make it fast if reallyneeded.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/hnENEg"
     },
     {
@@ -1118,7 +1166,8 @@
         }
       ],
       "title": "Focus on flow",
-      "description": "Focus on banishing costs increases costs.,Focus on flow decreases costs.",
+      "description": "Focus on banishing costs increases costs. Focus on flow decreases costs.",
+      "ulinks": [],
       "url": "http://bit.ly/i9fenO"
     },
     {
@@ -1141,6 +1190,7 @@
       ],
       "title": "Brutal transparency",
       "description": "<p>The only way to build trust is to be honest and transparent under all circumstances.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/dK5OCf"
     },
     {
@@ -1162,7 +1212,8 @@
         }
       ],
       "title": "Think of code and test as one",
-      "description": "<blockquote>When writing the code, think of the test.,When writing the test, think of the code.,When you think of code and test as one, testing is easy and code is beautiful.</blockquote>",
+      "description": "<blockquote>When writing the code, think of the test. When writing the test, think of the code. When you think of code and test as one, testing is easy and code is beautiful.</blockquote>",
+      "ulinks": [],
       "url": "http://bit.ly/hw4BK8"
     },
     {
@@ -1183,8 +1234,9 @@
           "id": "cwortel"
         }
       ],
-      "title": "When you can&apos;t test everything, you're building too much",
-      "description": "<p>When a story isn&apos;t tested, it simply is not ready forproduction.  This means that focus should be on testingthroughout the sprint, by the whole team.  No new work should bepicked up if there is still unfinished test work.</p>",
+      "title": "When you can't test everything, you're building too much",
+      "description": "<p>When a story isn't tested, it simply is not ready forproduction.  This means that focus should be on testingthroughout the sprint, by the whole team.  No new work should bepicked up if there is still unfinished test work.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/gu1Lq3"
     },
     {
@@ -1203,6 +1255,7 @@
       "tags": [],
       "title": "Maximize cohesion, Minimize coupling",
       "description": "<p>Maximizing cohesion and minimizing coupling reduces complexity and increases testability.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/euvBUZ"
     },
     {
@@ -1224,6 +1277,7 @@
       "tags": [],
       "title": "Make it visible",
       "description": "<p>The most effective way to get a message across is byvisualizing it. Use simple charts and diagrams in favor ofspreadsheets, and pictures instead of prose.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/h0b8NA"
     },
     {
@@ -1245,6 +1299,7 @@
       "tags": [],
       "title": "One feature at a time",
       "description": "<p>First complete what you started before starting somethingnew. It decreases time to market and allows you to applyexperience gained during development of the first feature in thedevelopment of the next one.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/hjPWim"
     },
     {
@@ -1261,8 +1316,9 @@
         }
       ],
       "tags": [],
-      "title": "It ain&apos;t over till it's done",
+      "title": "It ain't over till it's done",
       "description": "<p>Create a clear definition of done to have a firm agreement onwhether a task is finished or not.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/eRw2Hq"
     },
     {
@@ -1282,6 +1338,7 @@
       "tags": [],
       "title": "Honor the timebox",
       "description": "<p>You cannot stretch the boundaries of a timebox. Thepromise of having at least something at the end of a timeboxshould never be broken.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/eFftF0"
     },
     {
@@ -1302,7 +1359,8 @@
       ],
       "tags": [],
       "title": "Have fun",
-      "description": "<p>If it ain&apos;t fun, it probably ain't right.</p>",
+      "description": "<p>If it ain't fun, it probably ain't right.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/f37zxa"
     },
     {
@@ -1323,7 +1381,8 @@
       ],
       "tags": [],
       "title": "Eliminate waste",
-      "description": "<p>Sources of waste in software development include:</p><ul><li>Partially done work</li>,<li>Extra processes</li>,<li>Extra features</li>,<li>Task switching</li>,<li>Waiting</li>,<li>Motion</li>,<li>Defects</li></ul>",
+      "description": "<p>Sources of waste in software development include:</p><ul><li>Partially done work</li><li>Extra processes</li><li>Extra features</li><li>Task switching</li><li>Waiting</li><li>Motion</li><li>Defects</li></ul>",
+      "ulinks": [],
       "url": "http://bit.ly/fAE0fA"
     },
     {
@@ -1341,7 +1400,8 @@
       ],
       "tags": [],
       "title": "Favor continuous improvement over delayed perfection",
-      "description": "<p>If you don&apos;t get better, you get worse.</p><blockquote><p>Continuous improvement is not about the things you dowell - that&apos;s work. Continuous improvement is about removingthe things that get in the way of your work. The headaches,the things that slow you down, thatâ€™s what continuousimprovement is all about.</p></blockquote>",
+      "description": "<p>If you don't get better, you get worse.</p><blockquote><p>Continuous improvement is not about the things you dowell - that's work. Continuous improvement is about removingthe things that get in the way of your work. The headaches,the things that slow you down, thatâ€™s what continuousimprovement is all about.</p></blockquote>",
+      "ulinks": [],
       "url": "http://bit.ly/e1p3oQ"
     },
     {
@@ -1359,7 +1419,8 @@
       ],
       "tags": [],
       "title": "Genchi genbutsu",
-      "description": "Genchi genbutsu is the Japanese expression for a practiceof finding your answers right down at the source.,Don&apos;t rely on second-hand reports or tables and charts ofdata to achieve a true understanding. Instead go to the place&amp;&#35;40;gemba&#41; where you can watch, observe, and &apos;ask why five times'.",
+      "description": "Genchi genbutsu is the Japanese expression for a practiceof finding your answers right down at the source. Don't rely on second-hand reports or tables and charts ofdata to achieve a true understanding. Instead go to the place&amp;&#35;40;gemba&#41; where you can watch, observe, and &apos;ask why five times'.",
+      "ulinks": [],
       "url": "http://bit.ly/fHdeNm"
     },
     {
@@ -1379,6 +1440,7 @@
       "tags": [],
       "title": "Pair programming",
       "description": "<p>Pairing improves focus and fosters collective ownershipmore effectively than group discussions, documentation andreviews.</p>",
+      "ulinks": [],
       "url": "http://bit.ly/dNoAYS"
     },
     {
@@ -1396,7 +1458,8 @@
       ],
       "tags": [],
       "title": "APIs, like diamonds, are forever",
-      "description": "<p>So craft them carefully:</p><blockquote><ul><li>APIs should be self-documenting</li>,<li>Obey the principle of least astonishment</li>,<li>Use consistent parameter ordering across methods</li>,<li>APIs should be easy to use, and hard to misuse</li></ul></blockquote>",
+      "description": "<p>So craft them carefully:</p><blockquote><ul><li>APIs should be self-documenting</li><li>Obey the principle of least astonishment</li><li>Use consistent parameter ordering across methods</li><li>APIs should be easy to use, and hard to misuse</li></ul></blockquote>",
+      "ulinks": [],
       "url": "http://bit.ly/hJOvvL"
     }
   ]

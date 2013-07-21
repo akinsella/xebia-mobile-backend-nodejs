@@ -15,10 +15,21 @@ categories = (req, res) ->
 cardsByCategoryId = (req, res) ->
 
 	categoryId = req.params.id
-	cards = _(Card.cards().cards).filter( (card) ->
-		card.category == categoryId
+
+	category = _(Card.categories().categories).find( (category) ->
+		category.id == categoryId
 	)
-	utils.responseData 200, "", cards, {req: req, res: res}
+
+	cards = _(Card.cards().cards).filter( (card) ->
+		card.category.id == categoryId
+	)
+
+	data = {
+		category: category
+		cards: cards
+	}
+
+	utils.responseData 200, "", data, {req: req, res: res}
 
 cardById = (req, res) ->
 
@@ -26,6 +37,7 @@ cardById = (req, res) ->
 	cards = _(Card.cards().cards).find( (card) ->
 		card.id == cardId
 	)
+
 	utils.responseData 200, "", cards, {req: req, res: res}
 
 
