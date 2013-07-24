@@ -87,3 +87,7 @@ exports.token = [
     session: false
   }), server.token(), server.errorHandler()
 ];
+
+/*
+//@ sourceMappingURL=oauth2.map
+*/

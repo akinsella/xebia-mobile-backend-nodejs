@@ -50,3 +50,7 @@ User.plugin(pureautoinc.plugin, {
 });
 
 module.exports = userModel;
+
+/*
+//@ sourceMappingURL=user.map
+*/

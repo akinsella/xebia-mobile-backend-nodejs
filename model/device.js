@@ -35,3 +35,7 @@ Device.plugin(pureautoinc.plugin, {
 });
 
 module.exports = deviceModel;
+
+/*
+//@ sourceMappingURL=device.map
+*/

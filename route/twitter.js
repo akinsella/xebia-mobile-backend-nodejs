@@ -233,3 +233,7 @@ shortenTweet = function(tweet) {
 module.exports = {
   xebia_timeline: xebia_timeline
 };
+
+/*
+//@ sourceMappingURL=twitter.map
+*/

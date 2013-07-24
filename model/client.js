@@ -40,3 +40,7 @@ Client.plugin(pureautoinc.plugin, {
 });
 
 module.exports = clientModel;
+
+/*
+//@ sourceMappingURL=client.map
+*/

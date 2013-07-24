@@ -88,3 +88,7 @@ module.exports = {
   removeById: removeById,
   me: me
 };
+
+/*
+//@ sourceMappingURL=user.map
+*/

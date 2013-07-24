@@ -155,3 +155,7 @@ module.exports = {
   callback: callback,
   videos: videos
 };
+
+/*
+//@ sourceMappingURL=vimeo.map
+*/

@@ -47,3 +47,7 @@ News.plugin(pureautoinc.plugin, {
 });
 
 module.exports = newsModel;
+
+/*
+//@ sourceMappingURL=news.map
+*/

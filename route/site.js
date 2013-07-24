@@ -38,3 +38,7 @@ module.exports = {
   loginForm: loginForm,
   logout: logout
 };
+
+/*
+//@ sourceMappingURL=site.map
+*/

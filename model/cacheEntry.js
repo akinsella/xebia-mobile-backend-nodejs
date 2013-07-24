@@ -28,3 +28,7 @@ CacheEntry.plugin(pureautoinc.plugin, {
 });
 
 module.exports = cacheEntryModel;
+
+/*
+//@ sourceMappingURL=cacheEntry.map
+*/

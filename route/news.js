@@ -76,3 +76,7 @@ module.exports = {
   create: create,
   removeById: removeById
 };
+
+/*
+//@ sourceMappingURL=news.map
+*/

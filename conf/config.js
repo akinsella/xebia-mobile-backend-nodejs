@@ -57,3 +57,7 @@ module.exports = {
   cf: cf,
   mongoConfig: mongoConfig
 };
+
+/*
+//@ sourceMappingURL=config.map
+*/

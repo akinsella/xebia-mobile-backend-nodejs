@@ -284,3 +284,7 @@ process.on('uncaughtException', function(err) {
 });
 
 console.log("Express listening on port: " + (app.get('port')));
+
+/*
+//@ sourceMappingURL=app.map
+*/

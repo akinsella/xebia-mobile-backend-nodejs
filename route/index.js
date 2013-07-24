@@ -11,3 +11,7 @@ index = function(req, res) {
 module.exports = {
   index: index
 };
+
+/*
+//@ sourceMappingURL=index.map
+*/

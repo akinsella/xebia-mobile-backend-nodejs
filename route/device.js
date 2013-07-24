@@ -82,3 +82,7 @@ module.exports = {
   create: create,
   removeById: removeById
 };
+
+/*
+//@ sourceMappingURL=device.map
+*/

@@ -145,3 +145,7 @@ module.exports = {
   categoryPosts: categoryPosts,
   datePosts: datePosts
 };
+
+/*
+//@ sourceMappingURL=wordpress.map
+*/

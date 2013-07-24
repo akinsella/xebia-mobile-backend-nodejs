@@ -52,3 +52,7 @@ list = function(req, res) {
 module.exports = {
   list: list
 };
+
+/*
+//@ sourceMappingURL=eventbrite.map
+*/

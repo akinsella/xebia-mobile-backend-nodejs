@@ -60,3 +60,7 @@ module.exports = {
   categories: categories,
   cardsByCategoryId: cardsByCategoryId
 };
+
+/*
+//@ sourceMappingURL=card.map
+*/

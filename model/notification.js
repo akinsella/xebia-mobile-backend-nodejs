@@ -22,3 +22,7 @@ Notification.plugin(pureautoinc.plugin, {
 });
 
 module.exports = notificationModel;
+
+/*
+//@ sourceMappingURL=notification.map
+*/

@@ -38,3 +38,7 @@ module.exports = {
   authGoogleCallback: authGoogleCallback,
   logout: logout
 };
+
+/*
+//@ sourceMappingURL=auth.map
+*/

@@ -55,3 +55,7 @@ module.exports = {
   repos: repos,
   public_members: public_members
 };
+
+/*
+//@ sourceMappingURL=github.map
+*/

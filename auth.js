@@ -168,3 +168,7 @@ passport.use(new BearerStrategy(function(accessToken, done) {
     });
   });
 }));
+
+/*
+//@ sourceMappingURL=auth.map
+*/

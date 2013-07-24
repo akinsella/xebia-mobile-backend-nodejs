@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "security.js",
+  "sourceRoot": "..",
+  "sources": [
+    "src/lib/security.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAMA,IAAA,eAAA;GAAA,SAAA;;AAAA,CAAA,CAA4B,CAAN,CAAA,KAAC,UAAvB;CACC,CAAA,CAAM,CAAH,WAAA;CACF,GAAA,OAAA;IADD,EAAA;CAGK,EAAD,CAAH,IAAA;IAJoB;CAAA;;AAStB,CATA,EAUC,GADK,CAAN;CACC,CAAA,iBAAA;CAVD,CAAA"
+}

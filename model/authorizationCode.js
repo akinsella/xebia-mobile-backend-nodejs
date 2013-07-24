@@ -45,3 +45,7 @@ AuthorizationCode.plugin(pureautoinc.plugin, {
 });
 
 module.exports = authorizationCodeModel;
+
+/*
+//@ sourceMappingURL=authorizationCode.map
+*/

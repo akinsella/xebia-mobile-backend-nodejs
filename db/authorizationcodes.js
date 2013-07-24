@@ -36,3 +36,7 @@ exports.save = function(code, clientID, redirectURI, userID, done) {
     }
   });
 };
+
+/*
+//@ sourceMappingURL=authorizationCodes.map
+*/

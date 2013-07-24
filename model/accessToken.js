@@ -40,3 +40,7 @@ AccesToken.plugin(pureautoinc.plugin, {
 });
 
 module.exports = accessTokenModel;
+
+/*
+//@ sourceMappingURL=accessToken.map
+*/
