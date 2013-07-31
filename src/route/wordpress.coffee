@@ -4,7 +4,7 @@ _ = require('underscore')._
 # To be refactored
 processRequest = (req, res, url, transform) ->
 
-	options = utils.buildOptions req, res, url, 5 * 60, transform
+	options = utils.buildOptions req, res, url, 10 * 24 * 60 * 60, transform
 	utils.processRequest options
 
 	return

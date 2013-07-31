@@ -132,9 +132,13 @@ fetchDataFromUrl = (options) ->
 	console.log "[#{options.url}] Fetching data from url"
 
 	if (options.oauth)
-		options.oauth.get options.url, options.credentials.accessToken, options.credentials.accessTokenSecret, (error, data, response) -> processResponse(options, error, JSON.parse(data), response)
+		options.oauth.get options.url, options.credentials.accessToken, options.credentials.accessTokenSecret, (error, data, response) ->
+			data = if data then JSON.parse(data) else data
+			processResponse(options, error, data, response)
 	else if (options.oauth2)
-		options.oauth2.get options.url, options.credentials.accessToken, (error, data, response) -> processResponse(options, error, JSON.parse(data), response)
+		options.oauth2.get options.url, options.credentials.accessToken, (error, data, response) ->
+			data = if data then JSON.parse(data) else data
+			processResponse(options, error, data, response)
 	else
 		headers = { "User-Agent": "Xebia-Mobile-Backend" }
 		if options.accessToken

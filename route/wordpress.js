@@ -7,7 +7,7 @@ _ = require('underscore')._;
 
 processRequest = function(req, res, url, transform) {
   var options;
-  options = utils.buildOptions(req, res, url, 5 * 60, transform);
+  options = utils.buildOptions(req, res, url, 10 * 24 * 60 * 60, transform);
   utils.processRequest(options);
 };
 

@@ -8,6 +8,7 @@ _ = require('underscore')._;
 Card = require('../service/card');
 
 cards = function(req, res) {
+  res.charset = 'UTF-8';
   cards = Card.cards();
   return utils.responseData(200, "", cards, {
     req: req,
@@ -16,6 +17,7 @@ cards = function(req, res) {
 };
 
 categories = function(req, res) {
+  res.charset = 'UTF-8';
   categories = Card.categories();
   return utils.responseData(200, "", categories, {
     req: req,
@@ -25,6 +27,7 @@ categories = function(req, res) {
 
 cardsByCategoryId = function(req, res) {
   var category, categoryId, data;
+  res.charset = 'UTF-8';
   categoryId = req.params.id;
   category = _(Card.categories().categories).find(function(category) {
     return category.id === categoryId;
@@ -44,6 +47,7 @@ cardsByCategoryId = function(req, res) {
 
 cardById = function(req, res) {
   var cardId;
+  res.charset = 'UTF-8';
   cardId = req.params.id;
   cards = _(Card.cards().cards).find(function(card) {
     return card.id === cardId;
