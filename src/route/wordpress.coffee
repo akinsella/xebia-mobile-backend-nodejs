@@ -183,209 +183,256 @@ transformPostContent = (post, cb) ->
 			if (err)
 				cb(err)
 			else
-				document = window.document.body
-				restructureElement(document)
-				async.map document.childNodes, mapElement, (err, children) ->
-					if !err && children
-						post.structuredContent = mergeSiblingTexts(filterEmptyChildren(children))
-					cb(err, post)
-					window.close()
+				post.structuredContent = mergeSiblingTexts(removeChildrenWhenDescendantsAreTextOnly(filterEmptyChildren(mapChildNodes(window.document.body.childNodes, mapChildNode))))
+#				post.structuredContent = restructureElements(structuredContent)
+				cb(err, post)
+				window.close()
 
-restructureElement = (element) ->
-	children = []
-	for child in element.childNodes
-		children.push child
-	if element.tagName in [ "A", "LI", "SPAN" ]
-		element.removeAttribute "class"
-	if element.tagName == "DIV"
-		if element.parentNode.tagName == "LI" && element.parentNode.childNodes.length == 1
-			for child in children
-				element.removeChild child
-				element.parentNode.insertBefore child, element
-			element.parentNode.removeChild element
-#	if element.tagName == "IMG"
-#		if element.parentNode.tagName == "A" && element.parentNode.childNodes.length == 1
-#			element.parentNode.parentNode.insertBefore element, element.parentNode
-#			element.attributes.href = element.parentNode.attributes.href
-#			element.parentNode.parentNode.removeChild element.parentNode
-#			element.parentNode.removeChild element
+mapChildNodes = (childNodes, mapChildNode) ->
+	_(childNodes).map (childNode) -> mapChildNode(childNode)
+
+mapChildNode = (childNode) ->
+	element = {
+		type: childNode.nodeName,
+		attributes: []
+	}
+	if childNode.childNodes.length > 0
+		element.children = mapChildNodes(childNode.childNodes, mapChildNode)
+	if childNode.nodeName == "#text"
+		element.text = childNode.nodeValue
+	else if  childNode.nodeName == "IMG"
+		element.attributes.push { key: "src", value: childNode.src }
+	else if  childNode.nodeName == "A"
+		element.attributes.push { key: "href", value: childNode.href }
+	element.innerHTML = () ->
+		if !element.children
+			element.text
+		else
+			_(element.children).chain().map((element) -> element.innerHTML() ).join("").value()
+	element.outerHTML = () ->
+		if element.type == "#text"
+			"<p>#{element.text}</p>"
+		else if element.type in ["IMG"]
+			if element.attributes.length > 0
+				attributes = ("#{attribute.key}=\"#{attribute.value}\"" for attribute in element.attributes).reduce ((attr1, attr2) -> "#{attr1} #{attr2}"), ""
+				"<#{element.type} #{attributes} />"
+			else
+				"<#{element.type} />"
+		else
+			if element.attributes.length > 0
+				attributes = ("#{attribute.key}=\"#{attribute.value}\"" for attribute in element.attributes).reduce ((attr1, attr2) -> "#{attr1} #{attr2}"), ""
+				"<#{element.type} #{attributes}>#{element.innerHTML()}</#{element.type}>"
+			else
+				"<#{element.type}>#{element.innerHTML()}</#{element.type}>"
+	element.text = element.innerHTML()
+	element
+
+
+#	if element.nodeName == "#text"
+#		cb(undefined, {
+#			type: "#text"
+#			text: element.nodeValue
+#		})
+#	else if element.tagName == "IMG"
+#		image = {
+#			type: "img",
+#			src: element.src
+#			text: element.outerHTML
+#		}
+#		if element.attributes.href
+#			image.href = element.attributes.href
+#		cb(undefined, image)
+#	else if element.tagName == "AUTHOR"
+#		cb(undefined, {
+#			type: "author",
+#			username: element.attributes.username.value
+#			firstname: element.attributes.firstname.value
+#			lastname: element.attributes.lastname.value
+#			gravatar: element.attributes.gravatar.value
+#			twitter: element.attributes.twitter.value
+#		})
+#	else if element.tagName == "CODE"
+#		cb(undefined, {
+#			type: "code",
+#			language: element.attributes.language.value,
+#			text: element.innerHTML
+#		})
+#	else if element.tagName == "A"
+#		if areChildNodesTextOnly(element.childNodes)
+#			cb(undefined, {
+#				type: "a"
+#				text: element.outerHTML
+#			})
+#		else
+#			async.map element.childNodes, mapElement, (err, children) ->
+#				cb(undefined, {
+#					type: "a",
+#					children: mergeSiblingTexts(filterEmptyChildren(children))
+#				})
+#	else if element.tagName == "DIV"
+#		if areChildNodesTextOnly(element.childNodes)
+#			cb(undefined, {
+#				type: "p"
+#				text: "<p>#{element.innerHTML}</p>"
+#			})
+#		else
+#			async.map element.childNodes, mapElement, (err, children) ->
+#				cb(undefined, {
+#					type: "div",
+#					children: mergeSiblingTexts(filterEmptyChildren(children))
+#				})
+#	else if element.tagName == "P"
+#		if areChildNodesTextOnly(element.childNodes)
+#			cb(undefined, {
+#				type: "p"
+#				text: "<p>#{element.innerHTML}</p>"
+#			})
+#		else
+#			async.map element.childNodes, mapElement, (err, children) ->
+#				cb(undefined, {
+#					type: "p",
+#					children: mergeSiblingTexts(filterEmptyChildren(children))
+#				})
+#	else if element.tagName == "SPAN"
+#		if areChildNodesTextOnly(element.childNodes)
+#			cb(undefined, {
+#				type: "span"
+#				ignore: element.innerHTML.trim().length == 0
+#				text: element.outerHTML
+#			})
+#		else
+#			async.map element.childNodes, mapElement, (err, children) ->
+#				cb(undefined, {
+#					type: "span",
+#					children: mergeSiblingTexts(filterEmptyChildren(children))
+#				})
+#	else if element.tagName == "EM"
+#		if areChildNodesTextOnly(element.childNodes)
+#			cb(undefined, {
+#				type: "em"
+#				text: "<em>#{element.innerHTML}</em>"
+#			})
+#		else
+#			async.map element.childNodes, mapElement, (err, children) ->
+#				cb(undefined, {
+#					type: "em",
+#					children: mergeSiblingTexts(filterEmptyChildren(children))
+#				})
+#	else if element.tagName == "STRONG"
+#		if areChildNodesTextOnly(element.childNodes)
+#			cb(undefined, {
+#				type: "em"
+#				text: "<em>#{element.innerHTML}</em>"
+#			})
+#		else
+#			async.map element.childNodes, mapElement, (err, children) ->
+#				cb(undefined, {
+#					type: "em",
+#					children: mergeSiblingTexts(filterEmptyChildren(children))
+#				})
+#	else if element.tagName == "H1"
+#		cb(undefined, {
+#			type: "h1",
+#			text: element.innerHTML
+#		})
+#	else if element.tagName == "H2"
+#		cb(undefined, {
+#			type: "h2",
+#			text: element.innerHTML
+#		})
+#	else if element.tagName == "H3"
+#		cb(undefined, {
+#			type: "h3",
+#			text: element.innerHTML
+#		})
+#	else if element.tagName == "H4"
+#		cb(undefined, {
+#			type: "h4",
+#			text: element.innerHTML
+#		})
+#	else if element.tagName == "H5"
+#		cb(undefined, {
+#			type: "h4",
+#			text: element.innerHTML
+#		})
+#	else if element.tagName == "H6"
+#		cb(undefined, {
+#			type: "h6",
+#			text: element.innerHTML
+#		})
+#	else if element.tagName == "UL"
+#		if areChildNodesTextOnly(element.childNodes)
+#			cb(undefined, {
+#				type: "ul"
+#				text: "<ul>#{element.innerHTML}</ul>"
+#			})
+#		else
+#			async.map element.childNodes, mapElement, (err, children) ->
+#				cb(undefined, {
+#					type: "ul",
+#					children: mergeSiblingTexts(filterEmptyChildren(children))
+#				})
+#	else if element.tagName == "OL"
+#		if areChildNodesTextOnly(element.childNodes)
+#			cb(undefined, {
+#				type: "ol"
+#				text: "<ol>#{element.innerHTML}</ol>"
+#			})
+#		else
+#			async.map element.childNodes, mapElement, (err, children) ->
+#				cb(undefined, {
+#					type: "ol",
+#					children: mergeSiblingTexts(filterEmptyChildren(children))
+#				})
+#	else if element.tagName == "LI"
+#		if areChildNodesTextOnly(element.childNodes)
+#			cb(undefined, {
+#				type: "li"
+#				text: "<li>#{element.innerHTML}</li>"
+#			})
+#		else
+#			async.map element.childNodes, mapElement, (err, children) ->
+#				cb(undefined, {
+#					type: "li",
+#					children: mergeSiblingTexts(filterEmptyChildren(children))
+#				})
+#	else
+#		cb(undefined, {
+#			type: element.tagName.toLowerCase(),
+#			text: element.innerHTML
+#		})
+
+restructureChildren = (children) ->
 	for child in children
-		restructureElement(child)
+		if child.type == "LI" && child.children.length = 1 && child.children[0].type == "DIV"
+			child.children = child.children[0].children
+		restructureChildren(child.children)
 
-mapElement = (element, cb) ->
-	if element.nodeName == "#text"
-		cb(undefined, {
-			type: "#text"
-			text: element.nodeValue
-		})
-	else if element.tagName == "IMG"
-		image = {
-			type: "img",
-			src: element.src
-			text: element.outerHTML
-		}
-		if element.attributes.href
-			image.href = element.attributes.href
-		cb(undefined, image)
-	else if element.tagName == "AUTHOR"
-		cb(undefined, {
-			type: "author",
-			username: element.attributes.username.value
-			firstname: element.attributes.firstname.value
-			lastname: element.attributes.lastname.value
-			gravatar: element.attributes.gravatar.value
-			twitter: element.attributes.twitter.value
-		})
-	else if element.tagName == "CODE"
-		cb(undefined, {
-			type: "code",
-			language: element.attributes.language.value,
-			text: element.innerHTML
-		})
-	else if element.tagName == "A"
-		if areChildNodesTextOnly(element.childNodes)
-			cb(undefined, {
-				type: "a"
-				text: element.outerHTML
-			})
-		else
-			async.map element.childNodes, mapElement, (err, children) ->
-				cb(undefined, {
-					type: "a",
-					children: mergeSiblingTexts(filterEmptyChildren(children))
-				})
-	else if element.tagName == "DIV"
-		if areChildNodesTextOnly(element.childNodes)
-			cb(undefined, {
-				type: "p"
-				text: "<p>#{element.innerHTML}</p>"
-			})
-		else
-			async.map element.childNodes, mapElement, (err, children) ->
-				cb(undefined, {
-					type: "div",
-					children: mergeSiblingTexts(filterEmptyChildren(children))
-				})
-	else if element.tagName == "P"
-		if areChildNodesTextOnly(element.childNodes)
-			cb(undefined, {
-				type: "p"
-				text: "<p>#{element.innerHTML}</p>"
-			})
-		else
-			async.map element.childNodes, mapElement, (err, children) ->
-				cb(undefined, {
-					type: "p",
-					children: mergeSiblingTexts(filterEmptyChildren(children))
-				})
-	else if element.tagName == "SPAN"
-		if areChildNodesTextOnly(element.childNodes)
-			cb(undefined, {
-				type: "span"
-				ignore: element.innerHTML.trim().length == 0
-				text: element.outerHTML
-			})
-		else
-			async.map element.childNodes, mapElement, (err, children) ->
-				cb(undefined, {
-					type: "span",
-					children: mergeSiblingTexts(filterEmptyChildren(children))
-				})
-	else if element.tagName == "EM"
-		if areChildNodesTextOnly(element.childNodes)
-			cb(undefined, {
-				type: "em"
-				text: "<em>#{element.innerHTML}</em>"
-			})
-		else
-			async.map element.childNodes, mapElement, (err, children) ->
-				cb(undefined, {
-					type: "em",
-					children: mergeSiblingTexts(filterEmptyChildren(children))
-				})
-	else if element.tagName == "STRONG"
-		if areChildNodesTextOnly(element.childNodes)
-			cb(undefined, {
-				type: "em"
-				text: "<em>#{element.innerHTML}</em>"
-			})
-		else
-			async.map element.childNodes, mapElement, (err, children) ->
-				cb(undefined, {
-					type: "em",
-					children: mergeSiblingTexts(filterEmptyChildren(children))
-				})
-	else if element.tagName == "H1"
-		cb(undefined, {
-			type: "h1",
-			text: element.innerHTML
-		})
-	else if element.tagName == "H2"
-		cb(undefined, {
-			type: "h2",
-			text: element.innerHTML
-		})
-	else if element.tagName == "H3"
-		cb(undefined, {
-			type: "h3",
-			text: element.innerHTML
-		})
-	else if element.tagName == "H4"
-		cb(undefined, {
-			type: "h4",
-			text: element.innerHTML
-		})
-	else if element.tagName == "H5"
-		cb(undefined, {
-			type: "h4",
-			text: element.innerHTML
-		})
-	else if element.tagName == "H6"
-		cb(undefined, {
-			type: "h6",
-			text: element.innerHTML
-		})
-	else if element.tagName == "UL"
-		if areChildNodesTextOnly(element.childNodes)
-			cb(undefined, {
-				type: "ul"
-				text: "<ul>#{element.innerHTML}</ul>"
-			})
-		else
-			async.map element.childNodes, mapElement, (err, children) ->
-				cb(undefined, {
-					type: "ul",
-					children: mergeSiblingTexts(filterEmptyChildren(children))
-				})
-	else if element.tagName == "OL"
-		if areChildNodesTextOnly(element.childNodes)
-			cb(undefined, {
-				type: "ol"
-				text: "<ol>#{element.innerHTML}</ol>"
-			})
-		else
-			async.map element.childNodes, mapElement, (err, children) ->
-				cb(undefined, {
-					type: "ol",
-					children: mergeSiblingTexts(filterEmptyChildren(children))
-				})
-	else if element.tagName == "LI"
-		if areChildNodesTextOnly(element.childNodes)
-			cb(undefined, {
-				type: "li"
-				text: "<li>#{element.innerHTML}</li>"
-			})
-		else
-			async.map element.childNodes, mapElement, (err, children) ->
-				cb(undefined, {
-					type: "li",
-					children: mergeSiblingTexts(filterEmptyChildren(children))
-				})
-	else
-		cb(undefined, {
-			type: element.tagName.toLowerCase(),
-			text: element.innerHTML
-		})
+
+filterEmptyChildren = (children) ->
+	children = _(children).filter (child) ->
+		child.type == "#text" && child.text.trim().length > 0 || child.children
+	_(children).each (child) ->
+		child.children = filterEmptyChildren(child.children)
+	children
+
+removeChildrenWhenDescendantsAreTextOnly = (children) ->
+	_(children).each (child) ->
+		if child.children
+			if areChildrenTextOnly(child.children)
+				child.type = "#text"
+				child.children = []
+			else
+				removeChildrenWhenDescendantsAreTextOnly(child.children)
+	children
+
+areChildrenTextOnly = (children) ->
+	if !children
+		return true
+	for child in children
+		if child.type in ["VIDEO", "IMG", "CODE", "TABLE", "DIV"] || !areChildrenTextOnly(child.children)
+			return false
+	return true
 
 mergeSiblingTexts = (children) ->
 	newChildren = []
@@ -393,7 +440,7 @@ mergeSiblingTexts = (children) ->
 	index = 0
 	for child in children
 		index++
-		if  !child.children && child.text && child.type in ["#text", "p", "span", "em", "a", "ul", "ol", "li", "strong", "em"]
+		if  !child.children && child.type in ["#text", "P", "SPAN", "EM", "A", "UL", "OL", "LI", "STRONG", "EM"]
 			text = "#{text}#{child.text}"
 		else
 			if text.length > 0
@@ -408,23 +455,10 @@ mergeSiblingTexts = (children) ->
 			type: "#text",
 			text: text
 		})
+	_(children).each (child) ->
+			if child.children
+				child.children = mergeSiblingTexts(child.children)
 	newChildren
-
-areChildNodesTextOnly = (childNodes) ->
-	if !childNodes
-		return true
-	for childNode in childNodes
-		if childNode.tagName in ["VIDEO", "IMG", "CODE"] || !areChildNodesTextOnly(childNode.childNodes)
-			return false
-	return true
-
-filterEmptyChildren = (children) ->
-	_(children).filter (child) ->
-		if child.ignore
-			false
-		else
-			child.children || child.text == undefined || child.text.trim().length > 0
-
 
 module.exports =
 	tags : tags,
