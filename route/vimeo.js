@@ -97,11 +97,11 @@ videos = function(req, res) {
         res: res
       });
     } else {
-      return processRequest(req, res, url, oauth, credentials, function(data) {
+      return processRequest(req, res, url, oauth, credentials, function(data, cb) {
         _(data.videos.video).each(function(video) {
           return transformVideo(video);
         });
-        return data;
+        return cb(data);
       });
     }
   });

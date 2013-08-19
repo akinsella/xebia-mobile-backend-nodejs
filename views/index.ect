@@ -1,9 +1,16 @@
 <% extend 'layout.ect' %>
 <!-- index.ect -->
-<h1>{{title}}</h1>
 
-{{#if user}}
-    <h2>Hello, {{user.identifier}}.</h2>
-{{else}}
-    <h2>Welcome! Please log in.</h2>
-{{/if}}
+<div ng-controller="IndexController">
+
+    <h1>{{title}}</h1>
+
+    <div ng-show="authenticated">
+        <h2>Hello, {{user.identifier}}.</h2>
+    </div>
+
+    <div ng-show="!authenticated">
+        <h2>Welcome! Please log in.</h2>
+    </div>
+
+</div>

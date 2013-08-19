@@ -78,9 +78,9 @@ videos = (req, res) ->
 		else if (!credentials)
 			utils.responseData 500, "Error No Credentials stored", undefined, {req: req, res: res}
 		else
-			processRequest req, res, url, oauth, credentials, (data) ->
+			processRequest req, res, url, oauth, credentials, (data, cb) ->
 				_(data.videos.video).each((video) -> transformVideo(video) )
-				data
+				cb(data)
 	)
 
 transformVideo = (video) ->

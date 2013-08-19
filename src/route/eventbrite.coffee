@@ -24,10 +24,15 @@ venueProps = [
 # To be refactored
 list = (req, res) ->
 	apiKey = process.env["EVENTBRITE_AUTH_KEY"]
-	processRequest req, res, "https://www.eventbrite.com/json/organizer_list_events?app_key=#{apiKey}&id=1627902102", (data) ->
+	processRequest req, res, "https://www.eventbrite.com/json/organizer_list_events?app_key=#{apiKey}&id=1627902102", (data, cb) ->
 		data = _(data.events).pluck("event").filter((event) -> event.status == "Live")
 		_(data).each((event) ->
-			event.description_plain_text = if event.description then event.description.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '').replace(/<!--(.*?)-->/, '') else event.description
+			event.description_plain_text = event.description
+			if event.description_plain_text
+				event.description_plain_text = event.description_plain_text.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '')
+				event.description_plain_text = event.description_plain_text.replace(/<!--(.*?)-->/g, '')
+				event.description_plain_text = event.description_plain_text.replace(/\n\s*\n/g, '\n')
+
 			for key of event
 				if !(key in eventProps) then delete event[key]
 				for vKey of event.venue
@@ -36,7 +41,7 @@ list = (req, res) ->
 					if !(oKey in organizerProps) then delete event.organizer[oKey]
 			event
 		)
-		data
+		cb(data)
 
 module.exports =
 	list : list

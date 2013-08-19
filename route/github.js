@@ -17,7 +17,7 @@ repoProps = ["id", "name", "full_name", "description", "language", "owner", "htm
 ownerProps = ["id", "login", "gravatar_id", "avatar_url"];
 
 repos = function(req, res) {
-  return processRequest(req, res, "https://api.github.com/orgs/xebia-france/repos", function(data) {
+  return processRequest(req, res, "https://api.github.com/orgs/xebia-france/repos", function(data, cb) {
     _(data).each(function(repo) {
       var oKey, rKey;
       for (rKey in repo) {
@@ -32,12 +32,12 @@ repos = function(req, res) {
       }
       return repo;
     });
-    return data;
+    return cb(data);
   });
 };
 
 public_members = function(req, res) {
-  return processRequest(req, res, "https://api.github.com/orgs/xebia-france/public_members", function(data) {
+  return processRequest(req, res, "https://api.github.com/orgs/xebia-france/public_members", function(data, cb) {
     _(data).each(function(owner) {
       var oKey;
       for (oKey in owner) {
@@ -47,7 +47,7 @@ public_members = function(req, res) {
       }
       return owner;
     });
-    return data;
+    return cb(data);
   });
 };
 

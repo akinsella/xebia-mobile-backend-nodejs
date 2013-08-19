@@ -22,7 +22,7 @@ ownerProps = [
 # To be refactored
 repos = (req, res) ->
 
-	processRequest req, res, "https://api.github.com/orgs/xebia-france/repos", (data) ->
+	processRequest req, res, "https://api.github.com/orgs/xebia-france/repos", (data, cb) ->
 		_(data).each((repo) ->
 			for rKey of repo
 				if !(rKey in repoProps) then delete repo[rKey]
@@ -30,18 +30,18 @@ repos = (req, res) ->
 					if !(oKey in ownerProps) then delete repo.owner[oKey]
 			repo
 		)
-		data
+		cb(data)
 
 
 # To be refactored
 public_members = (req, res) ->
-	processRequest req, res, "https://api.github.com/orgs/xebia-france/public_members", (data) ->
+	processRequest req, res, "https://api.github.com/orgs/xebia-france/public_members", (data, cb) ->
 		_(data).each((owner) ->
 			for oKey of owner
 				if !(oKey in ownerProps) then delete owner[oKey]
 			owner
 		)
-		data
+		cb(data)
 
 
 module.exports =

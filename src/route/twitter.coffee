@@ -134,11 +134,11 @@ xebia_timeline = (req, res) ->
 
 
 fetchTwitterData = (twitterUrl, credentials, req, res) ->
-	processRequest req, res, twitterUrl, oauth2, credentials, (data) ->
+	processRequest req, res, twitterUrl, oauth2, credentials, (data, cb) ->
 		_(data).each((tweet) ->
 			shortenTweet(tweet)
 		)
-		data
+		cb(data)
 
 
 tweetProps = [

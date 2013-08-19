@@ -21,13 +21,18 @@ venueProps = ["id", "name", "city", "region", "country", "country_code", "addres
 list = function(req, res) {
   var apiKey;
   apiKey = process.env["EVENTBRITE_AUTH_KEY"];
-  return processRequest(req, res, "https://www.eventbrite.com/json/organizer_list_events?app_key=" + apiKey + "&id=1627902102", function(data) {
+  return processRequest(req, res, "https://www.eventbrite.com/json/organizer_list_events?app_key=" + apiKey + "&id=1627902102", function(data, cb) {
     data = _(data.events).pluck("event").filter(function(event) {
       return event.status === "Live";
     });
     _(data).each(function(event) {
       var key, oKey, vKey;
-      event.description_plain_text = event.description ? event.description.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '').replace(/<!--(.*?)-->/, '') : event.description;
+      event.description_plain_text = event.description;
+      if (event.description_plain_text) {
+        event.description_plain_text = event.description_plain_text.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '');
+        event.description_plain_text = event.description_plain_text.replace(/<!--(.*?)-->/g, '');
+        event.description_plain_text = event.description_plain_text.replace(/\n\s*\n/g, '\n');
+      }
       for (key in event) {
         if (!(__indexOf.call(eventProps, key) >= 0)) {
           delete event[key];
@@ -45,7 +50,7 @@ list = function(req, res) {
       }
       return event;
     });
-    return data;
+    return cb(data);
   });
 };
 

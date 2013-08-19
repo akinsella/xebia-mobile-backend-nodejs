@@ -5,10 +5,10 @@ pureautoinc  = require 'mongoose-pureautoinc'
 options =
   db: { native_parser: true },
   server: { poolSize: 5 },
-  user: config.mongoConfig.credentials.username,
-  pass: config.mongoConfig.credentials.password
+  user: config.mongo.username,
+  pass: config.mongo.password
 
-url = "mongodb://#{config.mongoConfig.credentials.host}:#{config.mongoConfig.port}/#{config.mongoConfig.credentials.name}"
+url = "mongodb://#{config.mongo.hostname}:#{config.mongo.port}/#{config.mongo.dbname}"
 mongoose.connect url, options
 
 

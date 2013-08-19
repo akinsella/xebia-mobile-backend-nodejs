@@ -43,12 +43,12 @@ sendJsonResponse = (options, data) ->
 
 	if callback
 		options.res.setHeader 'Content-Type', 'application/javascript'
-		response = callback + '(' + response + ');'
+		response = "#{callback}(#{response});"
 	else
 		options.res.setHeader 'Content-Type', 'application/json'
 
 
-	console.log "[" + options.url + "] Response sent: " + response
+	console.log "[" + options.url + "] Response sent: #{response}"
 	options.res.send(response)
 
 
@@ -83,7 +83,7 @@ responseData = (statusCode, statusMessage, data, options) ->
 
 		sendJsonResponse(options, data)
 	else
-		console.log "Status code: " + statusCode + ", message: " + statusMessage
+		console.log "Status code: #{statusCode}, message: #{statusMessage}"
 		options.res.send(statusMessage, statusCode)
 
 
@@ -92,14 +92,14 @@ getData = (options) ->
 		if !useCache(options)
 			fetchDataFromUrl(options)
 		else
-			console.log "[" + options.cacheKey + "] Cache Key is: " + options.cacheKey
-			console.log "Checking if data for cache key [" + options.cacheKey + "] is in cache"
+			console.log "[#{options.cacheKey}] Cache Key is: #{options.cacheKey}"
+			console.log "Checking if data for cache key [#{options.cacheKey}] is in cache"
 			cache.get options.cacheKey, (err, data) ->
 				if !err && data
-					console.log "[" + options.url + "] A reply is in cache key: '" + options.cacheKey + "', returning immediatly the reply"
+					console.log "[#{options.url}] A reply is in cache key: '#{options.cacheKey}', returning immediatly the reply"
 					options.callback(200, "", data, options)
 				else
-					console.log "[" + options.url + "] No cached reply found for key: '" + options.cacheKey + "'"
+					console.log "[#{options.url}] No cached reply found for key: '#{options.cacheKey}'"
 					fetchDataFromUrl(options)
 	catch err
 		errorMessage = err.name + ": " + err.message
@@ -111,8 +111,8 @@ processResponse = (options, error, data, response) ->
 		options.callback(500, "", undefined, options)
 	else
 		contentType = getContentType(response)
-		console.log "[" + options.url + "] Http Response - Content-Type: " + contentType
-		console.log "[" + options.url + "] Http Response - Headers: ", response.headers
+		console.log "[#{options.url}] Http Response - Content-Type: #{contentType}"
+		console.log "[#{options.url}] Http Response - Headers: #{response.headers}"
 
 		if !isContentTypeJsonOrScript(contentType)
 			console.log "[" + options.url + "] Content-Type is not json or javascript: Not caching data and returning response directly"
@@ -120,12 +120,20 @@ processResponse = (options, error, data, response) ->
 			options.callback(500, "", undefined, options)
 		else
 			if options.transform
-				data = options.transform data
-			jsonData = JSON.stringify(data)
-			console.log "[" + options.url + "] Fetched Response from url: " + jsonData.substr(0, 256)
-			options.callback(200, "", jsonData, options)
-			if useCache(options)
-				cache.set(options.cacheKey, data, if options.cacheTimeout then options.cacheTimeout else 60 * 60)
+				options.transform data, (err, data) ->
+					putInCacheAndSendResponse(err, data, options)
+			else
+				putInCacheAndSendResponse(undefined, data, options)
+
+putInCacheAndSendResponse = (err, data, options) ->
+	if (err)
+		options.callback(500, "", undefined, options)
+	else
+		jsonData = JSON.stringify(data)
+		console.log "[#{options.url}] Fetched Response from url: #{jsonData.substr(0, 256)}"
+		options.callback(200, "", jsonData, options)
+		if useCache(options)
+			cache.set(options.cacheKey, data, if options.cacheTimeout then options.cacheTimeout else 60 * 60)
 
 
 fetchDataFromUrl = (options) ->

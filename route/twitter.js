@@ -155,11 +155,11 @@ xebia_timeline = function(req, res) {
 };
 
 fetchTwitterData = function(twitterUrl, credentials, req, res) {
-  return processRequest(req, res, twitterUrl, oauth2, credentials, function(data) {
+  return processRequest(req, res, twitterUrl, oauth2, credentials, function(data, cb) {
     _(data).each(function(tweet) {
       return shortenTweet(tweet);
     });
-    return data;
+    return cb(data);
   });
 };
 
