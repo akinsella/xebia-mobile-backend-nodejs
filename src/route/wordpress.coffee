@@ -192,26 +192,30 @@ mapChildNodes = (childNodes, mapChildNode) ->
 	_(childNodes).map (childNode) -> mapChildNode(childNode)
 
 mapChildNode = (childNode) ->
+
 	element = {
 		type: childNode.nodeName,
 		attributes: []
 	}
-	if childNode.childNodes.length > 0
+
+	if childNode.childNodes.length
 		element.children = mapChildNodes(childNode.childNodes, mapChildNode)
 	if childNode.nodeName == "#text"
 		element.text = childNode.nodeValue
-	else if  childNode.nodeName == "IMG"
+	else if childNode.nodeName == "IMG"
 		element.attributes.push { key: "src", value: childNode.src }
 	else if  childNode.nodeName == "A"
 		element.attributes.push { key: "href", value: childNode.href }
+
 	element.innerHTML = () ->
-		if !element.children
+		if !element.children || !element.children.length
 			element.text
 		else
-			_(element.children).chain().map((element) -> element.innerHTML() ).join("").value()
+			_(element.children).chain().map((element) -> element.outerHTML() ).join("").value()
+
 	element.outerHTML = () ->
 		if element.type == "#text"
-			"<p>#{element.text}</p>"
+			"#{element.text}"
 		else if element.type in ["IMG"]
 			if element.attributes.length > 0
 				attributes = ("#{attribute.key}=\"#{attribute.value}\"" for attribute in element.attributes).reduce ((attr1, attr2) -> "#{attr1} #{attr2}"), ""
@@ -224,8 +228,77 @@ mapChildNode = (childNode) ->
 				"<#{element.type} #{attributes}>#{element.innerHTML()}</#{element.type}>"
 			else
 				"<#{element.type}>#{element.innerHTML()}</#{element.type}>"
-	element.text = element.innerHTML()
+#	element.text = element.innerHTML()
 	element
+
+
+restructureChildren = (children) ->
+	for child in children
+		if child.type == "LI" && child.children.length = 1 && child.children[0].type == "DIV"
+			child.children = child.children[0].children
+		restructureChildren(child.children)
+
+filterEmptyChildren = (children) ->
+	children = _(children).filter (child) ->
+		child.type == "#text" && child.text.trim() || child.children && child.children.length
+	_(children).each (child) ->
+		child.children = filterEmptyChildren(child.children)
+	children
+
+removeChildrenWhenDescendantsAreTextOnly = (children) ->
+	_(children).each (child) ->
+		if child.children && child.children.length
+			if areChildrenTextOnly(child.children)
+				child.text = child.outerHTML()
+				child.children = []
+			else
+				removeChildrenWhenDescendantsAreTextOnly(child.children)
+	children
+
+areChildrenTextOnly = (children) ->
+	if !children
+		return true
+	for child in children
+		if child.type in ["VIDEO", "IMG", "CODE", "TABLE", "DIV", "H1", "H2", "H3", "H4", "H5", "H6"] || !areChildrenTextOnly(child.children)
+			return false
+	return true
+
+mergeSiblingTexts = (children) ->
+	newChildren = []
+	text = ""
+	index = 0
+	for child in children
+		index++
+		if (!child.children || !child.children.length) && child.type in ["#text", "P", "SPAN", "EM", "A", "UL", "OL", "LI", "STRONG", "EM"]
+			text = "#{text}#{child.outerHTML()}"
+		else
+			if text.length
+				newChildren.push({
+					type: "#text",
+					text: "#{text.trim()}"
+				})
+			text = ""
+			newChildren.push(child)
+	if text.length
+		newChildren.push({
+			type: "#text",
+			text: "#{text.trim()}"
+		})
+	_(children).each (child) ->
+			if child.children && child.children.length
+				child.children = mergeSiblingTexts(child.children)
+	newChildren
+
+
+
+insertAt = (array, index) ->
+	arrayToInsert = Array.prototype.splice.apply(arguments, [2])
+	insertArrayAt(array, index, arrayToInsert)
+
+
+insertArrayAt = (array, index, arrayToInsert) ->
+	Array.prototype.splice.apply(array, [index, 0].concat(arrayToInsert))
+	array
 
 
 #	if element.nodeName == "#text"
@@ -401,64 +474,6 @@ mapChildNode = (childNode) ->
 #			type: element.tagName.toLowerCase(),
 #			text: element.innerHTML
 #		})
-
-restructureChildren = (children) ->
-	for child in children
-		if child.type == "LI" && child.children.length = 1 && child.children[0].type == "DIV"
-			child.children = child.children[0].children
-		restructureChildren(child.children)
-
-
-filterEmptyChildren = (children) ->
-	children = _(children).filter (child) ->
-		child.type == "#text" && child.text.trim().length > 0 || child.children
-	_(children).each (child) ->
-		child.children = filterEmptyChildren(child.children)
-	children
-
-removeChildrenWhenDescendantsAreTextOnly = (children) ->
-	_(children).each (child) ->
-		if child.children
-			if areChildrenTextOnly(child.children)
-				child.type = "#text"
-				child.children = []
-			else
-				removeChildrenWhenDescendantsAreTextOnly(child.children)
-	children
-
-areChildrenTextOnly = (children) ->
-	if !children
-		return true
-	for child in children
-		if child.type in ["VIDEO", "IMG", "CODE", "TABLE", "DIV"] || !areChildrenTextOnly(child.children)
-			return false
-	return true
-
-mergeSiblingTexts = (children) ->
-	newChildren = []
-	text = ""
-	index = 0
-	for child in children
-		index++
-		if  !child.children && child.type in ["#text", "P", "SPAN", "EM", "A", "UL", "OL", "LI", "STRONG", "EM"]
-			text = "#{text}#{child.text}"
-		else
-			if text.length > 0
-				newChildren.push({
-					type: "#text",
-					text: text.trim()
-				})
-			text = ""
-			newChildren.push(child)
-	if text.length > 0
-		newChildren.push({
-			type: "#text",
-			text: text
-		})
-	_(children).each (child) ->
-			if child.children
-				child.children = mergeSiblingTexts(child.children)
-	newChildren
 
 module.exports =
 	tags : tags,
