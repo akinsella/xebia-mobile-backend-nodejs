@@ -183,7 +183,7 @@ transformPostContent = (post, cb) ->
 			if (err)
 				cb(err)
 			else
-				post.structuredContent = mergeSiblingTexts(removeChildrenWhenDescendantsAreTextOnly(filterEmptyChildren(mapChildNodes(window.document.body.childNodes, mapChildNode))))
+				post.structuredContent = mergeSiblingTexts(removeChildrenWhenDescendantsAreTextOnly(restructureChildren(filterEmptyChildren(mapChildNodes(window.document.body.childNodes, mapChildNode)))))
 #				post.structuredContent = restructureElements(structuredContent)
 				cb(err, post)
 				window.close()
@@ -228,7 +228,7 @@ mapChildNode = (childNode) ->
 				"<#{element.type} #{attributes}>#{element.innerHTML()}</#{element.type}>"
 			else
 				"<#{element.type}>#{element.innerHTML()}</#{element.type}>"
-#	element.text = element.innerHTML()
+
 	element
 
 
@@ -236,7 +236,8 @@ restructureChildren = (children) ->
 	for child in children
 		if child.type == "LI" && child.children.length = 1 && child.children[0].type == "DIV"
 			child.children = child.children[0].children
-		restructureChildren(child.children)
+		child.children = restructureChildren(child.children)
+	children
 
 filterEmptyChildren = (children) ->
 	children = _(children).filter (child) ->
@@ -249,7 +250,7 @@ removeChildrenWhenDescendantsAreTextOnly = (children) ->
 	_(children).each (child) ->
 		if child.children && child.children.length
 			if areChildrenTextOnly(child.children)
-				child.text = child.outerHTML()
+				child.text = child.innerHTML()
 				child.children = []
 			else
 				removeChildrenWhenDescendantsAreTextOnly(child.children)
@@ -291,14 +292,14 @@ mergeSiblingTexts = (children) ->
 
 
 
-insertAt = (array, index) ->
-	arrayToInsert = Array.prototype.splice.apply(arguments, [2])
-	insertArrayAt(array, index, arrayToInsert)
-
-
-insertArrayAt = (array, index, arrayToInsert) ->
-	Array.prototype.splice.apply(array, [index, 0].concat(arrayToInsert))
-	array
+#insertAt = (array, index) ->
+#	arrayToInsert = Array.prototype.splice.apply(arguments, [2])
+#	insertArrayAt(array, index, arrayToInsert)
+#
+#
+#insertArrayAt = (array, index, arrayToInsert) ->
+#	Array.prototype.splice.apply(array, [index, 0].concat(arrayToInsert))
+#	array
 
 
 #	if element.nodeName == "#text"
