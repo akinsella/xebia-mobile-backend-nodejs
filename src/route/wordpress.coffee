@@ -1,10 +1,18 @@
-fs = require "fs"
 utils = require '../lib/utils'
 _ = require('underscore')._
 jsdom = require 'jsdom'
 async = require 'async'
 
-#jquery = fs.readFileSync "./lib/jquery.js", "utf-8"
+Array::insertArrayAt = (index, arrayToInsert) ->
+	Array.prototype.splice.apply(this, [index, 0].concat(arrayToInsert))
+	this
+
+Array::insertAt = (index) ->
+	arrayToInsert = Array.prototype.splice.apply(arguments, [1])
+	Array.insertArrayAt(this, index, arrayToInsert)
+
+Array::removeAt = (index) ->
+	this.splice(index, 1)
 
 baseUrl = "http://blog.xebia.fr"
 #baseUrl = "http://localhost/wordpress"
@@ -15,58 +23,42 @@ processRequest = (req, res, url, transform) ->
 	options = utils.buildOptions req, res, url, 5 * 60, transform
 	utils.processRequest options
 
-	return
-
-
-# To be refactored
-#wildcard = (req, res) ->
-#	processRequest req, res, "http://blog.xebia.fr/wp-json-api/" + utils.getUrlToFetch(req).substring("/api/wordpress/".length)
-
-
 authors = (req, res) ->
-	# utils.getUrlToFetch(req).substring("/api/wordpress/authors".length)
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_author_index?count=250", (data, cb) ->
 			delete data.status
-			_(data.authors).each (author) ->
+			for author in data.authors
 				author.firstname = author.first_name
 				delete author.first_name
 				author.lastname = author.last_name
 				delete author.last_name
-				return
 			cb(data)
 
 
 tags = (req, res) ->
-	# utils.getUrlToFetch(req).substring("/api/wordpress/tags".length)
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_tag_index/?count=2000", (data, cb) ->
 		delete data.status
-		_(data.tags).each (tag) ->
+		for tag in data.tags
 			tag.postCount = tag.post_count
 			delete tag.post_count
-			return
 		cb(data)
 
 
 categories = (req, res) ->
-	# utils.getUrlToFetch(req).substring("/api/wordpress/categories".length)
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_category_index?count=100", (data, cb) ->
 		delete data.status
-		_(data.categories).each (category) ->
+		for category in data.categories
 			category.postCount = category.post_count
 			delete category.post_count
-			return
 		cb(data)
 
 
 dates = (req, res) ->
-	# utils.getUrlToFetch(req).substring("/api/wordpress/categories".length)
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_date_index?count=1000", (data, cb) ->
 		delete data.status
 		delete data.permalinks
 		for key, value of data.tree
 			data[key] = value
 		delete data.tree
-
 		cb(data)
 
 
@@ -88,14 +80,14 @@ recentPosts = (req, res) ->
 		delete data.status
 		data.total = data.count_total
 		delete data.count_total
-		async.map(data.posts, transformPost, (err, posts) ->
-			cb(data)
-		)
+		for post in data.posts
+			transformPost(post)
+		cb(err, data)
 
 authorPosts = (req, res) ->
 	authorId = req.params.id
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_author_posts?id=#{authorId}", (data, cb) ->
-		_(data.posts).each (post) ->
+		for post in data.posts
 			transformPost(post)
 		cb(data)
 
@@ -103,7 +95,7 @@ authorPosts = (req, res) ->
 tagPosts = (req, res) ->
 	tagId = req.params.id
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_tag_posts?id=#{tagId}", (data, cb) ->
-		_(data.posts).each (post) ->
+		for post in data.posts
 			transformPost(post)
 		cb(data)
 
@@ -111,7 +103,7 @@ tagPosts = (req, res) ->
 categoryPosts = (req, res) ->
 	categoryId = req.params.id
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_category_posts?id=#{categoryId}", (data, cb) ->
-		_(data.posts).each (post) ->
+		for post in data.posts
 			transformPost(post)
 		cb(data)
 
@@ -131,21 +123,21 @@ transformPost = (post, cb) ->
 	post.commentStatus = post.comment_status
 	delete post.comment_status
 	delete post.title_plain
-	_(post.categories).each (category) ->
+	for category in post.categories
 		category.postCount = category.post_count
 		delete category.post_count
-	_(post.tags).each (tag) ->
+	for tag in post.tags
 		tag.postCount = tag.post_count
 		delete tag.post_count
 	post.authors = [post.author]
 	delete post.author
-	_(post.authors).each (author) ->
+	for author in post.authors
 		author.firstname = author.first_name
 		delete author.firstname
 		author.lastname = author.last_name
 		delete author.last_name
-	_(post.comments).each (author) ->
-		delete author.parent
+	for comment in post.comments
+		delete comment.parent
 	transformPostContent(post, cb)
 
 
@@ -195,7 +187,8 @@ mapChildNode = (childNode) ->
 
 	element = {
 		type: childNode.nodeName,
-		attributes: []
+		attributes: [],
+		children: []
 	}
 
 	if childNode.childNodes.length
@@ -208,10 +201,10 @@ mapChildNode = (childNode) ->
 		element.attributes.push { key: "href", value: childNode.href }
 
 	element.innerHTML = () ->
-		if !element.children || !element.children.length
+		if !element.children.length
 			element.text
 		else
-			_(element.children).chain().map((element) -> element.outerHTML() ).join("").value()
+			element.children.map((element) -> element.outerHTML()).reduce (elt1, elt2) -> elt1 + elt2
 
 	element.outerHTML = () ->
 		if element.type == "#text"
@@ -233,22 +226,23 @@ mapChildNode = (childNode) ->
 
 
 restructureChildren = (children) ->
-	for child in children
-		if child.type == "LI" && child.children.length = 1 && child.children[0].type == "DIV"
-			child.children = child.children[0].children
+	for child, index in children
 		child.children = restructureChildren(child.children)
+		if child.type == "DIV"
+			children.removeAt(index)
+			children.insertArrayAt(index, child.children)
 	children
 
 filterEmptyChildren = (children) ->
-	children = _(children).filter (child) ->
-		child.type == "#text" && child.text.trim() || child.children && child.children.length
-	_(children).each (child) ->
+	for child in children
 		child.children = filterEmptyChildren(child.children)
+	children = children.filter (child) ->
+		child.type == "#text" && child.text.trim() || child.children.length
 	children
 
 removeChildrenWhenDescendantsAreTextOnly = (children) ->
-	_(children).each (child) ->
-		if child.children && child.children.length
+	for child in children
+		if child.children.length
 			if areChildrenTextOnly(child.children)
 				child.text = child.innerHTML()
 				child.children = []
@@ -270,7 +264,7 @@ mergeSiblingTexts = (children) ->
 	index = 0
 	for child in children
 		index++
-		if (!child.children || !child.children.length) && child.type in ["#text", "P", "SPAN", "EM", "A", "UL", "OL", "LI", "STRONG", "EM"]
+		if (!child.children.length) && child.type in ["#text", "P", "SPAN", "EM", "A", "LI", "STRONG", "EM"]
 			text = "#{text}#{child.outerHTML()}"
 		else
 			if text.length
@@ -285,21 +279,10 @@ mergeSiblingTexts = (children) ->
 			type: "#text",
 			text: "#{text.trim()}"
 		})
-	_(children).each (child) ->
-			if child.children && child.children.length
-				child.children = mergeSiblingTexts(child.children)
+	for child in children
+		if child.children.length
+			child.children = mergeSiblingTexts(child.children)
 	newChildren
-
-
-
-#insertAt = (array, index) ->
-#	arrayToInsert = Array.prototype.splice.apply(arguments, [2])
-#	insertArrayAt(array, index, arrayToInsert)
-#
-#
-#insertArrayAt = (array, index, arrayToInsert) ->
-#	Array.prototype.splice.apply(array, [index, 0].concat(arrayToInsert))
-#	array
 
 
 #	if element.nodeName == "#text"
