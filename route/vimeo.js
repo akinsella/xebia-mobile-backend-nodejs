@@ -101,7 +101,7 @@ videos = function(req, res) {
         _(data.videos.video).each(function(video) {
           return transformVideo(video);
         });
-        return cb(data);
+        return cb(void 0, data);
       });
     }
   });

@@ -1,10 +1,18 @@
-fs = require "fs"
 utils = require '../lib/utils'
 _ = require('underscore')._
 jsdom = require 'jsdom'
 async = require 'async'
 
-#jquery = fs.readFileSync "./lib/jquery.js", "utf-8"
+Array::insertArrayAt = (index, arrayToInsert) ->
+	Array.prototype.splice.apply(this, [index, 0].concat(arrayToInsert))
+	this
+
+Array::insertAt = (index) ->
+	arrayToInsert = Array.prototype.splice.apply(arguments, [1])
+	Array.insertArrayAt(index, arrayToInsert)
+
+Array::removeAt = (index) ->
+	this.splice(index, 1)
 
 baseUrl = "http://blog.xebia.fr"
 #baseUrl = "http://localhost/wordpress"
@@ -15,60 +23,40 @@ processRequest = (req, res, url, transform) ->
 	options = utils.buildOptions req, res, url, 5 * 60, transform
 	utils.processRequest options
 
-	return
-
-
-# To be refactored
-#wildcard = (req, res) ->
-#	processRequest req, res, "http://blog.xebia.fr/wp-json-api/" + utils.getUrlToFetch(req).substring("/api/wordpress/".length)
-
-
 authors = (req, res) ->
-	# utils.getUrlToFetch(req).substring("/api/wordpress/authors".length)
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_author_index?count=250", (data, cb) ->
-			delete data.status
-			_(data.authors).each (author) ->
-				author.firstname = author.first_name
-				delete author.first_name
-				author.lastname = author.last_name
-				delete author.last_name
-				return
-			cb(undefined, data)
-
+		delete data.status
+		for author in data.authors
+			author.firstname = author.first_name
+			delete author.first_name
+			author.lastname = author.last_name
+			delete author.last_name
+		cb(undefined, data)
 
 tags = (req, res) ->
-	# utils.getUrlToFetch(req).substring("/api/wordpress/tags".length)
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_tag_index/?count=2000", (data, cb) ->
 		delete data.status
-		_(data.tags).each (tag) ->
+		for tag in data.tags
 			tag.postCount = tag.post_count
 			delete tag.post_count
-			return
 		cb(undefined, data)
-
 
 categories = (req, res) ->
-	# utils.getUrlToFetch(req).substring("/api/wordpress/categories".length)
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_category_index?count=100", (data, cb) ->
 		delete data.status
-		_(data.categories).each (category) ->
+		for category in data.categories
 			category.postCount = category.post_count
 			delete category.post_count
-			return
 		cb(undefined, data)
 
-
 dates = (req, res) ->
-	# utils.getUrlToFetch(req).substring("/api/wordpress/categories".length)
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_date_index?count=1000", (data, cb) ->
 		delete data.status
 		delete data.permalinks
 		for key, value of data.tree
 			data[key] = value
 		delete data.tree
-
 		cb(undefined, data)
-
 
 post = (req, res) ->
 	postId = req.params.id
@@ -81,7 +69,6 @@ post = (req, res) ->
 				data.post = post
 			cb(err, data)
 		)
-
 
 recentPosts = (req, res) ->
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_recent_posts", (data, cb) ->
@@ -131,21 +118,21 @@ transformPost = (post, cb) ->
 	post.commentStatus = post.comment_status
 	delete post.comment_status
 	delete post.title_plain
-	_(post.categories).each (category) ->
+	for category in post.categories
 		category.postCount = category.post_count
 		delete category.post_count
-	_(post.tags).each (tag) ->
+	for tag in post.tags
 		tag.postCount = tag.post_count
 		delete tag.post_count
 	post.authors = [post.author]
 	delete post.author
-	_(post.authors).each (author) ->
+	for author in post.authors
 		author.firstname = author.first_name
 		delete author.firstname
 		author.lastname = author.last_name
 		delete author.last_name
-	_(post.comments).each (author) ->
-		delete author.parent
+	for comment in post.comments
+		delete comment.parent
 	transformPostContent(post, cb)
 
 
@@ -163,7 +150,7 @@ transformPostContent = (post, cb) ->
 			if (err)
 				cb(err)
 			else
-				post.structuredContent = processTextElements(mergeSiblingTexts(removeChildrenWhenDescendantsAreTextOnly(restructureChildren(filterEmptyChildren(mapChildNodes(window.document.body.childNodes, mapChildNode))))))
+				post.structuredContent = cleanUpAttributes(processTextElements(mergeSiblingTexts(stringifyChildren(restructureChildren(filterEmptyChildren(mapChildNodes(window.document.body.childNodes, mapChildNode)))))))
 #				post.structuredContent = restructureElements(structuredContent)
 				cb(err, post)
 				window.close()
@@ -196,7 +183,6 @@ mapChildNodes = (childNodes, mapChildNode) ->
 	_(childNodes).map (childNode) -> mapChildNode(childNode)
 
 mapChildNode = (childNode) ->
-
 	element = {
 		type: childNode.nodeName,
 		attributes: [],
@@ -209,14 +195,23 @@ mapChildNode = (childNode) ->
 		element.text = childNode.nodeValue
 	else if childNode.nodeName == "IMG"
 		element.attributes.push { key: "src", value: childNode.src }
-	else if  childNode.nodeName == "A"
+	else if childNode.nodeName == "A"
 		element.attributes.push { key: "href", value: childNode.href }
+	else if childNode.nodeName == "AUTHOR"
+		element.attributes.push { key: "username", value: childNode.attributes.username.value }
+		element.attributes.push { key: "firstname", value: childNode.attributes.firstname.value }
+		element.attributes.push { key: "lastname", value: childNode.attributes.lastname.value }
+		element.attributes.push { key: "gravatar", value: childNode.attributes.gravatar.value }
+		element.attributes.push { key: "twitter", value: childNode.attributes.twitter.value }
+	else if childNode.nodeName == "CODE"
+		element.attributes.push { key: "language", value: childNode.attributes.language.value }
+
 
 	element.innerHTML = () ->
 		if !element.children.length
 			element.text
 		else
-			_(element.children).chain().map((element) -> element.outerHTML()).join("").value()
+			element.children.map((element) -> element.outerHTML()).reduce (elt1, elt2) -> elt1 + elt2
 
 	element.outerHTML = () ->
 		if element.type == "#text"
@@ -236,12 +231,12 @@ mapChildNode = (childNode) ->
 
 	element
 
-
 restructureChildren = (children) ->
-	for child in children
+	for child, index in children
 		child.children = restructureChildren(child.children)
-		if child.type == "LI" && child.children.length = 1 && child.children[0].type == "DIV"
-			child.children = child.children[0].children
+		if child.type == "DIV"
+			children.removeAt(index)
+			children.insertArrayAt(index, child.children)
 	children
 
 processTextElements = (children) ->
@@ -252,20 +247,27 @@ processTextElements = (children) ->
 	children
 
 filterEmptyChildren = (children) ->
-	_(children).each (child) ->
+	for child in children
 		child.children = filterEmptyChildren(child.children)
-	children = _(children).filter (child) ->
-		child.type == "#text" && child.text.trim() || child.children.length
+	children = children.filter (child) ->
+		child.text && child.text.trim() || child.children.length || child.type in ["IMG"]
 	children
 
-removeChildrenWhenDescendantsAreTextOnly = (children) ->
-	_(children).each (child) ->
+stringifyChildren = (children) ->
+	for child in children
 		if child.children.length
-			if areChildrenTextOnly(child.children)
+			if areChildrenTextOnly(child.children) || child.type in ["TABLE"]
 				child.text = child.innerHTML()
 				child.children = []
 			else
-				removeChildrenWhenDescendantsAreTextOnly(child.children)
+				stringifyChildren(child.children)
+	children
+
+cleanUpAttributes = (children) ->
+	for child in children
+		if child.children.length
+			cleanUpAttributes(child.children)
+		delete child.children
 	children
 
 areChildrenTextOnly = (children) ->
@@ -299,196 +301,10 @@ mergeSiblingTexts = (children) ->
 			text: "#{text.trim()}",
 			children: []
 		})
-	_(children).each (child) ->
-			if child.children.length
-				child.children = mergeSiblingTexts(child.children)
+	for child in children
+		if child.children.length
+			child.children = mergeSiblingTexts(child.children)
 	newChildren
-
-
-
-#insertAt = (array, index) ->
-#	arrayToInsert = Array.prototype.splice.apply(arguments, [2])
-#	insertArrayAt(array, index, arrayToInsert)
-#
-#
-#insertArrayAt = (array, index, arrayToInsert) ->
-#	Array.prototype.splice.apply(array, [index, 0].concat(arrayToInsert))
-#	array
-
-
-#	if element.nodeName == "#text"
-#		cb(undefined, {
-#			type: "#text"
-#			text: element.nodeValue
-#		})
-#	else if element.tagName == "IMG"
-#		image = {
-#			type: "img",
-#			src: element.src
-#			text: element.outerHTML
-#		}
-#		if element.attributes.href
-#			image.href = element.attributes.href
-#		cb(undefined, image)
-#	else if element.tagName == "AUTHOR"
-#		cb(undefined, {
-#			type: "author",
-#			username: element.attributes.username.value
-#			firstname: element.attributes.firstname.value
-#			lastname: element.attributes.lastname.value
-#			gravatar: element.attributes.gravatar.value
-#			twitter: element.attributes.twitter.value
-#		})
-#	else if element.tagName == "CODE"
-#		cb(undefined, {
-#			type: "code",
-#			language: element.attributes.language.value,
-#			text: element.innerHTML
-#		})
-#	else if element.tagName == "A"
-#		if areChildNodesTextOnly(element.childNodes)
-#			cb(undefined, {
-#				type: "a"
-#				text: element.outerHTML
-#			})
-#		else
-#			async.map element.childNodes, mapElement, (err, children) ->
-#				cb(undefined, {
-#					type: "a",
-#					children: mergeSiblingTexts(filterEmptyChildren(children))
-#				})
-#	else if element.tagName == "DIV"
-#		if areChildNodesTextOnly(element.childNodes)
-#			cb(undefined, {
-#				type: "p"
-#				text: "<p>#{element.innerHTML}</p>"
-#			})
-#		else
-#			async.map element.childNodes, mapElement, (err, children) ->
-#				cb(undefined, {
-#					type: "div",
-#					children: mergeSiblingTexts(filterEmptyChildren(children))
-#				})
-#	else if element.tagName == "P"
-#		if areChildNodesTextOnly(element.childNodes)
-#			cb(undefined, {
-#				type: "p"
-#				text: "<p>#{element.innerHTML}</p>"
-#			})
-#		else
-#			async.map element.childNodes, mapElement, (err, children) ->
-#				cb(undefined, {
-#					type: "p",
-#					children: mergeSiblingTexts(filterEmptyChildren(children))
-#				})
-#	else if element.tagName == "SPAN"
-#		if areChildNodesTextOnly(element.childNodes)
-#			cb(undefined, {
-#				type: "span"
-#				ignore: element.innerHTML.trim().length == 0
-#				text: element.outerHTML
-#			})
-#		else
-#			async.map element.childNodes, mapElement, (err, children) ->
-#				cb(undefined, {
-#					type: "span",
-#					children: mergeSiblingTexts(filterEmptyChildren(children))
-#				})
-#	else if element.tagName == "EM"
-#		if areChildNodesTextOnly(element.childNodes)
-#			cb(undefined, {
-#				type: "em"
-#				text: "<em>#{element.innerHTML}</em>"
-#			})
-#		else
-#			async.map element.childNodes, mapElement, (err, children) ->
-#				cb(undefined, {
-#					type: "em",
-#					children: mergeSiblingTexts(filterEmptyChildren(children))
-#				})
-#	else if element.tagName == "STRONG"
-#		if areChildNodesTextOnly(element.childNodes)
-#			cb(undefined, {
-#				type: "em"
-#				text: "<em>#{element.innerHTML}</em>"
-#			})
-#		else
-#			async.map element.childNodes, mapElement, (err, children) ->
-#				cb(undefined, {
-#					type: "em",
-#					children: mergeSiblingTexts(filterEmptyChildren(children))
-#				})
-#	else if element.tagName == "H1"
-#		cb(undefined, {
-#			type: "h1",
-#			text: element.innerHTML
-#		})
-#	else if element.tagName == "H2"
-#		cb(undefined, {
-#			type: "h2",
-#			text: element.innerHTML
-#		})
-#	else if element.tagName == "H3"
-#		cb(undefined, {
-#			type: "h3",
-#			text: element.innerHTML
-#		})
-#	else if element.tagName == "H4"
-#		cb(undefined, {
-#			type: "h4",
-#			text: element.innerHTML
-#		})
-#	else if element.tagName == "H5"
-#		cb(undefined, {
-#			type: "h4",
-#			text: element.innerHTML
-#		})
-#	else if element.tagName == "H6"
-#		cb(undefined, {
-#			type: "h6",
-#			text: element.innerHTML
-#		})
-#	else if element.tagName == "UL"
-#		if areChildNodesTextOnly(element.childNodes)
-#			cb(undefined, {
-#				type: "ul"
-#				text: "<ul>#{element.innerHTML}</ul>"
-#			})
-#		else
-#			async.map element.childNodes, mapElement, (err, children) ->
-#				cb(undefined, {
-#					type: "ul",
-#					children: mergeSiblingTexts(filterEmptyChildren(children))
-#				})
-#	else if element.tagName == "OL"
-#		if areChildNodesTextOnly(element.childNodes)
-#			cb(undefined, {
-#				type: "ol"
-#				text: "<ol>#{element.innerHTML}</ol>"
-#			})
-#		else
-#			async.map element.childNodes, mapElement, (err, children) ->
-#				cb(undefined, {
-#					type: "ol",
-#					children: mergeSiblingTexts(filterEmptyChildren(children))
-#				})
-#	else if element.tagName == "LI"
-#		if areChildNodesTextOnly(element.childNodes)
-#			cb(undefined, {
-#				type: "li"
-#				text: "<li>#{element.innerHTML}</li>"
-#			})
-#		else
-#			async.map element.childNodes, mapElement, (err, children) ->
-#				cb(undefined, {
-#					type: "li",
-#					children: mergeSiblingTexts(filterEmptyChildren(children))
-#				})
-#	else
-#		cb(undefined, {
-#			type: element.tagName.toLowerCase(),
-#			text: element.innerHTML
-#		})
 
 module.exports =
 	tags : tags,

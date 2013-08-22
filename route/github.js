@@ -32,7 +32,7 @@ repos = function(req, res) {
       }
       return repo;
     });
-    return cb(data);
+    return cb(void 0, data);
   });
 };
 
@@ -47,7 +47,7 @@ public_members = function(req, res) {
       }
       return owner;
     });
-    return cb(data);
+    return cb(void 0, data);
   });
 };
 

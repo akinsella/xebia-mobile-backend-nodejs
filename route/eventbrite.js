@@ -50,7 +50,7 @@ list = function(req, res) {
       }
       return event;
     });
-    return cb(data);
+    return cb(void 0, data);
   });
 };
 

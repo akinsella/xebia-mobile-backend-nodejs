@@ -159,7 +159,7 @@ fetchTwitterData = function(twitterUrl, credentials, req, res) {
     _(data).each(function(tweet) {
       return shortenTweet(tweet);
     });
-    return cb(data);
+    return cb(void 0, data);
   });
 };
 
