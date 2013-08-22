@@ -41,7 +41,7 @@ list = (req, res) ->
 					if !(oKey in organizerProps) then delete event.organizer[oKey]
 			event
 		)
-		cb(data)
+		cb(undefined, data)
 
 module.exports =
 	list : list

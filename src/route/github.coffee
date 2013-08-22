@@ -30,7 +30,7 @@ repos = (req, res) ->
 					if !(oKey in ownerProps) then delete repo.owner[oKey]
 			repo
 		)
-		cb(data)
+		cb(undefined, data)
 
 
 # To be refactored
@@ -41,7 +41,7 @@ public_members = (req, res) ->
 				if !(oKey in ownerProps) then delete owner[oKey]
 			owner
 		)
-		cb(data)
+		cb(undefined, data)
 
 
 module.exports =

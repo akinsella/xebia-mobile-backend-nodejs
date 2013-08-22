@@ -80,7 +80,7 @@ videos = (req, res) ->
 		else
 			processRequest req, res, url, oauth, credentials, (data, cb) ->
 				_(data.videos.video).each((video) -> transformVideo(video) )
-				cb(data)
+				cb(undefined, data)
 	)
 
 transformVideo = (video) ->

@@ -33,7 +33,7 @@ authors = (req, res) ->
 				author.lastname = author.last_name
 				delete author.last_name
 				return
-			cb(data)
+			cb(undefined, data)
 
 
 tags = (req, res) ->
@@ -44,7 +44,7 @@ tags = (req, res) ->
 			tag.postCount = tag.post_count
 			delete tag.post_count
 			return
-		cb(data)
+		cb(undefined, data)
 
 
 categories = (req, res) ->
@@ -55,7 +55,7 @@ categories = (req, res) ->
 			category.postCount = category.post_count
 			delete category.post_count
 			return
-		cb(data)
+		cb(undefined, data)
 
 
 dates = (req, res) ->
@@ -67,7 +67,7 @@ dates = (req, res) ->
 			data[key] = value
 		delete data.tree
 
-		cb(data)
+		cb(undefined, data)
 
 
 post = (req, res) ->
@@ -89,38 +89,38 @@ recentPosts = (req, res) ->
 		data.total = data.count_total
 		delete data.count_total
 		async.map(data.posts, transformPost, (err, posts) ->
-			cb(data)
+			data.posts = posts
+			cb(err, data)
 		)
 
 authorPosts = (req, res) ->
 	authorId = req.params.id
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_author_posts?id=#{authorId}", (data, cb) ->
-		_(data.posts).each (post) ->
-			transformPost(post)
-		cb(data)
-
+		async.map(data.posts, transformPost, (err, posts) ->
+			data.posts = posts
+			cb(err, data)
+		)
 
 tagPosts = (req, res) ->
 	tagId = req.params.id
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_tag_posts?id=#{tagId}", (data, cb) ->
-		_(data.posts).each (post) ->
-			transformPost(post)
-		cb(data)
-
+		async.map(data.posts, transformPost, (err, posts) ->
+			data.posts = posts
+			cb(err, data)
+		)
 
 categoryPosts = (req, res) ->
 	categoryId = req.params.id
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_category_posts?id=#{categoryId}", (data, cb) ->
-		_(data.posts).each (post) ->
-			transformPost(post)
-		cb(data)
-
+		async.map(data.posts, transformPost, (err, posts) ->
+			data.posts = posts
+			cb(err, data)
+		)
 
 datePosts = (req, res) ->
 	year = req.params.year
 	month = req.params.month
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_date_posts_sync_data/?date=#{year}#{month}$&count=1000"
-
 
 
 transformPost = (post, cb) ->
@@ -152,6 +152,23 @@ transformPost = (post, cb) ->
 transformPostContent = (post, cb) ->
 #	[author twitter="@bmoussaud" username="bmoussaud" urls="http://github.com/user" gravatar="bmoussaud@xebialabs.com" lastname="Moussaud" firstname="Benoit"/]
 
+	processAuthorInformations(post)
+	processLanguageInformations(post)
+
+	jsdom.env
+		html: post.content,
+		src: [],
+#		src: [jquery],
+		done: (err, window) ->
+			if (err)
+				cb(err)
+			else
+				post.structuredContent = processTextElements(mergeSiblingTexts(removeChildrenWhenDescendantsAreTextOnly(restructureChildren(filterEmptyChildren(mapChildNodes(window.document.body.childNodes, mapChildNode))))))
+#				post.structuredContent = restructureElements(structuredContent)
+				cb(err, post)
+				window.close()
+
+processAuthorInformations = (post) ->
 	matches = post.content.match(/\[author.*\]/g)
 	console.log "Matches: #{matches}"
 
@@ -168,25 +185,12 @@ transformPostContent = (post, cb) ->
 
 			post.content = post.content.replace(match, "<author username=\"#{username}\" firstname=\"#{firstname}\" lastname=\"#{lastname}\" gravatar=\"#{gravatar}\" twitter=\"#{twitter}\" />")
 
-
+processLanguageInformations = (post) ->
 	languages = [ "java" ]
 	for language in languages
 		post.content = post.content.replace(/\[java\]/g, "<code language=\"#{language}\">")
 		post.content = post.content.replace(/\[\/java\]/g, "</code>")
 
-
-	jsdom.env
-		html: post.content,
-		src: [],
-#		src: [jquery],
-		done: (err, window) ->
-			if (err)
-				cb(err)
-			else
-				post.structuredContent = mergeSiblingTexts(removeChildrenWhenDescendantsAreTextOnly(restructureChildren(filterEmptyChildren(mapChildNodes(window.document.body.childNodes, mapChildNode)))))
-#				post.structuredContent = restructureElements(structuredContent)
-				cb(err, post)
-				window.close()
 
 mapChildNodes = (childNodes, mapChildNode) ->
 	_(childNodes).map (childNode) -> mapChildNode(childNode)
@@ -195,7 +199,8 @@ mapChildNode = (childNode) ->
 
 	element = {
 		type: childNode.nodeName,
-		attributes: []
+		attributes: [],
+		children: []
 	}
 
 	if childNode.childNodes.length
@@ -208,10 +213,10 @@ mapChildNode = (childNode) ->
 		element.attributes.push { key: "href", value: childNode.href }
 
 	element.innerHTML = () ->
-		if !element.children || !element.children.length
+		if !element.children.length
 			element.text
 		else
-			_(element.children).chain().map((element) -> element.outerHTML() ).join("").value()
+			_(element.children).chain().map((element) -> element.outerHTML()).join("").value()
 
 	element.outerHTML = () ->
 		if element.type == "#text"
@@ -234,21 +239,28 @@ mapChildNode = (childNode) ->
 
 restructureChildren = (children) ->
 	for child in children
+		child.children = restructureChildren(child.children)
 		if child.type == "LI" && child.children.length = 1 && child.children[0].type == "DIV"
 			child.children = child.children[0].children
-		child.children = restructureChildren(child.children)
+	children
+
+processTextElements = (children) ->
+	for child in children
+		child.children = processTextElements(child.children)
+		if child.type == "#text"
+			child.type = "P"
 	children
 
 filterEmptyChildren = (children) ->
-	children = _(children).filter (child) ->
-		child.type == "#text" && child.text.trim() || child.children && child.children.length
 	_(children).each (child) ->
 		child.children = filterEmptyChildren(child.children)
+	children = _(children).filter (child) ->
+		child.type == "#text" && child.text.trim() || child.children.length
 	children
 
 removeChildrenWhenDescendantsAreTextOnly = (children) ->
 	_(children).each (child) ->
-		if child.children && child.children.length
+		if child.children.length
 			if areChildrenTextOnly(child.children)
 				child.text = child.innerHTML()
 				child.children = []
@@ -270,23 +282,25 @@ mergeSiblingTexts = (children) ->
 	index = 0
 	for child in children
 		index++
-		if (!child.children || !child.children.length) && child.type in ["#text", "P", "SPAN", "EM", "A", "UL", "OL", "LI", "STRONG", "EM"]
+		if !child.children.length && child.type in ["#text", "P", "SPAN", "EM", "A", "LI", "STRONG", "EM", "AUTHOR"]
 			text = "#{text}#{child.outerHTML()}"
 		else
 			if text.length
 				newChildren.push({
 					type: "#text",
-					text: "#{text.trim()}"
+					text: "#{text.trim()}",
+					children: []
 				})
 			text = ""
 			newChildren.push(child)
 	if text.length
 		newChildren.push({
 			type: "#text",
-			text: "#{text.trim()}"
+			text: "#{text.trim()}",
+			children: []
 		})
 	_(children).each (child) ->
-			if child.children && child.children.length
+			if child.children.length
 				child.children = mergeSiblingTexts(child.children)
 	newChildren
 

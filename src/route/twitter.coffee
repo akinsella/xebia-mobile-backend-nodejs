@@ -138,7 +138,7 @@ fetchTwitterData = (twitterUrl, credentials, req, res) ->
 		_(data).each((tweet) ->
 			shortenTweet(tweet)
 		)
-		cb(data)
+		cb(undefined, data)
 
 
 tweetProps = [
