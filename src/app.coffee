@@ -8,11 +8,11 @@ mongo = require './lib/mongo'
 
 passport = require 'passport'
 login = require 'connect-ensure-login'
+role = require 'connect-roles'
 
 requestLogger = require './lib/requestLogger'
 allowCrossDomain = require './lib/allowCrossDomain'
 utils = require './lib/utils'
-security = require './lib/security'
 
 config = require './conf/config'
 
@@ -29,14 +29,12 @@ client = require './route/client'
 user = require './route/user'
 vimeo = require './route/vimeo'
 card = require './route/card'
-site = require './route/site'
 oauth2 = require './oauth2'
-
+authMiddleware = require './middleware/authMiddleware'
+authService = require './service/authService'
 
 console.log "Application Name: #{config.appname}"
 console.log "Env: #{JSON.stringify config}"
-
-require './auth'
 
 # Express
 app = express()
@@ -46,6 +44,21 @@ gracefullyClosing = false
 #cacheMiddleware = (seconds) -> (req, res, next) ->
 #    res.setHeader "Cache-Control", "public, max-age=#{seconds}"
 #    next()
+
+passport.serializeUser authService.serializeUser
+passport.deserializeUser authService.deserializeUser
+
+passport.use authMiddleware.LocalStrategy
+passport.use authMiddleware.GoogleStrategy
+passport.use authMiddleware.BasicStrategy
+passport.use authMiddleware.ClientPasswordStrategy
+passport.use authMiddleware.BearerStrategy
+
+role.use authService.checkRoleAnonymous
+role.use authService.ROLE_AGENT, authService.checkRoleAgent
+role.use authService.ROLE_SUPER_AGENT, authService.checkRoleSuperAgent
+role.use authService.ROLE_ADMIN, authService.checkRoleAdmin
+role.setFailureHandler authService.failureHandler
 
 ECT = require 'ect'
 ectRenderer = ECT
@@ -102,6 +115,8 @@ app.configure ->
 	app.use passport.initialize()
 	app.use passport.session()
 
+	app.use role
+
 	app.use app.router
 
 	app.use (err, req, res, next) ->
@@ -127,9 +142,6 @@ app.get '/api/eventbrite/event', eventbrite.list
 app.get '/api/github/repository', github.repos
 app.get '/api/github/member', github.public_members
 
-# app.get '/api/twitter/auth/stream/XebiaFr', twitter.stream_xebiafr
-# app.get '/api/twitter/auth/user/:user', twitter.user_timeline_authenticated
-#app.get '/api/twitter/user/:user', twitter.user_timeline
 app.get '/api/twitter/timeline', twitter.xebia_timeline
 
 app.get '/api/wordpress/post/recent', wordpress.recentPosts
@@ -182,21 +194,17 @@ app.get 'api/notification/push', notification.push
 
 app.get '/api/user/me', passport.authenticate("bearer", session: false), user.me
 
-app.get '/', site.index
-app.get '/login', site.loginForm
-app.post '/login', site.login
-app.get '/logout', site.logout
-app.get '/account', login.ensureLoggedIn(), site.account
+app.get '/login', auth.loginForm
+app.post '/login', auth.login
+app.get '/logout', auth.logout
+app.get '/account', login.ensureLoggedIn(), auth.account
+
+app.get '/auth/google', passport.authenticate('google', { failureRedirect: '/login' }), auth.authGoogle
+app.get '/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), auth.authGoogleCallback
 
 app.get '/dialog/authorize', oauth2.authorization
 app.post '/dialog/authorize/decision', oauth2.decision
 app.post '/oauth/token', oauth2.token
-
-app.get '/auth/account', security.ensureAuthenticated, auth.account
-app.get '/auth/login', auth.login
-app.get '/auth/google', passport.authenticate('google', { failureRedirect: '/login' }), auth.authGoogle
-app.get '/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), auth.authGoogleCallback
-app.get '/auth/logout', auth.logout
 
 #app.get '*', route.index
 

@@ -1,16 +1,19 @@
 utils = require '../lib/utils'
 security = require '../lib/security'
-
+passport = require 'passport'
 
 account = (req, res) =>
-	res.render 'account', { user: req.user }
-	return
+	res.render 'account',
+		user: req.user
 
+loginForm = (req, res) ->
+	res.render "login"
 
-login = (req, res) =>
-	res.render 'login', { user: req.user }
-	return
+login = passport.authenticate 'local', { successRedirect: '/', failureRedirect: '/login' }
 
+logout = (req, res) =>
+	req.logout()
+	res.redirect "/login"
 
 # GET /auth/google
 #   Use passport.authenticate() as route middleware to authenticate the
@@ -20,7 +23,6 @@ login = (req, res) =>
 authGoogle = (req, res) =>
 	res.redirect '/'
 	return
-
 
 # GET /auth/google/callback
 #   Use passport.authenticate() as route middleware to authenticate the
@@ -33,15 +35,10 @@ authGoogleCallback = (req, res) =>
 	return
 
 
-logout = (req, res) =>
-	req.logout()
-	res.redirect '/'
-	return
-
-
 module.exports =
-	account : account,
-	login : login,
-	authGoogle : authGoogle,
-	authGoogleCallback : authGoogleCallback,
-	logout : logout
+	account: account
+	login: login
+	loginForm: loginForm
+	authGoogle: authGoogle
+	authGoogleCallback: authGoogleCallback
+	logout: logout

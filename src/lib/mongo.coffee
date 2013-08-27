@@ -3,7 +3,7 @@ mongoose = require 'mongoose'
 pureautoinc  = require 'mongoose-pureautoinc'
 
 options =
-  db: { native_parser: true },
+  db: { native_parser: false },
   server: { poolSize: 5 },
   user: config.mongo.username,
   pass: config.mongo.password

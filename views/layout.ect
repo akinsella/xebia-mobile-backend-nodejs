@@ -1,8 +1,8 @@
 <!-- layout.ect -->
 <!DOCTYPE html>
-<html ng-app="xebia-notification">
+<html ng-app="xebia-mobile-backend">
     <head>
-        <title>Xebia Notification</title>
+        <title>Xebia Mobile Backend</title>
 
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -34,17 +34,23 @@
         <script src="scripts/libs/angular/angular-sanitize.js"></script>
         <script src="scripts/controllers.js"></script>
 
+        <style>
+            [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+              display: none !important;
+            }
+        </style>
     </head>
-    <body ng-controller="RootController">
+    <body ng-controller="RootController" ng-cloak>
         <header>
             <div>
                 <nav id="menu">
                     <ul>
                         <li><a href="/">Home</a></li>
+                        <li><a href="/admin" ng-show="Auth.hasRole('ROLE_ADMIN')">Admin</a></li>
                     </ul>
                 </nav>
                 <div id="user" ng-controller="UserDetailsController">
-                    <div id="user-details-loggedin" ng-show="authenticated">
+                    <div id="user-details-loggedin" ng-show="Auth.isAuthenticated()">
                         <a href="/account">
                             <img src="{{user.avatarUrl}}" alt="{{user.firstName}}" width="40px" height="40px"/>
                             <span>{{user.fullName}}<span>( {{user.email}} )</span></span>
@@ -54,7 +60,7 @@
                         </div>
                     </div>
 
-                    <div id="user-details-login" ng-show="!authenticated">
+                    <div id="user-details-login" ng-show="Auth.isNotAuthenticated()">
                         <span><a href="/login">Login</a></span>
                     </div>
                 </div>

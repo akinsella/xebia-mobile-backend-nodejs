@@ -3,14 +3,12 @@ _ = require('underscore')._
 apn = require 'apn'
 AuthorizationCode = require "../model/authorizationCode"
 
-exports.find = (code, done) ->
+find = (code, done) ->
 	AuthorizationCode.find { code: code }, (err, authorizationCode) ->
 		if (err)
-			done err, null
-		else
-			done null, authorizationCode
+			done err, authorizationCode
 
-exports.save = (code, clientID, redirectURI, userID, done) ->
+save = (code, clientID, redirectURI, userID, done) ->
 	authorizationCode = new AuthorizationCode({
 		clientID: clientID,
 		redirectURI: redirectURI,
@@ -18,7 +16,8 @@ exports.save = (code, clientID, redirectURI, userID, done) ->
 	})
 
 	authorizationCode.save (err) ->
-		if (err)
-			done err
-		else
-			done null
+		done err, authorizationCode
+
+module.exports =
+	find: find
+	save:save

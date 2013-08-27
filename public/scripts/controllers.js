@@ -14,7 +14,7 @@
   /* Application Module*/
 
 
-  appModule = angular.module('xebia-notification', []);
+  appModule = angular.module('xebia-mobile-backend', []);
 
   /* Services*/
 

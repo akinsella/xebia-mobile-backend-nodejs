@@ -27,9 +27,20 @@ User = new mongo.Schema({
     "default": '',
     trim: true
   },
+  gender: {
+    type: String,
+    "default": '',
+    trim: true
+  },
   googleId: {
     type: String,
     "default": '',
+    trim: true
+  },
+  role: {
+    type: String,
+    "default": '',
+    'enum': ["ROLE_USER", "ROLE_ADMIN"],
     trim: true
   },
   createAt: {

@@ -52,7 +52,9 @@
     "moment": "*",
     "oauth": "0.9.10",
     "jsdom": "*",
-    "async": "*"
+    "async": "*",
+    "validator": "*",
+    "connect-roles": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

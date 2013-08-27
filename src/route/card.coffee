@@ -1,17 +1,17 @@
 utils = require '../lib/utils'
 _ = require('underscore')._
-Card = require '../service/card'
+cardService = require '../service/cardService'
 
 cards = (req, res) ->
 	res.charset = 'UTF-8'
 
-	cards = Card.cards()
+	cards = cardService.cards()
 	utils.responseData 200, "", cards, {req: req, res: res}
 
 categories = (req, res) ->
 	res.charset = 'UTF-8'
 
-	categories = Card.categories()
+	categories = cardService.categories()
 	utils.responseData 200, "", categories, {req: req, res: res}
 
 cardsByCategoryId = (req, res) ->
@@ -19,11 +19,11 @@ cardsByCategoryId = (req, res) ->
 
 	categoryId = req.params.id
 
-	category = _(Card.categories().categories).find( (category) ->
+	category = _(cardService.categories().categories).find( (category) ->
 		category.id == categoryId
 	)
 
-	cards = _(Card.cards().cards).filter( (card) ->
+	cards = _(cardService.cards().cards).filter( (card) ->
 		card.category.id == categoryId
 	)
 
@@ -38,7 +38,7 @@ cardById = (req, res) ->
 	res.charset = 'UTF-8'
 
 	cardId = req.params.id
-	cards = _(Card.cards().cards).find( (card) ->
+	cards = _(cardService.cards().cards).find( (card) ->
 		card.id == cardId
 	)
 

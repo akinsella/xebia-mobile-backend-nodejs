@@ -3,7 +3,8 @@
 Module dependencies.
 */
 
-var account, index, login, loginForm, logout, passport;
+var account, index, login, loginForm, logout, passport,
+  _this = this;
 
 passport = require('passport');
 
@@ -11,24 +12,24 @@ index = function(req, res) {
   return res.send("OAuth 2.0 Server");
 };
 
+account = function(req, res) {
+  return res.render('account', {
+    user: req.user
+  });
+};
+
 loginForm = function(req, res) {
   return res.render("login");
 };
 
-login = passport.authenticate("local", {
-  successReturnToOrRedirect: "/",
-  failureRedirect: "/login"
+login = passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login'
 });
 
 logout = function(req, res) {
   req.logout();
-  return res.redirect("/");
-};
-
-account = function(req, res) {
-  return res.render("account", {
-    user: req.user
-  });
+  return res.redirect("/login");
 };
 
 module.exports = {
