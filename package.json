@@ -41,7 +41,6 @@
     "passport-http-bearer": "0.2.x",
     "passport-oauth2-client-password": "0.1.x",
     "connect-ensure-login": "0.1.x",
-    "ect": "*",
     "coffee-script": "*",
     "uglify-js": "*",
     "mongoose": "*",

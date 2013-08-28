@@ -1,8 +1,148 @@
-<html>
-	<head>
-		<title>Xebia Mobile Backend</title>
-	</head>
-	<body>
-		<h1>Welcome on Xebia Mobile Backend</h1>
-	</body>
+<!-- layout.ect -->
+<!DOCTYPE html>
+<html ng-app="xebia-mobile-backend">
+    <head>
+        <title>Xebia Mobile Backend</title>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+        <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+
+        <link rel="stylesheet" media="screen" href="styles/styles.css">
+        <link rel="stylesheet" media="screen" href="styles/gh-buttons.css">
+        <link rel="stylesheet" media="screen" href="scripts/libs/select2/select2.css"/>
+
+        <script src="scripts/libs/jquery/jquery-1.9.0.js"></script>
+        <script src="scripts/libs/select2/select2.js"></script>
+        <script src="scripts/libs/moment/moment-1.7.2.js"></script>
+
+        <script src="scripts/libs/angular/angular.js"></script>
+        <script src="scripts/libs/angular/angular-cookies.js"></script>
+        <script src="scripts/libs/angular/angular-loader.js"></script>
+        <script src="scripts/libs/angular/angular-resource.js"></script>
+        <script src="scripts/libs/angular/angular-sanitize.js"></script>
+
+        <script src="scripts/app.js"></script>
+        <script src="scripts/auth.js"></script>
+        <script src="scripts/news.js"></script>
+        <script src="scripts/scripts.js"></script>
+
+        <style>
+            [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+              display: none !important;
+            }
+        </style>
+    </head>
+    <body ng-controller="RootCtrl" ng-cloak>
+        <header>
+            <div>
+                <nav id="menu">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/admin" ng-show="Auth.hasRole('ROLE_ADMIN')">Admin</a></li>
+                    </ul>
+                </nav>
+                <div id="user" ng-controller="UserDetailsCtrl">
+                    <div id="user-details-loggedin" ng-show="Auth.isAuthenticated()">
+                        <a href="/account">
+                            <img src="{{user.avatarUrl}}" alt="{{user.firstName}}" width="40px" height="40px"/>
+                            <span>{{user.fullName}}<span>( {{user.email}} )</span></span>
+                        </a> | <a href="/logout">Logout</a>
+                        <div ng-show="!authenticated">
+                            <span><a href="/login">Login</a></span>
+                        </div>
+                    </div>
+
+                    <div id="user-details-login" ng-show="Auth.isNotAuthenticated()">
+                        <span><a href="/login">Login</a></span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <nav id="submenu" ng-controller="SubMenuCtrl">
+                    <ul>
+                        <li ng-repeat="menu in menus">
+                            <a href="{{menu.url}}">{{menu.message}}</a>
+                        </li>
+                    </ul>
+                </nav>
+             </div>
+        </header>
+        <section id="main">
+            <aside id="sidebar" ng-controller="SubMenuCtrl" ng-show="groups.length > 0" ng-repeat="group in groups">
+                <section id="sb-actions">
+                    <h1>Actions</h1>
+                    <ul>
+                        <li ng-repeat="action in actions">
+                            <a class="btn" href="{{url}}">{{message}}</a>
+                        </li>
+                    </ul>
+                </section>
+            </aside>
+
+            <section id="content" class="{{sidebar}}sidebar" ng-controller="ContentCtrl">
+                <% content %>
+            </section>
+            <br style="clear: both;" />
+        </section>
+        <footer>
+            <ul>
+                <li>
+                    <h1>XEBIA FRANCE</h1>
+                    <section>
+                        <address>
+                            156 boulevard Haussmann<br />
+                        <br />
+                            75008 PARIS<br />
+                            +33 1 53 89 99 99<br />
+                        </address>
+                        <a href="mailto:info@@xebia.fr">info@@xebia.fr</a>
+                    </section>
+                </li><!--
+             --><li>
+                    <h1>XEBIA</h1>
+
+                    <section>
+                        <ul id="websites">
+                            <li><a href="#">Site Xebia France</a></li>
+                            <li><a href="#">Blog Xebia France</a></li>
+                            <li><a href="#">Xebia Studio France</a></li>
+                            <li><a href="#">Xebia Training Nederlands</a></li>
+                            <li><a href="#">Xebia Training UK</a></li>
+                            <li><a href="#">Xebia Labs</a></li>
+                            <li><a href="#">Xebia Inde</a></li>
+                        </ul>
+                    </section>
+                </li><!--
+             --><li>
+                    <h1>SUIVEZ-NOUS !</h1>
+
+                    <section>
+                        <ul>
+                            <li><a href="">Suivez-nous sur le blog xebia</a></li>
+                        </ul>
+                    </section>
+                </li>
+            </ul>
+
+            <div id="copyright"> Copyright 2013 - <a href="http://blog.xebia.fr">Xebia.fr</a></div>
+        </footer>
+
+        <script type="text/javascript">
+/*
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-1889791-20']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+*/
+        </script>
+
+    </body>
 </html>
+

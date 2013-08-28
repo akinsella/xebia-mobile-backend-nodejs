@@ -16,7 +16,6 @@ utils = require './lib/utils'
 
 config = require './conf/config'
 
-route = require './route'
 github = require './route/github'
 twitter = require './route/twitter'
 eventbrite = require './route/eventbrite'
@@ -60,20 +59,9 @@ role.use authService.ROLE_SUPER_AGENT, authService.checkRoleSuperAgent
 role.use authService.ROLE_ADMIN, authService.checkRoleAdmin
 role.setFailureHandler authService.failureHandler
 
-ECT = require 'ect'
-ectRenderer = ECT
-	cache: true,
-	watch: true,
-	root: "views"
-
 app.configure ->
 	console.log "Environment: #{app.get('env')}"
 	app.set 'port', config.port or process.env.PORT or 8000
-
-	app.set 'views', "#{__dirname}/views"
-	app.set 'view engine', 'ect'
-
-	app.engine '.ect', ectRenderer.render
 
 	app.use (req, res, next) ->
 		return next() unless gracefullyClosing
@@ -84,9 +72,7 @@ app.configure ->
 		req.forwardedSecure = (req.headers["x-forwarded-proto"] == "https")
 		next()
 
-	app.use '/images', express.static("#{__dirname}/public/images")
-	app.use '/scripts', express.static("#{__dirname}/public/scripts")
-	app.use '/styles', express.static("#{__dirname}/public/styles")
+	app.use '/', express.static("#{__dirname}/public")
 
 	app.use express.favicon()
 	app.use express.bodyParser()
@@ -133,9 +119,6 @@ app.configure 'development', () ->
 
 app.configure 'production', () ->
 	app.use express.errorHandler()
-
-
-app.get '/', route.index
 
 app.get '/api/eventbrite/event', eventbrite.list
 
@@ -205,8 +188,6 @@ app.get '/auth/google/callback', passport.authenticate('google', { failureRedire
 app.get '/dialog/authorize', oauth2.authorization
 app.post '/dialog/authorize/decision', oauth2.decision
 app.post '/oauth/token', oauth2.token
-
-#app.get '*', route.index
 
 
 httpServer = app.listen app.get('port')
