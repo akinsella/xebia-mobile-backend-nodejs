@@ -1,11 +1,11 @@
 ###
 Module dependencies.
 ###
-oauth2orize = require("oauth2orize")
-passport = require("passport")
-login = require("connect-ensure-login")
-db = require("./db")
-utils = require("./lib/utils")
+oauth2orize = require "oauth2orize"
+passport = require "passport"
+db = require "./db"
+utils = require "./lib/utils"
+security = require "./lib/security"
 
 # create OAuth 2.0 server
 server = oauth2orize.createServer()
@@ -85,7 +85,7 @@ server.exchange oauth2orize.exchange.code((client, code, redirectURI, done) ->
 # to obtain their approval (displaying details about the client requesting
 # authorization).  We accomplish that here by routing through `ensureLoggedIn()`
 # first, and rendering the `dialog` view.
-exports.authorization = [login.ensureLoggedIn(), server.authorization((clientID, redirectURI, done) ->
+exports.authorization = [security.ensureAuthenticated, server.authorization((clientID, redirectURI, done) ->
 	db.clients.findByClientId clientID, (err, client) ->
 		return done(err)  if err
 
@@ -109,7 +109,7 @@ exports.authorization = [login.ensureLoggedIn(), server.authorization((clientID,
 # requested by a client application.  Based on the grant type requested by the
 # client, the above grant middleware configured above will be invoked to send
 # a response.
-exports.decision = [login.ensureLoggedIn(), server.decision()]
+exports.decision = [security.ensureAuthenticated, server.decision()]
 
 # token endpoint
 #
@@ -117,6 +117,4 @@ exports.decision = [login.ensureLoggedIn(), server.decision()]
 # for access tokens.  Based on the grant type being exchanged, the above
 # exchange middleware will be invoked to handle the request.  Clients must
 # authenticate when making requests to this endpoint.
-exports.token = [passport.authenticate(["basic", "oauth2-client-password"],
-	session: false
-), server.token(), server.errorHandler()]
+exports.token = [passport.authenticate( ["basic", "oauth2-client-password"], session: false ), server.token(), server.errorHandler()]

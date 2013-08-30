@@ -19,26 +19,26 @@ ROLE_ADMIN = "ROLE_ADMIN";
 ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
 
 checkRoleAnonymous = function(req, action) {
-  console.log("User is authenticated: " + req.user.isAuthenticated);
-  if (!req.user.isAuthenticated) {
+  console.log("User is authenticated: " + (req.isAuthenticated()));
+  if (!req.isAuthenticated()) {
     return action === ROLE_ANONYMOUS;
   }
 };
 
 checkRoleAgent = function(req, action) {
-  if (req.user.role === ROLE_AGENT) {
+  if (req.isAuthenticated() && req.user.role === ROLE_AGENT) {
     return true;
   }
 };
 
 checkRoleSuperAgent = function(req, action) {
-  if (req.user.role === ROLE_SUPER_AGENT) {
+  if (req.isAuthenticated() && req.user.role === ROLE_SUPER_AGENT) {
     return true;
   }
 };
 
 checkRoleAdmin = function(req, action) {
-  if (req.user.role === ROLE_ADMIN) {
+  if (req.isAuthenticated() && req.user.role === ROLE_ADMIN) {
     return true;
   }
 };
@@ -60,11 +60,9 @@ authenticateUser = function(email, password, done) {
 
 failureHandler = function(req, res, action) {
   if (req.isAuthenticated()) {
-    res.status(401);
-    return res.send("Unauthorized");
+    return res.send(401, "Unauthorized");
   } else {
-    res.status(403);
-    return res.send("Forbidden");
+    return res.send(403, "Forbidden");
   }
 };
 

@@ -7,12 +7,13 @@ MongoStore = require('connect-mongo')(express)
 mongo = require './lib/mongo'
 
 passport = require 'passport'
-login = require 'connect-ensure-login'
-role = require 'connect-roles'
+role = require './lib/connect-roles-fixed'
 
 requestLogger = require './lib/requestLogger'
 allowCrossDomain = require './lib/allowCrossDomain'
 utils = require './lib/utils'
+
+security = require './lib/security'
 
 config = require './conf/config'
 
@@ -175,15 +176,15 @@ app.get '/api/notification', notification.list
 app.get '/api/notification/:id', notification.findById
 app.get 'api/notification/push', notification.push
 
-app.get '/api/user/me', passport.authenticate("bearer", session: false), user.me
+#app.get '/api/user/me', passport.authenticate("bearer", session: false), user.me
+app.get '/api/user/me', security.ensureAuthenticated, user.me
 
-app.get '/login', auth.loginForm
 app.post '/login', auth.login
 app.get '/logout', auth.logout
-app.get '/account', login.ensureLoggedIn(), auth.account
+app.get '/account', security.ensureAuthenticated, auth.account
 
-app.get '/auth/google', passport.authenticate('google', { failureRedirect: '/login' }), auth.authGoogle
-app.get '/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), auth.authGoogleCallback
+app.get '/auth/google', passport.authenticate('google')
+app.get '/auth/google/callback', auth.authGoogleCallback
 
 app.get '/dialog/authorize', oauth2.authorization
 app.post '/dialog/authorize/decision', oauth2.decision

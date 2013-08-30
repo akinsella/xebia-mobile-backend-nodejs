@@ -19,7 +19,6 @@
 
         <script src="scripts/libs/angular/angular.js"></script>
         <script src="scripts/libs/angular/angular-cookies.js"></script>
-        <script src="scripts/libs/angular/angular-loader.js"></script>
         <script src="scripts/libs/angular/angular-resource.js"></script>
         <script src="scripts/libs/angular/angular-sanitize.js"></script>
 
@@ -81,8 +80,8 @@
                 </section>
             </aside>
 
-            <section id="content" class="{{sidebar}}sidebar" ng-controller="ContentCtrl">
-                <% content %>
+            <section id="content" class="{{sidebar}}sidebar" ng-controller="ContentCtrl" ng-view>
+
             </section>
             <br style="clear: both;" />
         </section>

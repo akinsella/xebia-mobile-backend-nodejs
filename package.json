@@ -30,6 +30,8 @@
     }
   ],
   "dependencies": {
+    "debug": "0.7.2",
+    "path-to-regexp": "0.0.2",
     "express": "3.x",
     "underscore": "*",
     "request": "*",
@@ -40,7 +42,6 @@
     "passport-http": "0.2.x",
     "passport-http-bearer": "0.2.x",
     "passport-oauth2-client-password": "0.1.x",
-    "connect-ensure-login": "0.1.x",
     "coffee-script": "*",
     "uglify-js": "*",
     "mongoose": "*",
@@ -52,8 +53,7 @@
     "oauth": "0.9.10",
     "jsdom": "*",
     "async": "*",
-    "validator": "*",
-    "connect-roles": "*"
+    "validator": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

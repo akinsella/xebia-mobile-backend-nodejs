@@ -1,20 +1,53 @@
+
 'use strict';
 
 /* Application */
 
-angular.module('xebia-mobile-backend', [
-        'xebia-mobile-backend.auth',
-        'xebia-mobile-backend.news'
-    ])
-    .config(['$httpProvider', '$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider, $httpProvider) {
-        $routeProvider.otherwise({ redirectTo: '/' });
-        $locationProvider.html5Mode(true);
-    }]);
-
-
-/* Controllers */
-
 angular.module('xebia-mobile-backend', [])
+
+
+    /* Config */
+
+    .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
+        $routeProvider
+            .when('/', { templateUrl: 'partials/index.html', controller: 'RootCtrl' })
+            .when('/login', { templateUrl: 'partials/login.html', controller: 'AuthCtrl' })
+            .when('/account', { templateUrl: 'partials/account.html', controller: 'AuthCtrl' })
+            .when('/news', { templateUrl: 'partials/news/list.html', controller: 'NewsCtrl' })
+            .when('/news/create', { templateUrl: 'partials/news/crate.html', controller: 'NewsCtrl' })
+            .when('/news/update', { templateUrl: 'partials/news/update.html', controller: 'NewsCtrl' })
+            .otherwise({ redirectTo: '/' });
+        return $httpProvider.responseInterceptors.push('errorHttpInterceptor');
+    }])
+    .run(['$rootScope', '$http', '$location', function ($rootScope, $http, $location) {
+        $rootScope.$on('event:loginRequired', function () {
+            $location.path('/login');
+        });
+        $rootScope.user = {
+             role: "ROLE_ANONYMOUS"
+         };
+         $http.get('/user/me').success(function (user) {
+             $rootScope.user = user;
+         });
+
+         $rootScope.Auth = {
+             isAuthenticated: function () {
+                 return this.hasNotRole("ROLE_ANONYMOUS");
+             },
+             isNotAuthenticated: function () {
+                 return !this.isAuthenticated();
+             },
+             hasRole: function (role) {
+                 return  $rootScope.user.role === role;
+             },
+             hasNotRole: function (role) {
+                 return  $rootScope.user.role !== role;
+             }
+         };
+    }])
+
+    /* Controllers */
+
     .controller('RootCtrl', [
         '$scope', '$location', 'ErrorService', function ($scope, $location, ErrorService) {
             $scope.errorService = ErrorService;
@@ -46,18 +79,16 @@ angular.module('xebia-mobile-backend', [])
         $scope.title = "Home";
         $scope.user = user;
         $scope.authenticated = false;
-    });
+    })
 
 
-/* Directives */
+    /* Directives */
 
-angular.module('xebia-mobile-backend', [])
     .directive('appVersion', ['version', function (version) {
         return function (scope, elm, attrs) {
             elm.text(version);
         };
-    }]);
-angular.module('xebia-mobile-backend', [])
+    }])
     .directive('alertBar', ['$parse', function ($parse) {
         return {
             restrict: 'A',
@@ -75,12 +106,11 @@ angular.module('xebia-mobile-backend', [])
                 };
             }
         };
-    }]);
+    }])
 
 
-/* Factories */
+    /* Factories */
 
-angular.module('xebia-mobile-backend', [])
     .factory('ErrorService', function () {
         return {
             errorMessage: null,
@@ -91,20 +121,18 @@ angular.module('xebia-mobile-backend', [])
                 this.errorMessage = null;
             }
         };
-    });
+    })
 
 
-/* Filters */
+    /* Filters */
 
-angular.module('xebia-mobile-backends', [])
     .filter('interpolate', ['version', function (version) {
         return function (text) {
             return String(text).replace(/\%VERSION\%/mg, version);
         }
-    }]);
+    }])
 
 
-/* Services */
+    /* Services */
 
-angular.module('xebia-mobile-backend', [])
     .value('version', '0.1');

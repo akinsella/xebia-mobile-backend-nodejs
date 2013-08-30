@@ -12,9 +12,9 @@ ROLE_ANONYMOUS = "ROLE_ANONYMOUS"
 #returning false stops any more rules from being
 #considered
 checkRoleAnonymous = (req, action) ->
-	console.log "User is authenticated: #{req.user.isAuthenticated}"
+	console.log "User is authenticated: #{req.isAuthenticated()}"
 
-	if (!req.user.isAuthenticated)
+	if (!req.isAuthenticated())
 		return action == ROLE_ANONYMOUS
 	return
 
@@ -23,7 +23,7 @@ checkRoleAnonymous = (req, action) ->
 #they might not be the only one so we don't return
 #false if the user isn't a agent
 checkRoleAgent = (req, action) ->
-	if req.user.role is ROLE_AGENT
+	if req.isAuthenticated() && req.user.role is ROLE_AGENT
 		return true
 	return
 
@@ -31,13 +31,13 @@ checkRoleAgent = (req, action) ->
 # they might not be the only one so we don't return
 # false if the user isn't a super agent
 checkRoleSuperAgent = (req, action) ->
-	if req.user.role is ROLE_SUPER_AGENT
+	if req.isAuthenticated() && req.user.role is ROLE_SUPER_AGENT
 		return true
 	return
 
 #admin users can access all pages
 checkRoleAdmin = (req, action) ->
-	if req.user.role is ROLE_ADMIN
+	if req.isAuthenticated() && req.user.role is ROLE_ADMIN
 		return true
 	return
 
@@ -50,11 +50,9 @@ authenticateUser = (email, password, done) ->
 
 failureHandler = (req, res, action) ->
 	if req.isAuthenticated()
-		res.status 401
-		res.send "Unauthorized"
+		res.send 401, "Unauthorized"
 	else
-		res.status 403
-		res.send "Forbidden"
+		res.send 403, "Forbidden"
 
 # Passport session setup.
 #   To support persistent login sessions, Passport needs to be able to

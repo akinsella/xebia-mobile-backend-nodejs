@@ -3,17 +3,17 @@
 Module dependencies.
 */
 
-var db, login, oauth2orize, passport, server, utils;
+var db, oauth2orize, passport, security, server, utils;
 
 oauth2orize = require("oauth2orize");
 
 passport = require("passport");
 
-login = require("connect-ensure-login");
-
 db = require("./db");
 
 utils = require("./lib/utils");
+
+security = require("./lib/security");
 
 server = oauth2orize.createServer();
 
@@ -64,7 +64,7 @@ server.exchange(oauth2orize.exchange.code(function(client, code, redirectURI, do
 }));
 
 exports.authorization = [
-  login.ensureLoggedIn(), server.authorization(function(clientID, redirectURI, done) {
+  security.ensureAuthenticated, server.authorization(function(clientID, redirectURI, done) {
     return db.clients.findByClientId(clientID, function(err, client) {
       if (err) {
         return done(err);
@@ -80,7 +80,7 @@ exports.authorization = [
   }
 ];
 
-exports.decision = [login.ensureLoggedIn(), server.decision()];
+exports.decision = [security.ensureAuthenticated, server.decision()];
 
 exports.token = [
   passport.authenticate(["basic", "oauth2-client-password"], {
