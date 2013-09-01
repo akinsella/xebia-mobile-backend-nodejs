@@ -24,7 +24,7 @@ logout = function(req, res) {
 };
 
 authGoogleCallback = function(req, res) {
-  return res.send(200, "Authenticated");
+  return res.redirect("/#/login");
 };
 
 module.exports = {

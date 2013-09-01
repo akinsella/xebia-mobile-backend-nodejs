@@ -74,9 +74,11 @@ removeById = function(req, res) {
 
 me = function(req, res) {
   return res.json({
-    user_id: req.user.id,
-    name: req.user.name,
-    scope: req.authInfo.scope
+    id: req.user.id,
+    username: req.user.username,
+    firstName: req.user.firstName,
+    lastName: req.user.lastName,
+    role: req.user.role
   });
 };
 

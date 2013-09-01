@@ -33,15 +33,23 @@ removeById = (req, res) ->
 			utils.responseData(404, "Not Found", undefined, { req:req, res:res })
 		return
 
+#me = (req, res) ->
+#	  # req.authInfo is set using the `info` argument supplied by
+#	  # `BearerStrategy`.  It is typically used to indicate scope of the token,
+#	  # and used in access control checks.  For illustrative purposes, this
+#	  # example simply returns the scope in the response.
+#	  res.json
+#	    user_id: req.user.id
+#	    name: req.user.name
+#	    scope: req.authInfo.scope
+
 me = (req, res) ->
-	  # req.authInfo is set using the `info` argument supplied by
-	  # `BearerStrategy`.  It is typically used to indicate scope of the token,
-	  # and used in access control checks.  For illustrative purposes, this
-	  # example simply returns the scope in the response.
-	  res.json
-	    user_id: req.user.id
-	    name: req.user.name
-	    scope: req.authInfo.scope
+ 	res.json
+ 		id: req.user.id
+ 		username: req.user.username
+ 		firstName: req.user.firstName
+ 		lastName: req.user.lastName
+ 		role: req.user.role
 
 module.exports =
 	create : create,

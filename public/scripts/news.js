@@ -1,14 +1,17 @@
+(function() {
 
-'use strict';
+    'use strict';
 
-/* Application */
+    /* Application */
 
-angular.module('xebia-mobile-backend')
+    angular.module('xebia-mobile-backend')
 
 
-    /* Controllers */
+        /* Controllers */
 
-    .controller('NewsCtrl', [
-        '$scope', '$location', 'ErrorService', function ($scope, $location, ErrorService) {
-        }
-    ]);
+        .controller('NewsCtrl', [
+            '$scope', '$location', 'ErrorService', function ($scope, $location, ErrorService) {
+            }
+        ]);
+
+})();

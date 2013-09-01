@@ -21,7 +21,7 @@ logout = (req, res) =>
 # age.  Otherwise, the primary route function function will be called,
 #   which, in this example, will redirect the user to the home page.
 authGoogleCallback = (req, res) =>
-	res.send 200, "Authenticated"
+	res.redirect "/#/login"
 
 
 module.exports =

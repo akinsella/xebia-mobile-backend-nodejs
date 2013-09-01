@@ -7,6 +7,7 @@ BearerStrategy = require('passport-http-bearer').Strategy
 User = require '../model/user'
 utils = require '../lib/utils'
 db = require '../db'
+config = require '../conf/config'
 
 ###
 LocalStrategy
@@ -29,8 +30,8 @@ LocalStrategy = new LocalStrategy((email, password, done) ->
 #   credentials (in this case, an OpenID identifier and profile), and invoke a
 #   callback with a user object.
 GoogleStrategy = new GoogleStrategy({
-		returnURL: 'http://localhost:9090/auth/google/callback',
-		realm: 'http://localhost:9090/',
+		returnURL: "http://#{config.hostname}:#{config.port}/auth/google/callback",
+		realm: "http://#{config.hostname}:#{config.port}/",
 		stateless: true
 	}, (identifier, profile, done) =>
 		# asynchronous verification, for effect...
@@ -48,6 +49,7 @@ GoogleStrategy = new GoogleStrategy({
 					user.firstName = profile.name.givenName
 					user.lastName = profile.name.familyName
 					user.googleId = utils.getParameterByName(profile.identifier, "id")
+					user.role = if profile.emails[0].value == "akinsella.xebia.fr" then "ROLE_ADMIN" else "ROLE_USER"
 					user.save (err) ->
 						done(err, profile)
 				else

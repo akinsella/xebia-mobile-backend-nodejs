@@ -7,7 +7,7 @@ _ = underscore._;
 
 if (!config) {
   localConfig = {
-    hostname: 'localhost',
+    hostname: 'dev.xebia.fr',
     port: 8000,
     appname: 'xebia-mobile-backend.helyx.org',
     uri: ['xebia-mobile-backend.cloudfoundry.com'],

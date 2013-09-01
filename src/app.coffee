@@ -160,10 +160,11 @@ app.post '/api/client', client.create
 app.get '/api/client', client.list
 app.get '/api/client/:id', client.findById
 
-app.delete '/api/user/:id', user.removeById
 app.post '/api/user', user.create
 app.get '/api/user', user.list
+app.get '/api/user/me', security.ensureAuthenticated, user.me
 app.get '/api/user/:id', user.findById
+app.delete '/api/user/:id', user.removeById
 
 app.get '/api/essentials/card', card.cards
 app.get '/api/essentials/card/:id', card.cardById
@@ -177,14 +178,13 @@ app.get '/api/notification/:id', notification.findById
 app.get 'api/notification/push', notification.push
 
 #app.get '/api/user/me', passport.authenticate("bearer", session: false), user.me
-app.get '/api/user/me', security.ensureAuthenticated, user.me
 
 app.post '/login', auth.login
 app.get '/logout', auth.logout
 app.get '/account', security.ensureAuthenticated, auth.account
 
-app.get '/auth/google', passport.authenticate('google')
-app.get '/auth/google/callback', auth.authGoogleCallback
+app.get '/auth/google', passport.authenticate('google', { failureRedirect: '/#/login' })
+app.get '/auth/google/callback', passport.authenticate('google', { failureRedirect: '/#/login' }), auth.authGoogleCallback
 
 app.get '/dialog/authorize', oauth2.authorization
 app.post '/dialog/authorize/decision', oauth2.decision
