@@ -48,7 +48,6 @@ gracefullyClosing = false
 passport.serializeUser authService.serializeUser
 passport.deserializeUser authService.deserializeUser
 
-passport.use authMiddleware.LocalStrategy
 passport.use authMiddleware.GoogleStrategy
 passport.use authMiddleware.BasicStrategy
 passport.use authMiddleware.ClientPasswordStrategy
@@ -180,8 +179,8 @@ app.get 'api/notification/push', notification.push
 #app.get '/api/user/me', passport.authenticate("bearer", session: false), user.me
 
 app.post '/login', auth.login
+app.get '/login', auth.loginForm
 app.get '/logout', auth.logout
-app.get '/account', security.ensureAuthenticated, auth.account
 
 app.get '/auth/google', passport.authenticate('google', { failureRedirect: '/#/login' })
 app.get '/auth/google/callback', passport.authenticate('google', { failureRedirect: '/#/login' }), auth.authGoogleCallback

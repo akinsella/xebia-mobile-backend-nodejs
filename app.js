@@ -69,8 +69,6 @@ passport.serializeUser(authService.serializeUser);
 
 passport.deserializeUser(authService.deserializeUser);
 
-passport.use(authMiddleware.LocalStrategy);
-
 passport.use(authMiddleware.GoogleStrategy);
 
 passport.use(authMiddleware.BasicStrategy);
@@ -233,9 +231,9 @@ app.get('api/notification/push', notification.push);
 
 app.post('/login', auth.login);
 
-app.get('/logout', auth.logout);
+app.get('/login', auth.loginForm);
 
-app.get('/account', security.ensureAuthenticated, auth.account);
+app.get('/logout', auth.logout);
 
 app.get('/auth/google', passport.authenticate('google', {
   failureRedirect: '/#/login'

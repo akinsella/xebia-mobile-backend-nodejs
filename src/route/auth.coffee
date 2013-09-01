@@ -2,17 +2,15 @@ utils = require '../lib/utils'
 security = require '../lib/security'
 passport = require 'passport'
 
-account = (req, res) =>
-	res.render 'account',
-		user: req.user
-
 login = passport.authenticate 'local', (req, res) ->
-    res.send 200, "User authenticated"
+    res.redirect "/"
 
+loginForm = (req, res) =>
+	res.redirect "/login.html"
 
 logout = (req, res) =>
 	req.logout()
-	res.send 200, "User logged out"
+	res.redirect "/login"
 
 # GET /auth/google/callback
 #   Use passport.authenticate() as route middleware to authenticate the
@@ -21,11 +19,11 @@ logout = (req, res) =>
 # age.  Otherwise, the primary route function function will be called,
 #   which, in this example, will redirect the user to the home page.
 authGoogleCallback = (req, res) =>
-	res.redirect "/#/login"
+	res.redirect "/"
 
 
 module.exports =
-	account: account
+	loginForm: loginForm
 	login: login
-	authGoogleCallback: authGoogleCallback
 	logout: logout
+	authGoogleCallback: authGoogleCallback

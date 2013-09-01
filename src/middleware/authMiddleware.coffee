@@ -1,5 +1,4 @@
 passport = require 'passport'
-LocalStrategy = require('passport-local').Strategy
 GoogleStrategy = require('passport-google').Strategy
 BasicStrategy = require('passport-http').BasicStrategy
 ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy
@@ -8,22 +7,6 @@ User = require '../model/user'
 utils = require '../lib/utils'
 db = require '../db'
 config = require '../conf/config'
-
-###
-LocalStrategy
-
-This strategy is used to authenticate users based on a username and password.
-Anytime a request is made to authorize an application, we must ensure that
-a user is logged in before asking them to approve the request.
-###
-LocalStrategy = new LocalStrategy((email, password, done) ->
-	db.users.findByEmail email, (err, user) ->
-		return done(err)  if err
-		return done(null, false) unless user
-		return done(null, false) unless user.password is password
-		done null, user
-
-)
 
 # Use the GoogleStrategy within Passport.
 #   Strategies in passport require a `validate` function, which accept
@@ -114,7 +97,6 @@ BearerStrategy = new BearerStrategy((accessToken, done) ->
 )
 
 module.exports =
-	LocalStrategy: LocalStrategy
 	GoogleStrategy: GoogleStrategy
 	BasicStrategy: BasicStrategy
 	ClientPasswordStrategy: ClientPasswordStrategy
