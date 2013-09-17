@@ -437,15 +437,15 @@ stringifyChildren = function(children) {
 };
 
 cleanUpAttributes = function(children) {
-  var child, newChildren, _i, _len;
+  var child, newChildren, _i, _len, _ref;
   newChildren = [];
   for (_i = 0, _len = children.length; _i < _len; _i++) {
     child = children[_i];
-    if (child.children && child.children.length) {
+    if (child.children.length) {
       cleanUpAttributes(child.children);
     }
     delete child.children;
-    if (child.text) {
+    if (child.text || ((_ref = child.type) === "IMG")) {
       newChildren.push(child);
     }
   }

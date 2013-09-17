@@ -282,10 +282,10 @@ stringifyChildren = (children) ->
 cleanUpAttributes = (children) ->
 	newChildren = []
 	for child in children
-		if child.children && child.children.length
+		if child.children.length
 			cleanUpAttributes(child.children)
 		delete child.children
-		if child.text
+		if child.text || child.type in ["IMG"]
 			newChildren.push child
 	newChildren
 
