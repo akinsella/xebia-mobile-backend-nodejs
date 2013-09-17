@@ -362,13 +362,34 @@ mapChildNode = function(childNode) {
 };
 
 restructureChildren = function(children) {
-  var child, index, _i, _len;
+  var child, href, index, _i, _len;
   for (index = _i = 0, _len = children.length; _i < _len; index = ++_i) {
     child = children[index];
     child.children = restructureChildren(child.children);
     if (child.type === "DIV") {
       children.removeAt(index);
       children.insertArrayAt(index, child.children);
+    } else if (child.type === "A" && child.children.length === 1 && child.children[0].type === "IMG" && !child.text) {
+      child.type = "IMG";
+      href = _(child.attributes).find(function(attribute) {
+        return attribute.key === "href";
+      });
+      child.attributes = [];
+      child.attributes.push(_(child.children[0].attributes).find(function(attribute) {
+        return attribute.key === "src";
+      }));
+      child.attributes.push(href);
+      child.children = [];
+    } else if (child.type === "P" && child.children.length === 1 && child.children[0].type === "IMG" && !child.text) {
+      child.type = "IMG";
+      child.attributes = [];
+      child.attributes.push(_(child.children[0].attributes).find(function(attribute) {
+        return attribute.key === "src";
+      }));
+      child.attributes.push(_(child.children[0].attributes).find(function(attribute) {
+        return attribute.key === "href";
+      }));
+      child.children = [];
     }
   }
   return children;
@@ -416,15 +437,19 @@ stringifyChildren = function(children) {
 };
 
 cleanUpAttributes = function(children) {
-  var child, _i, _len;
+  var child, newChildren, _i, _len;
+  newChildren = [];
   for (_i = 0, _len = children.length; _i < _len; _i++) {
     child = children[_i];
-    if (child.children.length) {
+    if (child.children && child.children.length) {
       cleanUpAttributes(child.children);
     }
     delete child.children;
+    if (child.text) {
+      newChildren.push(child);
+    }
   }
-  return children;
+  return newChildren;
 };
 
 areChildrenTextOnly = function(children) {

@@ -237,6 +237,22 @@ restructureChildren = (children) ->
 		if child.type == "DIV"
 			children.removeAt(index)
 			children.insertArrayAt(index, child.children)
+
+		else if child.type == "A" && child.children.length == 1 && child.children[0].type == "IMG" && !child.text
+			child.type = "IMG"
+			href = _(child.attributes).find((attribute) -> attribute.key == "href")
+			child.attributes = []
+			child.attributes.push _(child.children[0].attributes).find((attribute) -> attribute.key == "src")
+			child.attributes.push href
+			child.children = []
+
+		else if child.type == "P" && child.children.length == 1 && child.children[0].type == "IMG" && !child.text
+			child.type = "IMG"
+			child.attributes = []
+			child.attributes.push _(child.children[0].attributes).find((attribute) -> attribute.key == "src")
+			child.attributes.push _(child.children[0].attributes).find((attribute) -> attribute.key == "href")
+			child.children = []
+
 	children
 
 processTextElements = (children) ->
@@ -264,11 +280,14 @@ stringifyChildren = (children) ->
 	children
 
 cleanUpAttributes = (children) ->
+	newChildren = []
 	for child in children
-		if child.children.length
+		if child.children && child.children.length
 			cleanUpAttributes(child.children)
 		delete child.children
-	children
+		if child.text
+			newChildren.push child
+	newChildren
 
 areChildrenTextOnly = (children) ->
 	if !children
