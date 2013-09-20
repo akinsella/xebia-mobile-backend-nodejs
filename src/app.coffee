@@ -1,3 +1,13 @@
+config = require './conf/config'
+os = require 'os'
+
+if config.strongOps.apiKey
+	console.log "Initializing StrongOps Agent with apiKey: '#{config.strongOps.apiKey}'"
+	require('strong-agent').profile(config.strongOps.apiKey, [config.appname, os.hostname() || config.hostname, config.processNumber], {})
+
+if config.devMode
+	console.log "Dev Mode enabled."
+
 fs = require 'fs'
 path = require 'path'
 util = require 'util'
@@ -14,8 +24,6 @@ allowCrossDomain = require './lib/allowCrossDomain'
 utils = require './lib/utils'
 
 security = require './lib/security'
-
-config = require './conf/config'
 
 github = require './route/github'
 twitter = require './route/twitter'

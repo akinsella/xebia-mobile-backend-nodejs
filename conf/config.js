@@ -7,25 +7,36 @@ _ = underscore._;
 
 if (!config) {
   localConfig = {
-    hostname: 'dev.xebia.fr',
-    port: 8000,
+    hostname: process.env.APP_HOSTNAME,
+    port: process.env.APP_HTTP_PORT,
     appname: 'xebia-mobile-backend.helyx.org',
-    uri: ['xebia-mobile-backend.cloudfoundry.com'],
+    devMode: process.env.DEV_MODE,
+    verbose: true,
+    processNumber: process.env.INDEX_OF_PROCESS || 0,
     mongo: {
-      dbname: 'xebia-mobile-backend',
-      hostname: 'localhost',
-      port: 27017
+      dbname: process.env.MONGO_DBNAME,
+      hostname: process.env.MONGO_HOSTNAME,
+      port: process.env.MONGO_PORT,
+      username: process.env.MONGO_USERNAME,
+      password: process.env.MONGO_PASSWORD
+    },
+    strongOps: {
+      apiKey: process.env.STRONG_OPS_API_KEY
     }
   };
   config = _.extend({}, localConfig);
 }
 
 module.exports = {
+  devMode: config.devMode,
+  verbose: config.verbose,
   hostname: config.hostname,
+  processNumber: config.processNumber,
   port: config.port,
   appname: config.appname,
   uri: config.uri,
-  mongo: config.mongo
+  mongo: config.mongo,
+  strongOps: config.strongOps
 };
 
 /*
