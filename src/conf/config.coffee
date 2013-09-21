@@ -15,10 +15,11 @@ if !config
 			port: process.env.MONGO_PORT
 			username: process.env.MONGO_USERNAME # 'xebia-mobile-backend'
 			password: process.env.MONGO_PASSWORD # 'Password123'
-
-		strongOps:
-			apiKey: process.env.STRONG_OPS_API_KEY
-
+		monitoring:
+			strongOps:
+				apiKey: process.env.STRONG_OPS_API_KEY
+			nodetime:
+				apiKey: process.env.NODETIME_API_KEY
 	config = _.extend({}, localConfig)
 
 module.exports =
@@ -30,7 +31,7 @@ module.exports =
 	appname: config.appname
 	uri: config.uri
 	mongo: config.mongo
-	strongOps: config.strongOps
+	monitoring: config.monitoring
 
 
 

@@ -1,12 +1,19 @@
 config = require './conf/config'
-os = require 'os'
-
-if config.strongOps.apiKey
-	console.log "Initializing StrongOps Agent with apiKey: '#{config.strongOps.apiKey}'"
-	require('strong-agent').profile(config.strongOps.apiKey, [config.appname, os.hostname() || config.hostname, config.processNumber], {})
 
 if config.devMode
 	console.log "Dev Mode enabled."
+
+#os = require 'os'
+#
+#if config.monitoringstrongOps.apiKey
+#	console.log "Initializing StrongOps Agent with apiKey: '#{config.monitoring.strongOps.apiKey}'"
+#	require('strong-agent').profile(config.monitoring.strongOps.apiKey, [config.appname, os.hostname() || config.hostname, config.processNumber], {})
+
+if config.monitoring.nodetime.apiKey
+	console.log "Initializing NodeTime with apiKey: '#{config.monitoring.nodetime.apiKey}'"
+	require('nodetime').profile
+		accountKey: config.monitoring.nodetime.apiKey
+		appName: config.appname
 
 fs = require 'fs'
 path = require 'path'

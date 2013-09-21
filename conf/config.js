@@ -20,8 +20,13 @@ if (!config) {
       username: process.env.MONGO_USERNAME,
       password: process.env.MONGO_PASSWORD
     },
-    strongOps: {
-      apiKey: process.env.STRONG_OPS_API_KEY
+    monitoring: {
+      strongOps: {
+        apiKey: process.env.STRONG_OPS_API_KEY
+      },
+      nodetime: {
+        apiKey: process.env.NODETIME_API_KEY
+      }
     }
   };
   config = _.extend({}, localConfig);
@@ -36,7 +41,7 @@ module.exports = {
   appname: config.appname,
   uri: config.uri,
   mongo: config.mongo,
-  strongOps: config.strongOps
+  monitoring: config.monitoring
 };
 
 /*

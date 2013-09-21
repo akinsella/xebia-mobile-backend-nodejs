@@ -54,7 +54,7 @@
     "jsdom": "*",
     "async": "*",
     "validator": "*",
-	"strong-agent": "*"
+	"nodetime": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
