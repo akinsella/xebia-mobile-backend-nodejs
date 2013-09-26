@@ -1,7 +1,7 @@
 {
   "name": "xebia-mobile",
   "description": "Node.js proxy for Xebia mobile applications",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "author": "Alexis Kinsella <alexis.kinsella@gmail.com>",
   "engines": {
@@ -54,7 +54,9 @@
     "jsdom": "*",
     "async": "*",
     "validator": "*",
-	"nodetime": "*"
+	"nodetime": "*",
+    "connect-domain": "*",
+    "recluster": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

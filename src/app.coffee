@@ -20,6 +20,8 @@ path = require 'path'
 util = require 'util'
 express = require 'express'
 
+connectDomain = require 'connect-domain'
+
 MongoStore = require('connect-mongo')(express)
 mongo = require './lib/mongo'
 
@@ -78,6 +80,7 @@ app.configure ->
 	console.log "Environment: #{app.get('env')}"
 	app.set 'port', config.port or process.env.PORT or 8000
 
+	app.use connectDomain()
 	app.use (req, res, next) ->
 		return next() unless gracefullyClosing
 		res.setHeader "Connection", "close"
