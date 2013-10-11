@@ -23,7 +23,7 @@ list = function(req, res) {
   apiKey = process.env["EVENTBRITE_AUTH_KEY"];
   return processRequest(req, res, "https://www.eventbrite.com/json/organizer_list_events?app_key=" + apiKey + "&id=1627902102", function(data, cb) {
     data = _(data.events).pluck("event").filter(function(event) {
-      return event.status === "Live";
+      return event.status === "Live" || event.status === "Completed";
     });
     _(data).each(function(event) {
       var key, oKey, vKey;
