@@ -250,7 +250,9 @@ restructureChildren = (children) ->
 			child.type = "IMG"
 			child.attributes = []
 			child.attributes.push _(child.children[0].attributes).find((attribute) -> attribute.key == "src")
-			child.attributes.push _(child.children[0].attributes).find((attribute) -> attribute.key == "href")
+			href = _(child.children[0].attributes).find((attribute) -> attribute.key == "href")
+			if href
+				child.attributes.push _(child.children[0].attributes).find((attribute) -> attribute.key == "href")
 			child.children = []
 
 	children

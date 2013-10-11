@@ -386,9 +386,14 @@ restructureChildren = function(children) {
       child.attributes.push(_(child.children[0].attributes).find(function(attribute) {
         return attribute.key === "src";
       }));
-      child.attributes.push(_(child.children[0].attributes).find(function(attribute) {
+      href = _(child.children[0].attributes).find(function(attribute) {
         return attribute.key === "href";
-      }));
+      });
+      if (href) {
+        child.attributes.push(_(child.children[0].attributes).find(function(attribute) {
+          return attribute.key === "href";
+        }));
+      }
       child.children = [];
     }
   }
