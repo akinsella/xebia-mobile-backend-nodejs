@@ -45,9 +45,9 @@ GoogleStrategy = new GoogleStrategy({
           email: profile.emails[0].value,
           firstName: profile.name.givenName,
           lastName: profile.name.familyName,
-          googleId: utils.getParameterByName(profile.identifier, "id")
+          googleId: utils.getParameterByName(profile.identifier, "id"),
+          role: profile.emails[0].value === "akinsella.xebia.fr" ? "ROLE_ADMIN" : "ROLE_USER"
         });
-        user.lastName = profile.name.familyName;
         return user.save(function(err) {
           return done(err, profile);
         });
