@@ -31,6 +31,7 @@ GoogleStrategy = new GoogleStrategy({
 				else if (user)
 					user.firstName = profile.name.givenName
 					user.lastName = profile.name.familyName
+					user.gender = profile.gender
 					user.googleId = utils.getParameterByName(profile.identifier, "id")
 					user.role = if profile.emails[0].value == "akinsella.xebia.fr" then "ROLE_ADMIN" else "ROLE_USER"
 					user.save (err) ->
@@ -40,6 +41,7 @@ GoogleStrategy = new GoogleStrategy({
 						email:profile.emails[0].value,
 						firstName: profile.name.givenName,
 						lastName: profile.name.familyName,
+						gender: profile.gender,
 						googleId:utils.getParameterByName(profile.identifier, "id"),
 						role: if profile.emails[0].value == "akinsella.xebia.fr" then "ROLE_ADMIN" else "ROLE_USER"
 					})

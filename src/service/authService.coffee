@@ -66,7 +66,7 @@ serializeUser = (user, done) =>
 	done(null, googleId)
 
 deserializeUser = (id, done) =>
-	User.find {googleId: id}, (err, user) ->
+	User.findOne {googleId: id}, (err, user) ->
 		done(err, user)
 
 module.exports =

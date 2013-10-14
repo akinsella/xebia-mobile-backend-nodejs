@@ -73,7 +73,7 @@ serializeUser = function(user, done) {
 };
 
 deserializeUser = function(id, done) {
-  return User.find({
+  return User.findOne({
     googleId: id
   }, function(err, user) {
     return done(err, user);

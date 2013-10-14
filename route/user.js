@@ -12,14 +12,14 @@ User = require("../model/user");
 create = function(req, res) {
   var user;
   user = new User(req.body);
-  return user.save(function(err) {
+  user.save(function(err) {
     if (err) {
-      utils.responseData(500, "Could not save user", req.body, {
+      return utils.responseData(500, "Could not save user", req.body, {
         req: req,
         res: res
       });
     } else {
-      utils.responseData(201, "Created", user, {
+      return utils.responseData(201, "Created", user, {
         req: req,
         res: res
       });
@@ -28,8 +28,8 @@ create = function(req, res) {
 };
 
 list = function(req, res) {
-  return User.find({}, function(err, users) {
-    utils.responseData(200, void 0, users, {
+  User.find({}, function(err, users) {
+    return utils.responseData(200, void 0, users, {
       req: req,
       res: res
     });
@@ -37,16 +37,16 @@ list = function(req, res) {
 };
 
 findById = function(req, res) {
-  return User.findOne({
+  User.findOne({
     id: req.params.id
   }, function(err, user) {
     if (user) {
-      utils.responseData(200, void 0, user, {
+      return utils.responseData(200, void 0, user, {
         req: req,
         res: res
       });
     } else {
-      utils.responseData(404, "Not Found", void 0, {
+      return utils.responseData(404, "Not Found", void 0, {
         req: req,
         res: res
       });
@@ -55,16 +55,16 @@ findById = function(req, res) {
 };
 
 removeById = function(req, res) {
-  return User.findOneAndRemove({
+  User.findOneAndRemove({
     id: req.params.id
   }, function(err, user) {
     if (user) {
-      utils.responseData(204, void 0, user, {
+      return utils.responseData(204, void 0, user, {
         req: req,
         res: res
       });
     } else {
-      utils.responseData(404, "Not Found", void 0, {
+      return utils.responseData(404, "Not Found", void 0, {
         req: req,
         res: res
       });
@@ -76,6 +76,8 @@ me = function(req, res) {
   return res.json({
     id: req.user.id,
     username: req.user.username,
+    email: req.user.email,
+    gender: req.user.gender,
     firstName: req.user.firstName,
     lastName: req.user.lastName,
     role: req.user.role
