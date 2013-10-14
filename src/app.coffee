@@ -9,11 +9,15 @@ if config.devMode
 #	console.log "Initializing StrongOps Agent with apiKey: '#{config.monitoring.strongOps.apiKey}'"
 #	require('strong-agent').profile(config.monitoring.strongOps.apiKey, [config.appname, os.hostname() || config.hostname, config.processNumber], {})
 
-if config.monitoring.nodetime.apiKey
-	console.log "Initializing NodeTime with apiKey: '#{config.monitoring.nodetime.apiKey}'"
-	require('nodetime').profile
-		accountKey: config.monitoring.nodetime.apiKey
-		appName: config.appname
+#if config.monitoring.nodetime.apiKey
+#	console.log "Initializing NodeTime with apiKey: '#{config.monitoring.nodetime.apiKey}'"
+#	require('nodetime').profile
+#		accountKey: config.monitoring.nodetime.apiKey
+#		appName: config.appname
+
+if config.monitoring.newrelic.apiKey
+	console.log "Initializing NewRelic with apiKey: '#{config.monitoring.newrelic.apiKey}'"
+	newrelic = require 'newrelic'
 
 fs = require 'fs'
 path = require 'path'

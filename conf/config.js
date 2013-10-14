@@ -21,6 +21,9 @@ if (!config) {
       password: process.env.MONGO_PASSWORD
     },
     monitoring: {
+      newrelic: {
+        apiKey: process.env.NEW_RELIC_API_KEY
+      },
       strongOps: {
         apiKey: process.env.STRONG_OPS_API_KEY
       },

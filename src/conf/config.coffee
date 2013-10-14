@@ -16,6 +16,8 @@ if !config
 			username: process.env.MONGO_USERNAME # 'xebia-mobile-backend'
 			password: process.env.MONGO_PASSWORD # 'Password123'
 		monitoring:
+			newrelic:
+				apiKey: process.env.NEW_RELIC_API_KEY
 			strongOps:
 				apiKey: process.env.STRONG_OPS_API_KEY
 			nodetime:

@@ -54,9 +54,9 @@
     "jsdom": "*",
     "async": "*",
     "validator": "*",
-	"nodetime": "*",
     "connect-domain": "*",
-    "recluster": "*"
+    "recluster": "*",
+    "newrelic": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
