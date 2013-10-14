@@ -19,3 +19,4 @@ dump.rdb
 .sass-cache
 npm-debug.log
 cert
+newrelic_agent.log
