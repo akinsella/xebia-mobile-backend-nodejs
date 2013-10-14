@@ -21,8 +21,8 @@ db = require('../db');
 config = require('../conf/config');
 
 GoogleStrategy = new GoogleStrategy({
-  returnURL: "http://" + config.hostname + ":" + config.port + "/auth/google/callback",
-  realm: "http://" + config.hostname + ":" + config.port + "/",
+  returnURL: config.auth.google.callbackUrl,
+  realm: config.auth.google.realm,
   stateless: true
 }, function(identifier, profile, done) {
   return process.nextTick(function() {

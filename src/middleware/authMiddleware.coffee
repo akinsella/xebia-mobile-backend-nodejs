@@ -13,8 +13,8 @@ config = require '../conf/config'
 #   credentials (in this case, an OpenID identifier and profile), and invoke a
 #   callback with a user object.
 GoogleStrategy = new GoogleStrategy({
-		returnURL: "http://#{config.hostname}:#{config.port}/auth/google/callback",
-		realm: "http://#{config.hostname}:#{config.port}/",
+		returnURL: config.auth.google.callbackUrl,
+		realm: config.auth.google.realm,
 		stateless: true
 	}, (identifier, profile, done) =>
 		# asynchronous verification, for effect...

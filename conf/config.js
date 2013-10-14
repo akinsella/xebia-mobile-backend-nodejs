@@ -13,6 +13,12 @@ if (!config) {
     devMode: process.env.DEV_MODE,
     verbose: true,
     processNumber: process.env.INDEX_OF_PROCESS || 0,
+    auth: {
+      google: {
+        callbackUrl: process.env.AUTH_GOOGLE_CALLBACK_URL,
+        realm: process.env.AUTH_GOOGLE_REALM
+      }
+    },
     mongo: {
       dbname: process.env.MONGO_DBNAME,
       hostname: process.env.MONGO_HOSTNAME,
@@ -42,6 +48,7 @@ module.exports = {
   processNumber: config.processNumber,
   port: config.port,
   appname: config.appname,
+  auth: config.auth,
   uri: config.uri,
   mongo: config.mongo,
   monitoring: config.monitoring
