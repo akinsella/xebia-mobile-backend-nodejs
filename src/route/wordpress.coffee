@@ -161,7 +161,7 @@ transformPostContent = (post, cb) ->
 
 processAuthorInformations = (post) ->
 	matches = post.content.match(/\[author.*\]/g)
-	console.log "Matches: #{matches}"
+	#console.log "Matches: #{matches}"
 
 	if matches
 		for match in matches
@@ -177,10 +177,13 @@ processAuthorInformations = (post) ->
 			post.content = post.content.replace(match, "<author username=\"#{username}\" firstname=\"#{firstname}\" lastname=\"#{lastname}\" gravatar=\"#{gravatar}\" twitter=\"#{twitter}\" />")
 
 processLanguageInformations = (post) ->
-	languages = [ "java" ]
+	languages = [ "java", "xml" ]
 	for language in languages
-		post.content = post.content.replace(/\[java\]/g, "<code language=\"#{language}\">")
-		post.content = post.content.replace(/\[\/java\]/g, "</code>")
+#		post.content = post.content.replace(/\[(\w+)[^\]]*\](.*?)\[\/\1\]/g, '$2')
+		startTag = "\\[#{language}\\]"
+		endTag = "\\[\\/#{language}\\]"
+		post.content = post.content.replace(new RegExp(startTag, "g"), "<code language=\"#{language}\">")
+		post.content = post.content.replace(new RegExp(endTag, "g"), "</code>")
 
 
 mapChildNodes = (childNodes, mapChildNode) ->

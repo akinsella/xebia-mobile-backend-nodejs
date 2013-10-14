@@ -228,7 +228,6 @@ transformPostContent = function(post, cb) {
 processAuthorInformations = function(post) {
   var components, firstname, gravatar, lastname, match, matches, twitter, username, _i, _len, _results;
   matches = post.content.match(/\[author.*\]/g);
-  console.log("Matches: " + matches);
   if (matches) {
     _results = [];
     for (_i = 0, _len = matches.length; _i < _len; _i++) {
@@ -247,13 +246,15 @@ processAuthorInformations = function(post) {
 };
 
 processLanguageInformations = function(post) {
-  var language, languages, _i, _len, _results;
-  languages = ["java"];
+  var endTag, language, languages, startTag, _i, _len, _results;
+  languages = ["java", "xml"];
   _results = [];
   for (_i = 0, _len = languages.length; _i < _len; _i++) {
     language = languages[_i];
-    post.content = post.content.replace(/\[java\]/g, "<code language=\"" + language + "\">");
-    _results.push(post.content = post.content.replace(/\[\/java\]/g, "</code>"));
+    startTag = "\\[" + language + "\\]";
+    endTag = "\\[\\/" + language + "\\]";
+    post.content = post.content.replace(new RegExp(startTag, "g"), "<code language=\"" + language + "\">");
+    _results.push(post.content = post.content.replace(new RegExp(endTag, "g"), "</code>"));
   }
   return _results;
 };
