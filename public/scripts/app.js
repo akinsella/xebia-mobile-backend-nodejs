@@ -22,7 +22,7 @@
         }])
         .run(['$rootScope', '$http', '$location', function ($rootScope, $http, $location) {
             $rootScope.$on('event:loginRequired', function () {
-                $location.path('/login');
+                window.location = "/login";
             });
             $rootScope.user = {
                  role: "ROLE_ANONYMOUS"
