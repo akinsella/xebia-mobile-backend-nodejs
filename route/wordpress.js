@@ -206,10 +206,18 @@ transformPostContent = function(post, cb) {
     html: post.content,
     src: [],
     done: function(err, window) {
+      var e;
       if (err) {
         return cb(err);
       } else {
-        post.structuredContent = cleanUpAttributes(processTextElements(mergeSiblingTexts(stringifyChildren(restructureChildren(filterEmptyChildren(mapChildNodes(window.document.body.childNodes, mapChildNode)))))));
+        try {
+          post.structuredContent = cleanUpAttributes(processTextElements(mergeSiblingTexts(stringifyChildren(restructureChildren(filterEmptyChildren(mapChildNodes(window.document.body.childNodes, mapChildNode)))))));
+        } catch (_error) {
+          e = _error;
+          console.log("Got some error: " + e.message);
+          err = e;
+          console.log(err.stack);
+        }
         cb(err, post);
         return window.close();
       }
@@ -302,7 +310,7 @@ mapChildNode = function(childNode) {
   } else if (childNode.nodeName === "CODE") {
     element.attributes.push({
       key: "language",
-      value: childNode.attributes.language.value
+      value: childNode.attributes.language ? childNode.attributes.language.value : "default"
     });
   }
   element.innerHTML = function() {

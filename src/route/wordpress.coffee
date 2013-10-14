@@ -150,8 +150,12 @@ transformPostContent = (post, cb) ->
 			if (err)
 				cb(err)
 			else
-				post.structuredContent = cleanUpAttributes(processTextElements(mergeSiblingTexts(stringifyChildren(restructureChildren(filterEmptyChildren(mapChildNodes(window.document.body.childNodes, mapChildNode)))))))
-#				post.structuredContent = restructureElements(structuredContent)
+				try
+					post.structuredContent = cleanUpAttributes(processTextElements(mergeSiblingTexts(stringifyChildren(restructureChildren(filterEmptyChildren(mapChildNodes(window.document.body.childNodes, mapChildNode)))))))
+				catch e
+					console.log "Got some error: #{e.message}"
+					err = e
+					console.log( err.stack )
 				cb(err, post)
 				window.close()
 
@@ -204,7 +208,7 @@ mapChildNode = (childNode) ->
 		element.attributes.push { key: "gravatar", value: childNode.attributes.gravatar.value }
 		element.attributes.push { key: "twitter", value: childNode.attributes.twitter.value }
 	else if childNode.nodeName == "CODE"
-		element.attributes.push { key: "language", value: childNode.attributes.language.value }
+		element.attributes.push { key: "language", value: if childNode.attributes.language then childNode.attributes.language.value else "default" }
 
 
 	element.innerHTML = () ->
