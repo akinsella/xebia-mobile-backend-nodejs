@@ -22,9 +22,14 @@ list = function(req, res) {
   var apiKey;
   apiKey = process.env["EVENTBRITE_AUTH_KEY"];
   return processRequest(req, res, "https://www.eventbrite.com/json/organizer_list_events?app_key=" + apiKey + "&id=1627902102", function(data, cb) {
-    data = _(data.events).pluck("event").filter(function(event) {
+    data = _(data.events).pluck("event");
+    data = _(data).sortBy(function(event) {
+      return event.start_date;
+    });
+    data = _(data).filter(function(event) {
       return event.status === "Live" || event.status === "Completed";
     });
+    data = _(data).reverse();
     _(data).each(function(event) {
       var key, oKey, vKey;
       event.description_plain_text = event.description;

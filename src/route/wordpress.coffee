@@ -71,7 +71,7 @@ post = (req, res) ->
 		)
 
 recentPosts = (req, res) ->
-	processRequest req, res, "#{baseUrl}/wp-json-api/get_recent_posts", (data, cb) ->
+	processRequest req, res, "#{baseUrl}/wp-json-api/get_recent_posts?count=50", (data, cb) ->
 		delete data.status
 		data.total = data.count_total
 		delete data.count_total

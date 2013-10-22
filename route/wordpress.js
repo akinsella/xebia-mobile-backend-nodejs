@@ -109,7 +109,7 @@ post = function(req, res) {
 };
 
 recentPosts = function(req, res) {
-  return processRequest(req, res, "" + baseUrl + "/wp-json-api/get_recent_posts", function(data, cb) {
+  return processRequest(req, res, "" + baseUrl + "/wp-json-api/get_recent_posts?count=50", function(data, cb) {
     delete data.status;
     data.total = data.count_total;
     delete data.count_total;

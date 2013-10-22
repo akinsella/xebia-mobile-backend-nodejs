@@ -25,7 +25,17 @@ venueProps = [
 list = (req, res) ->
 	apiKey = process.env["EVENTBRITE_AUTH_KEY"]
 	processRequest req, res, "https://www.eventbrite.com/json/organizer_list_events?app_key=#{apiKey}&id=1627902102", (data, cb) ->
-		data = _(data.events).pluck("event").filter((event) -> event.status == "Live" || event.status == "Completed")
+		data = _(data.events)
+			.pluck("event")
+
+		data = _(data)
+			.sortBy((event) -> event.start_date)
+
+		data = _(data)
+			.filter((event) -> event.status == "Live" || event.status == "Completed")
+
+		data = _(data)
+			.reverse()
 		_(data).each((event) ->
 			event.description_plain_text = event.description
 			if event.description_plain_text
