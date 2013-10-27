@@ -7,12 +7,20 @@ _ = underscore._;
 
 if (!config) {
   localConfig = {
+    offlineMode: process.env.OFFLINE_MODE === "true",
     hostname: process.env.APP_HOSTNAME,
     port: process.env.APP_HTTP_PORT,
     appname: 'xebia-mobile-backend.helyx.org',
-    devMode: process.env.DEV_MODE,
+    devMode: process.env.DEV_MODE === "true",
     verbose: true,
     processNumber: process.env.INDEX_OF_PROCESS || 0,
+    scheduler: {
+      syncWordpress: {
+        cron: '0,30 * * * * 1-7',
+        timezone: "Europe/Paris",
+        runOnStart: true
+      }
+    },
     auth: {
       google: {
         callbackUrl: process.env.AUTH_GOOGLE_CALLBACK_URL,
@@ -36,12 +44,16 @@ if (!config) {
       nodetime: {
         apiKey: process.env.NODETIME_API_KEY
       }
+    },
+    feature: {
+      stopWatch: true
     }
   };
   config = _.extend({}, localConfig);
 }
 
 module.exports = {
+  offlineMode: config.offlineMode,
   devMode: config.devMode,
   verbose: config.verbose,
   hostname: config.hostname,
@@ -51,7 +63,9 @@ module.exports = {
   auth: config.auth,
   uri: config.uri,
   mongo: config.mongo,
-  monitoring: config.monitoring
+  monitoring: config.monitoring,
+  feature: config.feature,
+  scheduler: config.scheduler
 };
 
 /*

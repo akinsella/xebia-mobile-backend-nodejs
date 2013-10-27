@@ -2,6 +2,8 @@ utils = require '../lib/utils'
 _ = require('underscore')._
 jsdom = require 'jsdom'
 async = require 'async'
+fs = require 'fs'
+config = require '../conf/config'
 
 Array::insertArrayAt = (index, arrayToInsert) ->
 	Array.prototype.splice.apply(this, [index, 0].concat(arrayToInsert))
@@ -71,14 +73,19 @@ post = (req, res) ->
 		)
 
 recentPosts = (req, res) ->
-	processRequest req, res, "#{baseUrl}/wp-json-api/get_recent_posts?count=50", (data, cb) ->
-		delete data.status
-		data.total = data.count_total
-		delete data.count_total
-		async.map(data.posts, transformPost, (err, posts) ->
-			data.posts = posts
-			cb(err, data)
-		)
+	if config.offlineMode
+		res.charset = 'UTF-8'
+		payload = JSON.parse(fs.readFileSync("#{__dirname}/../data/wp_recent_post.json", "utf-8"))
+		res.send payload
+	else
+		processRequest req, res, "#{baseUrl}/wp-json-api/get_recent_posts?count=50", (data, cb) ->
+			delete data.status
+			data.total = data.count_total
+			delete data.count_total
+			async.map(data.posts, transformPost, (err, posts) ->
+				data.posts = posts
+				cb(err, data)
+			)
 
 authorPosts = (req, res) ->
 	authorId = req.params.id
@@ -117,7 +124,6 @@ transformPost = (post, cb) ->
 	delete post.comment_count
 	post.commentStatus = post.comment_status
 	delete post.comment_status
-	delete post.title_plain
 	for category in post.categories
 		category.postCount = category.post_count
 		delete category.post_count

@@ -3,6 +3,9 @@ config = require './conf/config'
 if config.devMode
 	console.log "Dev Mode enabled."
 
+if config.offlineMode
+	console.log "Offline mode enabled."
+
 #os = require 'os'
 #
 #if config.monitoringstrongOps.apiKey
@@ -19,12 +22,15 @@ if config.monitoring.newrelic.apiKey
 	console.log "Initializing NewRelic with apiKey: '#{config.monitoring.newrelic.apiKey}'"
 	newrelic = require 'newrelic'
 
+scheduler = require './task/scheduler'
+scheduler.init()
+
 fs = require 'fs'
 path = require 'path'
 util = require 'util'
 express = require 'express'
 
-connectDomain = require 'connect-domain'
+#connectDomain = require 'connect-domain'
 
 MongoStore = require('connect-mongo')(express)
 mongo = require './lib/mongo'
@@ -84,7 +90,7 @@ app.configure ->
 	console.log "Environment: #{app.get('env')}"
 	app.set 'port', config.port or process.env.PORT or 8000
 
-	app.use connectDomain()
+#	app.use connectDomain()
 	app.use (req, res, next) ->
 		return next() unless gracefullyClosing
 		res.setHeader "Connection", "close"
@@ -169,6 +175,7 @@ app.get '/api/vimeo/video', vimeo.videos
 app.delete '/api/news/:id', news.removeById
 app.post '/api/news', news.create
 app.get '/api/news', news.list
+app.get '/api/news', news.listUnfiltered
 app.get '/api/news/:id', news.findById
 
 app.delete '/api/device/:id', device.removeById

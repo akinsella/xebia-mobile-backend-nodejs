@@ -56,7 +56,8 @@
     "validator": "*",
     "connect-domain": "*",
     "recluster": "*",
-    "newrelic": "*"
+    "newrelic": "*",
+    "cron": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

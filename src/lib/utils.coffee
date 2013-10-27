@@ -1,4 +1,5 @@
 request = require 'request'
+moment = require 'moment'
 cache = require './cache'
 
 removeParameters = (url, parameters) ->
@@ -7,17 +8,20 @@ removeParameters = (url, parameters) ->
 
 		if urlparts.length >= 2
 
-			urlBase = urlparts.shift() # Get first part, and remove from array
-			queryString = urlparts.join("?") # Join it back up
+			urlBase = urlparts.shift()
+			# Get first part, and remove from array
+			queryString = urlparts.join("?")
+			# Join it back up
 
 			prefix = encodeURIComponent(parameter) + '='
 			pars = queryString.split(/[&;]/g)
 
 			i = pars.length
 
-			i-- # Reverse iteration as may be destructive
+			i--
+			# Reverse iteration as may be destructive
 			while i > 0
-				if pars[i].lastIndexOf(prefix, 0) !=- 1 # Idiom for string.startsWith
+				if pars[i].lastIndexOf(prefix, 0) != -1 # Idiom for string.startsWith
 					pars.splice(i, 1)
 				i--
 
@@ -151,11 +155,11 @@ fetchDataFromUrl = (options) ->
 		headers = { "User-Agent": "Xebia-Mobile-Backend" }
 		if options.accessToken
 			headers["Authorization"] = "Bearer " + options.accessToken
-		request.get {url:options.url, json:true, headers: headers}, (error, response, data) -> processResponse(options, error, data, response)
+		request.get {url: options.url, json: true, headers: headers}, (error, response, data) ->
+			processResponse(options, error, data, response)
 
 
 buildOptions = (req, res, url, cacheTimeout = 5 * 60, transform, accessToken) ->
-
 	options =
 		req: req,
 		res: res,
@@ -185,7 +189,7 @@ Return a random int, used by `utils.uid()`
 @api private
 ###
 getRandomInt = (min, max) ->
-  Math.floor(Math.random() * (max - min + 1)) + min
+	Math.floor(Math.random() * (max - min + 1)) + min
 
 
 ###
@@ -199,15 +203,30 @@ utils.uid(10);
 @api private
 ###
 uid = (len) ->
-  buf = []
-  chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-  charlen = chars.length
-  i = 0
+	buf = []
+	chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+	charlen = chars.length
+	i = 0
 
-  while i < len
-    buf.push chars[getRandomInt(0, charlen - 1)]
-    ++i
-  buf.join ""
+	while i < len
+		buf.push chars[getRandomInt(0, charlen - 1)]
+		++i
+	buf.join ""
+
+callbackDelayed = (callback, err, data, delay) ->
+	setTimeout () ->
+		callback(err, data)
+		delay
+
+stopWatchCallbak = (_callback) ->
+	start = moment()
+
+	(err, data) ->
+		end = moment()
+		duration = moment.duration(end.diff(start)).asMilliseconds()
+		console.log "Task ended in #{duration} ms"
+
+		_callback err, data
 
 
 module.exports =
@@ -220,4 +239,6 @@ module.exports =
 	buildOptions: buildOptions,
 	processRequest: processRequest,
 	getParameterByName: getParameterByName,
-	uid: uid
+	uid: uid,
+	callbackDelayed: callbackDelayed
+	stopWatchCallbak: stopWatchCallbak
