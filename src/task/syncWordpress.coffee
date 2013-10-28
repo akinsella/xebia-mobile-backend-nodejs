@@ -38,7 +38,7 @@ synchronizeWordpressNews = (post, callback) ->
 				imageUrl: undefined
 				publicationDate: post.date
 				targetUrl: post.url
-				title: post.titlePlain
+				title: post.title_plain
 				type: "wordpress"
 				typeId: post.id
 			)

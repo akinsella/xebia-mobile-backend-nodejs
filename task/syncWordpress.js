@@ -57,7 +57,7 @@ synchronizeWordpressNews = function(post, callback) {
         imageUrl: void 0,
         publicationDate: post.date,
         targetUrl: post.url,
-        title: post.titlePlain,
+        title: post.title_plain,
         type: "wordpress",
         typeId: post.id
       });
