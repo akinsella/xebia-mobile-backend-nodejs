@@ -11,6 +11,7 @@ News = new mongo.Schema(
 	targetUrl: {type: String, "default": '', trim: true},
 	createAt: { type: Date, "default": Date.now },
 	lastModified: { type: Date, "default": Date.now },
+	author: {type: String, "default": '', trim: true},
 	draft: Boolean,
 	publicationDate: Date
 )

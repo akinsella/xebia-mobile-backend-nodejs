@@ -16,7 +16,11 @@ processRequest = function(req, res, url, transform) {
 };
 
 listUnfiltered = function(req, res) {
-  return News.find({}, function(err, news) {
+  return News.find({}, {
+    sort: {
+      "publicationDate": -1
+    }
+  }, function(err, news) {
     if (news) {
       return utils.responseData(200, void 0, news, {
         req: req,
@@ -34,6 +38,10 @@ listUnfiltered = function(req, res) {
 list = function(req, res) {
   return News.find({
     draft: false
+  }, null, {
+    sort: {
+      "publicationDate": -1
+    }
   }, function(err, news) {
     news = _(news).map(function(newsEntry) {
       return {

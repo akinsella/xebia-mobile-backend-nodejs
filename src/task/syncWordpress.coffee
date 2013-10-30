@@ -12,7 +12,7 @@ synchronize = () ->
 		if err
 			console.log "Wordpress Synchronization ended with error: #{err.message} - Error: #{err}"
 		else
-			console.log "Wordpress Synchronization ended with success ! (#{news.length} blog posts synchronized) "
+			console.log "Wordpress Synchronization ended with success ! (#{news.length} blog posts synchronized)"
 
 	if config.feature.stopWatch
 		callback = utils.stopWatchCallbak callback
@@ -35,10 +35,11 @@ synchronizeWordpressNews = (post, callback) ->
 			newsEntry = new News(
 				content: post.excerpt
 				draft: false
-				imageUrl: undefined
+				imageUrl: if post?.attachments && post.attachments.length > 0 then (post?.attachments[0].images?.full?.url || "") else ""
 				publicationDate: post.date
 				targetUrl: post.url
 				title: post.title_plain
+				author: post.author.name
 				type: "wordpress"
 				typeId: post.id
 			)

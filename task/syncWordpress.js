@@ -23,7 +23,7 @@ synchronize = function() {
     if (err) {
       return console.log("Wordpress Synchronization ended with error: " + err.message + " - Error: " + err);
     } else {
-      return console.log("Wordpress Synchronization ended with success ! (" + news.length + " blog posts synchronized) ");
+      return console.log("Wordpress Synchronization ended with success ! (" + news.length + " blog posts synchronized)");
     }
   };
   if (config.feature.stopWatch) {
@@ -47,17 +47,18 @@ synchronizeWordpressNews = function(post, callback) {
     type: 'wordpress',
     typeId: post.id
   }, function(err, news) {
-    var newsEntry;
+    var newsEntry, _ref, _ref1;
     if (err) {
       return callback(err);
     } else if (!news) {
       newsEntry = new News({
         content: post.excerpt,
         draft: false,
-        imageUrl: void 0,
+        imageUrl: (post != null ? post.attachments : void 0) && post.attachments.length > 0 ? (post != null ? (_ref = post.attachments[0].images) != null ? (_ref1 = _ref.full) != null ? _ref1.url : void 0 : void 0 : void 0) || "" : "",
         publicationDate: post.date,
         targetUrl: post.url,
         title: post.title_plain,
+        author: post.author.name,
         type: "wordpress",
         typeId: post.id
       });

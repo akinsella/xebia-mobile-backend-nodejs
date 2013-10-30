@@ -41,6 +41,11 @@ News = new mongo.Schema({
     type: Date,
     "default": Date.now
   },
+  author: {
+    type: String,
+    "default": '',
+    trim: true
+  },
   draft: Boolean,
   publicationDate: Date
 });

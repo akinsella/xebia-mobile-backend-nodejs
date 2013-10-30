@@ -13,14 +13,14 @@ processRequest = (req, res, url, transform) ->
 	return
 
 listUnfiltered = (req, res) ->
-	News.find {}, (err, news) ->
+	News.find {}, { sort: {"publicationDate": -1}}, (err, news) ->
 		if (news)
 			utils.responseData(200, undefined, news, { req:req, res:res })
 		else
 			utils.responseData(404, "Not Found", undefined, { req:req, res:res })
 
 list = (req, res) ->
-	News.find { draft: false }, (err, news) ->
+	News.find { draft: false }, null, { sort: {"publicationDate": -1}}, (err, news) ->
 
 		news = _(news).map (newsEntry) ->
 			id: newsEntry.id
