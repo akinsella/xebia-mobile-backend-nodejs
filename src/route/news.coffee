@@ -32,7 +32,9 @@ list = (req, res) ->
 			publicationDate: newsEntry.publicationDate
 			targetUrl: newsEntry.targetUrl
 			title: newsEntry.title
+			author: newsEntry.author
 			type: newsEntry.type
+			typeId: newsEntry.typeId
 
 		_(news).each (newsEntry) ->
 			newsEntry.publicationDate = moment(newsEntry.publicationDate).format("YYYY-MM-DD HH:mm:ss")

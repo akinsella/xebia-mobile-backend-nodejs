@@ -54,7 +54,9 @@ list = function(req, res) {
         publicationDate: newsEntry.publicationDate,
         targetUrl: newsEntry.targetUrl,
         title: newsEntry.title,
-        type: newsEntry.type
+        author: newsEntry.author,
+        type: newsEntry.type,
+        typeId: newsEntry.typeId
       };
     });
     _(news).each(function(newsEntry) {
