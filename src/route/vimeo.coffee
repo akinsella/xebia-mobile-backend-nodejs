@@ -42,7 +42,7 @@ auth = (req, res) ->
 			req.session.oauthRequestToken = oauthToken
 			req.session.oauthRequestTokenSecret = oauthTokenSecret
 
-			return res.redirect("http://vimeo.com/oauth/authorize?oauth_token=" + req.session.oauthRequestToken + "&permission=read");
+			return res.redirect("http://vimeo.com/oauth/authorize?oauth_token=#{req.session.oauthRequestToken}&permission=read")
 	)
 
 callback = (req, res) ->

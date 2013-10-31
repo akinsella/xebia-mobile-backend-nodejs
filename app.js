@@ -160,29 +160,29 @@ app.configure('production', function() {
   return app.use(express.errorHandler());
 });
 
-app.get('/api/eventbrite/event', eventbrite.list);
+app.get('/api/eventbrite/events', eventbrite.list);
 
-app.get('/api/github/repository', github.repos);
+app.get('/api/github/repositories', github.repos);
 
-app.get('/api/github/member', github.public_members);
+app.get('/api/github/members', github.public_members);
 
 app.get('/api/twitter/timeline', twitter.xebia_timeline);
 
-app.get('/api/wordpress/post/recent', wordpress.recentPosts);
+app.get('/api/wordpress/posts/recent', wordpress.recentPosts);
 
-app.get('/api/wordpress/post/:id', wordpress.post);
+app.get('/api/wordpress/posts/:id', wordpress.post);
 
-app.get('/api/wordpress/author', wordpress.authors);
+app.get('/api/wordpress/authors', wordpress.authors);
 
-app.get('/api/wordpress/author/:id', wordpress.authorPosts);
+app.get('/api/wordpress/authors/:id', wordpress.authorPosts);
 
-app.get('/api/wordpress/tag', wordpress.tags);
+app.get('/api/wordpress/tags', wordpress.tags);
 
-app.get('/api/wordpress/tag/:id', wordpress.tagPosts);
+app.get('/api/wordpress/tags/:id', wordpress.tagPosts);
 
-app.get('/api/wordpress/category', wordpress.categories);
+app.get('/api/wordpress/categories', wordpress.categories);
 
-app.get('/api/wordpress/category/:id', wordpress.categoryPosts);
+app.get('/api/wordpress/categories/:id', wordpress.categoryPosts);
 
 app.get('/api/wordpress/dates', wordpress.dates);
 
@@ -192,7 +192,7 @@ app.get('/api/vimeo/oauth', vimeo.auth);
 
 app.get('/api/vimeo/oauth/callback', vimeo.callback);
 
-app.get('/api/vimeo/video', vimeo.videos);
+app.get('/api/vimeo/videos', vimeo.videos);
 
 app["delete"]('/api/news/:id', news.removeById);
 
@@ -204,49 +204,49 @@ app.get('/api/news', news.listUnfiltered);
 
 app.get('/api/news/:id', news.findById);
 
-app["delete"]('/api/device/:id', device.removeById);
+app["delete"]('/api/devices/:id', device.removeById);
 
-app.post('/api/device', device.create);
+app.post('/api/devices', device.create);
 
-app.get('/api/device', device.list);
+app.get('/api/devices', device.list);
 
-app.get('/api/device/:id', device.findById);
+app.get('/api/devices/:id', device.findById);
 
-app["delete"]('/api/client/:id', client.removeById);
+app["delete"]('/api/clients/:id', client.removeById);
 
-app.post('/api/client', client.create);
+app.post('/api/clients', client.create);
 
-app.get('/api/client', client.list);
+app.get('/api/clients', client.list);
 
-app.get('/api/client/:id', client.findById);
+app.get('/api/clients/:id', client.findById);
 
-app.post('/api/user', user.create);
+app.post('/api/users', user.create);
 
-app.get('/api/user', user.list);
+app.get('/api/users', user.list);
 
-app.get('/api/user/me', security.ensureAuthenticated, user.me);
+app.get('/api/users/me', security.ensureAuthenticated, user.me);
 
-app.get('/api/user/:id', user.findById);
+app.get('/api/users/:id', user.findById);
 
-app["delete"]('/api/user/:id', user.removeById);
+app["delete"]('/api/users/:id', user.removeById);
 
-app.get('/api/essentials/card', card.cards);
+app.get('/api/essentials/cards', card.cards);
 
-app.get('/api/essentials/card/:id', card.cardById);
+app.get('/api/essentials/cards/:id', card.cardById);
 
-app.get('/api/essentials/category', card.categories);
+app.get('/api/essentials/categories', card.categories);
 
-app.get('/api/essentials/category/:id', card.cardsByCategoryId);
+app.get('/api/essentials/categories/:id', card.cardsByCategoryId);
 
-app["delete"]('/api/notification', notification.removeById);
+app["delete"]('/api/notifications', notification.removeById);
 
-app.post('/api/notification', notification.create);
+app.post('/api/notifications', notification.create);
 
-app.get('/api/notification', notification.list);
+app.get('/api/notifications', notification.list);
 
-app.get('/api/notification/:id', notification.findById);
+app.get('/api/notifications/:id', notification.findById);
 
-app.get('api/notification/push', notification.push);
+app.get('api/notifications/push', notification.push);
 
 app.post('/login', auth.login);
 

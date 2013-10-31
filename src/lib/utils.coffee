@@ -52,7 +52,7 @@ sendJsonResponse = (options, data) ->
 		options.res.setHeader 'Content-Type', 'application/json'
 
 
-	console.log "[" + options.url + "] Response sent: #{response}"
+#	console.log "[" + options.url + "] Response sent: #{response}"
 	options.res.send(response)
 
 
