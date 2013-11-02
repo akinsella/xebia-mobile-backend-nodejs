@@ -9,7 +9,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name : ['Xebia Mobile Backend'],
+  app_name : [config.monitoring.newrelic.appName],
   /**
    * Your New Relic license key.
    */

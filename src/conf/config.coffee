@@ -3,6 +3,7 @@ _ = underscore._
 
 if !config
 	localConfig =
+		apiVersion: process.env.API_VERSION
 		offlineMode: process.env.OFFLINE_MODE == "true"
 		hostname: process.env.APP_HOSTNAME
 		port: process.env.APP_HTTP_PORT
@@ -29,6 +30,7 @@ if !config
 		monitoring:
 			newrelic:
 				apiKey: process.env.NEW_RELIC_API_KEY
+				appName: process.env.NEW_RELIC_APP_NAME
 			strongOps:
 				apiKey: process.env.STRONG_OPS_API_KEY
 			nodetime:
@@ -38,6 +40,7 @@ if !config
 	config = _.extend({}, localConfig)
 
 module.exports =
+	apiVersion: config.apiVersion
 	offlineMode: config.offlineMode
 	devMode: config.devMode
 	verbose: config.verbose
