@@ -1,13 +1,38 @@
 syncWordpress = require './syncWordpress'
+syncEventBrite = require './syncEventBrite'
+syncTwitter = require './syncTwitter'
+syncVimeo = require './syncVimeo'
+
 cronJob = require('cron').CronJob
 conf = require '../conf/config'
 
 init = () ->
 	console.log "Starting scheduler ..."
-	console.log "Starting task 'syncTask' with cron expression: '#{conf.scheduler.syncWordpress.cron}', timezone: '#{conf.scheduler.syncWordpress.timezone}' and RunOnStart: '#{conf.scheduler.syncWordpress.runOnStart}'"
-	syncJob = new cronJob conf.scheduler.syncWordpress.cron, syncWordpress.synchronize, conf.scheduler.syncWordpress.runOnStart, conf.scheduler.syncWordpress.timezone
-	syncJob.start()
+
+	startSyncWordpress()
+	startSyncTwitter()
+	startSyncEventBrite()
+	startSyncVimeo()
+
 	console.log "Scheduler started ..."
+
+startSyncWordpress = () ->
+	startJob "Wordpress", conf.scheduler.syncWordpress, syncWordpress.synchronize
+
+startSyncEventBrite = () ->
+	startJob "EventBrite", conf.scheduler.syncEventBrite, syncEventBrite.synchronize
+
+startSyncTwitter = () ->
+	startJob "Twitter", conf.scheduler.syncTwitter, syncTwitter.synchronize
+
+startSyncVimeo = () ->
+	startJob "Vimeo", conf.scheduler.syncVimeo, syncVimeo.synchronize
+
+startJob = (jobName, syncJobConf, synchronizeFunction) ->
+	console.log "Starting task 'Sync #{jobName}' with cron expression: '#{syncJobConf.cron}', timezone: '#{syncJobConf.timezone}' and RunOnStart: '#{syncJobConf.runOnStart}'"
+	syncJob = new cronJob syncJobConf.cron, synchronizeFunction, syncJobConf.runOnStart, syncJobConf.timezone
+	syncJob.start()
+
 
 module.exports =
 	init: init

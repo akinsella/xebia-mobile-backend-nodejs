@@ -414,6 +414,16 @@ restructureChildren = function(children) {
         }));
       }
       child.children = [];
+    } else if (child.type === "CODE" && child.children.length === 1 && child.children[0].type === "A") {
+      child.type = "A";
+      child.attributes = [];
+      href = _(child.children[0].attributes).find(function(attribute) {
+        return attribute.key === "href";
+      });
+      child.attributes.push(_(child.children[0].attributes).find(function(attribute) {
+        return attribute.key === "href";
+      }));
+      child.children = [];
     }
   }
   return children;

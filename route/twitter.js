@@ -96,7 +96,7 @@ user_timeline_authenticated = (req, res) ->
 */
 
 
-processRequest = function(req, res, url, oauth, credentials, transform) {
+processRequest = function(req, res, url, credentials, transform) {
   var options;
   options = {
     req: req,
@@ -155,7 +155,7 @@ xebia_timeline = function(req, res) {
 };
 
 fetchTwitterData = function(twitterUrl, credentials, req, res) {
-  return processRequest(req, res, twitterUrl, oauth2, credentials, function(data, cb) {
+  return processRequest(req, res, twitterUrl, credentials, function(data, cb) {
     _(data).each(function(tweet) {
       return shortenTweet(tweet);
     });

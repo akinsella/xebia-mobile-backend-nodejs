@@ -93,7 +93,7 @@ user_timeline_authenticated = (req, res) ->
 ###
 
 # To be refactored
-processRequest = (req, res, url, oauth, credentials, transform) ->
+processRequest = (req, res, url, credentials, transform) ->
 	options =
 		req: req,
 		res: res,
@@ -134,7 +134,7 @@ xebia_timeline = (req, res) ->
 
 
 fetchTwitterData = (twitterUrl, credentials, req, res) ->
-	processRequest req, res, twitterUrl, oauth2, credentials, (data, cb) ->
+	processRequest req, res, twitterUrl, credentials, (data, cb) ->
 		_(data).each((tweet) ->
 			shortenTweet(tweet)
 		)
