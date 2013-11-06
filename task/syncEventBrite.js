@@ -41,18 +41,19 @@ processEventBriteEntries = function(callback) {
     url: "https://www.eventbrite.com/json/organizer_list_events?app_key=" + apiKey + "&id=1627902102",
     json: true
   }, function(error, data, response) {
-    data = _(data.events).pluck("event");
-    data = _(data).sortBy(function(event) {
+    var events;
+    events = _(response.events).pluck("event");
+    events = _(events).sortBy(function(event) {
       return event.start_date;
     });
-    data = _(data).filter(function(event) {
+    events = _(events).filter(function(event) {
       return event.status === "Live" || event.status === "Completed";
     });
-    data = _(data).reverse();
-    _(data).each(function(event) {
+    events = _(events).reverse();
+    _(events).each(function(event) {
       return event;
     });
-    return async.map(response.posts, synchronizeEventNews, callback);
+    return async.map(events, synchronizeEventNews, callback);
   });
 };
 

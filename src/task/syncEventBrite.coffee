@@ -28,22 +28,23 @@ processEventBriteEntries = (callback) ->
 
 	request.get {url: "https://www.eventbrite.com/json/organizer_list_events?app_key=#{apiKey}&id=1627902102", json: true}, (error, data, response) ->
 
-		data = _(data.events)
+		events = _(response.events)
 			.pluck("event")
 
-		data = _(data)
+		events = _(events)
 			.sortBy((event) -> event.start_date)
 
-		data = _(data)
+		events = _(events)
 			.filter((event) -> event.status == "Live" || event.status == "Completed")
 
-		data = _(data)
+		events = _(events)
 			.reverse()
-		_(data).each((event) ->
+
+		_(events).each((event) ->
 			event
 		)
 
-		async.map response.posts, synchronizeEventNews, callback
+		async.map events, synchronizeEventNews, callback
 
 
 synchronizeEventNews = (event, callback) ->

@@ -46,15 +46,19 @@ processVideos = function(callback) {
   url = "" + apiHost + "?method=vimeo.videos.getAll&user_id=xebia&sort=newest&page=1&per_page=50&summary_response=true&full_response=false&format=json";
   return Cache.get('vimeo.crendentials', function(err, credentials) {
     if (err) {
-      console.log("Error getting OAuth request data");
+      console.log("Error getting OAuth request data: " + err);
     } else if (!credentials) {
       console.log(500, "Error No Credentials stored");
     } else {
 
     }
     return oauth.get(url, credentials.accessToken, credentials.accessTokenSecret, function(error, data, response) {
-      data = data ? JSON.parse(data) : data;
-      return async.map(data, synchronizeVideoNews, callback);
+      if (error) {
+        return console.log(500, "Error No Credentials stored: " + error);
+      } else {
+        data = data ? JSON.parse(data) : data;
+        return async.map(data.videos.video, synchronizeVideoNews, callback);
+      }
     });
   });
 };

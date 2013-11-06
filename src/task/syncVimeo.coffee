@@ -41,13 +41,16 @@ processVideos = (callback) ->
 	url = "#{apiHost}?method=vimeo.videos.getAll&user_id=xebia&sort=newest&page=1&per_page=50&summary_response=true&full_response=false&format=json"
 	Cache.get('vimeo.crendentials', (err, credentials) ->
 		if err
-			console.log "Error getting OAuth request data"
+			console.log "Error getting OAuth request data: #{err}"
 		else if (!credentials)
 			console.log 500, "Error No Credentials stored"
 		else
 		oauth.get url, credentials.accessToken, credentials.accessTokenSecret, (error, data, response) ->
-			data = if data then JSON.parse(data) else data
-			async.map data, synchronizeVideoNews, callback
+			if error
+				console.log 500, "Error No Credentials stored: #{error}"
+			else
+				data = if data then JSON.parse(data) else data
+				async.map data.videos.video, synchronizeVideoNews, callback
 	)
 
 
