@@ -15,6 +15,9 @@ conf = require('../conf/config');
 
 init = function() {
   console.log("Starting scheduler ...");
+  startJob("Wordpress", conf.scheduler.syncWordpress, syncWordpress.synchronize);
+  startJob("EventBrite", conf.scheduler.syncEventBrite, syncEventBrite.synchronize);
+  startJob("Twitter", conf.scheduler.syncTwitter, syncTwitter.synchronize);
   startJob("Vimeo", conf.scheduler.syncVimeo, syncVimeo.synchronize);
   return console.log("Scheduler started ...");
 };
