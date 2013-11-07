@@ -17,22 +17,22 @@ if (!config) {
     processNumber: process.env.INDEX_OF_PROCESS || 0,
     scheduler: {
       syncWordpress: {
-        cron: '0,30 * * * * 1-7',
+        cron: '0 0,15,30,45 * * * 1-7',
         timezone: "Europe/Paris",
         runOnStart: true
       },
       syncTwitter: {
-        cron: '0,30 * * * * 1-7',
+        cron: '0 0,15,30,45 * * * 1-7',
         timezone: "Europe/Paris",
         runOnStart: true
       },
       syncEventBrite: {
-        cron: '0,30 * * * * 1-7',
+        cron: '0 0,15,30,45 * * * 1-7',
         timezone: "Europe/Paris",
         runOnStart: true
       },
       syncVimeo: {
-        cron: '0,30 * * * * 1-7',
+        cron: '0 0,15,30,45 * * * 1-7',
         timezone: "Europe/Paris",
         runOnStart: true
       }

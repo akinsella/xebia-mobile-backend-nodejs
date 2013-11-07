@@ -3,11 +3,13 @@ _ = require('underscore')._
 OAuth = require 'oauth'
 util = require 'util'
 Cache = require '../lib/cache'
+async = require 'async'
+request = require 'request'
 
 apiHost = 'http://vimeo.com/api/rest/v2'
 
 # To be refactored
-processRequest = (req, res, url, oauth, credentials, transform) ->
+processRequestOAuth = (req, res, url, oauth, credentials, transform) ->
 	options =
 		req: req,
 		res: res,
@@ -21,6 +23,14 @@ processRequest = (req, res, url, oauth, credentials, transform) ->
 		credentials: credentials
 
 	utils.processRequest options
+
+
+# To be refactored
+processRequest = (req, res, url, transform) ->
+
+	options = utils.buildOptions req, res, url, 5 * 60, transform
+	utils.processRequest options
+
 
 oauth = new OAuth.OAuth(
 	'https://vimeo.com/oauth/request_token',
@@ -78,12 +88,12 @@ videos = (req, res) ->
 		else if (!credentials)
 			utils.responseData 500, "Error No Credentials stored", undefined, {req: req, res: res}
 		else
-			processRequest req, res, url, oauth, credentials, (data, cb) ->
-				_(data.videos.video).each((video) -> transformVideo(video) )
-				cb(undefined, data)
+			processRequestOAuth req, res, url, oauth, credentials, (data, cb) ->
+				async.map data.videos.video, transformVideo, (err, videos) ->
+					cb(undefined, videos)
 	)
 
-transformVideo = (video) ->
+transformVideo = (video, cb) ->
 	video.embedPrivacy = video.embed_privacy
 	delete video.embed_privacy
 	video.isHd = Number(video.is_hd) > 0
@@ -125,7 +135,23 @@ transformVideo = (video) ->
 		thumbnail.url = thumbnail._content
 		delete thumbnail._content
 	)
-	video
+
+	videoConfigUrl = "http://player.vimeo.com/v2/video/#{video.id}/config"
+	console.log "Fetching url: #{videoConfigUrl}"
+	request.get { url: videoConfigUrl, json: true }, (error, data, response) ->
+
+		video.videoUrls = _(response.request.files.codecs.map (codec) ->
+			for key, value of response.request.files[codec]
+				value
+		).flatten()
+
+		_(video.videoUrls).each (video) ->
+			delete video.profile
+			delete video.origin
+			delete video.availability
+
+		cb(undefined, video);
+
 
 module.exports =
 	auth: auth,
