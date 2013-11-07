@@ -10,13 +10,14 @@ apiHost = 'http://vimeo.com/api/rest/v2'
 
 # To be refactored
 processRequestOAuth = (req, res, url, oauth, credentials, transform) ->
+	res.setHeader('Cache-Control', 'private, max-age=300');
 	options =
 		req: req,
 		res: res,
 		url: url,
 		cacheKey: utils.getCacheKey(req),
-		forceNoCache: utils.getIfUseCache(req),
-		cacheTimeout: 60 * 60,
+		forceNoCache: true,
+		cacheTimeout: 60 * 5,
 		callback: utils.responseData,
 		transform: transform,
 		oauth: oauth,
