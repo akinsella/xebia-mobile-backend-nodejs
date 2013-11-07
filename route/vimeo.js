@@ -163,6 +163,7 @@ transformVideo = function(video, cb) {
     url: videoConfigUrl,
     json: true
   }, function(error, data, response) {
+    var key, value, videoUrl, _ref;
     video.videoUrls = _(response.request.files.codecs.map(function(codec) {
       var key, value, _ref, _results;
       _ref = response.request.files[codec];
@@ -175,6 +176,20 @@ transformVideo = function(video, cb) {
       }
       return _results;
     })).flatten();
+    _ref = response.request.files.hls;
+    for (key in _ref) {
+      value = _ref[key];
+      videoUrl = {
+        url: value,
+        type: key,
+        codec: "hls",
+        height: 0,
+        width: 0,
+        bitrate: 0,
+        id: 0
+      };
+      video.videoUrls.push(videoUrl);
+    }
     _(video.videoUrls).each(function(video) {
       delete video.profile;
       delete video.origin;

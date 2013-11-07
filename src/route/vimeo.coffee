@@ -147,6 +147,17 @@ transformVideo = (video, cb) ->
 				value
 		).flatten()
 
+		for key, value of response.request.files.hls
+			videoUrl =
+				url: value
+				type: key
+				codec: "hls"
+				height: 0
+				width: 0
+				bitrate: 0
+				id: 0
+			video.videoUrls.push videoUrl
+
 		_(video.videoUrls).each (video) ->
 			delete video.profile
 			delete video.origin
