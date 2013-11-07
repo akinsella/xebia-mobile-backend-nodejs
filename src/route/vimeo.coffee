@@ -142,6 +142,8 @@ transformVideo = (video, cb) ->
 
 		video.videoUrls = _(response.request.files.codecs.map (codec) ->
 			for key, value of response.request.files[codec]
+				value["type"] = key
+				value["codec"] = codec
 				value
 		).flatten()
 

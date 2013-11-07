@@ -169,6 +169,8 @@ transformVideo = function(video, cb) {
       _results = [];
       for (key in _ref) {
         value = _ref[key];
+        value["type"] = key;
+        value["codec"] = codec;
         _results.push(value);
       }
       return _results;
