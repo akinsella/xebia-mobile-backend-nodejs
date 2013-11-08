@@ -179,6 +179,8 @@ app.get("/api/v" + config.apiVersion + "/vimeo/oauth/callback", vimeo.callback);
 
 app.get("/api/v" + config.apiVersion + "/vimeo/videos", vimeo.videos);
 
+app.get("/api/v" + config.apiVersion + "/vimeo/videos/:id/urls", vimeo.videoUrls);
+
 app["delete"]("/api/v" + config.apiVersion + "/news/:id", news.removeById);
 
 app.post("/api/v" + config.apiVersion + "/news", news.create);

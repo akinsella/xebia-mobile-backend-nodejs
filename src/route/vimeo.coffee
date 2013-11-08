@@ -10,13 +10,13 @@ apiHost = 'http://vimeo.com/api/rest/v2'
 
 # To be refactored
 processRequestOAuth = (req, res, url, oauth, credentials, transform) ->
-	res.setHeader('Cache-Control', 'private, max-age=300');
+#	res.setHeader('Cache-Control', 'private, max-age=300');
 	options =
 		req: req,
 		res: res,
 		url: url,
 		cacheKey: utils.getCacheKey(req),
-		forceNoCache: true,
+		forceNoCache: utils.getIfUseCache(req),
 		cacheTimeout: 60 * 5,
 		callback: utils.responseData,
 		transform: transform,
@@ -94,6 +94,40 @@ videos = (req, res) ->
 					cb(undefined, videos)
 	)
 
+videoUrls = (req, res) ->
+	videoId = req.params.id
+
+	videoConfigUrl = "http://player.vimeo.com/v2/video/#{videoId}/config"
+	console.log "Fetching url: #{videoConfigUrl}"
+	request.get { url: videoConfigUrl, json: true }, (error, data, response) ->
+
+		videoUrls = _(response.request.files.codecs.map (codec) ->
+			for key, value of response.request.files[codec]
+				value["type"] = key
+				value["codec"] = codec
+				value
+		).flatten()
+
+		for key, value of response.request.files.hls
+			videoUrl =
+				url: value
+				type: key
+				codec: "hls"
+				height: 0
+				width: 0
+				bitrate: 0
+				id: 0
+			videoUrls.push videoUrl
+
+		_(videoUrls).each (video) ->
+			delete video.profile
+			delete video.origin
+			delete video.availability
+
+		res.json videoUrls
+
+
+
 transformVideo = (video, cb) ->
 	video.embedPrivacy = video.embed_privacy
 	delete video.embed_privacy
@@ -137,37 +171,11 @@ transformVideo = (video, cb) ->
 		delete thumbnail._content
 	)
 
-	videoConfigUrl = "http://player.vimeo.com/v2/video/#{video.id}/config"
-	console.log "Fetching url: #{videoConfigUrl}"
-	request.get { url: videoConfigUrl, json: true }, (error, data, response) ->
-
-		video.videoUrls = _(response.request.files.codecs.map (codec) ->
-			for key, value of response.request.files[codec]
-				value["type"] = key
-				value["codec"] = codec
-				value
-		).flatten()
-
-		for key, value of response.request.files.hls
-			videoUrl =
-				url: value
-				type: key
-				codec: "hls"
-				height: 0
-				width: 0
-				bitrate: 0
-				id: 0
-			video.videoUrls.push videoUrl
-
-		_(video.videoUrls).each (video) ->
-			delete video.profile
-			delete video.origin
-			delete video.availability
-
-		cb(undefined, video);
+	cb(undefined, video)
 
 
 module.exports =
-	auth: auth,
-	callback: callback,
+	auth: auth
+	callback: callback
 	videos: videos
+	videoUrls: videoUrls
