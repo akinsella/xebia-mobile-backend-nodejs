@@ -88,7 +88,7 @@ processTweets = function(callback) {
 synchronizeTweetNews = function(tweet, callback) {
   return News.findOne({
     type: 'twitter',
-    typeId: tweet.id
+    typeId: tweet.id_str
   }, function(err, news) {
     var newsEntry;
     if (err) {

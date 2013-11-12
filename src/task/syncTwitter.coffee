@@ -70,7 +70,7 @@ processTweets = (callback) ->
 
 
 synchronizeTweetNews = (tweet, callback) ->
-	News.findOne { type: 'twitter', typeId: tweet.id }, (err, news) ->
+	News.findOne { type: 'twitter', typeId: tweet.id_str }, (err, news) ->
 		if err
 			callback err
 		else if !news
