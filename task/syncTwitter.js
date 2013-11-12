@@ -103,7 +103,7 @@ synchronizeTweetNews = function(tweet, callback) {
         title: tweet.text,
         author: tweet.user.name,
         type: "twitter",
-        typeId: tweet.id,
+        typeId: tweet.id_str,
         metadata: [
           {
             key: "screenName",
