@@ -56,7 +56,8 @@ list = function(req, res) {
         title: newsEntry.title,
         author: newsEntry.author,
         type: newsEntry.type,
-        typeId: newsEntry.typeId
+        typeId: newsEntry.typeId,
+        metadata: newsEntry.metadata
       };
     });
     _(news).each(function(newsEntry) {

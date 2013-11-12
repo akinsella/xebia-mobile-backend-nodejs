@@ -35,6 +35,7 @@ list = (req, res) ->
 			author: newsEntry.author
 			type: newsEntry.type
 			typeId: newsEntry.typeId
+			metadata: newsEntry.metadata
 
 		_(news).each (newsEntry) ->
 			newsEntry.publicationDate = moment(newsEntry.publicationDate).format("YYYY-MM-DD HH:mm:ss")
