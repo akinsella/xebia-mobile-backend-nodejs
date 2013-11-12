@@ -6,7 +6,7 @@ News = new mongo.Schema(
 	title: {type: String, "default": '', trim: true},
 	content: {type: String, "default": '', trim: true},
 	type: {type: String, "enum": ['wordpress', 'twitter', 'vimeo', 'eventbrite', 'other'], trim: true },
-	typeId: Number,
+	typeId: {type: String, "default": '', trim: true},
 	imageUrl: {type: String, "default": '', trim: true},
 	targetUrl: {type: String, "default": '', trim: true},
 	createAt: { type: Date, "default": Date.now },

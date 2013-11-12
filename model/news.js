@@ -22,7 +22,11 @@ News = new mongo.Schema({
     "enum": ['wordpress', 'twitter', 'vimeo', 'eventbrite', 'other'],
     trim: true
   },
-  typeId: Number,
+  typeId: {
+    type: String,
+    "default": '',
+    trim: true
+  },
   imageUrl: {
     type: String,
     "default": '',
