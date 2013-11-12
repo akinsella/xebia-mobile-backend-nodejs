@@ -47,7 +47,21 @@ News = new mongo.Schema({
     trim: true
   },
   draft: Boolean,
-  publicationDate: Date
+  publicationDate: Date,
+  metadata: [
+    {
+      key: {
+        type: String,
+        "default": '',
+        trim: true
+      },
+      value: {
+        type: String,
+        "default": '',
+        trim: true
+      }
+    }
+  ]
 });
 
 newsModel = mongo.client.model('News', News);

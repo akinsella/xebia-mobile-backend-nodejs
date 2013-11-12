@@ -13,7 +13,11 @@ News = new mongo.Schema(
 	lastModified: { type: Date, "default": Date.now },
 	author: {type: String, "default": '', trim: true},
 	draft: Boolean,
-	publicationDate: Date
+	publicationDate: Date,
+	metadata: [{
+		key: {type: String, "default": '', trim: true},
+		value: {type: String, "default": '', trim: true},
+	}]
 )
 
 newsModel = mongo.client.model 'News', News

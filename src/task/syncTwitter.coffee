@@ -85,6 +85,9 @@ synchronizeTweetNews = (tweet, callback) ->
 				author: tweet.user.name
 				type: "twitter"
 				typeId: tweet.id
+				metadata: [
+					{ key: "screenName", value: tweet.user.screen_name }
+				]
 			)
 
 			newsEntry.save (err) ->
