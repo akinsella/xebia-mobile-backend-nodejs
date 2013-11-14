@@ -257,7 +257,7 @@ processAuthorInformations = function(post) {
 
 processLanguageInformations = function(post) {
   var endTag, language, languages, startTag, _i, _len, _results;
-  languages = ["java", "xml"];
+  languages = ["java", "xml", "javascript", "cpp", "default"];
   _results = [];
   for (_i = 0, _len = languages.length; _i < _len; _i++) {
     language = languages[_i];
