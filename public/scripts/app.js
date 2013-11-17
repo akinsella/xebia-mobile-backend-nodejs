@@ -17,6 +17,8 @@
                 .when('/news', { templateUrl: 'partials/news/list.html', controller: 'NewsCtrl' })
                 .when('/news/create', { templateUrl: 'partials/news/crate.html', controller: 'NewsCtrl' })
                 .when('/news/update', { templateUrl: 'partials/news/update.html', controller: 'NewsCtrl' })
+                .when('/notifications', { templateUrl: 'partials/notifications/notifications.html', controller: 'NotificationsCtrl' })
+                .when('/devices', { templateUrl: 'partials/notifications/devices.html', controller: 'DevicesCtrl' })
                 .otherwise({ redirectTo: '/' });
             return $httpProvider.responseInterceptors.push('errorHttpInterceptor');
         }])
@@ -27,11 +29,14 @@
             $rootScope.user = {
                  role: "ROLE_ANONYMOUS"
              };
-             $http.get('/api/user/me').success(function (user) {
+             $http.get('/users/me').success(function (user) {
                  $rootScope.user = user;
              });
 
              $rootScope.Auth = {
+                 user: function() {
+                     return $rootScope.user;
+                 },
                  isAuthenticated: function () {
                      return this.hasNotRole("ROLE_ANONYMOUS");
                  },
@@ -51,31 +56,65 @@
 
         .controller('RootCtrl', [
             '$scope', '$location', 'ErrorService', function ($scope, $location, ErrorService) {
+
+                $scope.selectedMenuItem = undefined;
                 $scope.errorService = ErrorService;
+
+                $scope.selectMenuItem = function(menuItem) {
+                    console.log("Select MenuItem: [" + menuItem.id + "]");
+                    $scope.selectedMenuItem = menuItem;
+                };
+
+                $scope.$watch('selectedMenuItem', function(newVal, oldVal) {
+                    console.log(newVal, oldVal);
+                });
+
+                $scope.isMenuActive = function(selectedMenuItem, menuItem) {
+                    console.log("MenuItem is Active ? [" + menuItem.id + "]");
+                    console.log("Selected MenuItem: [" + selectedMenuItem.id + "]");
+                    return menuItem.id === selectedMenuItem.id;
+                };
+
+                $scope.menus = [
+                    {
+                         id: "news",
+                         name: "News",
+                         items: [
+                             {
+                                 name: 'News',
+                                 url: "#/news"
+                             }
+                         ]
+                    },
+                    {
+                        id: "notifications",
+                        name: "Notifications",
+                        items: [
+                            {
+                                name: 'Messages',
+                                url: "#/notifications"
+                            },
+                            {
+                                name: 'Devices',
+                                url: "#/devices"
+                            }
+                        ]
+                    }
+                ];
+
+                $scope.selectedMenuItem = $scope.menus[0];
+
             }
         ])
-        .controller('SubMenuCtrl', function ($scope) {
-            $scope.menus = [
-                {
-                    message: 'Item 1',
-                    url: "item/1"
-                },
-                {
-                    message: 'Item 2',
-                    url: "item/2"
-                },
-                {
-                    message: 'Item 3',
-                    url: "item/3"
-                }
-            ];
-        })
+
         .controller('SidebarCtrl', function ($scope) {
 
         })
+
         .controller('ContentCtrl', function ($scope) {
             $scope.sidebar = 'no';
         })
+
         .controller('IndexCtrl', function ($scope) {
             $scope.title = "Home";
             $scope.user = user;
@@ -136,5 +175,6 @@
 
         /* Services */
 
-        .value('version', '0.1');
+        .value('version', '0.1')
+        .value('baseApiUrl', 'http://dev.xebia.fr:8000');
 })();

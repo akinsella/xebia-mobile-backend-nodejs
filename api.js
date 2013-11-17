@@ -193,6 +193,8 @@ app.get("/api/v" + config.apiVersion + "/news/:id", news.findById);
 
 app["delete"]("/api/v" + config.apiVersion + "/devices/:id", device.removeById);
 
+app.post("/api/v" + config.apiVersion + "/devices/register", device.register);
+
 app.post("/api/v" + config.apiVersion + "/devices", device.create);
 
 app.get("/api/v" + config.apiVersion + "/devices", device.list);
@@ -231,9 +233,9 @@ app.post("/api/v" + config.apiVersion + "/notifications", notification.create);
 
 app.get("/api/v" + config.apiVersion + "/notifications", notification.list);
 
-app.get("/api/v" + config.apiVersion + "/notifications/:id", notification.findById);
+app.get("/api/v" + config.apiVersion + "/notifications/:id/push", notification.push);
 
-app.get("/api/v" + config.apiVersion + "/notifications/push", notification.push);
+app.get("/api/v" + config.apiVersion + "/notifications/:id", notification.findById);
 
 app.get('/dialog/authorize', oauth2.authorization);
 

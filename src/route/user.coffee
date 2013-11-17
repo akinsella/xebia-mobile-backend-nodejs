@@ -52,6 +52,7 @@ me = (req, res) ->
 		firstName: req.user.firstName
 		lastName: req.user.lastName
 		role: req.user.role
+		avatarUrl: req.user.avatarUrl
 
 module.exports =
 	create: create,

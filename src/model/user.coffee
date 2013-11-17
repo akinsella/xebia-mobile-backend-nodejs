@@ -9,6 +9,7 @@ User = new mongo.Schema(
 	lastName: { type: String, "default": '', trim: true },
 	gender: { type: String, "default": '', trim: true },
 	googleId: { type: String, "default": '', trim: true },
+	avatarUrl: { type: String, "default": '', trim: true },
 	role: { type: String, "default": '', 'enum': ["ROLE_USER", "ROLE_ADMIN"], trim: true },
 	createAt: { type: Date, "default": Date.now },
 	lastModified: { type: Date, "default": Date.now }

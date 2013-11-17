@@ -47,7 +47,7 @@ sendJsonResponse = (options, data) ->
 
 	if callback
 		options.res.setHeader 'Content-Type', 'application/javascript'
-		response = "#{callback}(#{response});"
+		response = "#{callback}(#{JSON.stringify(response)});"
 	else
 		options.res.setHeader 'Content-Type', 'application/json'
 
@@ -81,7 +81,7 @@ useCache = (options) ->
 
 
 responseData = (statusCode, statusMessage, data, options) ->
-	if statusCode == 200
+	if statusCode >= 200 && statusCode <= 299
 		if options.contentType
 			options.res.setHeader 'Content-Type', options.contentType
 

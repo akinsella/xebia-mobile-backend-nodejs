@@ -1,0 +1,23 @@
+<h1>Devices</h1>
+
+<table class="dataset">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Token</th>
+            <th>Udid</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr  ng-repeat="device in devices">
+                <td>{{device.id}}</td>
+                <td>{{device.token}}</td>
+                <td>{{device.udid}}</td>
+                <td>
+                    <a href="#/devices/{{device.id}}/updateForm">Edit</a> -
+                    <a href="#/devices/{{device.id}}/delete">Delete</a>
+                </td>
+            </tr>
+    </tbody>
+</table>

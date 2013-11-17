@@ -15,35 +15,16 @@ processRequest = (req, res, url, transform) ->
 listUnfiltered = (req, res) ->
 	News.find {}, { sort: {"publicationDate": -1}}, (err, news) ->
 		if (news)
-			utils.responseData(200, undefined, news, { req:req, res:res })
+			utils.responseData(200, undefined, news.map(mapNews), { req:req, res:res })
 		else
 			utils.responseData(404, "Not Found", undefined, { req:req, res:res })
 
 list = (req, res) ->
 	News.find { draft: false }, null, { sort: {"publicationDate": -1}}, (err, news) ->
 
-		news = _(news).map (newsEntry) ->
-			id: newsEntry.id
-			content: newsEntry.content
-			createdAt: newsEntry.createdAt
-			draft: newsEntry.draft
-			imageUrl: newsEntry.imageUrl
-			lastModified: newsEntry.lastModified
-			publicationDate: newsEntry.publicationDate
-			targetUrl: newsEntry.targetUrl
-			title: newsEntry.title
-			author: newsEntry.author
-			type: newsEntry.type
-			typeId: newsEntry.typeId
-			metadata: newsEntry.metadata
-
-		_(news).each (newsEntry) ->
-			newsEntry.publicationDate = moment(newsEntry.publicationDate).format("YYYY-MM-DD HH:mm:ss")
-			newsEntry.lastModified = moment(newsEntry.lastModified).format("YYYY-MM-DD HH:mm:ss")
-			newsEntry.createdAt = moment(newsEntry.createdAt).format("YYYY-MM-DD HH:mm:ss")
-			newsEntry.publicationDate = moment(newsEntry.publicationDate).format("YYYY-MM-DD HH:mm:ss")
 		if (news)
-			utils.responseData(200, undefined, news, { req:req, res:res })
+
+			utils.responseData(200, undefined, mapNews(news), { req:req, res:res })
 		else
 			utils.responseData(404, "Not Found", undefined, { req:req, res:res })
 
@@ -68,6 +49,26 @@ create = (req, res) ->
 			utils.responseData(500, "Could not save news", req.body, { req:req, res:res})
 		else
 			utils.responseData(201, "Created", news, { req:req, res:res})
+
+mapNews = (news) ->
+	id: news.id
+	content: news.content
+	createdAt: news.createdAt
+	draft: news.draft
+	imageUrl: news.imageUrl
+	lastModified: news.lastModified
+	publicationDate: news.publicationDate
+	targetUrl: news.targetUrl
+	title: news.title
+	author: news.author
+	type: news.type
+	typeId: news.typeId
+	metadata: news.metadata
+	publicationDate: moment(news.publicationDate).format("YYYY-MM-DD HH:mm:ss")
+	lastModified: moment(news.lastModified).format("YYYY-MM-DD HH:mm:ss")
+	createdAt: moment(news.createdAt).format("YYYY-MM-DD HH:mm:ss")
+	publicationDate: moment(news.publicationDate).format("YYYY-MM-DD HH:mm:ss")
+
 
 module.exports =
 	list : list,

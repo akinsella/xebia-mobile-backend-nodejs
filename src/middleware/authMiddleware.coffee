@@ -33,18 +33,20 @@ GoogleStrategy = new GoogleStrategy({
 					user.lastName = profile.name.familyName
 					user.gender = profile.gender
 					user.googleId = utils.getParameterByName(profile.identifier, "id")
+					user.avatarUrl = if profile.photos then profile.photos[0].value else "images/avatar_placeholder.png"
 					user.role = if profile.emails[0].value == "akinsella.xebia.fr" then "ROLE_ADMIN" else "ROLE_USER"
 					user.save (err) ->
 						done(err, profile)
 				else
-					user = new User({
-						email:profile.emails[0].value,
-						firstName: profile.name.givenName,
-						lastName: profile.name.familyName,
-						gender: profile.gender,
-						googleId:utils.getParameterByName(profile.identifier, "id"),
+					user = new User(
+						email:profile.emails[0].value
+						firstName: profile.name.givenName
+						lastName: profile.name.familyName
+						gender: profile.gender
+						avatarUrl:  if profile.photos then profile.photos[0].value else "images/avatar_placeholder.png"
+						googleId:utils.getParameterByName(profile.identifier, "id")
 						role: if profile.emails[0].value == "akinsella.xebia.fr" then "ROLE_ADMIN" else "ROLE_USER"
-					})
+					)
 					user.save (err) ->
 						done(err, profile)
 	)

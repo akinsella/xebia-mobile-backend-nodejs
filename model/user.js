@@ -37,6 +37,11 @@ User = new mongo.Schema({
     "default": '',
     trim: true
   },
+  avatarUrl: {
+    type: String,
+    "default": '',
+    trim: true
+  },
   role: {
     type: String,
     "default": '',

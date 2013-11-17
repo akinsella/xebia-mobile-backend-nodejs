@@ -57,7 +57,8 @@
     "connect-domain": "*",
     "recluster": "*",
     "newrelic": "*",
-    "cron": "*"
+    "cron": "*",
+    "apnagent": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

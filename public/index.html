@@ -26,6 +26,7 @@
         <script src="scripts/app.js"></script>
         <script src="scripts/auth.js"></script>
         <script src="scripts/news.js"></script>
+        <script src="scripts/notifications.js"></script>
 
         <script src="scripts/scripts.js"></script>
 
@@ -41,16 +42,18 @@
                 <nav id="menu">
                     <ul>
                         <li><a href="/">Home</a></li>
-                        <li><a href="/admin" ng-show="Auth.hasRole('ROLE_ADMIN')">Admin</a></li>
+                        <li ng-repeat="menu in menus" ng-class="{active: selectedMenuItem.id == menu.id}" ng-show="Auth.hasRole('ROLE_USER')">
+                             <a ng-click="selectMenuItem(menu)" href="{{menu.url}}">{{menu.name}}</a>
+                         </li>
                     </ul>
                 </nav>
                 <div id="user" ng-controller="UserDetailsCtrl">
                     <div id="user-details-loggedin" ng-show="Auth.isAuthenticated()">
                         <a href="/account">
-                            <img src="{{user.avatarUrl}}" alt="{{user.firstName}}" width="40px" height="40px"/>
-                            <span>{{user.fullName}}<span>( {{user.email}} )</span></span>
+                            <img ng-src="{{Auth.user().avatarUrl}}" alt="{{Auth.user().firstName}}" width="40px" height="40px"/>
+                            <span>{{Auth.user().fullName}}<span>( {{Auth.user().email}} )</span></span>
                         </a> | <a href="/logout">Logout</a>
-                        <div ng-show="!authenticated">
+                        <div ng-show="Auth.isNotAuthenticated()">
                             <span><a href="/login">Login</a></span>
                         </div>
                     </div>
@@ -61,10 +64,10 @@
                 </div>
             </div>
             <div>
-                <nav id="submenu" ng-controller="SubMenuCtrl">
+                <nav id="submenu">
                     <ul>
-                        <li ng-repeat="menu in menus">
-                            <a href="{{menu.url}}">{{menu.message}}</a>
+                        <li ng-repeat="subMenu in selectedMenuItem.items">
+                            <a href="{{subMenu.url}}">{{subMenu.name}}</a>
                         </li>
                     </ul>
                 </nav>

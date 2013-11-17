@@ -80,7 +80,8 @@ me = function(req, res) {
     gender: req.user.gender,
     firstName: req.user.firstName,
     lastName: req.user.lastName,
-    role: req.user.role
+    role: req.user.role,
+    avatarUrl: req.user.avatarUrl
   });
 };
 

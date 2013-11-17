@@ -2,6 +2,7 @@
 
    'use strict';
 
+/*
    var user;
 
    user = {
@@ -11,6 +12,7 @@
        fullName: "Alexis Kinsella",
        email: "alexis.kinsella@gmail.com"
    };
+*/
 
 
    /* Application */
@@ -20,8 +22,6 @@
        /* Controllers */
 
        .controller('UserDetailsCtrl', function ($scope) {
-           $scope.user = user;
-           $scope.authenticated = true;
        })
 
        .controller('AuthCtrl', function ($scope) {

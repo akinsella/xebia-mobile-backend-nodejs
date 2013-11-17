@@ -29,18 +29,9 @@ utils = require './lib/utils'
 
 security = require './lib/security'
 
-github = require './route/github'
-twitter = require './route/twitter'
-eventbrite = require './route/eventbrite'
-wordpress = require './route/wordpress'
 auth = require './route/auth'
-news = require './route/news'
-device = require './route/device'
-notification = require './route/notification'
 client = require './route/client'
 user = require './route/user'
-vimeo = require './route/vimeo'
-card = require './route/card'
 oauth2 = require './oauth2'
 authMiddleware = require './middleware/authMiddleware'
 authService = require './service/authService'
@@ -133,7 +124,8 @@ app.configure 'development', () ->
 app.configure 'production', () ->
 	app.use express.errorHandler()
 
-#app.get "/user/me", passport.authenticate("bearer", session: false), user.me
+#app.get "/users/me", passport.authenticate("bearer", session: false), user.me
+app.get "/users/me", security.ensureAuthenticated, user.me
 
 app.post '/login', auth.login
 app.get '/login', auth.loginForm

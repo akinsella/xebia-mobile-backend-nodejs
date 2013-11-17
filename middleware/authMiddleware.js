@@ -37,6 +37,7 @@ GoogleStrategy = new GoogleStrategy({
         user.lastName = profile.name.familyName;
         user.gender = profile.gender;
         user.googleId = utils.getParameterByName(profile.identifier, "id");
+        user.avatarUrl = profile.photos ? profile.photos[0].value : "images/avatar_placeholder.png";
         user.role = profile.emails[0].value === "akinsella.xebia.fr" ? "ROLE_ADMIN" : "ROLE_USER";
         return user.save(function(err) {
           return done(err, profile);
@@ -47,6 +48,7 @@ GoogleStrategy = new GoogleStrategy({
           firstName: profile.name.givenName,
           lastName: profile.name.familyName,
           gender: profile.gender,
+          avatarUrl: profile.photos ? profile.photos[0].value : "images/avatar_placeholder.png",
           googleId: utils.getParameterByName(profile.identifier, "id"),
           role: profile.emails[0].value === "akinsella.xebia.fr" ? "ROLE_ADMIN" : "ROLE_USER"
         });

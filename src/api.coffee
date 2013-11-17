@@ -156,6 +156,7 @@ app.get "/api/v#{config.apiVersion}/news", news.listUnfiltered
 app.get "/api/v#{config.apiVersion}/news/:id", news.findById
 
 app.delete "/api/v#{config.apiVersion}/devices/:id", device.removeById
+app.post "/api/v#{config.apiVersion}/devices/register", device.register
 app.post "/api/v#{config.apiVersion}/devices", device.create
 app.get "/api/v#{config.apiVersion}/devices", device.list
 app.get "/api/v#{config.apiVersion}/devices/:id", device.findById
@@ -179,8 +180,8 @@ app.get "/api/v#{config.apiVersion}/essentials/categories/:id", card.cardsByCate
 app.delete "/api/v#{config.apiVersion}/notifications", notification.removeById
 app.post "/api/v#{config.apiVersion}/notifications", notification.create
 app.get "/api/v#{config.apiVersion}/notifications", notification.list
+app.get "/api/v#{config.apiVersion}/notifications/:id/push", notification.push
 app.get "/api/v#{config.apiVersion}/notifications/:id", notification.findById
-app.get "/api/v#{config.apiVersion}/notifications/push", notification.push
 
 #app.get "/api/v#{config.apiVersion}/user/me", passport.authenticate("bearer", session: false), user.me
 

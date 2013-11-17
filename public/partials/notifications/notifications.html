@@ -1,0 +1,22 @@
+<h1>Notifications</h1>
+
+<table class="dataset">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Message</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr  ng-repeat="notification in notifications">
+                <td>{{notification.id}}</td>
+                <td>{{notification.message}}</td>
+                <td>
+                    <a href="#/notifications/{{notification.id}}/push">Push</a> -
+                    <a href="#/notifications/{{notification.id}}/updateForm">Edit</a> -
+                    <a href="#/notifications/{{notification.id}}/delete">Delete</a>
+                </td>
+            </tr>
+    </tbody>
+</table>
