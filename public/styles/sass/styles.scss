@@ -541,3 +541,76 @@ footer {
   }
 
 }
+
+.btn {
+    position: relative;
+    overflow: visible;
+    display: inline-block;
+
+    margin: 10px 5px;
+    padding: 10px 20px;
+    border: #ccc solid 1px;
+    border-radius: 4px;
+
+    text-decoration: none;
+    text-align: center;
+    text-shadow: 1px 1px 0 #fff;
+    font:11px/normal sans-serif;
+    color: #333;
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    background-color: #ececec;
+    background-image: linear-gradient(#f4f4f4, #ececec);
+    background-clip: padding-box;
+    border-radius: 0.2em;
+    /* IE hacks */
+    zoom: 1;
+    *display: inline;
+
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btn:hover,
+.btn:focus,
+.btn:active,
+.btn.active {
+    border-color: #4e1e48; // 1
+    border-bottom-color: #6C1573; // 0
+    text-decoration: none;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+    color: #fff;
+    background-color: #824996; // 2
+    background-image: linear-gradient(#682c5f, #4e1e48); // 3, 1
+}
+
+.btn:active,
+.btn.active {
+    border-color: #6C1573; // 0
+    border-bottom-color: #3884cd;
+    background-color: #4e1e48; // 1
+    background-image: linear-gradient(#4e1e48, #682c5f); // 1, 3
+}
+
+/* overrides extra padding on btn elements in Firefox */
+.btn::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+#content-header {
+    #content-header-title {
+        float: left;
+        margin: 0;
+        padding: 0;
+
+        h1 {
+            margin:21px 5px;
+            padding:0;
+        }
+    }
+    #content-header-actions {
+        float: right;
+    }
+}

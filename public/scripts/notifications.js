@@ -17,35 +17,17 @@
             }
         }])
 
-        .factory('DeviceData', ['baseApiUrl', '$http', function(baseApiUrl, $http) {
-            return {
-                devices : function() {
-                    return $http({
-                        method: 'JSONP',
-                        url: baseApiUrl + '/api/v1/devices?callback=JSON_CALLBACK'
-                    });
-                }
-            }
-        }])
-
 
         /* Controllers */
-        .controller('NotificationsCtrl', ['$scope', 'NotificationData', function ($scope, NotificationData) {
+        .controller('NotificationsCtrl', ['$scope', '$location', 'NotificationData', function ($scope, $location, NotificationData) {
             console.log("Notifications Controller");
-                NotificationData.notifications().then(function(response) {
-                    $scope.notifications = response.data;
-                    console.log("Notifications", response.data);
-                });
-            }
-        ])
+            NotificationData.notifications().then(function(response) {
+                $scope.notifications = response.data;
+                console.log("Notifications", response.data);
+            });
 
-        .controller('DevicesCtrl', ['$scope', 'DeviceData', function ($scope, DeviceData) {
-                console.log("Devices Controller");
-                DeviceData.devices().then(function(response) {
-                    $scope.devices = response.data;
-                    console.log("Devices", response.data);
-                });
+            $scope.createNotification = function() {
+                $location.path("#/notification/createNotification.html");
             }
-        ]);
-
+        }]);
 })();

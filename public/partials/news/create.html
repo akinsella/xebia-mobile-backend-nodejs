@@ -1,5 +1,5 @@
-<h1>Create a news <small>or edit an existing news</small></h1>
-{{#if newsForm.hasErrors}}
+<h1>Create a news</h1>
+{{#if createNewsForm.hasErrors}}
     <div class="alert-message error">
         <p><strong>Oops</strong> Please fix all errors</p>
         <ul>
@@ -9,7 +9,7 @@
         </ul>
     </div>
 {{/if}}
-<form action="/create" id="createNewsForm">
+<form id="createNewsForm" action="{{baseApiUrl}}/news" method="post">
     <h1>General informations</h1>
     <fieldset>
         <label for="title">Title:</label>
@@ -26,7 +26,7 @@
         <input id="publicationDate" type="checkbox" />
     </fieldset>
     <div class="actions">
-        <a href="/index" class="button">Cancel</a>
+        <a href="#/news" class="button">Cancel</a>
         <input type="submit" class="button primary" value="Insert" />
     </div>
     <script>

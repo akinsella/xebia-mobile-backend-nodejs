@@ -15,10 +15,14 @@
                 .when('/login', { templateUrl: 'partials/login.html', controller: 'AuthCtrl' })
                 .when('/account', { templateUrl: 'partials/account.html', controller: 'AuthCtrl' })
                 .when('/news', { templateUrl: 'partials/news/list.html', controller: 'NewsCtrl' })
-                .when('/news/create', { templateUrl: 'partials/news/crate.html', controller: 'NewsCtrl' })
+                .when('/news/create', { templateUrl: 'partials/news/create.html', controller: 'NewsCtrl' })
                 .when('/news/update', { templateUrl: 'partials/news/update.html', controller: 'NewsCtrl' })
-                .when('/notifications', { templateUrl: 'partials/notifications/notifications.html', controller: 'NotificationsCtrl' })
-                .when('/devices', { templateUrl: 'partials/notifications/devices.html', controller: 'DevicesCtrl' })
+                .when('/notifications', { templateUrl: 'partials/notifications/list.html', controller: 'NotificationsCtrl' })
+                .when('/notifications/create', { templateUrl: 'partials/notifications/create.html', controller: 'NotificationsCtrl' })
+                .when('/notifications/update', { templateUrl: 'partials/notifications/update.html', controller: 'NotificationsCtrl' })
+                .when('/devices', { templateUrl: 'partials/devices/list.html', controller: 'DevicesCtrl' })
+                .when('/devices/create', { templateUrl: 'partials/devices/create.html', controller: 'DevicesCtrl' })
+                .when('/devices/update', { templateUrl: 'partials/devices/update.html', controller: 'DevicesCtrl' })
                 .otherwise({ redirectTo: '/' });
             return $httpProvider.responseInterceptors.push('errorHttpInterceptor');
         }])
