@@ -111,17 +111,22 @@ getData = (options) ->
 
 
 processResponse = (options, error, data, response) ->
-	if (error || (data && data.error))
-		options.callback(500, "", undefined, options)
+	if error
+		options.callback(500, "Server Error: #{error}", undefined, options)
+	else if  data && data.error
+			options.callback(500, "Server Error: #{data.error}", undefined, options)
+	else if !data
+		options.callback(404, "Not Found", undefined, options)
 	else
 		contentType = getContentType(response)
 		console.log "[#{options.url}] Http Response - Content-Type: #{contentType}"
 		console.log "[#{options.url}] Http Response - Headers: #{response.headers}"
 
 		if !isContentTypeJsonOrScript(contentType)
-			console.log "[" + options.url + "] Content-Type is not json or javascript: Not caching data and returning response directly"
+			errorMessage = "[#{options.url}] Content-Type is not json or javascript: Not caching data and returning response directly"
+			console.log
 			options.contentType = contentType
-			options.callback(500, "", undefined, options)
+			options.callback(500, "Server Error: #{errorMessage}", undefined, options)
 		else
 			if options.transform
 				options.transform data, (err, data) ->
@@ -131,11 +136,13 @@ processResponse = (options, error, data, response) ->
 
 putInCacheAndSendResponse = (err, data, options) ->
 	if (err)
-		options.callback(500, "", undefined, options)
+		options.callback(500, "Server Error: #{err}", undefined, options)
+	else if (!data)
+		options.callback(400, "Not Found", undefined, options)
 	else
 		jsonData = JSON.stringify(data)
 		console.log "[#{options.url}] Fetched Response from url: #{jsonData.substr(0, 256)}"
-		options.callback(200, "", jsonData, options)
+		options.callback(200, "OK", jsonData, options)
 		if useCache(options)
 			cache.set(options.cacheKey, data, if options.cacheTimeout then options.cacheTimeout else 60 * 60)
 
@@ -178,7 +185,7 @@ processRequest = (options) ->
 		getData(options)
 	catch err
 		errorMessage = err.name + ": " + err.message
-		responseData(500, errorMessage, undefined, options)
+		responseData(500, "Server Error: #{errorMessage}", undefined, options)
 
 ###
 Return a random int, used by `utils.uid()`
@@ -214,9 +221,10 @@ uid = (len) ->
 	buf.join ""
 
 callbackDelayed = (callback, err, data, delay) ->
-	setTimeout () ->
-		callback(err, data)
+	setTimeout(
+		() -> callback(err, data)
 		delay
+	)
 
 stopWatchCallbak = (_callback) ->
 	start = moment()

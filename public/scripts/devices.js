@@ -6,12 +6,12 @@
     angular.module('xebia-mobile-backend')
 
         /* Factories */
-        .factory('DeviceData', ['baseApiUrl', '$http', function(baseApiUrl, $http) {
+        .factory('DeviceData', ['$http', function($http) {
             return {
                 devices : function() {
                     return $http({
                         method: 'JSONP',
-                        url: baseApiUrl + '/api/v1/devices?callback=JSON_CALLBACK'
+                        url: '/devices?callback=JSON_CALLBACK'
                     });
                 }
             }

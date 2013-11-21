@@ -57,5 +57,5 @@ setTimeout(() ->
 
 
 /*
-//@ sourceMappingURL=app.cluster.map
+//@ sourceMappingURL=web-app.cluster.map
 */

@@ -3,6 +3,8 @@ _ = require('underscore')._
 fs = require 'fs'
 config = require '../conf/config'
 
+apiKey = process.env["EVENTBRITE_AUTH_KEY"]
+
 # To be refactored
 processRequest = (req, res, url, transform) ->
 
@@ -24,40 +26,47 @@ venueProps = [
 
 # To be refactored
 list = (req, res) ->
-
 	if config.offlineMode
 		res.charset = 'UTF-8'
 		res.send JSON.parse(fs.readFileSync("#{__dirname}/../data/eventbrite_event.json", "utf-8"))
 	else
-		apiKey = process.env["EVENTBRITE_AUTH_KEY"]
 		processRequest req, res, "https://www.eventbrite.com/json/organizer_list_events?app_key=#{apiKey}&id=1627902102", (data, cb) ->
-			data = _(data.events)
-				.pluck("event")
+			events = extractEvents(data)
+			cb(undefined, events)
 
-			data = _(data)
-				.sortBy((event) -> event.start_date)
 
-			data = _(data)
-				.filter((event) -> event.status == "Live" || event.status == "Completed")
+# To be refactored
+event = (req, res) ->
+		eventId = req.params.id
+		processRequest req, res, "https://www.eventbrite.com/json/organizer_list_events?app_key=#{apiKey}&id=1627902102", (data, cb) ->
+			events = extractEvents(data)
+			event = _(events).find((event) -> String(event.id) == eventId)
+			cb(undefined, event)
 
-			data = _(data)
-				.reverse()
-			_(data).each((event) ->
-				event.description_plain_text = event.description
-				if event.description_plain_text
-					event.description_plain_text = event.description_plain_text.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '')
-					event.description_plain_text = event.description_plain_text.replace(/<!--(.*?)-->/g, '')
-					event.description_plain_text = event.description_plain_text.replace(/\n\s*\n/g, '\n')
+extractEvents = (data) ->
+	_.chain(data.events)
+		.pluck("event")
+		.sortBy((event) -> event.start_date)
+		.filter((event) -> event.status == "Live" || event.status == "Completed")
+		.reverse()
+		.map(transformEvent)
+		.value()
 
-				for key of event
-					if !(key in eventProps) then delete event[key]
-					for vKey of event.venue
-						if !(vKey in venueProps) then delete event.venue[vKey]
-					for oKey of event.organizer
-						if !(oKey in organizerProps) then delete event.organizer[oKey]
-				event
-			)
-			cb(undefined, data)
+transformEvent = (event) ->
+	event.description_plain_text = event.description
+	if event.description_plain_text
+		event.description_plain_text = event.description_plain_text.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '')
+		event.description_plain_text = event.description_plain_text.replace(/<!--(.*?)-->/g, '')
+		event.description_plain_text = event.description_plain_text.replace(/\n\s*\n/g, '\n')
+
+	for key of event
+		if !(key in eventProps) then delete event[key]
+		for vKey of event.venue
+			if !(vKey in venueProps) then delete event.venue[vKey]
+		for oKey of event.organizer
+			if !(oKey in organizerProps) then delete event.organizer[oKey]
+	event
 
 module.exports =
 	list : list
+	event : event

@@ -179,6 +179,5 @@
 
         /* Services */
 
-        .value('version', '0.1')
-        .value('baseApiUrl', 'http://dev.xebia.fr:8000');
+        .value('version', '0.1');
 })();
