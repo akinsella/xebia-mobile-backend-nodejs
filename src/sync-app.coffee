@@ -1,6 +1,7 @@
 start = new Date()
 
 config = require './conf/config'
+Apns = require './lib/apns'
 
 if config.devMode
 	console.log "Dev Mode enabled."
@@ -21,6 +22,7 @@ requestLogger = require './lib/requestLogger'
 
 console.log "Application Name: #{config.appname}"
 console.log "Env: #{JSON.stringify config}"
+
 
 # Express
 app = express()

@@ -6,6 +6,7 @@ db = require "../db"
 moment = require "moment"
 config = require "../conf/config"
 request = require "request"
+apns = require "../lib/apns"
 
 OAuth = require 'oauth'
 Cache = require '../lib/cache'
@@ -73,6 +74,8 @@ synchronizeVideoNews = (video, callback) ->
 
 			newsEntry.save (err) ->
 				callback err, newsEntry
+				apns.pushToAll("Nouvelle vidéo: #{newsEntry.title}")
+
 		else
 			callback err, undefined
 

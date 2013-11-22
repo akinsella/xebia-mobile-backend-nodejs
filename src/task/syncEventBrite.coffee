@@ -6,6 +6,7 @@ db = require "../db"
 moment = require "moment"
 config = require "../conf/config"
 request = require "request"
+apns = require "../lib/apns"
 
 synchronize = () ->
 	callback = (err, news) ->
@@ -59,7 +60,6 @@ synchronizeEventNews = (event, callback) ->
 				event.description_plain_text = event.description_plain_text.replace(/<!--(.*?)-->/g, '')
 				event.description_plain_text = event.description_plain_text.replace(/\n\s*\n/g, '\n')
 
-
 			newsEntry = new News(
 				content: event.description_plain_text
 				draft: false
@@ -74,6 +74,8 @@ synchronizeEventNews = (event, callback) ->
 
 			newsEntry.save (err) ->
 				callback err, newsEntry
+				apns.pushToAll("Nouvel événement: #{newsEntry.title}")
+
 		else
 			callback err, undefined
 

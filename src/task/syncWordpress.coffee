@@ -6,6 +6,7 @@ db = require "../db"
 moment = require "moment"
 config = require "../conf/config"
 request = require "request"
+apns = require "../lib/apns"
 
 synchronize = () ->
 	callback = (err, news) ->
@@ -46,6 +47,8 @@ synchronizeWordpressNews = (post, callback) ->
 
 			newsEntry.save (err) ->
 				callback err, newsEntry
+				apns.pushToAll("Nouveau blog post: #{newsEntry.title}")
+
 		else
 			callback err, undefined
 
