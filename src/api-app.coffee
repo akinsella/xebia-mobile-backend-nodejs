@@ -95,7 +95,7 @@ app.get "/api/v#{config.apiVersion}/vimeo/oauth/callback", vimeo.callback
 app.get "/api/v#{config.apiVersion}/vimeo/videos", vimeo.videos
 app.get "/api/v#{config.apiVersion}/vimeo/videos/:id/urls", vimeo.videoUrls
 
-app.get "/api/v#{config.apiVersion}/timeline", news.list
+app.get "/api/v#{config.apiVersion}/timeline", news.listUnfiltered
 app.post "/api/v#{config.apiVersion}/devices/register", device.register
 
 app.get "/api/v#{config.apiVersion}/essentials/cards", card.cards

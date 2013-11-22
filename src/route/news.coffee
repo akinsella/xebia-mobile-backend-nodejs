@@ -10,37 +10,39 @@ processRequest = (req, res, url, transform) ->
 	options = utils.buildOptions req, res, url, 5 * 60, transform
 	utils.processRequest options
 
-	return
 
 listUnfiltered = (req, res) ->
-	News.find {}, { sort: {"publicationDate": -1}}, (err, news) ->
-		if (news)
-			utils.responseData(200, undefined, news.map(mapNews), { req:req, res:res })
+	News.find({}).sort({"publicationDate": -1}).exec((err, news) ->
+		if err
+			utils.responseData(500, "Could not find news - Error: #{err.message}", undefined, { req:req, res:res })
 		else
-			utils.responseData(404, "Not Found", undefined, { req:req, res:res })
+			utils.responseData(200, undefined, news.map(mapNews), { req:req, res:res })
+	)
 
 list = (req, res) ->
 	News.find { draft: false }, null, { sort: {"publicationDate": -1}}, (err, news) ->
-
-		if (news)
-
-			utils.responseData(200, undefined, mapNews(news), { req:req, res:res })
+		if err
+			utils.responseData(500, "Could not find news - Error: #{err.message}", undefined, { req:req, res:res })
 		else
-			utils.responseData(404, "Not Found", undefined, { req:req, res:res })
+			utils.responseData(200, undefined, mapNews(news), { req:req, res:res })
 
 findById = (req, res) ->
 	News.findOne { id: req.params.id }, (err, news) ->
-		if (news)
-			utils.responseData(200, undefined, news, { req:req, res:res})
-		else
+		if err
+			utils.responseData(500, "Could not find news - Error: #{err.message}", undefined, { req:req, res:res })
+		if !news
 			utils.responseData(404, "Not Found", undefined, { req:req, res:res})
+		else
+			utils.responseData(200, undefined, news, { req:req, res:res})
 
 removeById = (req, res) ->
 	News.findOneAndRemove { id: req.params.id }, (err, news) ->
-		if (news)
-			utils.responseData(204, undefined, news, { req:req, res:res})
-		else
+		if err
+			utils.responseData(500, "Could not remove news - Error: #{err.message}", undefined, { req:req, res:res })
+		if !news
 			utils.responseData(404, "Not Found", undefined, { req:req, res:res})
+		else
+			utils.responseData(204, undefined, news, { req:req, res:res})
 
 create = (req, res) ->
 	news = new News(req.body)

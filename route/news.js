@@ -12,22 +12,20 @@ moment = require('moment');
 processRequest = function(req, res, url, transform) {
   var options;
   options = utils.buildOptions(req, res, url, 5 * 60, transform);
-  utils.processRequest(options);
+  return utils.processRequest(options);
 };
 
 listUnfiltered = function(req, res) {
-  return News.find({}, {
-    sort: {
-      "publicationDate": -1
-    }
-  }, function(err, news) {
-    if (news) {
-      return utils.responseData(200, void 0, news.map(mapNews), {
+  return News.find({}).sort({
+    "publicationDate": -1
+  }).exec(function(err, news) {
+    if (err) {
+      return utils.responseData(500, "Could not find news - Error: " + err.message, void 0, {
         req: req,
         res: res
       });
     } else {
-      return utils.responseData(404, "Not Found", void 0, {
+      return utils.responseData(200, void 0, news.map(mapNews), {
         req: req,
         res: res
       });
@@ -43,13 +41,13 @@ list = function(req, res) {
       "publicationDate": -1
     }
   }, function(err, news) {
-    if (news) {
-      return utils.responseData(200, void 0, mapNews(news), {
+    if (err) {
+      return utils.responseData(500, "Could not find news - Error: " + err.message, void 0, {
         req: req,
         res: res
       });
     } else {
-      return utils.responseData(404, "Not Found", void 0, {
+      return utils.responseData(200, void 0, mapNews(news), {
         req: req,
         res: res
       });
@@ -61,13 +59,19 @@ findById = function(req, res) {
   return News.findOne({
     id: req.params.id
   }, function(err, news) {
-    if (news) {
-      return utils.responseData(200, void 0, news, {
+    if (err) {
+      utils.responseData(500, "Could not find news - Error: " + err.message, void 0, {
+        req: req,
+        res: res
+      });
+    }
+    if (!news) {
+      return utils.responseData(404, "Not Found", void 0, {
         req: req,
         res: res
       });
     } else {
-      return utils.responseData(404, "Not Found", void 0, {
+      return utils.responseData(200, void 0, news, {
         req: req,
         res: res
       });
@@ -79,13 +83,19 @@ removeById = function(req, res) {
   return News.findOneAndRemove({
     id: req.params.id
   }, function(err, news) {
-    if (news) {
-      return utils.responseData(204, void 0, news, {
+    if (err) {
+      utils.responseData(500, "Could not remove news - Error: " + err.message, void 0, {
+        req: req,
+        res: res
+      });
+    }
+    if (!news) {
+      return utils.responseData(404, "Not Found", void 0, {
         req: req,
         res: res
       });
     } else {
-      return utils.responseData(404, "Not Found", void 0, {
+      return utils.responseData(204, void 0, news, {
         req: req,
         res: res
       });
