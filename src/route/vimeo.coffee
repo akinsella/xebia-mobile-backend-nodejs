@@ -194,4 +194,5 @@ module.exports =
 	auth: auth
 	callback: callback
 	videos: videos
+	video: video
 	videoUrls: videoUrls
