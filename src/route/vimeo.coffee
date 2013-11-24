@@ -94,6 +94,22 @@ videos = (req, res) ->
 					cb(undefined, videos)
 	)
 
+video = (req, res) ->
+
+	videoId = req.params.id
+	url = "#{apiHost}?method=vimeo.videos.getAll&user_id=xebia&sort=newest&page=1&per_page=50&summary_response=true&full_response=false&format=json"
+	Cache.get('vimeo.crendentials', (err, credentials) ->
+		if err
+			utils.responseData 500, "Error getting OAuth request data : " + util.inspect(err), undefined, {req: req, res: res}
+		else if (!credentials)
+			utils.responseData 500, "Error No Credentials stored", undefined, {req: req, res: res}
+		else
+			processRequestOAuth req, res, url, oauth, credentials, (data, cb) ->
+				async.map data.videos.video, transformVideo, (err, videos) ->
+					video = _(videos).find((video) -> video.id = videoId)
+					cb(undefined, video)
+	)
+
 videoUrls = (req, res) ->
 	videoId = req.params.id
 

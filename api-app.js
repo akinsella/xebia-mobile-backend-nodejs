@@ -118,6 +118,8 @@ app.get("/api/v" + config.apiVersion + "/vimeo/oauth/callback", vimeo.callback);
 
 app.get("/api/v" + config.apiVersion + "/vimeo/videos", vimeo.videos);
 
+app.get("/api/v" + config.apiVersion + "/vimeo/videos/:id", vimeo.video);
+
 app.get("/api/v" + config.apiVersion + "/vimeo/videos/:id/urls", vimeo.videoUrls);
 
 app.get("/api/v" + config.apiVersion + "/timeline", news.listUnfiltered);
