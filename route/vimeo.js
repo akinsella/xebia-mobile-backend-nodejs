@@ -135,7 +135,7 @@ video = function(req, res) {
       return processRequestOAuth(req, res, url, oauth, credentials, function(data, cb) {
         return async.map(data.videos.video, transformVideo, function(err, videos) {
           video = _(videos).find(function(video) {
-            return video.id = videoId;
+            return video.id === videoId;
           });
           return cb(void 0, video);
         });

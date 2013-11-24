@@ -106,7 +106,7 @@ video = (req, res) ->
 		else
 			processRequestOAuth req, res, url, oauth, credentials, (data, cb) ->
 				async.map data.videos.video, transformVideo, (err, videos) ->
-					video = _(videos).find((video) -> video.id = videoId)
+					video = _(videos).find((video) -> video.id == videoId)
 					cb(undefined, video)
 	)
 
