@@ -1,6 +1,7 @@
 config = require '../conf/config'
 utils = require '../lib/utils'
 Device = require '../model/device'
+Notification = require '../model/notification'
 ApnAgent = require 'apnagent'
 
 console.log "Dirname: #{__dirname}"
@@ -49,7 +50,7 @@ pushNotificationToAll = (notificationId, cb) ->
 				if err
 					cb(err)
 				else
-					devices.each (device) ->
+					devices.forEach (device) ->
 						pushNotification(device.token, notification.message)
 
 					cb()

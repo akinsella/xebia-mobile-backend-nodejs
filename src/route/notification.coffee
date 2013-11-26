@@ -54,7 +54,8 @@ mapNotification = (notification) ->
 
 push = (req, res) ->
 
-	apns.pushNotificationToAll (err) ->
+	notificationId = req.params.id
+	apns.pushNotificationToAll notificationId, (err) ->
 		if err
 			utils.responseData(500, "Error: #{err}", "{}", { req:req, res:res })
 		else

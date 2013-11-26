@@ -99,7 +99,9 @@ mapNotification = function(notification) {
 };
 
 push = function(req, res) {
-  return apns.pushNotificationToAll(function(err) {
+  var notificationId;
+  notificationId = req.params.id;
+  return apns.pushNotificationToAll(notificationId, function(err) {
     if (err) {
       return utils.responseData(500, "Error: " + err, "{}", {
         req: req,
