@@ -183,7 +183,7 @@ processAuthorInformations = (post) ->
 			post.content = post.content.replace(match, "<author username=\"#{username}\" firstname=\"#{firstname}\" lastname=\"#{lastname}\" gravatar=\"#{gravatar}\" twitter=\"#{twitter}\" />")
 
 processLanguageInformations = (post) ->
-	languages = [ "java", "xml", "javascript", "cpp", "default" ]
+	languages = [ "java", "xml", "javascript", "cpp", "scala", "default" ]
 	for language in languages
 #		post.content = post.content.replace(/\[(\w+)[^\]]*\](.*?)\[\/\1\]/g, '$2')
 		startTag = "\\[#{language}\\]"
