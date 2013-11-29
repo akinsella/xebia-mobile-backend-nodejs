@@ -43,6 +43,9 @@ if (!config) {
         realm: process.env.AUTH_GOOGLE_REALM
       }
     },
+    apns: {
+      enabled: false
+    },
     mongo: {
       dbname: process.env.MONGO_DBNAME,
       hostname: process.env.MONGO_HOSTNAME,
@@ -83,7 +86,8 @@ module.exports = {
   mongo: config.mongo,
   monitoring: config.monitoring,
   feature: config.feature,
-  scheduler: config.scheduler
+  scheduler: config.scheduler,
+  apns: config.apns
 };
 
 /*

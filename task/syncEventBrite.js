@@ -87,7 +87,9 @@ synchronizeEventNews = function(event, callback) {
       });
       return newsEntry.save(function(err) {
         callback(err, newsEntry);
-        return apns.pushToAll("Nouvel événement: " + newsEntry.title);
+        return apns.pushToAll("Nouvel événement: " + newsEntry.title, function() {
+          return console.log("Pushed notification for new event: " + newsEntry.title);
+        });
       });
     } else {
       return callback(err, void 0);

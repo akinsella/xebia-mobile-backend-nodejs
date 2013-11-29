@@ -86,7 +86,9 @@ synchronizeVideoNews = function(video, callback) {
       });
       return newsEntry.save(function(err) {
         callback(err, newsEntry);
-        return apns.pushToAll("Nouvelle vidéo: " + newsEntry.title);
+        return apns.pushToAll("Nouvelle vidéo: " + newsEntry.title, function() {
+          return console.log("Pushed notification for video: '" + newsEntry.title + "'");
+        });
       });
     } else {
       return callback(err, void 0);
