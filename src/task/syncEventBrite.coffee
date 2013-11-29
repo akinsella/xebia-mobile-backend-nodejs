@@ -74,7 +74,8 @@ synchronizeEventNews = (event, callback) ->
 
 			newsEntry.save (err) ->
 				callback err, newsEntry
-				apns.pushToAll("Nouvel événement: #{newsEntry.title}")
+				apns.pushToAll "Nouvel événement: #{newsEntry.title}" , () ->
+					console.log "Pushed notification for new event: #{newsEntry.title}"
 
 		else
 			callback err, undefined

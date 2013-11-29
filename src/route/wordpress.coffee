@@ -4,6 +4,9 @@ jsdom = require 'jsdom'
 async = require 'async'
 fs = require 'fs'
 config = require '../conf/config'
+Tag = require '../model/tag'
+Category = require '../model/category'
+Author = require '../model/author'
 
 Array::insertArrayAt = (index, arrayToInsert) ->
 	Array.prototype.splice.apply(this, [index, 0].concat(arrayToInsert))
@@ -26,30 +29,48 @@ processRequest = (req, res, url, transform) ->
 	utils.processRequest options
 
 authors = (req, res) ->
-	processRequest req, res, "#{baseUrl}/wp-json-api/get_author_index?count=250", (data, cb) ->
-		delete data.status
-		for author in data.authors
-			author.firstname = author.first_name
-			delete author.first_name
-			author.lastname = author.last_name
-			delete author.last_name
-		cb(undefined, data)
+	Author.find {}, (err, authors) ->
+		if err
+			res.json 500, { message: "Server error: #{error.message}" }
+		else
+			authors = authors.map (author) ->
+				author = author.toObject()
+				author.firstname = author.first_name
+				delete author.first_name
+				author.lastname = author.last_name
+				delete author.last_name
+				delete author.__v
+				delete author._id
+				author
+			res.json authors
 
 tags = (req, res) ->
-	processRequest req, res, "#{baseUrl}/wp-json-api/get_tag_index/?count=2000", (data, cb) ->
-		delete data.status
-		for tag in data.tags
-			tag.postCount = tag.post_count
-			delete tag.post_count
-		cb(undefined, data)
+	Tag.find {}, (err, tags) ->
+		if err
+			res.json 500, { message: "Server error: #{error.message}" }
+		else
+			tags = tags.map (tag) ->
+				tag = tag.toObject()
+				tag.postCount = tag.post_count
+				delete tag.post_count
+				delete tag.__v
+				delete tag._id
+				tag
+			res.json tags
 
 categories = (req, res) ->
-	processRequest req, res, "#{baseUrl}/wp-json-api/get_category_index?count=100", (data, cb) ->
-		delete data.status
-		for category in data.categories
-			category.postCount = category.post_count
-			delete category.post_count
-		cb(undefined, data)
+	Category.find {}, (err, categories) ->
+		if err
+			res.json 500, { message: "Server error: #{error.message}" }
+		else
+			categories = categories.map (category) ->
+				category = category.toObject()
+				category.postCount = category.post_count
+				delete category.post_count
+				delete category.__v
+				delete category._id
+				category
+			res.json categories
 
 dates = (req, res) ->
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_date_index?count=1000", (data, cb) ->

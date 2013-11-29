@@ -74,7 +74,8 @@ synchronizeVideoNews = (video, callback) ->
 
 			newsEntry.save (err) ->
 				callback err, newsEntry
-				apns.pushToAll("Nouvelle vidéo: #{newsEntry.title}")
+				apns.pushToAll "Nouvelle vidéo: #{newsEntry.title}", () ->
+					console.log "Pushed notification for video: '#{newsEntry.title}'"
 
 		else
 			callback err, undefined
