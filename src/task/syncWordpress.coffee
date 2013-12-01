@@ -35,19 +35,22 @@ synchronize = () ->
 processWordpressTags = (callback) ->
 	console.log "Start synchronizing Wordpress tags ..."
 	request.get {url: "http://blog.xebia.fr/wp-json-api/get_tag_index", json: true}, (error, data, response) ->
-		async.map response.tags, synchronizeWordpressTag, (err, results) ->
+		tags = _(response.tags).sortBy((tag) -> tag.title.toUpperCase())
+		async.map tags, synchronizeWordpressTag, (err, results) ->
 			console.log "Synchronized #{results.length} Wordpress tags"
 
 processWordpressCategories = (callback) ->
 	console.log "Start synchronizing Wordpress categories ..."
 	request.get {url: "http://blog.xebia.fr/wp-json-api/get_category_index", json: true}, (error, data, response) ->
-		async.map response.categories, synchronizeWordpressCategory, (err, results) ->
+		categories = _(response.categories).sortBy( (category) -> category.title.toUpperCase())
+		async.map categories, synchronizeWordpressCategory, (err, results) ->
 			console.log "Synchronized #{results.length} Wordpress categories"
 
 processWordpressAuthors = (callback) ->
 	console.log "Start synchronizing Wordpress authors ..."
 	request.get {url: "http://blog.xebia.fr/wp-json-api/get_author_index", json: true}, (error, data, response) ->
-		async.map response.authors, synchronizeWordpressAuthor, (err, results) ->
+		authors = _(response.authors).sortBy((author) -> author.name.toUpperCase())
+		async.map authors, synchronizeWordpressAuthor, (err, results) ->
 			console.log "Synchronized #{results.length} Wordpress authors"
 
 

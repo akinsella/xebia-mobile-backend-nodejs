@@ -120,14 +120,16 @@ app.get "/sync/vimeo/oauth/callback", vimeo.callback
 app.get "/sync/wordpress", security.ensureAuthenticated, sync.syncWordpress
 app.get "/sync/wordpress/posts", security.ensureAuthenticated, sync.syncWordpressPosts
 app.get "/sync/wordpress/news", security.ensureAuthenticated, sync.syncWordpressNews
+app.delete "/sync/wordpress/data", security.ensureAuthenticated, sync.removeBlogData
+app.delete "/sync/wordpress/posts", security.ensureAuthenticated, sync.removeBlogPosts
 
 app.get "/sync/eventbrite", security.ensureAuthenticated, sync.syncEventBrite
-app.delete "/sync/events", security.ensureAuthenticated, sync.removeEvents
 app.get "/sync/eventbrite/news", security.ensureAuthenticated, sync.syncEventBriteNews
+app.delete "/sync/events", security.ensureAuthenticated, sync.removeEvents
 
 app.get "/sync/vimeo", security.ensureAuthenticated, sync.syncVimeo
-app.delete "/sync/videos", security.ensureAuthenticated, sync.removeVideos
 app.get "/sync/vimeo/news", security.ensureAuthenticated, sync.syncVimeoNews
+app.delete "/sync/videos", security.ensureAuthenticated, sync.removeVideos
 
 app.get "/sync/twitter/news", security.ensureAuthenticated, sync.syncTwitterNews
 

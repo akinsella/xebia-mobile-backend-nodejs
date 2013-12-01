@@ -46,7 +46,7 @@ processRequest = function(req, res, url, transform) {
 };
 
 authors = function(req, res) {
-  return Author.find({}, function(err, authors) {
+  return Author.find({}).sort("name").exec(function(err, authors) {
     if (err) {
       return res.json(500, {
         message: "Server error: " + err.message
@@ -64,7 +64,7 @@ authors = function(req, res) {
 };
 
 tags = function(req, res) {
-  return Tag.find({}, function(err, tags) {
+  return Tag.find({}).sort("title").exec(function(err, tags) {
     if (err) {
       return res.json(500, {
         message: "Server error: " + err.message
@@ -82,7 +82,7 @@ tags = function(req, res) {
 };
 
 categories = function(req, res) {
-  return Category.find({}, function(err, categories) {
+  return Category.find({}).sort("title").exec(function(err, categories) {
     if (err) {
       return res.json(500, {
         message: "Server error: " + err.message

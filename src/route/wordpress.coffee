@@ -30,7 +30,7 @@ processRequest = (req, res, url, transform) ->
 	utils.processRequest options
 
 authors = (req, res) ->
-	Author.find {}, (err, authors) ->
+	Author.find({}).sort("name").exec (err, authors) ->
 		if err
 			res.json 500, { message: "Server error: #{err.message}" }
 		else
@@ -42,7 +42,7 @@ authors = (req, res) ->
 			res.json authors
 
 tags = (req, res) ->
-	Tag.find {}, (err, tags) ->
+	Tag.find({}).sort("title").exec (err, tags) ->
 		if err
 			res.json 500, { message: "Server error: #{err.message}" }
 		else
@@ -54,7 +54,7 @@ tags = (req, res) ->
 			res.json tags
 
 categories = (req, res) ->
-	Category.find {}, (err, categories) ->
+	Category.find({}).sort("title").exec (err, categories) ->
 		if err
 			res.json 500, { message: "Server error: #{err.message}" }
 		else

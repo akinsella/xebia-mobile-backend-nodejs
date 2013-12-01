@@ -7,6 +7,11 @@ _ = require('underscore')._
 
 Event = require "../../model/event"
 Video = require "../../model/video"
+Post = require "../../model/post"
+DetailedPost = require "../../model/detailedPost"
+Tag = require "../../model/tag"
+Category = require "../../model/category"
+Author = require "../../model/author"
 
 config = require "../../conf/config"
 
@@ -57,19 +62,59 @@ syncTwitterNews = (req, res) ->
 	syncVimeoNewsTask.synchronize()
 	res.send 200, "Started sync for twitter news"
 
+
+removeBlogData = (req, res) ->
+	async.parallel [
+		(callback) ->
+			Tag.remove {}, (err) ->
+				callback(err, 'posts')
+	,
+		(callback) ->
+			Category.remove {}, (err) ->
+				callback(err, 'category')
+	,
+		(callback) ->
+			Author.remove {}, (err) ->
+				callback(err, 'author')
+	],
+		(err, results) ->
+			if err
+				res.send 500, "Server error. Error: #{err.message}"
+			else
+				res.send 204, "Removed data : '#{results}'"
+
+
+removeBlogPosts = (req, res) ->
+	async.parallel [
+		(callback) ->
+			Post.remove {}, (err) ->
+				callback(err, 'posts')
+		,
+		(callback) ->
+			DetailedPost.remove {}, (err) ->
+				callback(err, 'detailedPosts')
+	],
+	(err, results) ->
+		if err
+			res.send 500, "Server error. Error: #{err.message}"
+		else
+			res.send 204, "Removed data : '#{results}'"
+
+
 removeEvents = (req, res) ->
 	Event.remove {}, (err) ->
 		if err
 			res.send 500, "Server error. Error: #{err.message}"
 		else
-			res.send 204, "Removed Events"
+			res.send 204, "Removed events"
+
 
 removeVideos = (req, res) ->
 	Video.remove {}, (err) ->
 		if err
 			res.send 500, "Server error. Error: #{err.message}"
 		else
-			res.send 204, "Removed Events"
+			res.send 204, "Removed videos"
 
 
 module.exports =
@@ -83,3 +128,5 @@ module.exports =
 	syncTwitterNews: syncTwitterNews
 	removeVideos: removeVideos
 	removeEvents: removeEvents
+	removeBlogPosts: removeBlogPosts
+	removeBlogData: removeBlogData

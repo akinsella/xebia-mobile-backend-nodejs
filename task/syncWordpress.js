@@ -47,7 +47,11 @@ processWordpressTags = function(callback) {
     url: "http://blog.xebia.fr/wp-json-api/get_tag_index",
     json: true
   }, function(error, data, response) {
-    return async.map(response.tags, synchronizeWordpressTag, function(err, results) {
+    var tags;
+    tags = _(response.tags).sortBy(function(tag) {
+      return tag.title.toUpperCase();
+    });
+    return async.map(tags, synchronizeWordpressTag, function(err, results) {
       return console.log("Synchronized " + results.length + " Wordpress tags");
     });
   });
@@ -59,7 +63,11 @@ processWordpressCategories = function(callback) {
     url: "http://blog.xebia.fr/wp-json-api/get_category_index",
     json: true
   }, function(error, data, response) {
-    return async.map(response.categories, synchronizeWordpressCategory, function(err, results) {
+    var categories;
+    categories = _(response.categories).sortBy(function(category) {
+      return category.title.toUpperCase();
+    });
+    return async.map(categories, synchronizeWordpressCategory, function(err, results) {
       return console.log("Synchronized " + results.length + " Wordpress categories");
     });
   });
@@ -71,7 +79,11 @@ processWordpressAuthors = function(callback) {
     url: "http://blog.xebia.fr/wp-json-api/get_author_index",
     json: true
   }, function(error, data, response) {
-    return async.map(response.authors, synchronizeWordpressAuthor, function(err, results) {
+    var authors;
+    authors = _(response.authors).sortBy(function(author) {
+      return author.name.toUpperCase();
+    });
+    return async.map(authors, synchronizeWordpressAuthor, function(err, results) {
       return console.log("Synchronized " + results.length + " Wordpress authors");
     });
   });
