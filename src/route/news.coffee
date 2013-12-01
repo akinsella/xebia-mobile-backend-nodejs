@@ -12,15 +12,14 @@ processRequest = (req, res, url, transform) ->
 
 
 listUnfiltered = (req, res) ->
-	News.find({}).sort({"publicationDate": -1}).exec((err, news) ->
+	News.find({}).sort("-publicationDate").limit(100).exec (err, news) ->
 		if err
 			utils.responseData(500, "Could not find news - Error: #{err.message}", undefined, { req:req, res:res })
 		else
 			utils.responseData(200, undefined, news.map(mapNews), { req:req, res:res })
-	)
 
 list = (req, res) ->
-	News.find { draft: false }, null, { sort: {"publicationDate": -1}}, (err, news) ->
+	News.find { draft: false }.sort("-publicationDate").limit(100).exec (err, news) ->
 		if err
 			utils.responseData(500, "Could not find news - Error: #{err.message}", undefined, { req:req, res:res })
 		else

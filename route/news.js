@@ -16,9 +16,7 @@ processRequest = function(req, res, url, transform) {
 };
 
 listUnfiltered = function(req, res) {
-  return News.find({}).sort({
-    "publicationDate": -1
-  }).exec(function(err, news) {
+  return News.find({}).sort("-publicationDate").limit(100).exec(function(err, news) {
     if (err) {
       return utils.responseData(500, "Could not find news - Error: " + err.message, void 0, {
         req: req,
@@ -36,11 +34,7 @@ listUnfiltered = function(req, res) {
 list = function(req, res) {
   return News.find({
     draft: false
-  }, null, {
-    sort: {
-      "publicationDate": -1
-    }
-  }, function(err, news) {
+  }.sort("-publicationDate").limit(100).exec(function(err, news) {
     if (err) {
       return utils.responseData(500, "Could not find news - Error: " + err.message, void 0, {
         req: req,
@@ -52,7 +46,7 @@ list = function(req, res) {
         res: res
       });
     }
-  });
+  }));
 };
 
 findById = function(req, res) {
