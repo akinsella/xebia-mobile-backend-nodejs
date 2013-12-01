@@ -5,6 +5,9 @@ request = require "request"
 OAuth = require 'oauth'
 _ = require('underscore')._
 
+Event = require "../../model/event"
+Video = require "../../model/video"
+
 config = require "../../conf/config"
 
 utils = require '../../lib/utils'
@@ -17,7 +20,7 @@ syncWordpressNewsTask = require '../../task/syncWordpressNews'
 syncEventBriteTask = require '../../task/syncEventBrite'
 syncEventBriteNewsTask = require '../../task/syncEventBriteNews'
 
-syncVimeoTask = require '../../task/syncEventBrite'
+syncVimeoTask = require '../../task/syncVimeo'
 syncVimeoNewsTask = require '../../task/syncVimeoNews'
 
 syncTwitterNewsTask = require '../../task/syncTwitterNews'
@@ -54,6 +57,20 @@ syncTwitterNews = (req, res) ->
 	syncVimeoNewsTask.synchronize()
 	res.send 200, "Started sync for twitter news"
 
+removeEvents = (req, res) ->
+	Event.remove {}, (err) ->
+		if err
+			res.send 500, "Server error. Error: #{err.message}"
+		else
+			res.send 204, "Removed Events"
+
+removeVideos = (req, res) ->
+	Video.remove {}, (err) ->
+		if err
+			res.send 500, "Server error. Error: #{err.message}"
+		else
+			res.send 204, "Removed Events"
+
 
 module.exports =
 	syncWordpress: syncWordpress
@@ -64,3 +81,5 @@ module.exports =
 	syncEventBrite: syncEventBrite
 	syncEventBriteNews: syncEventBriteNews
 	syncTwitterNews: syncTwitterNews
+	removeVideos: removeVideos
+	removeEvents: removeEvents

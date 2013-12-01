@@ -84,7 +84,7 @@ synchronizeVideo = (video, callback) ->
 						id: 0
 					videoUrls.push videoUrl
 
-				_(videoUrls).each (video) ->
+				videoUrls.forEach (video) ->
 					delete video.profile
 					delete video.origin
 					delete video.availability
@@ -137,12 +137,12 @@ transformVideo = (video) ->
 	video.owner.videosUrl = video.owner.videosurl
 	delete video.owner.videosurl
 
-	_(video.thumbnails).each((thumbnail) ->
+	video.thumbnails.forEach (thumbnail) ->
 		thumbnail.width = Number(thumbnail.width)
 		thumbnail.height = Number(thumbnail.height)
 		thumbnail.url = thumbnail._content
 		delete thumbnail._content
-	)
+
 
 	video
 

@@ -57,6 +57,8 @@ Video = new mongo.Schema({
   is_watcher: Number,
   thumbnails: [
     {
+      width: Number,
+      height: Number,
       url: {
         type: String,
         "default": '',

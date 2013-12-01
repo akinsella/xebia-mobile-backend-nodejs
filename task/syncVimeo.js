@@ -107,7 +107,7 @@ synchronizeVideo = function(video, callback) {
           };
           videoUrls.push(videoUrl);
         }
-        _(videoUrls).each(function(video) {
+        videoUrls.forEach(function(video) {
           delete video.profile;
           delete video.origin;
           return delete video.availability;
@@ -163,7 +163,7 @@ transformVideo = function(video) {
   delete video.owner.realname;
   video.owner.videosUrl = video.owner.videosurl;
   delete video.owner.videosurl;
-  _(video.thumbnails).each(function(thumbnail) {
+  video.thumbnails.forEach(function(thumbnail) {
     thumbnail.width = Number(thumbnail.width);
     thumbnail.height = Number(thumbnail.height);
     thumbnail.url = thumbnail._content;
