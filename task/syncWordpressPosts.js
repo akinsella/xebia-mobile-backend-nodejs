@@ -48,7 +48,7 @@ synchronize = function() {
 processWordpressRecentBlogPosts = function(page, callback, results) {
   console.log("Start synchronizing Wordpress blog posts for page: " + page + " ...");
   return request.get({
-    url: "http://blog.xebia.fr/wp-json-api/get_recent_posts?count=5&page=" + page,
+    url: "http://blog.xebia.fr/wp-json-api/get_recent_posts?count=25&page=" + page,
     json: true
   }, function(error, data, response) {
     return async.map(response.posts, synchronizeWordpressPost, function(err, postIds) {

@@ -32,7 +32,7 @@ synchronize = () ->
 
 processWordpressRecentBlogPosts = (page, callback, results) ->
 	console.log "Start synchronizing Wordpress blog posts for page: #{page} ..."
-	request.get {url: "http://blog.xebia.fr/wp-json-api/get_recent_posts?count=5&page=#{page}", json: true}, (error, data, response) ->
+	request.get {url: "http://blog.xebia.fr/wp-json-api/get_recent_posts?count=25&page=#{page}", json: true}, (error, data, response) ->
 		async.map response.posts, synchronizeWordpressPost, (err, postIds) ->
 			console.log "Synchronized #{results.length} Wordpress posts for page: #{page}. Post Ids: #{postIds}"
 
