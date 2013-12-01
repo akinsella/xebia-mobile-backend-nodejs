@@ -2,6 +2,7 @@ utils = require '../lib/utils'
 _ = require('underscore')._
 fs = require 'fs'
 config = require '../conf/config'
+Event = require '../model/event'
 
 apiKey = process.env["EVENTBRITE_AUTH_KEY"]
 
@@ -30,42 +31,35 @@ list = (req, res) ->
 		res.charset = 'UTF-8'
 		res.send JSON.parse(fs.readFileSync("#{__dirname}/../data/eventbrite_event.json", "utf-8"))
 	else
-		processRequest req, res, "https://www.eventbrite.com/json/organizer_list_events?app_key=#{apiKey}&id=1627902102", (data, cb) ->
-			events = extractEvents(data)
-			cb(undefined, events)
+		Event.find({}).sort("-start_date").limit(50).exec (err, events) ->
+			if err
+				res.json 500, { message: "Server error: #{err.message}" }
+			else if !event
+				res.json 404, "Not Found"
+			else
+				events = events.map (event) ->
+					event = event.toObject()
+					delete event._id
+					delete event.__v
+					event
+				res.json events
 
 
 # To be refactored
 event = (req, res) ->
-		eventId = req.params.id
-		processRequest req, res, "https://www.eventbrite.com/json/organizer_list_events?app_key=#{apiKey}&id=1627902102", (data, cb) ->
-			events = extractEvents(data)
-			event = _(events).find((event) -> String(event.id) == eventId)
-			cb(undefined, event)
+	eventId = req.params.id
+	Event.findOne { id: eventId }, (err, event) ->
+		if err
+			res.json 500, { message: "Server error: #{err.message}" }
 
-extractEvents = (data) ->
-	_.chain(data.events)
-		.pluck("event")
-		.sortBy((event) -> event.start_date)
-		.filter((event) -> event.status == "Live" || event.status == "Completed")
-		.reverse()
-		.map(transformEvent)
-		.value()
+		else if !event
+			res.json 404, "Not Found"
+		else
+			event = event.toObject()
+			delete event._id
+			delete event.__v
+			res.json event
 
-transformEvent = (event) ->
-	event.description_plain_text = event.description
-	if event.description_plain_text
-		event.description_plain_text = event.description_plain_text.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '')
-		event.description_plain_text = event.description_plain_text.replace(/<!--(.*?)-->/g, '')
-		event.description_plain_text = event.description_plain_text.replace(/\n\s*\n/g, '\n')
-
-	for key of event
-		if !(key in eventProps) then delete event[key]
-		for vKey of event.venue
-			if !(vKey in venueProps) then delete event.venue[vKey]
-		for oKey of event.organizer
-			if !(oKey in organizerProps) then delete event.organizer[oKey]
-	event
 
 module.exports =
 	list : list

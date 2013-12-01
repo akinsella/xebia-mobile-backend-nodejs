@@ -1,7 +1,7 @@
 utils = require '../lib/utils'
 async = require 'async'
 _ = require('underscore')._
-News = require "../model/news"
+Video = require "../model/video"
 db = require "../db"
 moment = require "moment"
 config = require "../conf/config"
@@ -51,34 +51,71 @@ processVideos = (callback) ->
 				console.log 500, "Error No Credentials stored: #{error}"
 			else
 				data = if data then JSON.parse(data) else data
-				async.map data.videos.video, synchronizeVideoNews, callback
+				async.map data.videos.video, synchronizeVideo, callback
 	)
 
 
-synchronizeVideoNews = (video, callback) ->
-	News.findOne { type: 'vimeo', typeId: video.id }, (err, news) ->
+synchronizeVideo = (video, callback) ->
+	Video.findOne { id: video.id }, (err, foundVideo) ->
 		if err
 			callback err
-		else if !news
+		else if !foundVideo
+			video = transformVideo(video)
+			videoEntry = new Video(video)
 
-			newsEntry = new News(
-				content: video.title
-				draft: false
-				imageUrl: ""
-				publicationDate: video.upload_date
-				title: video.title
-				author: video.owner.fullname
-				type: "vimeo"
-				typeId: video.id
-			)
-
-			newsEntry.save (err) ->
-				callback err, newsEntry
-				apns.pushToAll "Nouvelle vidéo: #{newsEntry.title}", () ->
-					console.log "Pushed notification for video: '#{newsEntry.title}'"
-
+			videoEntry.save (err) ->
+				callback err, videoEntry.id
+				if !err
+					apns.pushToAll "New video with id: #{videoEntry.id}", () ->
+						console.log "Pushed notification for video with id: '#{videoEntry.id}'"
 		else
-			callback err, undefined
+			callback err, foundVideo.id
+
+
+transformVideo = (video) ->
+	video.embedPrivacy = video.embed_privacy
+	delete video.embed_privacy
+	video.isHd = Number(video.is_hd) > 0
+	delete video.is_hd
+	video.isTranscoding = Number(video.is_transcoding) > 0
+	delete video.is_transcoding
+	video.isWatchLater = Number(video.is_watchlater) > 0
+	delete video.is_watchlater
+	video.uploadDate = video.upload_date
+	delete video.upload_date
+	video.modifiedDate = video.modified_date
+	delete video.modified_date
+	video.likeCount = Number(video.number_of_likes)
+	delete video.number_of_likes
+	video.playCount = Number(video.number_of_plays)
+	delete video.number_of_plays
+	video.commentCount = Number(video.number_of_comments)
+	delete video.number_of_comments
+	video.thumbnails = video.thumbnails.thumbnail
+
+	video.owner.profileUrl = video.owner.profileurl
+	delete video.owner.profileurl
+	video.owner.displayName = video.owner.display_name
+	delete video.owner.display_name
+	video.owner.isPlus = Number(video.owner.is_plus) > 0
+	delete video.owner.is_plus
+	video.owner.isPro = Number(video.owner.is_pro) > 0
+	delete video.owner.is_pro
+	video.owner.isStaff = Number(video.owner.is_staff) > 0
+	delete video.owner.is_staff
+	video.owner.realName = video.owner.realname
+	delete video.owner.realname
+	video.owner.videosUrl = video.owner.videosurl
+	delete video.owner.videosurl
+
+	_(video.thumbnails).each((thumbnail) ->
+		thumbnail.width = Number(thumbnail.width)
+		thumbnail.height = Number(thumbnail.height)
+		thumbnail.url = thumbnail._content
+		delete thumbnail._content
+	)
+
+	video
 
 
 module.exports =

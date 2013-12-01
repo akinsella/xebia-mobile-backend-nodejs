@@ -7,6 +7,7 @@ config = require '../conf/config'
 Tag = require '../model/tag'
 Category = require '../model/category'
 Author = require '../model/author'
+Post = require '../model/post'
 
 Array::insertArrayAt = (index, arrayToInsert) ->
 	Array.prototype.splice.apply(this, [index, 0].concat(arrayToInsert))
@@ -31,7 +32,7 @@ processRequest = (req, res, url, transform) ->
 authors = (req, res) ->
 	Author.find {}, (err, authors) ->
 		if err
-			res.json 500, { message: "Server error: #{error.message}" }
+			res.json 500, { message: "Server error: #{err.message}" }
 		else
 			authors = authors.map (author) ->
 				author = author.toObject()
@@ -47,7 +48,7 @@ authors = (req, res) ->
 tags = (req, res) ->
 	Tag.find {}, (err, tags) ->
 		if err
-			res.json 500, { message: "Server error: #{error.message}" }
+			res.json 500, { message: "Server error: #{err.message}" }
 		else
 			tags = tags.map (tag) ->
 				tag = tag.toObject()
@@ -61,7 +62,7 @@ tags = (req, res) ->
 categories = (req, res) ->
 	Category.find {}, (err, categories) ->
 		if err
-			res.json 500, { message: "Server error: #{error.message}" }
+			res.json 500, { message: "Server error: #{err.message}" }
 		else
 			categories = categories.map (category) ->
 				category = category.toObject()
@@ -83,14 +84,17 @@ dates = (req, res) ->
 
 post = (req, res) ->
 	postId = req.params.id
-	processRequest req, res, "#{baseUrl}/wp-json-api/get_post?post_id=#{postId}", (data, cb) ->
-		delete data.status
-		delete data.previous_url
-		delete data.next_url
-		transformPost(data.post, (err, post) ->
-			if !err && post
-				data.post = post
-			cb(err, data)
+	Post.findOne { id: postId}, (err, post) ->
+		delete post.status
+		delete post.previous_url
+		delete post.next_url
+		transformPost(post.post, (err, post) ->
+			if err
+				res.json 500, { message: "Server error: #{err.message}" }
+			else
+				res.json {
+					post: post
+				}
 		)
 
 recentPosts = (req, res) ->
@@ -99,38 +103,59 @@ recentPosts = (req, res) ->
 		payload = JSON.parse(fs.readFileSync("#{__dirname}/../data/wp_recent_post.json", "utf-8"))
 		res.send payload
 	else
-		processRequest req, res, "#{baseUrl}/wp-json-api/get_recent_posts?count=50", (data, cb) ->
-			delete data.status
-			data.total = data.count_total
-			delete data.count_total
-			async.map(data.posts, transformPost, (err, posts) ->
-				data.posts = posts
-				cb(err, data)
-			)
+		limit = 50
+		Post.count({}, (error, count) ->
+			total = count
+			pages = if total % 50 == 0 then total / limit else total / limit + 1
+			Post.find({}).sort("-date").limit(limit).exec (err, posts) ->
+				if err
+					res.json 500, { message: "Server error: #{err.message}" }
+				else
+					async.map(posts, transformPost, (err, posts) ->
+						res.json {
+							count:limit
+							pages:pages
+							total:total
+							posts:posts
+						}
+					)
+		)
 
 authorPosts = (req, res) ->
 	authorId = req.params.id
-	processRequest req, res, "#{baseUrl}/wp-json-api/get_author_posts?id=#{authorId}", (data, cb) ->
-		async.map(data.posts, transformPost, (err, posts) ->
-			data.posts = posts
-			cb(err, data)
-		)
+	Post.find({}).where("author.id").equals(authorId).sort("-date").exec (err, posts) ->
+		if err
+			res.json 500, { message: "Server error: #{err.message}" }
+		else
+			async.map(posts, transformPost, (err, posts) ->
+				res.json {
+					posts:posts
+				}
+			)
 
 tagPosts = (req, res) ->
 	tagId = req.params.id
-	processRequest req, res, "#{baseUrl}/wp-json-api/get_tag_posts?id=#{tagId}", (data, cb) ->
-		async.map(data.posts, transformPost, (err, posts) ->
-			data.posts = posts
-			cb(err, data)
-		)
+	Post.find({}).where("tag.id").equals(tagId).sort("-date").exec (err, posts) ->
+		if err
+			res.json 500, { message: "Server error: #{err.message}" }
+		else
+			async.map(posts, transformPost, (err, posts) ->
+				res.json {
+					posts:posts
+				}
+			)
 
 categoryPosts = (req, res) ->
 	categoryId = req.params.id
-	processRequest req, res, "#{baseUrl}/wp-json-api/get_category_posts?id=#{categoryId}", (data, cb) ->
-		async.map(data.posts, transformPost, (err, posts) ->
-			data.posts = posts
-			cb(err, data)
-		)
+	Post.find({}).where("category.id").equals(categoryId).sort("-date").exec (err, posts) ->
+		if err
+			res.json 500, { message: "Server error: #{err.message}" }
+		else
+			async.map(posts, transformPost, (err, posts) ->
+				res.json {
+					posts:posts
+				}
+			)
 
 datePosts = (req, res) ->
 	year = req.params.year
@@ -139,6 +164,9 @@ datePosts = (req, res) ->
 
 
 transformPost = (post, cb) ->
+	post = post.toObject()
+	delete post.__v
+	delete post._id
 	post.titlePlain = post.title_plain
 	delete post.title_plain
 	post.commentCount = post.comment_count
@@ -148,9 +176,13 @@ transformPost = (post, cb) ->
 	for category in post.categories
 		category.postCount = category.post_count
 		delete category.post_count
+		delete category.__v
+		delete category._id
 	for tag in post.tags
 		tag.postCount = tag.post_count
 		delete tag.post_count
+		delete tag.__v
+		delete tag._id
 	post.authors = [post.author]
 	delete post.author
 	for author in post.authors
@@ -158,8 +190,15 @@ transformPost = (post, cb) ->
 		delete author.firstname
 		author.lastname = author.last_name
 		delete author.last_name
+		delete author.__v
+		delete author._id
 	for comment in post.comments
 		delete comment.parent
+		delete comment.__v
+		delete comment._id
+	for attachment in post.attachments
+		delete attachment.__v
+		delete attachment._id
 	transformPostContent(post, cb)
 
 

@@ -29,8 +29,7 @@ synchronize = () ->
 	async.parallel [
 		processWordpressTags,
 		processWordpressCategories,
-		processWordpressAuthors,
-		processWordpressRecentBlogPosts
+		processWordpressAuthors
 	], callback
 
 processWordpressTags = (callback) ->
@@ -51,12 +50,6 @@ processWordpressAuthors = (callback) ->
 		async.map response.authors, synchronizeWordpressAuthor, (err, results) ->
 			console.log "Synchronized #{results.length} Wordpress authors"
 
-processWordpressRecentBlogPosts = (callback) ->
-	console.log "Start synchronizing Wordpress blog posts ..."
-	request.get {url: "http://blog.xebia.fr/wp-json-api/get_recent_posts?count=50", json: true}, (error, data, response) ->
-		async.map response.posts, synchronizeWordpressNews, (err, results) ->
-			console.log "Synchronized #{results.length} Wordpress posts"
-
 
 synchronizeWordpressTag = (tag, callback) ->
 	Tag.findOne { id: tag.id }, (err, tagFound) ->
@@ -66,10 +59,10 @@ synchronizeWordpressTag = (tag, callback) ->
 
 			tagEntry = new Tag(tag)
 			tagEntry.save (err) ->
-				callback err, tagEntry
+				callback err, tagEntry.id
 				console.log("New tag synchronised: #{tagEntry.title}")
 		else
-			callback err, tagFound
+			callback err, tagFound.id
 
 
 synchronizeWordpressCategory = (category, callback) ->
@@ -80,10 +73,10 @@ synchronizeWordpressCategory = (category, callback) ->
 
 			categoryEntry = new Category(category)
 			categoryEntry.save (err) ->
-				callback err, categoryEntryEntry
-				console.log("New category synchronised: #{categoryEntryEntry.title}")
+				callback err, categoryEntry.id
+				console.log("New category synchronised: #{categoryEntry.title}")
 		else
-			callback err, categoryFound
+			callback err, categoryFound.id
 
 synchronizeWordpressAuthor = (author, callback) ->
 	Author.findOne { id: author.id }, (err, authorFound) ->
@@ -93,38 +86,10 @@ synchronizeWordpressAuthor = (author, callback) ->
 
 			authorEntry = new Author(author)
 			authorEntry.save (err) ->
-				callback err, authorEntry
+				callback err, authorEntry.id
 				console.log("New author synchronised: #{authorEntry.name}")
 		else
-			callback err, authorFound
-
-
-synchronizeWordpressNews = (post, callback) ->
-	News.findOne { type: 'wordpress', typeId: post.id }, (err, news) ->
-		if err
-			callback err
-		else if !news
-
-			newsEntry = new News(
-				content: post.excerpt
-				draft: false
-				imageUrl: if post?.attachments && post.attachments.length > 0 then (post?.attachments[0].images?.full?.url || "") else ""
-				publicationDate: post.date
-				targetUrl: post.url
-				title: post.title_plain
-				author: post.author.name
-				type: "wordpress"
-				typeId: post.id
-			)
-
-			newsEntry.save (err) ->
-				callback err, newsEntry
-				apns.pushToAll "New blog post: #{newsEntry.title}", () ->
-					console.log "Pushed Notification for blog post: '#{newsEntry.title}'"
-
-		else
-			callback err, news
-
+			callback err, authorFound.id
 
 module.exports =
 	synchronize: synchronize

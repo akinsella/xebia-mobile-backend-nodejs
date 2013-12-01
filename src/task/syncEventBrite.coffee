@@ -1,12 +1,25 @@
 utils = require '../lib/utils'
 async = require 'async'
 _ = require('underscore')._
-News = require "../model/news"
+Event = require "../model/event"
 db = require "../db"
 moment = require "moment"
 config = require "../conf/config"
 request = require "request"
 apns = require "../lib/apns"
+
+
+eventProps = [
+	"id", "category", "capacity", "title", "start_date", "end_date",
+	"timezone_offset", "tags", "created", "url", "privacy", "status", "description", "description_plain_text",
+	"organizer", "venue"
+]
+organizerProps = [
+	"id", "name", "url", "description"
+]
+venueProps = [
+	"id", "name", "city", "region", "country", "country_code", "address", "address_2", "postal_code", "longitude", "latitude"
+]
 
 synchronize = () ->
 	callback = (err, news) ->
@@ -29,57 +42,50 @@ processEventBriteEntries = (callback) ->
 
 	request.get {url: "https://www.eventbrite.com/json/organizer_list_events?app_key=#{apiKey}&id=1627902102", json: true}, (error, data, response) ->
 
-		events = _(response.events)
-			.pluck("event")
-
-		events = _(events)
-			.sortBy((event) -> event.start_date)
-
-		events = _(events)
-			.filter((event) -> event.status == "Live" || event.status == "Completed")
-
-		events = _(events)
-			.reverse()
-
-		_(events).each((event) ->
-			event
-		)
-
-		async.map events, synchronizeEventNews, callback
+		events = extractEvents(response)
+		async.map events, synchronizeEvent, callback
 
 
-synchronizeEventNews = (event, callback) ->
-	News.findOne { type: 'eventbrite', typeId: event.id }, (err, news) ->
+synchronizeEvent = (event, callback) ->
+	Event.findOne { id: event.id }, (err, foundEvent) ->
 		if err
 			callback err
-		else if !news
+		else if !foundEvent
 
-			event.description_plain_text = event.description
-			if event.description_plain_text
-				event.description_plain_text = event.description_plain_text.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '')
-				event.description_plain_text = event.description_plain_text.replace(/<!--(.*?)-->/g, '')
-				event.description_plain_text = event.description_plain_text.replace(/\n\s*\n/g, '\n')
+			eventEntry = new Event(event)
 
-			newsEntry = new News(
-				content: event.description_plain_text
-				draft: false
-				imageUrl: ""
-				publicationDate: event.created
-				targetUrl: event.url
-				title: event.title
-				author: event.organizer.name
-				type: "eventbrite"
-				typeId: event.id
-			)
-
-			newsEntry.save (err) ->
-				callback err, newsEntry
-				apns.pushToAll "Nouvel événement: #{newsEntry.title}" , () ->
-					console.log "Pushed notification for new event: #{newsEntry.title}"
+			eventEntry.save (err) ->
+				callback err, eventEntry.id
+				apns.pushToAll "New event with id: #{eventEntry.id}" , () ->
+					console.log "Pushed notification for new event wth id: #{eventEntry.id}"
 
 		else
-			callback err, undefined
+			callback err, foundEvent.id
 
+
+extractEvents = (data) ->
+	_.chain(data.events)
+		.pluck("event")
+		.sortBy((event) -> event.start_date)
+		.filter((event) -> event.status == "Live" || event.status == "Completed")
+		.reverse()
+		.map(transformEvent)
+		.value()
+
+transformEvent = (event) ->
+	event.description_plain_text = event.description
+	if event.description_plain_text
+		event.description_plain_text = event.description_plain_text.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '')
+		event.description_plain_text = event.description_plain_text.replace(/<!--(.*?)-->/g, '')
+		event.description_plain_text = event.description_plain_text.replace(/\n\s*\n/g, '\n')
+
+	for key of event
+		if !(key in eventProps) then delete event[key]
+		for vKey of event.venue
+			if !(vKey in venueProps) then delete event.venue[vKey]
+		for oKey of event.organizer
+			if !(oKey in organizerProps) then delete event.organizer[oKey]
+	event
 
 module.exports =
 	synchronize: synchronize

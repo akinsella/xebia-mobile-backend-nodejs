@@ -92,9 +92,9 @@ synchronizeTweetNews = (tweet, callback) ->
 			)
 
 			newsEntry.save (err) ->
-				callback err, newsEntry
+				callback err, newsEntry.typeId
 		else
-			callback err, undefined
+			callback err, news.id
 
 
 module.exports =

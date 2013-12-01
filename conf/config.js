@@ -21,6 +21,11 @@ if (!config) {
         timezone: "Europe/Paris",
         runOnStart: true
       },
+      syncWordpressPosts: {
+        cron: '35 00 * * * 1-7',
+        timezone: "Europe/Paris",
+        runOnStart: true
+      },
       syncTwitter: {
         cron: '0 0,15,30,45 * * * 1-7',
         timezone: "Europe/Paris",

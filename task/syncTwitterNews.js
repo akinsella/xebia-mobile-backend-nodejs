@@ -114,10 +114,10 @@ synchronizeTweetNews = function(tweet, callback) {
         ]
       });
       return newsEntry.save(function(err) {
-        return callback(err, newsEntry);
+        return callback(err, newsEntry.typeId);
       });
     } else {
-      return callback(err, void 0);
+      return callback(err, news.id);
     }
   });
 };
@@ -127,5 +127,5 @@ module.exports = {
 };
 
 /*
-//@ sourceMappingURL=syncTwitter.map
+//@ sourceMappingURL=syncTwitterNews.map
 */
