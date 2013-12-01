@@ -6,6 +6,7 @@ Event = new mongo.Schema(
 	tags: {type: String, "default": '', trim: true},
 	capacity: Number,
 	title: {type: String, "default": '', trim: true},
+	created: {type: String, "default": '', trim: true},
 	startDate: {type: String, "default": '', trim: true},
 	endDate: {type: String, "default": '', trim: true},
 	timezoneOffset: {type: String, "default": '', trim: true},

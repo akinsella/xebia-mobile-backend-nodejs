@@ -21,6 +21,11 @@ Event = new mongo.Schema({
     "default": '',
     trim: true
   },
+  created: {
+    type: String,
+    "default": '',
+    trim: true
+  },
   startDate: {
     type: String,
     "default": '',
