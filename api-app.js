@@ -86,47 +86,47 @@ app.configure('production', function() {
   return app.use(express.errorHandler());
 });
 
-app.get("/api/v" + config.apiVersion + "/eventbrite/events", eventbrite.list);
-
-app.get("/api/v" + config.apiVersion + "/eventbrite/events/:id", eventbrite.event);
-
-app.get("/api/v" + config.apiVersion + "/twitter/timeline", twitter.xebia_timeline);
-
-app.get("/api/v" + config.apiVersion + "/wordpress/posts/recent", wordpress.recentPosts);
-
-app.get("/api/v" + config.apiVersion + "/wordpress/posts/:id", wordpress.post);
-
-app.get("/api/v" + config.apiVersion + "/wordpress/authors", wordpress.authors);
-
-app.get("/api/v" + config.apiVersion + "/wordpress/authors/:id", wordpress.authorPosts);
-
-app.get("/api/v" + config.apiVersion + "/wordpress/tags", wordpress.tags);
-
-app.get("/api/v" + config.apiVersion + "/wordpress/tags/:id", wordpress.tagPosts);
-
-app.get("/api/v" + config.apiVersion + "/wordpress/categories", wordpress.categories);
-
-app.get("/api/v" + config.apiVersion + "/wordpress/categories/:id", wordpress.categoryPosts);
-
-app.get("/api/v" + config.apiVersion + "/wordpress/dates", wordpress.dates);
-
-app.get("/api/v" + config.apiVersion + "/wordpress/:year/:month", wordpress.datePosts);
-
-app.get("/api/v" + config.apiVersion + "/vimeo/videos", vimeo.videos);
-
-app.get("/api/v" + config.apiVersion + "/vimeo/videos/:id", vimeo.video);
-
 app.get("/api/v" + config.apiVersion + "/timeline", news.listUnfiltered);
 
 app.post("/api/v" + config.apiVersion + "/devices/register", device.register);
 
-app.get("/api/v" + config.apiVersion + "/essentials/cards", card.cards);
+app.get("/api/v" + config.apiVersion + "/blog/posts/recent", wordpress.recentPosts);
 
-app.get("/api/v" + config.apiVersion + "/essentials/cards/:id", card.cardById);
+app.get("/api/v" + config.apiVersion + "/blog/posts/:id", wordpress.post);
 
-app.get("/api/v" + config.apiVersion + "/essentials/categories", card.categories);
+app.get("/api/v" + config.apiVersion + "/blog/authors", wordpress.authors);
 
-app.get("/api/v" + config.apiVersion + "/essentials/categories/:id", card.cardsByCategoryId);
+app.get("/api/v" + config.apiVersion + "/blog/authors/:id", wordpress.authorPosts);
+
+app.get("/api/v" + config.apiVersion + "/blog/tags", wordpress.tags);
+
+app.get("/api/v" + config.apiVersion + "/blog/tags/:id", wordpress.tagPosts);
+
+app.get("/api/v" + config.apiVersion + "/blog/categories", wordpress.categories);
+
+app.get("/api/v" + config.apiVersion + "/blog/categories/:id", wordpress.categoryPosts);
+
+app.get("/api/v" + config.apiVersion + "/blog/dates", wordpress.dates);
+
+app.get("/api/v" + config.apiVersion + "/blog/:year/:month", wordpress.datePosts);
+
+app.get("/api/v" + config.apiVersion + "/twitter/timeline", twitter.xebia_timeline);
+
+app.get("/api/v" + config.apiVersion + "/events", eventbrite.list);
+
+app.get("/api/v" + config.apiVersion + "/events/:id", eventbrite.event);
+
+app.get("/api/v" + config.apiVersion + "/videos", vimeo.videos);
+
+app.get("/api/v" + config.apiVersion + "/videos/:id", vimeo.video);
+
+app.get("/api/v" + config.apiVersion + "/cards", card.cards);
+
+app.get("/api/v" + config.apiVersion + "/cards/categories", card.categories);
+
+app.get("/api/v" + config.apiVersion + "/cards/categories/:id", card.cardsByCategoryId);
+
+app.get("/api/v" + config.apiVersion + "/cards/:id", card.cardById);
 
 httpServer = app.listen(app.get('port'));
 

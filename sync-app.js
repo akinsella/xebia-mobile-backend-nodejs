@@ -139,6 +139,18 @@ app.get("/sync/wordpress", security.ensureAuthenticated, sync.syncWordpress);
 
 app.get("/sync/wordpress/posts", security.ensureAuthenticated, sync.syncWordpressPosts);
 
+app.get("/sync/wordpress/news", security.ensureAuthenticated, sync.syncWordpressNews);
+
+app.get("/sync/eventbrite", security.ensureAuthenticated, sync.syncEventBrite);
+
+app.get("/sync/eventbrite/news", security.ensureAuthenticated, sync.syncEventBriteNews);
+
+app.get("/sync/vimeo", security.ensureAuthenticated, sync.syncVimeo);
+
+app.get("/sync/vimeo/news", security.ensureAuthenticated, sync.syncVimeoNews);
+
+app.get("/sync/twitter/news", security.ensureAuthenticated, sync.syncTwitterNews);
+
 httpServer = app.listen(app.get('port'));
 
 process.on('SIGTERM', function() {
