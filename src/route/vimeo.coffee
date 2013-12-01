@@ -38,7 +38,5 @@ video = (req, res) ->
 
 
 module.exports =
-	auth: auth
-	callback: callback
 	videos: videos
 	video: video
