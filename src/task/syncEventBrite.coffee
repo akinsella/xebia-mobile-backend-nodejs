@@ -10,15 +10,15 @@ apns = require "../lib/apns"
 
 
 eventProps = [
-	"id", "category", "capacity", "title", "start_date", "end_date",
-	"timezone_offset", "tags", "created", "url", "privacy", "status", "description", "descriptionPlainText",
+	"id", "category", "capacity", "title", "startDate", "endDate",
+	"timezoneOffset", "tags", "created", "url", "privacy", "status", "description", "descriptionPlainText",
 	"organizer", "venue"
 ]
 organizerProps = [
 	"id", "name", "url", "description"
 ]
 venueProps = [
-	"id", "name", "city", "region", "country", "country_code", "address", "address_2", "postal_code", "longitude", "latitude"
+	"id", "name", "city", "region", "country", "countryCode", "address", "address2", "postalCode", "longitude", "latitude"
 ]
 
 synchronize = () ->
