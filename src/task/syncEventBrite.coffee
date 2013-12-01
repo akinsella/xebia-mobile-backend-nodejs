@@ -42,7 +42,7 @@ processEventBriteEntries = (callback) ->
 
 	request.get {url: "https://www.eventbrite.com/json/organizer_list_events?app_key=#{apiKey}&id=1627902102", json: true}, (error, data, response) ->
 
-		events = extractEvents(response)
+		events = _(extractEvents(response)).sortBy((event) -> event.startDate )
 		async.map events, synchronizeEvent, callback
 
 

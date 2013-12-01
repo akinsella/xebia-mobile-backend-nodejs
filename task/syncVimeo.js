@@ -55,11 +55,15 @@ processVideos = function(callback) {
 
     }
     return oauth.get(url, credentials.accessToken, credentials.accessTokenSecret, function(error, data, response) {
+      var videos;
       if (error) {
         return console.log(500, "Error No Credentials stored: " + error);
       } else {
         data = data ? JSON.parse(data) : data;
-        return async.map(data.videos.video, synchronizeVideo, callback);
+        videos = _(data.videos.video).sortBy(function(video) {
+          return video.uploadDate;
+        });
+        return async.map(videos, synchronizeVideo, callback);
       }
     });
   });

@@ -10,7 +10,7 @@ list = (req, res) ->
 		res.charset = 'UTF-8'
 		res.send JSON.parse(fs.readFileSync("#{__dirname}/../data/eventbrite_event.json", "utf-8"))
 	else
-		Event.find({}).sort("-start_date").limit(50).exec (err, events) ->
+		Event.find({}).sort("-startDate").limit(50).exec (err, events) ->
 			if err
 				res.json 500, { message: "Server error: #{err.message}" }
 			else if !event

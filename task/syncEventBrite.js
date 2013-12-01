@@ -51,7 +51,9 @@ processEventBriteEntries = function(callback) {
     json: true
   }, function(error, data, response) {
     var events;
-    events = extractEvents(response);
+    events = _(extractEvents(response)).sortBy(function(event) {
+      return event.startDate;
+    });
     return async.map(events, synchronizeEvent, callback);
   });
 };

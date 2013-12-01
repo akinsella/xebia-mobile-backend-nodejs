@@ -16,7 +16,7 @@ list = function(req, res) {
     res.charset = 'UTF-8';
     return res.send(JSON.parse(fs.readFileSync("" + __dirname + "/../data/eventbrite_event.json", "utf-8")));
   } else {
-    return Event.find({}).sort("-start_date").limit(50).exec(function(err, events) {
+    return Event.find({}).sort("-startDate").limit(50).exec(function(err, events) {
       if (err) {
         return res.json(500, {
           message: "Server error: " + err.message

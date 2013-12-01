@@ -51,7 +51,9 @@ processVideos = (callback) ->
 				console.log 500, "Error No Credentials stored: #{error}"
 			else
 				data = if data then JSON.parse(data) else data
-				async.map data.videos.video, synchronizeVideo, callback
+				videos = _(data.videos.video).sortBy((video) -> video.uploadDate )
+
+				async.map videos, synchronizeVideo, callback
 	)
 
 
