@@ -20,7 +20,7 @@ Tag = new mongo.Schema({
     "default": '',
     trim: true
   },
-  post_count: Number
+  postCount: Number
 });
 
 tagModel = mongo.client.model('Tag', Tag);

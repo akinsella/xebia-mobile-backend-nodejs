@@ -2,6 +2,8 @@ start = new Date()
 
 config = require './conf/config'
 Apns = require './lib/apns'
+vimeo = require './route/sync/vimeo'
+sync = require './route/sync'
 
 if config.devMode
 	console.log "Dev Mode enabled."
@@ -13,10 +15,22 @@ if config.monitoring.newrelic.apiKey
 	console.log "Initializing NewRelic with apiKey: '#{config.monitoring.newrelic.apiKey}'"
 	newrelic = require 'newrelic'
 
-scheduler = require './task/scheduler'
-scheduler.init()
 
 express = require 'express'
+
+MongoStore = require('connect-mongo')(express)
+mongo = require './lib/mongo'
+
+passport = require 'passport'
+role = require './lib/connect-roles-fixed'
+
+security = require './lib/security'
+auth = require './route/auth'
+authMiddleware = require './middleware/authMiddleware'
+authService = require './service/authService'
+
+scheduler = require './task/scheduler'
+scheduler.init()
 
 requestLogger = require './lib/requestLogger'
 
@@ -28,6 +42,20 @@ console.log "Env: #{JSON.stringify config}"
 app = express()
 
 gracefullyClosing = false
+
+passport.serializeUser authService.serializeUser
+passport.deserializeUser authService.deserializeUser
+
+passport.use authMiddleware.GoogleStrategy
+passport.use authMiddleware.BasicStrategy
+passport.use authMiddleware.ClientPasswordStrategy
+passport.use authMiddleware.BearerStrategy
+
+role.use authService.checkRoleAnonymous
+role.use authService.ROLE_AGENT, authService.checkRoleAgent
+role.use authService.ROLE_SUPER_AGENT, authService.checkRoleSuperAgent
+role.use authService.ROLE_ADMIN, authService.checkRoleAdmin
+role.setFailureHandler authService.failureHandler
 
 app.configure ->
 	console.log "Environment: #{app.get('env')}"
@@ -48,6 +76,27 @@ app.configure ->
 	app.use express.methodOverride()
 
 	app.use requestLogger()
+	app.use express.cookieParser()
+	app.use express.session(
+		secret: process.env.SESSION_SECRET,
+		maxAge: new Date(Date.now() + 3600000),
+		store: new MongoStore(
+			db: config.mongo.dbname,
+			host: config.mongo.hostname,
+			port: config.mongo.port,
+			username: config.mongo.username,
+			password: config.mongo.password,
+			collection: "sessions",
+			auto_reconnect: true
+		)
+	)
+
+	# Initialize Passport!  Also use passport.session() middleware, to support
+	# persistent login sessions (recommended).
+	app.use passport.initialize()
+	app.use passport.session()
+
+	app.use role
 
 	app.use app.router
 
@@ -64,6 +113,13 @@ app.configure 'development', () ->
 
 app.configure 'production', () ->
 	app.use express.errorHandler()
+
+app.get "/sync/vimeo/oauth", vimeo.auth
+app.get "/sync/vimeo/oauth/callback", vimeo.callback
+
+app.get "/sync/wordpress", security.ensureAuthenticated, sync.syncWordpress
+app.get "/sync/wordpress/posts", security.ensureAuthenticated, sync.syncWordpressPosts
+
 
 httpServer = app.listen app.get('port')
 

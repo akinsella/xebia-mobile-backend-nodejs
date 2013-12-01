@@ -36,10 +36,6 @@ authors = (req, res) ->
 		else
 			authors = authors.map (author) ->
 				author = author.toObject()
-				author.firstname = author.first_name
-				delete author.first_name
-				author.lastname = author.last_name
-				delete author.last_name
 				delete author.__v
 				delete author._id
 				author
@@ -52,8 +48,6 @@ tags = (req, res) ->
 		else
 			tags = tags.map (tag) ->
 				tag = tag.toObject()
-				tag.postCount = tag.post_count
-				delete tag.post_count
 				delete tag.__v
 				delete tag._id
 				tag
@@ -66,8 +60,6 @@ categories = (req, res) ->
 		else
 			categories = categories.map (category) ->
 				category = category.toObject()
-				category.postCount = category.post_count
-				delete category.post_count
 				delete category.__v
 				delete category._id
 				category
@@ -85,17 +77,19 @@ dates = (req, res) ->
 post = (req, res) ->
 	postId = req.params.id
 	Post.findOne { id: postId}, (err, post) ->
-		delete post.status
-		delete post.previous_url
-		delete post.next_url
-		transformPost(post.post, (err, post) ->
-			if err
-				res.json 500, { message: "Server error: #{err.message}" }
-			else
-				res.json {
-					post: post
-				}
-		)
+		if err
+			res.json 500, { message: "Server error: #{err.message}" }
+		else if !post
+			res.json 404, { message: "Not Found" }
+		else
+			post = post.toObject()
+			delete post._id
+			delete post.__v
+			post.tags.forEach (tag) -> delete tag._id
+			post.categories.forEach (category) -> delete category._id
+			res.json {
+				post: post
+			}
 
 recentPosts = (req, res) ->
 	if config.offlineMode

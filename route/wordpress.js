@@ -54,10 +54,6 @@ authors = function(req, res) {
     } else {
       authors = authors.map(function(author) {
         author = author.toObject();
-        author.firstname = author.first_name;
-        delete author.first_name;
-        author.lastname = author.last_name;
-        delete author.last_name;
         delete author.__v;
         delete author._id;
         return author;
@@ -76,8 +72,6 @@ tags = function(req, res) {
     } else {
       tags = tags.map(function(tag) {
         tag = tag.toObject();
-        tag.postCount = tag.post_count;
-        delete tag.post_count;
         delete tag.__v;
         delete tag._id;
         return tag;
@@ -96,8 +90,6 @@ categories = function(req, res) {
     } else {
       categories = categories.map(function(category) {
         category = category.toObject();
-        category.postCount = category.post_count;
-        delete category.post_count;
         delete category.__v;
         delete category._id;
         return category;
@@ -128,20 +120,28 @@ post = function(req, res) {
   return Post.findOne({
     id: postId
   }, function(err, post) {
-    delete post.status;
-    delete post.previous_url;
-    delete post.next_url;
-    return transformPost(post.post, function(err, post) {
-      if (err) {
-        return res.json(500, {
-          message: "Server error: " + err.message
-        });
-      } else {
-        return res.json({
-          post: post
-        });
-      }
-    });
+    if (err) {
+      return res.json(500, {
+        message: "Server error: " + err.message
+      });
+    } else if (!post) {
+      return res.json(404, {
+        message: "Not Found"
+      });
+    } else {
+      post = post.toObject();
+      delete post._id;
+      delete post.__v;
+      post.tags.forEach(function(tag) {
+        return delete tag._id;
+      });
+      post.categories.forEach(function(category) {
+        return delete category._id;
+      });
+      return res.json({
+        post: post
+      });
+    }
   });
 };
 

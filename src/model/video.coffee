@@ -17,10 +17,17 @@ Video = new mongo.Schema(
 	},
 	is_watcher: Number,
 	thumbnails: [{
-		width: Number,
-		height: Number,
 		url: {type: String, "default": '', trim: true}
 	}],
+	videoUrls: [{
+		id: Number,
+		url: {type: String, "default": '', trim: true}
+		width: Number,
+		height: Number,
+		bitrate: Number,
+		type: {type: String, "default": '', trim: true},
+		codec: {type: String, "default": '', trim: true}
+	}]
 	embedPrivacy: {type: String, "default": '', trim: true},
 	isHd: Boolean,
 	isTranscoding: Boolean,

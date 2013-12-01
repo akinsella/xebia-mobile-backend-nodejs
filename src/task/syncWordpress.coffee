@@ -56,7 +56,8 @@ synchronizeWordpressTag = (tag, callback) ->
 		if err
 			callback err
 		else if !tagFound
-
+			tag.postCount = tag.post_count
+			delete tag.post_count
 			tagEntry = new Tag(tag)
 			tagEntry.save (err) ->
 				callback err, tagEntry.id
@@ -70,7 +71,8 @@ synchronizeWordpressCategory = (category, callback) ->
 		if err
 			callback err
 		else if !categoryFound
-
+			category.postCount = category.post_count
+			delete category.post_count
 			categoryEntry = new Category(category)
 			categoryEntry.save (err) ->
 				callback err, categoryEntry.id
@@ -83,7 +85,10 @@ synchronizeWordpressAuthor = (author, callback) ->
 		if err
 			callback err
 		else if !authorFound
-
+			author.firstname = author.first_name
+			delete author.first_name
+			author.lastname = author.last_name
+			delete author.last_name
 			authorEntry = new Author(author)
 			authorEntry.save (err) ->
 				callback err, authorEntry.id

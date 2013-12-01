@@ -15,12 +15,12 @@ Author = new mongo.Schema({
     "default": '',
     trim: true
   },
-  first_name: {
+  firstName: {
     type: String,
     "default": '',
     trim: true
   },
-  last_name: {
+  lastName: {
     type: String,
     "default": '',
     trim: true

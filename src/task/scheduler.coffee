@@ -13,7 +13,7 @@ conf = require '../conf/config'
 init = () ->
 	console.log "Starting scheduler ..."
 
-	syncEventBrite.synchronize()
+	syncVimeo.synchronize()
 
 # 	startJob "WordpressPosts", conf.scheduler.syncWordpressPosts, syncWordpressPosts.synchronize
 #	startJob "WordpressNews", conf.scheduler.syncWordpress, syncWordpressNews.synchronize

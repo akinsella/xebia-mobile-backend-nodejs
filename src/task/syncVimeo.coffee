@@ -61,13 +61,42 @@ synchronizeVideo = (video, callback) ->
 			callback err
 		else if !foundVideo
 			video = transformVideo(video)
-			videoEntry = new Video(video)
 
-			videoEntry.save (err) ->
-				callback err, videoEntry.id
-				if !err
-					apns.pushToAll "New video with id: #{videoEntry.id}", () ->
-						console.log "Pushed notification for video with id: '#{videoEntry.id}'"
+			videoConfigUrl = "http://player.vimeo.com/v2/video/#{video.id}/config"
+			console.log "Fetching url: #{videoConfigUrl}"
+			request.get { url: videoConfigUrl, json: true }, (error, data, response) ->
+
+				videoUrls = _(response.request.files.codecs.map (codec) ->
+					for key, value of response.request.files[codec]
+						value["type"] = key
+						value["codec"] = codec
+						value
+				).flatten()
+
+				for key, value of response.request.files.hls
+					videoUrl =
+						url: value
+						type: key
+						codec: "hls"
+						height: 0
+						width: 0
+						bitrate: 0
+						id: 0
+					videoUrls.push videoUrl
+
+				_(videoUrls).each (video) ->
+					delete video.profile
+					delete video.origin
+					delete video.availability
+
+				video.videoUrls = videoUrls
+				# Saving video urls
+				videoEntry = new Video(video)
+				videoEntry.save (err) ->
+					callback err, videoEntry.id
+					if !err
+						apns.pushToAll "New video with id: #{videoEntry.id}", () ->
+							console.log "Pushed notification for video with id: '#{videoEntry.id}'"
 		else
 			callback err, foundVideo.id
 

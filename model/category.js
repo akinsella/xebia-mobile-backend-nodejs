@@ -21,7 +21,7 @@ Category = new mongo.Schema({
     "default": '',
     trim: true
   },
-  post_count: Number
+  postCount: Number
 });
 
 categoryModel = mongo.client.model('Category', Category);

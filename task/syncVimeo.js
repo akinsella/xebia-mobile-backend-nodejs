@@ -69,19 +69,59 @@ synchronizeVideo = function(video, callback) {
   return Video.findOne({
     id: video.id
   }, function(err, foundVideo) {
-    var videoEntry;
+    var videoConfigUrl;
     if (err) {
       return callback(err);
     } else if (!foundVideo) {
       video = transformVideo(video);
-      videoEntry = new Video(video);
-      return videoEntry.save(function(err) {
-        callback(err, videoEntry.id);
-        if (!err) {
-          return apns.pushToAll("New video with id: " + videoEntry.id, function() {
-            return console.log("Pushed notification for video with id: '" + videoEntry.id + "'");
-          });
+      videoConfigUrl = "http://player.vimeo.com/v2/video/" + video.id + "/config";
+      console.log("Fetching url: " + videoConfigUrl);
+      return request.get({
+        url: videoConfigUrl,
+        json: true
+      }, function(error, data, response) {
+        var key, value, videoEntry, videoUrl, videoUrls, _ref;
+        videoUrls = _(response.request.files.codecs.map(function(codec) {
+          var key, value, _ref, _results;
+          _ref = response.request.files[codec];
+          _results = [];
+          for (key in _ref) {
+            value = _ref[key];
+            value["type"] = key;
+            value["codec"] = codec;
+            _results.push(value);
+          }
+          return _results;
+        })).flatten();
+        _ref = response.request.files.hls;
+        for (key in _ref) {
+          value = _ref[key];
+          videoUrl = {
+            url: value,
+            type: key,
+            codec: "hls",
+            height: 0,
+            width: 0,
+            bitrate: 0,
+            id: 0
+          };
+          videoUrls.push(videoUrl);
         }
+        _(videoUrls).each(function(video) {
+          delete video.profile;
+          delete video.origin;
+          return delete video.availability;
+        });
+        video.videoUrls = videoUrls;
+        videoEntry = new Video(video);
+        return videoEntry.save(function(err) {
+          callback(err, videoEntry.id);
+          if (!err) {
+            return apns.pushToAll("New video with id: " + videoEntry.id, function() {
+              return console.log("Pushed notification for video with id: '" + videoEntry.id + "'");
+            });
+          }
+        });
       });
     } else {
       return callback(err, foundVideo.id);

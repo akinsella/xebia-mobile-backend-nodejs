@@ -23,7 +23,7 @@ conf = require('../conf/config');
 
 init = function() {
   console.log("Starting scheduler ...");
-  syncEventBrite.synchronize();
+  syncVimeo.synchronize();
   return console.log("Scheduler started ...");
 };
 
