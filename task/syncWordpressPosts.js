@@ -110,6 +110,8 @@ synchronizeWordpressDetailedPost = function(postId, callback) {
         var detailedPost, detailedPostEntry;
         if (err) {
           return callback(err);
+        } else if (!response) {
+          return callback(new Error("No detailed post with id: " + postId));
         } else {
           detailedPost = response.post;
           detailedPostEntry = new DetailedPost(detailedPost);

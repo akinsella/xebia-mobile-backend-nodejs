@@ -75,6 +75,8 @@ synchronizeWordpressDetailedPost = (postId, callback) ->
 			request.get {url: "http://blog.xebia.fr/wp-json-api/get_post?post_id=#{postId}", json: true}, (error, data, response) ->
 				if err
 					callback err
+				else if !response
+					callback new Error("No detailed post with id: #{postId}")
 				else
 					detailedPost = response.post
 					detailedPostEntry = new DetailedPost(detailedPost)
