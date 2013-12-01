@@ -117,7 +117,7 @@ recentPosts = (req, res) ->
 
 authorPosts = (req, res) ->
 	authorId = req.params.id
-	Post.find({}).where("author.id").equals(authorId).sort("-date").exec (err, posts) ->
+	Post.find({"author.id":Number(authorId)}).sort("-date").exec (err, posts) ->
 		if err
 			res.json 500, { message: "Server error: #{err.message}" }
 		else
@@ -129,7 +129,7 @@ authorPosts = (req, res) ->
 
 tagPosts = (req, res) ->
 	tagId = req.params.id
-	Post.find({}).where("tag.id").equals(tagId).sort("-date").exec (err, posts) ->
+	Post.find({"tags.id":Number(tagId)}).sort("-date").exec (err, posts) ->
 		if err
 			res.json 500, { message: "Server error: #{err.message}" }
 		else
@@ -141,7 +141,7 @@ tagPosts = (req, res) ->
 
 categoryPosts = (req, res) ->
 	categoryId = req.params.id
-	Post.find({}).where("category.id").equals(categoryId).sort("-date").exec (err, posts) ->
+	Post.find({"categories.id":Number(categoryId)}).sort("-date").exec (err, posts) ->
 		if err
 			res.json 500, { message: "Server error: #{err.message}" }
 		else

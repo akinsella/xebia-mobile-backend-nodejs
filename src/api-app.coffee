@@ -79,13 +79,13 @@ app.post "/api/v#{config.apiVersion}/devices/register", device.register
 app.get "/api/v#{config.apiVersion}/blog/posts/recent", wordpress.recentPosts
 app.get "/api/v#{config.apiVersion}/blog/posts/:id", wordpress.post
 app.get "/api/v#{config.apiVersion}/blog/authors", wordpress.authors
-app.get "/api/v#{config.apiVersion}/blog/authors/:id", wordpress.authorPosts
+app.get "/api/v#{config.apiVersion}/blog/authors/:id/posts", wordpress.authorPosts
 app.get "/api/v#{config.apiVersion}/blog/tags", wordpress.tags
-app.get "/api/v#{config.apiVersion}/blog/tags/:id", wordpress.tagPosts
+app.get "/api/v#{config.apiVersion}/blog/tags/:id/posts", wordpress.tagPosts
 app.get "/api/v#{config.apiVersion}/blog/categories", wordpress.categories
-app.get "/api/v#{config.apiVersion}/blog/categories/:id", wordpress.categoryPosts
+app.get "/api/v#{config.apiVersion}/blog/categories/:id/posts", wordpress.categoryPosts
 app.get "/api/v#{config.apiVersion}/blog/dates", wordpress.dates
-app.get "/api/v#{config.apiVersion}/blog/:year/:month", wordpress.datePosts
+app.get "/api/v#{config.apiVersion}/blog/:year/:month/posts", wordpress.datePosts
 
 app.get "/api/v#{config.apiVersion}/twitter/timeline", twitter.xebia_timeline
 

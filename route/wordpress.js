@@ -180,7 +180,9 @@ recentPosts = function(req, res) {
 authorPosts = function(req, res) {
   var authorId;
   authorId = req.params.id;
-  return Post.find({}).where("author.id").equals(authorId).sort("-date").exec(function(err, posts) {
+  return Post.find({
+    "author.id": Number(authorId)
+  }).sort("-date").exec(function(err, posts) {
     if (err) {
       return res.json(500, {
         message: "Server error: " + err.message
@@ -198,7 +200,9 @@ authorPosts = function(req, res) {
 tagPosts = function(req, res) {
   var tagId;
   tagId = req.params.id;
-  return Post.find({}).where("tag.id").equals(tagId).sort("-date").exec(function(err, posts) {
+  return Post.find({
+    "tags.id": Number(tagId)
+  }).sort("-date").exec(function(err, posts) {
     if (err) {
       return res.json(500, {
         message: "Server error: " + err.message
@@ -216,7 +220,9 @@ tagPosts = function(req, res) {
 categoryPosts = function(req, res) {
   var categoryId;
   categoryId = req.params.id;
-  return Post.find({}).where("category.id").equals(categoryId).sort("-date").exec(function(err, posts) {
+  return Post.find({
+    "categories.id": Number(categoryId)
+  }).sort("-date").exec(function(err, posts) {
     if (err) {
       return res.json(500, {
         message: "Server error: " + err.message
