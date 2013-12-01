@@ -11,7 +11,7 @@ apns = require "../lib/apns"
 
 eventProps = [
 	"id", "category", "capacity", "title", "start_date", "end_date",
-	"timezone_offset", "tags", "created", "url", "privacy", "status", "description", "description_plain_text",
+	"timezone_offset", "tags", "created", "url", "privacy", "status", "description", "descriptionPlainText",
 	"organizer", "venue"
 ]
 organizerProps = [
@@ -73,11 +73,25 @@ extractEvents = (data) ->
 		.value()
 
 transformEvent = (event) ->
-	event.description_plain_text = event.description
-	if event.description_plain_text
-		event.description_plain_text = event.description_plain_text.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '')
-		event.description_plain_text = event.description_plain_text.replace(/<!--(.*?)-->/g, '')
-		event.description_plain_text = event.description_plain_text.replace(/\n\s*\n/g, '\n')
+	event.descriptionPlainText = event.description
+	if event.descriptionPlainText
+		event.descriptionPlainText = event.descriptionPlainText.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '')
+		event.descriptionPlainText = event.descriptionPlainText.replace(/<!--(.*?)-->/g, '')
+		event.descriptionPlainText = event.descriptionPlainText.replace(/\n\s*\n/g, '\n')
+
+	event.startDate = event.start_date
+	delete event.start_date
+	event.endDate = event.end_date
+	delete event.end_date
+	event.timezoneOffset = event.timezone_offset
+	delete event.timezone_offset
+
+	event.venue.countryCode = event.venue.country_code
+	delete event.venue.country_code
+	event.venue.address2 = event.venue.address_2
+	delete event.venue.address_2
+	event.venue.postalCode = event.venue.postal_code
+	delete event.venue.postal_code
 
 	for key of event
 		if !(key in eventProps) then delete event[key]

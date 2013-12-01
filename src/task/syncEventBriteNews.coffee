@@ -54,14 +54,14 @@ synchronizeEventNews = (event, callback) ->
 			callback err
 		else if !news
 
-			event.description_plain_text = event.description
-			if event.description_plain_text
-				event.description_plain_text = event.description_plain_text.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '')
-				event.description_plain_text = event.description_plain_text.replace(/<!--(.*?)-->/g, '')
-				event.description_plain_text = event.description_plain_text.replace(/\n\s*\n/g, '\n')
+			event.descriptionPlainText = event.description
+			if event.descriptionPlainText
+				event.descriptionPlainText = event.descriptionPlainText.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '')
+				event.descriptionPlainText = event.descriptionPlainText.replace(/<!--(.*?)-->/g, '')
+				event.descriptionPlainText = event.descriptionPlainText.replace(/\n\s*\n/g, '\n')
 
 			newsEntry = new News(
-				content: event.description_plain_text
+				content: event.descriptionPlainText
 				draft: false
 				imageUrl: ""
 				publicationDate: event.created

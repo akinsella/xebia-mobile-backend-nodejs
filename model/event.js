@@ -21,17 +21,17 @@ Event = new mongo.Schema({
     "default": '',
     trim: true
   },
-  start_date: {
+  startDate: {
     type: String,
     "default": '',
     trim: true
   },
-  end_date: {
+  endDate: {
     type: String,
     "default": '',
     trim: true
   },
-  timezone_offset: {
+  timezoneOffset: {
     type: String,
     "default": '',
     trim: true
@@ -56,7 +56,7 @@ Event = new mongo.Schema({
     "default": '',
     trim: true
   },
-  description_plain_text: {
+  descriptionPlainText: {
     type: String,
     "default": '',
     trim: true
@@ -101,12 +101,12 @@ Event = new mongo.Schema({
       "default": '',
       trim: true
     },
-    postal_code: {
+    postalCode: {
       type: String,
       "default": '',
       trim: true
     },
-    address_2: {
+    address2: {
       type: String,
       "default": '',
       trim: true
@@ -116,7 +116,7 @@ Event = new mongo.Schema({
       "default": '',
       trim: true
     },
-    country_code: {
+    countryCode: {
       type: String,
       "default": '',
       trim: true

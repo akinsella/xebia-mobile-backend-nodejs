@@ -6,14 +6,14 @@ Event = new mongo.Schema(
 	tags: {type: String, "default": '', trim: true},
 	capacity: Number,
 	title: {type: String, "default": '', trim: true},
-	start_date: {type: String, "default": '', trim: true},
-	end_date: {type: String, "default": '', trim: true},
-	timezone_offset: {type: String, "default": '', trim: true},
+	startDate: {type: String, "default": '', trim: true},
+	endDate: {type: String, "default": '', trim: true},
+	timezoneOffset: {type: String, "default": '', trim: true},
 	url: {type: String, "default": '', trim: true}
 	privacy: {type: String, "default": '', trim: true}
 	status: {type: String, "default": '', trim: true},
 	description: {type: String, "default": '', trim: true},
-	description_plain_text: {type: String, "default": '', trim: true},
+	descriptionPlainText: {type: String, "default": '', trim: true},
 	organizer:{
 		id: Number,
 		name: {type: String, "default": '', trim: true},
@@ -26,10 +26,10 @@ Event = new mongo.Schema(
 		name: {type: String, "default": '', trim: true},
 		country: {type: String, "default": '', trim: true},
 		region: {type: String, "default": '', trim: true},
-		postal_code: {type: String, "default": '', trim: true},
-		address_2: {type: String, "default": '', trim: true},
+		postalCode: {type: String, "default": '', trim: true},
+		address2: {type: String, "default": '', trim: true},
 		address: {type: String, "default": '', trim: true},
-		country_code: {type: String, "default": '', trim: true},
+		countryCode: {type: String, "default": '', trim: true},
 		latitude: Number,
 		longitude: Number
 	}
