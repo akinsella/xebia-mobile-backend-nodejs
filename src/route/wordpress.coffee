@@ -8,6 +8,7 @@ Tag = require '../model/tag'
 Category = require '../model/category'
 Author = require '../model/author'
 Post = require '../model/post'
+DetailedPost = require '../model/detailedPost'
 
 Array::insertArrayAt = (index, arrayToInsert) ->
 	Array.prototype.splice.apply(this, [index, 0].concat(arrayToInsert))
@@ -76,7 +77,7 @@ dates = (req, res) ->
 
 post = (req, res) ->
 	postId = req.params.id
-	Post.findOne { id: postId}, (err, post) ->
+	DetailedPost.findOne { id: postId}, (err, post) ->
 		if err
 			res.json 500, { message: "Server error: #{err.message}" }
 		else if !post
