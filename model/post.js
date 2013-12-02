@@ -35,16 +35,6 @@ Post = new mongo.Schema({
     "default": '',
     trim: true
   },
-  content: {
-    type: String,
-    "default": '',
-    trim: true
-  },
-  structuredContent: {
-    type: String,
-    "default": '',
-    trim: true
-  },
   excerpt: {
     type: String,
     "default": '',

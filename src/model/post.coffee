@@ -8,8 +8,6 @@ Post = new mongo.Schema(
 	status: {type: String, "default": '', trim: true},
 	title: {type: String, "default": '', trim: true},
 	titlePlain: {type: String, "default": '', trim: true},
-	content: {type: String, "default": '', trim: true},
-	structuredContent: {type: String, "default": '', trim: true},
 	excerpt: {type: String, "default": '', trim: true},
 	date: {type: String, "default": '', trim: true},
 	modified: {type: String, "default": '', trim: true},

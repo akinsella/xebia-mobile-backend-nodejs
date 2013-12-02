@@ -40,11 +40,30 @@ DetailedPost = new mongo.Schema({
     "default": '',
     trim: true
   },
-  structuredContent: {
-    type: String,
-    "default": '',
-    trim: true
-  },
+  structuredContent: [
+    {
+      attributes: [
+        {
+          key: {
+            type: String,
+            "default": '',
+            trim: true
+          },
+          value: {
+            type: String,
+            "default": '',
+            trim: true
+          }
+        }
+      ],
+      type: {
+        type: String,
+        "default": '',
+        trim: true
+      },
+      text: String
+    }
+  ],
   excerpt: {
     type: String,
     "default": '',
