@@ -10,19 +10,7 @@ Author = require '../model/author'
 Post = require '../model/post'
 DetailedPost = require '../model/detailedPost'
 
-Array::insertArrayAt = (index, arrayToInsert) ->
-	Array.prototype.splice.apply(this, [index, 0].concat(arrayToInsert))
-	this
-
-Array::insertAt = (index) ->
-	arrayToInsert = Array.prototype.splice.apply(arguments, [1])
-	Array.insertArrayAt(index, arrayToInsert)
-
-Array::removeAt = (index) ->
-	this.splice(index, 1)
-
 baseUrl = "http://blog.xebia.fr"
-#baseUrl = "http://localhost/wordpress"
 
 # To be refactored
 processRequest = (req, res, url, transform) ->
@@ -88,6 +76,15 @@ post = (req, res) ->
 			delete post.__v
 			post.tags.forEach (tag) -> delete tag._id
 			post.categories.forEach (category) -> delete category._id
+			post.authors.forEach (author) -> delete author._id
+			post.attachments.forEach (attachment) -> delete attachment._id
+			post.comments.forEach (comment) -> delete comment._id
+			if post.structuredContent
+				post.structuredContent.forEach (scItem) ->
+					if scItem.attributes
+						post.attributes.forEach (attribute) ->
+							delete attribute._id
+					delete scItem._id
 			res.json {
 				post: post
 			}

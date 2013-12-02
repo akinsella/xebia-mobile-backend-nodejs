@@ -23,21 +23,6 @@ Post = require('../model/post');
 
 DetailedPost = require('../model/detailedPost');
 
-Array.prototype.insertArrayAt = function(index, arrayToInsert) {
-  Array.prototype.splice.apply(this, [index, 0].concat(arrayToInsert));
-  return this;
-};
-
-Array.prototype.insertAt = function(index) {
-  var arrayToInsert;
-  arrayToInsert = Array.prototype.splice.apply(arguments, [1]);
-  return Array.insertArrayAt(index, arrayToInsert);
-};
-
-Array.prototype.removeAt = function(index) {
-  return this.splice(index, 1);
-};
-
 baseUrl = "http://blog.xebia.fr";
 
 processRequest = function(req, res, url, transform) {
@@ -140,6 +125,25 @@ post = function(req, res) {
       post.categories.forEach(function(category) {
         return delete category._id;
       });
+      post.authors.forEach(function(author) {
+        return delete author._id;
+      });
+      post.attachments.forEach(function(attachment) {
+        return delete attachment._id;
+      });
+      post.comments.forEach(function(comment) {
+        return delete comment._id;
+      });
+      if (post.structuredContent) {
+        post.structuredContent.forEach(function(scItem) {
+          if (scItem.attributes) {
+            post.attributes.forEach(function(attribute) {
+              return delete attribute._id;
+            });
+          }
+          return delete scItem._id;
+        });
+      }
       return res.json({
         post: post
       });
