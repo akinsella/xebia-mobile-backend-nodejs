@@ -137,7 +137,7 @@ post = function(req, res) {
       if (post.structuredContent) {
         post.structuredContent.forEach(function(scItem) {
           if (scItem.attributes) {
-            post.attributes.forEach(function(attribute) {
+            scItem.attributes.forEach(function(attribute) {
               return delete attribute._id;
             });
           }

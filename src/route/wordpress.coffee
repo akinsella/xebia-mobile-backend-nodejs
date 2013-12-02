@@ -82,7 +82,7 @@ post = (req, res) ->
 			if post.structuredContent
 				post.structuredContent.forEach (scItem) ->
 					if scItem.attributes
-						post.attributes.forEach (attribute) ->
+						scItem.attributes.forEach (attribute) ->
 							delete attribute._id
 					delete scItem._id
 			res.json {
