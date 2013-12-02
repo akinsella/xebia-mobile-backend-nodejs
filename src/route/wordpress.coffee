@@ -71,23 +71,26 @@ post = (req, res) ->
 		else if !post
 			res.json 404, { message: "Not Found" }
 		else
-			post = post.toObject()
-			delete post._id
-			delete post.__v
-			post.tags.forEach (tag) -> delete tag._id
-			post.categories.forEach (category) -> delete category._id
-			post.authors.forEach (author) -> delete author._id
-			post.attachments.forEach (attachment) -> delete attachment._id
-			post.comments.forEach (comment) -> delete comment._id
-			if post.structuredContent
-				post.structuredContent.forEach (scItem) ->
-					if scItem.attributes
-						scItem.attributes.forEach (attribute) ->
-							delete attribute._id
-					delete scItem._id
 			res.json {
-				post: post
+				post: cleanUpPost(post)
 			}
+
+cleanUpPost = (post) ->
+	post = post.toObject()
+	delete post._id
+	delete post.__v
+	post.tags.forEach (tag) -> delete tag._id
+	post.categories.forEach (category) -> delete category._id
+	post.authors.forEach (author) -> delete author._id
+	post.attachments.forEach (attachment) -> delete attachment._id
+	post.comments.forEach (comment) -> delete comment._id
+	if post.structuredContent
+		post.structuredContent.forEach (scItem) ->
+			if scItem.attributes
+				scItem.attributes.forEach (attribute) ->
+					delete attribute._id
+			delete scItem._id
+	post
 
 recentPosts = (req, res) ->
 	if config.offlineMode
@@ -103,6 +106,7 @@ recentPosts = (req, res) ->
 				if err
 					res.json 500, { message: "Server error: #{err.message}" }
 				else
+					posts = posts.map (post) -> cleanUpPost(post)
 					res.json {
 						count:limit
 						pages:pages
@@ -117,6 +121,7 @@ authorPosts = (req, res) ->
 		if err
 			res.json 500, { message: "Server error: #{err.message}" }
 		else
+			posts = posts.map (post) -> cleanUpPost(post)
 			res.json {
 				posts:posts
 			}
@@ -127,6 +132,7 @@ tagPosts = (req, res) ->
 		if err
 			res.json 500, { message: "Server error: #{err.message}" }
 		else
+			posts = posts.map (post) -> cleanUpPost(post)
 			res.json {
 				posts:posts
 			}
@@ -137,6 +143,7 @@ categoryPosts = (req, res) ->
 		if err
 			res.json 500, { message: "Server error: #{err.message}" }
 		else
+			posts = posts.map (post) -> cleanUpPost(post)
 			res.json {
 				posts:posts
 			}
