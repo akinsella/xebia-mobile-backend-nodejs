@@ -86,7 +86,7 @@ synchronizeWordpressDetailedPost = (postId, callback) ->
 					detailedPost = response.post
 					postTransformer.transformPost detailedPost, (err, detailedPost) ->
 						if err
-							callback err, detailedPost.id
+							callback err, response.post.id
 						else
 							detailedPostEntry = new DetailedPost(detailedPost)
 							detailedPostEntry.save (err) ->

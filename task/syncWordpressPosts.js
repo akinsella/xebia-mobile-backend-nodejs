@@ -125,7 +125,7 @@ synchronizeWordpressDetailedPost = function(postId, callback) {
           return postTransformer.transformPost(detailedPost, function(err, detailedPost) {
             var detailedPostEntry;
             if (err) {
-              return callback(err, detailedPost.id);
+              return callback(err, response.post.id);
             } else {
               detailedPostEntry = new DetailedPost(detailedPost);
               return detailedPostEntry.save(function(err) {
