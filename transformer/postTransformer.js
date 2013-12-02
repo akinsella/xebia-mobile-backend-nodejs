@@ -23,10 +23,7 @@ Array.prototype.removeAt = function(index) {
 };
 
 transformPost = function(post, cb) {
-  var attachment, author, category, comment, tag, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref, _ref1, _ref2, _ref3, _ref4;
-  post = post.toObject();
-  delete post.__v;
-  delete post._id;
+  var author, category, comment, tag, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3;
   post.titlePlain = post.title_plain;
   delete post.title_plain;
   post.commentCount = post.comment_count;
@@ -38,16 +35,12 @@ transformPost = function(post, cb) {
     category = _ref[_i];
     category.postCount = category.post_count;
     delete category.post_count;
-    delete category.__v;
-    delete category._id;
   }
   _ref1 = post.tags;
   for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
     tag = _ref1[_j];
     tag.postCount = tag.post_count;
     delete tag.post_count;
-    delete tag.__v;
-    delete tag._id;
   }
   post.authors = [post.author];
   delete post.author;
@@ -58,21 +51,11 @@ transformPost = function(post, cb) {
     delete author.firstname;
     author.lastname = author.last_name;
     delete author.last_name;
-    delete author.__v;
-    delete author._id;
   }
   _ref3 = post.comments;
   for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
     comment = _ref3[_l];
     delete comment.parent;
-    delete comment.__v;
-    delete comment._id;
-  }
-  _ref4 = post.attachments;
-  for (_m = 0, _len4 = _ref4.length; _m < _len4; _m++) {
-    attachment = _ref4[_m];
-    delete attachment.__v;
-    delete attachment._id;
   }
   return transformPostContent(post, cb);
 };

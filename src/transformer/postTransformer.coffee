@@ -15,9 +15,6 @@ Array::removeAt = (index) ->
 
 
 transformPost = (post, cb) ->
-	post = post.toObject()
-	delete post.__v
-	delete post._id
 	post.titlePlain = post.title_plain
 	delete post.title_plain
 	post.commentCount = post.comment_count
@@ -27,13 +24,9 @@ transformPost = (post, cb) ->
 	for category in post.categories
 		category.postCount = category.post_count
 		delete category.post_count
-		delete category.__v
-		delete category._id
 	for tag in post.tags
 		tag.postCount = tag.post_count
 		delete tag.post_count
-		delete tag.__v
-		delete tag._id
 	post.authors = [post.author]
 	delete post.author
 	for author in post.authors
@@ -41,15 +34,9 @@ transformPost = (post, cb) ->
 		delete author.firstname
 		author.lastname = author.last_name
 		delete author.last_name
-		delete author.__v
-		delete author._id
 	for comment in post.comments
 		delete comment.parent
-		delete comment.__v
-		delete comment._id
-	for attachment in post.attachments
-		delete attachment.__v
-		delete attachment._id
+#	for attachment in post.attachments
 	transformPostContent(post, cb)
 
 
