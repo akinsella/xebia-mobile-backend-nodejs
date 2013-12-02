@@ -69,16 +69,24 @@ processAuthorInformations = (post) ->
 
 	if matches
 		for match in matches
-			components = (/\[author.*twitter="(.*)".*username="(.*)".*urls="(.*)".*gravatar="(.*)".*lastname="(.*)".*firstname="(.*)".*\]/).exec(match)
-			console.log "Components: #{components}"
-			twitter = components[1]
-			username = components[2]
-	#		urls = components[3]
-			gravatar = components[4]
-			lastname = components[5]
-			firstname = components[6]
+			try
+				components = (/\[author.*twitter="(.*)".*username="(.*)".*urls="(.*)".*gravatar="(.*)".*lastname="(.*)".*firstname="(.*)".*\]/).exec(match)
+				console.log "Components: #{components}"
+				twitter = components[1]
+				username = components[2]
+				#		urls = components[3]
+				gravatar = components[4]
+				lastname = components[5]
+				firstname = components[6]
 
-			post.content = post.content.replace(match, "<author username=\"#{username}\" firstname=\"#{firstname}\" lastname=\"#{lastname}\" gravatar=\"#{gravatar}\" twitter=\"#{twitter}\" />")
+				post.content = post.content.replace(match, "<author username=\"#{username}\" firstname=\"#{firstname}\" lastname=\"#{lastname}\" gravatar=\"#{gravatar}\" twitter=\"#{twitter}\" />")
+			catch e
+				console.log("entering catch block")
+				console.log(e)
+				console.log("leaving catch block")
+			finally
+				console.log("entering and leaving the finally block")
+
 
 processLanguageInformations = (post) ->
 	languages = [ "java", "xml", "javascript", "cpp", "scala", "default" ]

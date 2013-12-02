@@ -87,20 +87,29 @@ transformPostContent = function(post, cb) {
 };
 
 processAuthorInformations = function(post) {
-  var components, firstname, gravatar, lastname, match, matches, twitter, username, _i, _len, _results;
+  var components, e, firstname, gravatar, lastname, match, matches, twitter, username, _i, _len, _results;
   matches = post.content.match(/\[author.*\]/g);
   if (matches) {
     _results = [];
     for (_i = 0, _len = matches.length; _i < _len; _i++) {
       match = matches[_i];
-      components = /\[author.*twitter="(.*)".*username="(.*)".*urls="(.*)".*gravatar="(.*)".*lastname="(.*)".*firstname="(.*)".*\]/.exec(match);
-      console.log("Components: " + components);
-      twitter = components[1];
-      username = components[2];
-      gravatar = components[4];
-      lastname = components[5];
-      firstname = components[6];
-      _results.push(post.content = post.content.replace(match, "<author username=\"" + username + "\" firstname=\"" + firstname + "\" lastname=\"" + lastname + "\" gravatar=\"" + gravatar + "\" twitter=\"" + twitter + "\" />"));
+      try {
+        components = /\[author.*twitter="(.*)".*username="(.*)".*urls="(.*)".*gravatar="(.*)".*lastname="(.*)".*firstname="(.*)".*\]/.exec(match);
+        console.log("Components: " + components);
+        twitter = components[1];
+        username = components[2];
+        gravatar = components[4];
+        lastname = components[5];
+        firstname = components[6];
+        _results.push(post.content = post.content.replace(match, "<author username=\"" + username + "\" firstname=\"" + firstname + "\" lastname=\"" + lastname + "\" gravatar=\"" + gravatar + "\" twitter=\"" + twitter + "\" />"));
+      } catch (_error) {
+        e = _error;
+        console.log("entering catch block");
+        console.log(e);
+        _results.push(console.log("leaving catch block"));
+      } finally {
+        console.log("entering and leaving the finally block");
+      }
     }
     return _results;
   }
