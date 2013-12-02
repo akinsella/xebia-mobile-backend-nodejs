@@ -30,9 +30,9 @@ transformPost = (post, cb) ->
 	post.authors = [post.author]
 	delete post.author
 	for author in post.authors
-		author.firstname = author.first_name
+		author.firstName = author.first_name
 		delete author.firstname
-		author.lastname = author.last_name
+		author.lastName = author.last_name
 		delete author.last_name
 	for comment in post.comments
 		delete comment.parent

@@ -30,7 +30,7 @@ Post = new mongo.Schema({
     "default": '',
     trim: true
   },
-  title_plain: {
+  titlePlain: {
     type: String,
     "default": '',
     trim: true
@@ -60,8 +60,8 @@ Post = new mongo.Schema({
     "default": '',
     trim: true
   },
-  comment_count: Number,
-  comment_status: {
+  commentCount: Number,
+  commentStatus: {
     type: String,
     "default": '',
     trim: true
@@ -85,7 +85,7 @@ Post = new mongo.Schema({
         "default": '',
         trim: true
       },
-      post_count: Number
+      postCount: Number
     }
   ],
   tags: [
@@ -106,7 +106,7 @@ Post = new mongo.Schema({
         "default": '',
         trim: true
       },
-      post_count: Number
+      postCount: Number
     }
   ],
   authors: [
@@ -122,12 +122,12 @@ Post = new mongo.Schema({
         "default": '',
         trim: true
       },
-      first_name: {
+      firstName: {
         type: String,
         "default": '',
         trim: true
       },
-      last_name: {
+      lastName: {
         type: String,
         "default": '',
         trim: true
@@ -204,7 +204,7 @@ Post = new mongo.Schema({
         trim: true
       },
       parent: Number,
-      mime_type: {
+      mimeType: {
         type: String,
         "default": '',
         trim: true

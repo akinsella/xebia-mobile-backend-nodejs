@@ -88,9 +88,9 @@ synchronizeWordpressAuthor = (author, callback) ->
 		if err
 			callback err
 		else if !authorFound
-			author.firstname = author.first_name
+			author.firstName = author.first_name
 			delete author.first_name
-			author.lastname = author.last_name
+			author.lastName = author.last_name
 			delete author.last_name
 			authorEntry = new Author(author)
 			authorEntry.save (err) ->

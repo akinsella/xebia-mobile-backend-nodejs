@@ -47,9 +47,9 @@ transformPost = function(post, cb) {
   _ref2 = post.authors;
   for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
     author = _ref2[_k];
-    author.firstname = author.first_name;
+    author.firstName = author.first_name;
     delete author.firstname;
-    author.lastname = author.last_name;
+    author.lastName = author.last_name;
     delete author.last_name;
   }
   _ref3 = post.comments;
