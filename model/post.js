@@ -40,6 +40,11 @@ Post = new mongo.Schema({
     "default": '',
     trim: true
   },
+  structuredContent: {
+    type: String,
+    "default": '',
+    trim: true
+  },
   excerpt: {
     type: String,
     "default": '',
@@ -104,44 +109,46 @@ Post = new mongo.Schema({
       post_count: Number
     }
   ],
-  author: {
-    id: Number,
-    slug: {
-      type: String,
-      "default": '',
-      trim: true
-    },
-    name: {
-      type: String,
-      "default": '',
-      trim: true
-    },
-    first_name: {
-      type: String,
-      "default": '',
-      trim: true
-    },
-    last_name: {
-      type: String,
-      "default": '',
-      trim: true
-    },
-    nickname: {
-      type: String,
-      "default": '',
-      trim: true
-    },
-    url: {
-      type: String,
-      "default": '',
-      trim: true
-    },
-    description: {
-      type: String,
-      "default": '',
-      trim: true
+  authors: [
+    {
+      id: Number,
+      slug: {
+        type: String,
+        "default": '',
+        trim: true
+      },
+      name: {
+        type: String,
+        "default": '',
+        trim: true
+      },
+      first_name: {
+        type: String,
+        "default": '',
+        trim: true
+      },
+      last_name: {
+        type: String,
+        "default": '',
+        trim: true
+      },
+      nickname: {
+        type: String,
+        "default": '',
+        trim: true
+      },
+      url: {
+        type: String,
+        "default": '',
+        trim: true
+      },
+      description: {
+        type: String,
+        "default": '',
+        trim: true
+      }
     }
-  },
+  ],
   comments: [
     {
       id: Number,

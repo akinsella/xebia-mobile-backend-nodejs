@@ -30,12 +30,17 @@ DetailedPost = new mongo.Schema({
     "default": '',
     trim: true
   },
-  title_plain: {
+  titlePlain: {
     type: String,
     "default": '',
     trim: true
   },
   content: {
+    type: String,
+    "default": '',
+    trim: true
+  },
+  structuredContent: {
     type: String,
     "default": '',
     trim: true
@@ -55,8 +60,8 @@ DetailedPost = new mongo.Schema({
     "default": '',
     trim: true
   },
-  comment_count: Number,
-  comment_status: {
+  commentCount: Number,
+  commentStatus: {
     type: String,
     "default": '',
     trim: true
@@ -80,7 +85,7 @@ DetailedPost = new mongo.Schema({
         "default": '',
         trim: true
       },
-      post_count: Number
+      postCount: Number
     }
   ],
   tags: [
@@ -101,47 +106,49 @@ DetailedPost = new mongo.Schema({
         "default": '',
         trim: true
       },
-      post_count: Number
+      postCount: Number
     }
   ],
-  author: {
-    id: Number,
-    slug: {
-      type: String,
-      "default": '',
-      trim: true
-    },
-    name: {
-      type: String,
-      "default": '',
-      trim: true
-    },
-    first_name: {
-      type: String,
-      "default": '',
-      trim: true
-    },
-    last_name: {
-      type: String,
-      "default": '',
-      trim: true
-    },
-    nickname: {
-      type: String,
-      "default": '',
-      trim: true
-    },
-    url: {
-      type: String,
-      "default": '',
-      trim: true
-    },
-    description: {
-      type: String,
-      "default": '',
-      trim: true
+  authors: [
+    {
+      id: Number,
+      slug: {
+        type: String,
+        "default": '',
+        trim: true
+      },
+      name: {
+        type: String,
+        "default": '',
+        trim: true
+      },
+      firstName: {
+        type: String,
+        "default": '',
+        trim: true
+      },
+      lastName: {
+        type: String,
+        "default": '',
+        trim: true
+      },
+      nickname: {
+        type: String,
+        "default": '',
+        trim: true
+      },
+      url: {
+        type: String,
+        "default": '',
+        trim: true
+      },
+      description: {
+        type: String,
+        "default": '',
+        trim: true
+      }
     }
-  },
+  ],
   comments: [
     {
       id: Number,
@@ -197,7 +204,7 @@ DetailedPost = new mongo.Schema({
         trim: true
       },
       parent: Number,
-      mime_type: {
+      mimeType: {
         type: String,
         "default": '',
         trim: true

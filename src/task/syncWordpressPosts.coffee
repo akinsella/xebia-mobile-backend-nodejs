@@ -15,6 +15,7 @@ Category = require "../model/category"
 Author = require "../model/author"
 Post = require "../model/post"
 DetailedPost = require "../model/detailedPost"
+postTransformer = require "../transformer/postTransformer"
 
 synchronize = () ->
 	callback = (err, results) ->
@@ -55,13 +56,17 @@ synchronizeWordpressPost = (post, callback) ->
 	console.log "Checking for post with id: '#{post.id}'"
 	Post.findOne { id: post.id }, (err, foundPost) ->
 		if err
-			callback err
+			callback err, post.id
 		else if !foundPost
-			postEntry = new Post(post)
-			postEntry.save (err) ->
-				callback err, postEntry.id
-				if !err
-					console.log "Saved detailed post with id: '#{postEntry.id}'"
+			postTransformer.transformPost post, (err, post) ->
+				if err
+					callback err, post.id
+				else
+					postEntry = new Post(post)
+					postEntry.save (err) ->
+						callback err, postEntry.id
+						if !err
+							console.log "Saved detailed post with id: '#{postEntry.id}'"
 		else
 			callback err, foundPost.id
 
@@ -74,18 +79,22 @@ synchronizeWordpressDetailedPost = (postId, callback) ->
 		else if !foundDetailedPost
 			request.get {url: "http://blog.xebia.fr/wp-json-api/get_post?post_id=#{postId}", json: true}, (error, data, response) ->
 				if err
-					callback err
+					callback err, postId
 				else if !response
 					callback new Error("No detailed post with id: #{postId}")
 				else
 					detailedPost = response.post
-					detailedPostEntry = new DetailedPost(detailedPost)
-					detailedPostEntry.save (err) ->
-						callback err, detailedPostEntry.id
-						if !err
-							console.log "Saved detailed post with id: '#{detailedPostEntry.id}'"
-							apns.pushToAll "New blog detailed post: #{detailedPostEntry.title}", () ->
-								console.log "Pushed Notification for blog post with title: '#{detailedPostEntry.title}'"
+					postTransformer.transformPost detailedPost, (err, detailedPost) ->
+						if err
+							callback err, detailedPost.id
+						else
+							detailedPostEntry = new DetailedPost(detailedPost)
+							detailedPostEntry.save (err) ->
+								callback err, detailedPostEntry.id
+								if !err
+									console.log "Saved detailed post with id: '#{detailedPostEntry.id}'"
+									apns.pushToAll "New blog detailed post: #{detailedPostEntry.title}", () ->
+										console.log "Pushed Notification for blog post with title: '#{detailedPostEntry.title}'"
 		else
 			callback err, foundDetailedPost.id
 

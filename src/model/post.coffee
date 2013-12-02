@@ -9,6 +9,7 @@ Post = new mongo.Schema(
 	title: {type: String, "default": '', trim: true},
 	title_plain: {type: String, "default": '', trim: true},
 	content: {type: String, "default": '', trim: true},
+	structuredContent: {type: String, "default": '', trim: true},
 	excerpt: {type: String, "default": '', trim: true},
 	date: {type: String, "default": '', trim: true},
 	modified: {type: String, "default": '', trim: true},
@@ -29,7 +30,7 @@ Post = new mongo.Schema(
 		description: {type: String, "default": '', trim: true},
 		post_count: Number
 	}],
-	author:{
+	authors:[{
 		id: Number,
 		slug: {type: String, "default": '', trim: true},
 		name: {type: String, "default": '', trim: true},
@@ -38,7 +39,7 @@ Post = new mongo.Schema(
 		nickname: {type: String, "default": '', trim: true},
 		url: {type: String, "default": '', trim: true},
 		description: {type: String, "default": '', trim: true}
-	},
+	}],
 	comments: [{
 		id: Number,
 		name: {type: String, "default": '', trim: true},
