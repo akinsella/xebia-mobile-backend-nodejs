@@ -120,6 +120,8 @@ app.get("/api/v" + config.apiVersion + "/videos", vimeo.videos);
 
 app.get("/api/v" + config.apiVersion + "/videos/:id", vimeo.video);
 
+app.get("/api/v" + config.apiVersion + "/videos/:id/urls", vimeo.videoUrls);
+
 app.get("/api/v" + config.apiVersion + "/cards", card.cards);
 
 app.get("/api/v" + config.apiVersion + "/cards/categories", card.categories);
