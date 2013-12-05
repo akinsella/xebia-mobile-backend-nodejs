@@ -9,6 +9,8 @@ create = (req, res) ->
 	device = new Device(
 		udid: req.body.udid
 		token: req.body.token
+		osType: req.body.osType
+		osVersion: req.body.osVersion
 	)
 
 	device.save (err) ->
@@ -29,6 +31,8 @@ register = (req, res) ->
 			device = new Device(
 				udid: req.body.udid
 				token: req.body.token
+				osType: req.body.osType
+				osVersion: req.body.osVersion
 			)
 
 			device.save (err) ->

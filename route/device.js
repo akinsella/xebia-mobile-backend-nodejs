@@ -13,7 +13,9 @@ create = function(req, res) {
   var device;
   device = new Device({
     udid: req.body.udid,
-    token: req.body.token
+    token: req.body.token,
+    osType: req.body.osType,
+    osVersion: req.body.osVersion
   });
   return device.save(function(err) {
     if (err) {
@@ -48,7 +50,9 @@ register = function(req, res) {
     } else {
       device = new Device({
         udid: req.body.udid,
-        token: req.body.token
+        token: req.body.token,
+        osType: req.body.osType,
+        osVersion: req.body.osVersion
       });
       return device.save(function(err) {
         if (err) {

@@ -17,6 +17,16 @@ Device = new mongo.Schema({
     "default": '',
     trim: true
   },
+  osType: {
+    type: String,
+    "default": '',
+    trim: true
+  },
+  osVersion: {
+    type: String,
+    "default": '',
+    trim: true
+  },
   createAt: {
     type: Date,
     "default": Date.now
