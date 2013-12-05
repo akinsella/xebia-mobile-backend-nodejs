@@ -49,7 +49,7 @@ if (!config) {
       }
     },
     apns: {
-      enabled: false
+      enabled: true
     },
     mongo: {
       dbname: process.env.MONGO_DBNAME,

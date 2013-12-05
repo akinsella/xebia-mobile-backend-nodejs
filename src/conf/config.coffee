@@ -43,7 +43,7 @@ if !config
 				callbackUrl: process.env.AUTH_GOOGLE_CALLBACK_URL
 				realm: process.env.AUTH_GOOGLE_REALM
 		apns:
-			enabled: false
+			enabled: true
 		mongo:
 			dbname: process.env.MONGO_DBNAME
 			hostname: process.env.MONGO_HOSTNAME
