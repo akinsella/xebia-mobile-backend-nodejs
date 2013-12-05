@@ -14,10 +14,10 @@ create = function(req, res) {
   device = new Device({
     udid: req.body.udid,
     token: req.body.token,
-    osType: req.body.osType,
-    osVersion: req.body.osVersion
+    deviceModel: req.body.deviceModel,
+    systemVersion: req.body.systemVersion
   });
-  return device.save(function(err) {
+  return device.save(function(err, device) {
     if (err) {
       return utils.responseData(500, "Could not save device", req.body, {
         req: req,
@@ -33,28 +33,46 @@ create = function(req, res) {
 };
 
 register = function(req, res) {
-  return Device.findOne({
+  var query;
+  query = {
     udid: req.body.udid,
     token: req.body.token
-  }, function(err, device) {
+  };
+  return Device.findOne(query, function(err, device) {
     if (err) {
       return utils.responseData(500, "Could not check device is already registered", void 0, {
         req: req,
         res: res
       });
     } else if (device) {
-      return utils.responseData(200, "Device is already registered", mapDevice(device), {
-        req: req,
-        res: res
+      device.deviceModel = req.body.deviceModel;
+      device.systemVersion = req.body.systemVersion;
+      return Device.update(query, {
+        deviceModel: req.body.deviceModel,
+        systemVersion: req.body.systemVersion
+      }, {
+        upsert: true
+      }, function(err, numberAffected, raw) {
+        if (err) {
+          return utils.responseData(500, "Could not check device is already registered", void 0, {
+            req: req,
+            res: res
+          });
+        } else {
+          return utils.responseData(200, "Device already registered was updated", mapDevice(device), {
+            req: req,
+            res: res
+          });
+        }
       });
     } else {
       device = new Device({
         udid: req.body.udid,
         token: req.body.token,
-        osType: req.body.osType,
-        osVersion: req.body.osVersion
+        deviceModel: req.body.deviceModel,
+        systemVersion: req.body.systemVersion
       });
-      return device.save(function(err) {
+      return device.save(function(err, device) {
         if (err) {
           return utils.responseData(500, "Could not save device", req.body, {
             req: req,
@@ -132,7 +150,9 @@ mapDevice = function(device) {
   return {
     id: device.id,
     token: device.token,
-    udid: device.udid
+    udid: device.udid,
+    deviceModel: device.deviceModel,
+    systemVersion: device.systemVersion
   };
 };
 

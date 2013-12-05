@@ -4,38 +4,43 @@ apn = require 'apn'
 Device = require "../model/device"
 
 # To be refactored
-
 create = (req, res) ->
 	device = new Device(
 		udid: req.body.udid
 		token: req.body.token
-		osType: req.body.osType
-		osVersion: req.body.osVersion
+		deviceModel: req.body.deviceModel
+		systemVersion: req.body.systemVersion
 	)
 
-	device.save (err) ->
+	device.save (err, device) ->
 		if (err)
 			utils.responseData(500, "Could not save device", req.body, { req:req, res:res })
 		else
 			utils.responseData(201, "Created", mapDevice(device), { req:req, res:res })
 
 register = (req, res) ->
-
-	Device.findOne { udid: req.body.udid, token: req.body.token }, (err, device) ->
-
+	query =  { udid: req.body.udid, token: req.body.token }
+	Device.findOne query, (err, device) ->
 		if err
 			utils.responseData(500, "Could not check device is already registered", undefined, { req:req, res:res })
 		else if device
-			utils.responseData(200, "Device is already registered", mapDevice(device), { req:req, res:res })
+			device.deviceModel = req.body.deviceModel
+			device.systemVersion = req.body.systemVersion
+#			device.save (err, device) ->
+			Device.update query, { deviceModel: req.body.deviceModel, systemVersion: req.body.systemVersion }, { upsert: true }, (err, numberAffected, raw) ->
+				if (err)
+					utils.responseData(500, "Could not check device is already registered", undefined, { req:req, res:res })
+				else
+					utils.responseData(200, "Device already registered was updated", mapDevice(device), { req:req, res:res })
 		else
 			device = new Device(
 				udid: req.body.udid
 				token: req.body.token
-				osType: req.body.osType
-				osVersion: req.body.osVersion
+				deviceModel: req.body.deviceModel
+				systemVersion: req.body.systemVersion
 			)
 
-			device.save (err) ->
+			device.save (err, device) ->
 				if err
 					utils.responseData(500, "Could not save device", req.body, { req:req, res:res })
 				else
@@ -68,6 +73,8 @@ mapDevice = (device) ->
 	id: device.id
 	token: device.token
 	udid: device.udid
+	deviceModel: device.deviceModel
+	systemVersion: device.systemVersion
 
 module.exports =
 	register : register

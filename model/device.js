@@ -17,12 +17,12 @@ Device = new mongo.Schema({
     "default": '',
     trim: true
   },
-  osType: {
+  deviceModel: {
     type: String,
     "default": '',
     trim: true
   },
-  osVersion: {
+  systemVersion: {
     type: String,
     "default": '',
     trim: true

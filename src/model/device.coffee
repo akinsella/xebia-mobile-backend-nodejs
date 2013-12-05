@@ -5,8 +5,8 @@ Device = new mongo.Schema(
   id: Number,
   udid: {type : String, "default" : '', trim : true},
   token: {type : String, "default" : '', trim : true},
-  osType: {type : String, "default" : '', trim : true},
-  osVersion: {type : String, "default" : '', trim : true},
+  deviceModel: {type : String, "default" : '', trim : true},
+  systemVersion: {type : String, "default" : '', trim : true},
   createAt: { type : Date, "default" : Date.now },
   lastModified: { type : Date, "default" : Date.now }
 )
