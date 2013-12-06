@@ -36,6 +36,7 @@ utils = require './lib/utils'
 
 security = require './lib/security'
 
+api = require './route/api'
 auth = require './route/auth'
 client = require './route/client'
 user = require './route/user'
@@ -130,6 +131,8 @@ app.configure 'development', () ->
 
 app.configure 'production', () ->
 	app.use express.errorHandler()
+
+app.get "/api/info", api.informations
 
 #app.get "/users/me", passport.authenticate("bearer", session: false), user.me
 app.get "/users/me", security.ensureAuthenticated, user.me
