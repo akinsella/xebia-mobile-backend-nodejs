@@ -89,7 +89,7 @@ processAuthorInformations = (post) ->
 
 
 processLanguageInformations = (post) ->
-	languages = [ "java", "xml", "javascript", "cpp", "scala", "default" ]
+	languages = [ "java", "xml", "javascript", "cpp", "scala", "bash", "default" ]
 	for language in languages
 #		post.content = post.content.replace(/\[(\w+)[^\]]*\](.*?)\[\/\1\]/g, '$2')
 		startTag = "\\[#{language}\\]"
