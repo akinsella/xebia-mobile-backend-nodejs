@@ -67,8 +67,8 @@ synchronizeVideo = (video, callback) ->
 			videoEntry.save (err) ->
 				callback err, videoEntry.id
 				if !err
-					apns.pushToAll "New video with id: #{videoEntry.id}", () ->
-						console.log "Pushed notification for video with id: '#{videoEntry.id}'"
+					apns.pushToAll "#{videoEntry.title}", () ->
+						console.log "Pushed notification for video with id: '#{videoEntry.id}' and title: '#{videoEntry.title}'"
 		else
 			callback err, foundVideo.id
 

@@ -1,7 +1,6 @@
 start = new Date()
 
 config = require './conf/config'
-Apns = require './lib/apns'
 vimeo = require './route/sync/vimeo'
 sync = require './route/sync'
 

@@ -69,8 +69,8 @@ synchronizeEvent = function(event, callback) {
       eventEntry = new Event(event);
       return eventEntry.save(function(err) {
         callback(err, eventEntry.id);
-        return apns.pushToAll("New event with id: " + eventEntry.id, function() {
-          return console.log("Pushed notification for new event wth id: " + eventEntry.id);
+        return apns.pushToAll("" + eventEntry.title, function() {
+          return console.log("Pushed notification for new event wth id: '" + eventEntry.id + "' and title: '" + eventEntry.title + "'");
         });
       });
     } else {

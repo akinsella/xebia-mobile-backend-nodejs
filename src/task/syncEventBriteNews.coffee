@@ -6,7 +6,6 @@ db = require "../db"
 moment = require "moment"
 config = require "../conf/config"
 request = require "request"
-apns = require "../lib/apns"
 
 synchronize = () ->
 	callback = (err, news) ->
@@ -74,8 +73,6 @@ synchronizeEventNews = (event, callback) ->
 
 			newsEntry.save (err) ->
 				callback err, newsEntry.id
-				apns.pushToAll "Nouvel événement: #{newsEntry.title}" , () ->
-					console.log "Pushed notification for new event: #{newsEntry.title}"
 
 		else
 			callback err, news.id

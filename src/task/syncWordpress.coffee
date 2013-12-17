@@ -7,7 +7,6 @@ config = require "../conf/config"
 
 utils = require '../lib/utils'
 db = require "../db"
-apns = require "../lib/apns"
 
 News = require "../model/news"
 Tag = require "../model/tag"

@@ -6,7 +6,6 @@ db = require "../db"
 moment = require "moment"
 config = require "../conf/config"
 request = require "request"
-apns = require "../lib/apns"
 
 synchronize = () ->
 	callback = (err, news) ->

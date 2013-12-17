@@ -132,8 +132,8 @@ synchronizeWordpressDetailedPost = function(postId, callback) {
                 callback(err, detailedPostEntry.id);
                 if (!err) {
                   console.log("Saved detailed post with id: '" + detailedPostEntry.id + "'");
-                  return apns.pushToAll("New blog detailed post: " + detailedPostEntry.title, function() {
-                    return console.log("Pushed Notification for blog post with title: '" + detailedPostEntry.title + "'");
+                  return apns.pushToAll("" + detailedPostEntry.title, function() {
+                    return console.log("Pushed Notification for blog post with id: '" + detailedPostEntry.id + "' and title: '" + detailedPostEntry.title + "'");
                   });
                 }
               });

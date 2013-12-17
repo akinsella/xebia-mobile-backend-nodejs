@@ -56,8 +56,8 @@ synchronizeEvent = (event, callback) ->
 
 			eventEntry.save (err) ->
 				callback err, eventEntry.id
-				apns.pushToAll "New event with id: #{eventEntry.id}" , () ->
-					console.log "Pushed notification for new event wth id: #{eventEntry.id}"
+				apns.pushToAll "#{eventEntry.title}" , () ->
+					console.log "Pushed notification for new event wth id: '#{eventEntry.id}' and title: '#{eventEntry.title}'"
 
 		else
 			callback err, foundEvent.id

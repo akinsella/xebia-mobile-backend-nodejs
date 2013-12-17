@@ -6,7 +6,6 @@ db = require "../db"
 moment = require "moment"
 config = require "../conf/config"
 request = require "request"
-apns = require "../lib/apns"
 
 OAuth = require 'oauth'
 Cache = require '../lib/cache'

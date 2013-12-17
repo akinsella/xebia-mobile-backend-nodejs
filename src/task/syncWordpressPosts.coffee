@@ -93,8 +93,8 @@ synchronizeWordpressDetailedPost = (postId, callback) ->
 								callback err, detailedPostEntry.id
 								if !err
 									console.log "Saved detailed post with id: '#{detailedPostEntry.id}'"
-									apns.pushToAll "New blog detailed post: #{detailedPostEntry.title}", () ->
-										console.log "Pushed Notification for blog post with title: '#{detailedPostEntry.title}'"
+									apns.pushToAll "#{detailedPostEntry.title}", () ->
+										console.log "Pushed Notification for blog post with id: '#{detailedPostEntry.id}' and title: '#{detailedPostEntry.title}'"
 		else
 			callback err, foundDetailedPost.id
 

@@ -82,8 +82,8 @@ synchronizeVideo = function(video, callback) {
       return videoEntry.save(function(err) {
         callback(err, videoEntry.id);
         if (!err) {
-          return apns.pushToAll("New video with id: " + videoEntry.id, function() {
-            return console.log("Pushed notification for video with id: '" + videoEntry.id + "'");
+          return apns.pushToAll("" + videoEntry.title, function() {
+            return console.log("Pushed notification for video with id: '" + videoEntry.id + "' and title: '" + videoEntry.title + "'");
           });
         }
       });
