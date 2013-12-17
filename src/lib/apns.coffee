@@ -12,7 +12,7 @@ if config.apns.enabled
 	agent
 		.set('cert file', "#{__dirname}/../certs/xebia-apns-cert.pem")
 		.set('key file', "#{__dirname}/../certs/xebia-apns-key.pem")
-		.enable('sandbox')
+#		.enable('sandbox')
 		.set('expires', '1d')
 		.set('reconnect delay', '1s')
 		.set('cache ttl', '30m')
