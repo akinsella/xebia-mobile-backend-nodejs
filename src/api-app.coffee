@@ -104,6 +104,7 @@ app.get "/api/v#{config.apiVersion}/cards/:id", card.cardById
 
 app.get "/api/v#{config.apiVersion}/conference/:conferenceId/experienceLevels", conference.experienceLevels
 app.get "/api/v#{config.apiVersion}/conference/:conferenceId/presentationTypes", conference.presentationTypes
+app.get "/api/v#{config.apiVersion}/conference/:conferenceId/tracks", conference.tracks
 
 #app.get '/dialog/authorize', oauth2.authorization
 #app.post '/dialog/authorize/decision', oauth2.decision

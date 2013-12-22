@@ -8,6 +8,20 @@ Cache = require '../lib/cache'
 utils = require '../lib/utils'
 PresentationType = require '../model/presentationType'
 ExperienceLevel = require '../model/experienceLevel'
+Track = require '../model/track'
+
+tracks = (req, res) ->
+	conferenceId = req.params.conferenceId
+	Track.find({ conferenceId: conferenceId }).sort("-name").exec (err, tracks) ->
+		if err
+			res.json 500, { message: "Server error: #{err.message}" }
+		else
+			tracks = tracks.map (track) ->
+				track = track.toObject()
+				delete track._id
+				delete track.__v
+				track
+			res.json tracks
 
 presentationTypes = (req, res) ->
 	conferenceId = req.params.conferenceId
@@ -38,3 +52,4 @@ experienceLevels = (req, res) ->
 module.exports =
 	presentationTypes: presentationTypes
 	experienceLevels: experienceLevels
+	tracks: tracks

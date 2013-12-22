@@ -1,6 +1,9 @@
 request = require 'request'
 moment = require 'moment'
 cache = require './cache'
+_ = require('underscore')._
+HtmlEntities = require('html-entities');
+html5Entities = new HtmlEntities.Html5Entities()
 
 removeParameters = (url, parameters) ->
 	for parameter in parameters
@@ -237,13 +240,20 @@ stopWatchCallbak = (_callback) ->
 		_callback err, data
 
 isSame = (obj1, obj2, fields) ->
-	for field in fields
+	for field, i in fields
 		if obj1[field] != obj2[field]
 			return false
 	true
 
 isNotSame = (obj1, obj2, fields) ->
-	!isSame
+	!isSame(obj1, obj2, fields)
+
+htmlToPlainText = (html) ->
+	content = html.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '')
+	content = content.replace(/<!--(.*?)-->/g, '')
+	content = content.replace(/\n\s*\n/g, '\n')
+	content = html5Entities.decode(content)
+	content = content.trim()
 
 module.exports =
 	getData: getData
@@ -260,3 +270,4 @@ module.exports =
 	stopWatchCallbak: stopWatchCallbak
 	isSame: isSame
 	isNotSame: isNotSame
+	htmlToPlainText: htmlToPlainText

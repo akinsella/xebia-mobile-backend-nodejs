@@ -15,6 +15,11 @@ Track = new mongo.Schema({
     type: String,
     "default": '',
     trim: true
+  },
+  descriptionPlainText: {
+    type: String,
+    "default": '',
+    trim: true
   }
 });
 

@@ -10,6 +10,7 @@ db = require "../db"
 
 ExperienceLevel = require "../model/experienceLevel"
 PresentationType = require "../model/presentationType"
+Track = require "../model/track"
 
 eventId = 10
 
@@ -27,7 +28,8 @@ synchronize = () ->
 
 	async.parallel [
 		processDevoxxExperienceLevels,
-		processDevoxxPresentationTypes
+		processDevoxxPresentationTypes,
+		processDevoxxTracks
 	], callback
 
 processDevoxxExperienceLevels = (callback) ->
@@ -41,14 +43,26 @@ processDevoxxExperienceLevels = (callback) ->
             console.log "Synchronized #{results.length} Experience Levels"
 
 processDevoxxPresentationTypes = (callback) ->
-    console.log "Start synchronizing Devoxx Presentation Types ..."
-    request.get {url: "https://cfp.devoxx.com/rest/v1/events/#{eventId}/presentationtypes", json: true}, (error, data, response) ->
-	    presentationTypes = _(response).sortBy((presentationType) ->
-		    presentationType.name.toUpperCase())
-	    presentationTypes.forEach (presentationType) ->
-		    presentationType.conferenceId = eventId
-	    async.map presentationTypes, synchronizeDevoxxPresentationType, (err, results) ->
-            console.log "Synchronized #{results.length} Presentation Types"
+	console.log "Start synchronizing Devoxx Presentation Types ..."
+	request.get {url: "https://cfp.devoxx.com/rest/v1/events/#{eventId}/presentationtypes", json: true}, (error, data, response) ->
+		presentationTypes = _(response).sortBy((presentationType) ->
+			presentationType.name.toUpperCase())
+		presentationTypes.forEach (presentationType) ->
+			presentationType.conferenceId = eventId
+			presentationType.descriptionPlainText = utils.htmlToPlainText(presentationType.description)
+		async.map presentationTypes, synchronizeDevoxxPresentationType, (err, results) ->
+			console.log "Synchronized #{results.length} Presentation Types"
+
+processDevoxxTracks = (callback) ->
+	console.log "Start synchronizing Devoxx Presentation Types ..."
+	request.get {url: "https://cfp.devoxx.com/rest/v1/events/#{eventId}/tracks", json: true}, (error, data, response) ->
+		tracks = _(response).sortBy((track) ->
+			track.name.toUpperCase())
+		tracks.forEach (track) ->
+			track.conferenceId = eventId
+			track.descriptionPlainText = utils.htmlToPlainText(track.description)
+		async.map tracks, synchronizeDevoxxTrack, (err, results) ->
+			console.log "Synchronized #{results.length} Tracks"
 
 synchronizeDevoxxExperienceLevel = (experienceLevel, callback) ->
 	query = { name: experienceLevel.name, conferenceId: experienceLevel.conferenceId }
@@ -68,8 +82,11 @@ synchronizeDevoxxPresentationType = (presentationType, callback) ->
 		if err
 			callback err
 		else if presentationTypeFound
-			if utils.isNotSame(presentationType, presentationTypeFound, ["name", "description"])
-				updatedData = { name: presentationType.name, description: presentationType.description }
+			if utils.isNotSame(presentationType, presentationTypeFound, ["name", "description", "descriptionPlainText"])
+				updatedData =
+					name: presentationType.name
+					description: presentationType.description
+					descriptionPlainText: presentationType.descriptionPlainText
 				PresentationType.update query, updatedData, (err, numberAffected, raw) ->
 					callback err, presentationTypeFound?.id
 			else
@@ -78,6 +95,26 @@ synchronizeDevoxxPresentationType = (presentationType, callback) ->
 			new PresentationType(presentationType).save (err) ->
 				console.log("New experience level synchronized: #{presentationType.name}")
 				callback err, presentationType.id
+
+synchronizeDevoxxTrack = (track, callback) ->
+	query = { id: track.id, conferenceId: track.conferenceId }
+	Track.findOne query, (err, trackFound) ->
+		if err
+			callback err
+		else if trackFound
+			if utils.isNotSame(track, trackFound, ["name", "description", "descriptionPlainText"])
+				updatedData =
+					name: track.name
+					description: track.description
+					descriptionPlainText: track.descriptionPlainText
+				Track.update query, updatedData, (err, numberAffected, raw) ->
+					callback err, trackFound?.id
+			else
+				callback err, trackFound.id
+		else
+			new Track(track).save (err) ->
+				console.log("New experience level synchronized: #{track.name}")
+				callback err, track.id
 
 module.exports =
 	synchronize: synchronize

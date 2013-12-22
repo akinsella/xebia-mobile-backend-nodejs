@@ -136,6 +136,8 @@ app.get("/api/v" + config.apiVersion + "/conference/:conferenceId/experienceLeve
 
 app.get("/api/v" + config.apiVersion + "/conference/:conferenceId/presentationTypes", conference.presentationTypes);
 
+app.get("/api/v" + config.apiVersion + "/conference/:conferenceId/tracks", conference.tracks);
+
 httpServer = app.listen(app.get('port'));
 
 process.on('SIGTERM', function() {

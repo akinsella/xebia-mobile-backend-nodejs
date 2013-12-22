@@ -68,9 +68,7 @@ synchronizeEventNews = function(event, callback) {
     } else if (!news) {
       event.descriptionPlainText = event.description;
       if (event.descriptionPlainText) {
-        event.descriptionPlainText = event.descriptionPlainText.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, '');
-        event.descriptionPlainText = event.descriptionPlainText.replace(/<!--(.*?)-->/g, '');
-        event.descriptionPlainText = event.descriptionPlainText.replace(/\n\s*\n/g, '\n');
+        event.descriptionPlainText = utils.htmlToPlainText(event.descriptionPlainText);
       }
       newsEntry = new News({
         content: event.descriptionPlainText,

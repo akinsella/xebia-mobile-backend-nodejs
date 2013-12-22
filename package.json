@@ -58,7 +58,8 @@
     "recluster": "*",
     "newrelic": "*",
     "cron": "*",
-    "apnagent": "*"
+    "apnagent": "*",
+	"html-entities": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
