@@ -11,6 +11,8 @@ db = require "../db"
 ExperienceLevel = require "../model/experienceLevel"
 PresentationType = require "../model/presentationType"
 Track = require "../model/track"
+Speaker = require "../model/speaker"
+Presentation = require "../model/presentation"
 
 eventId = 10
 
@@ -29,7 +31,9 @@ synchronize = () ->
 	async.parallel [
 		processDevoxxExperienceLevels,
 		processDevoxxPresentationTypes,
-		processDevoxxTracks
+		processDevoxxTracks,
+		processDevoxxSpeakers,
+		processDevoxxPresentations
 	], callback
 
 processDevoxxExperienceLevels = (callback) ->
@@ -45,8 +49,8 @@ processDevoxxExperienceLevels = (callback) ->
 processDevoxxPresentationTypes = (callback) ->
 	console.log "Start synchronizing Devoxx Presentation Types ..."
 	request.get {url: "https://cfp.devoxx.com/rest/v1/events/#{eventId}/presentationtypes", json: true}, (error, data, response) ->
-		presentationTypes = _(response).sortBy((presentationType) ->
-			presentationType.name.toUpperCase())
+		presentationTypes = _(response).sortBy (presentationType) ->
+			presentationType.name.toUpperCase()
 		presentationTypes.forEach (presentationType) ->
 			presentationType.conferenceId = eventId
 			presentationType.descriptionPlainText = utils.htmlToPlainText(presentationType.description)
@@ -54,15 +58,41 @@ processDevoxxPresentationTypes = (callback) ->
 			console.log "Synchronized #{results.length} Presentation Types"
 
 processDevoxxTracks = (callback) ->
-	console.log "Start synchronizing Devoxx Presentation Types ..."
+	console.log "Start synchronizing Devoxx Tracks..."
 	request.get {url: "https://cfp.devoxx.com/rest/v1/events/#{eventId}/tracks", json: true}, (error, data, response) ->
-		tracks = _(response).sortBy((track) ->
-			track.name.toUpperCase())
+		tracks = _(response).sortBy (track) ->
+			track.name.toUpperCase()
 		tracks.forEach (track) ->
 			track.conferenceId = eventId
 			track.descriptionPlainText = utils.htmlToPlainText(track.description)
 		async.map tracks, synchronizeDevoxxTrack, (err, results) ->
 			console.log "Synchronized #{results.length} Tracks"
+
+processDevoxxSpeakers = (callback) ->
+	console.log "Start synchronizing Devoxx Speakers ..."
+	request.get {url: "https://cfp.devoxx.com/rest/v1/events/#{eventId}/speakers", json: true}, (error, data, response) ->
+		speakers = _(response).sortBy (speaker) ->
+			"#{speaker.firstName} #{speaker.lastName}".toUpperCase()
+		speakers.forEach (speaker) ->
+			speaker.conferenceId = eventId
+			speaker.firstName = speaker.firstname
+			delete speaker.firstname
+			speaker.lastName = speaker.lastname
+			delete speaker.lastname
+			speaker.tweetHandle = speaker.tweethandle
+			delete speaker.tweethandle
+		async.map speakers, synchronizeDevoxxSpeaker, (err, results) ->
+			console.log "Synchronized #{results.length} Speakers"
+
+processDevoxxPresentations = (callback) ->
+	console.log "Start synchronizing Devoxx Presentations ..."
+	request.get {url: "https://cfp.devoxx.com/rest/v1/events/#{eventId}/presentations", json: true}, (error, data, response) ->
+		presentations = _(response).sortBy (presentation) ->
+			"#{presentation.title}".toUpperCase()
+		presentations.forEach (presentation) ->
+			presentation.conferenceId = eventId
+		async.map presentations, synchronizeDevoxxPresentation, (err, results) ->
+			console.log "Synchronized #{results.length} Presentations"
 
 synchronizeDevoxxExperienceLevel = (experienceLevel, callback) ->
 	query = { name: experienceLevel.name, conferenceId: experienceLevel.conferenceId }
@@ -115,6 +145,53 @@ synchronizeDevoxxTrack = (track, callback) ->
 			new Track(track).save (err) ->
 				console.log("New experience level synchronized: #{track.name}")
 				callback err, track.id
+
+synchronizeDevoxxSpeaker = (speaker, callback) ->
+	query = { id: speaker.id, conferenceId: speaker.conferenceId }
+	Speaker.findOne query, (err, speakerFound) ->
+		if err
+			callback err
+		else if speakerFound
+			if utils.isNotSame(speaker, speakerFound, ["lastName", "bio", "company", "imageURI", "firstName", "tweethandle"])
+				updatedData =
+					lastName: speaker.lastName
+					bio: speaker.bio
+					company: speaker.company
+					imageURI: speaker.imageURI
+					firstName: speaker.firstName
+					tweetHandle: speaker.tweetHandle
+				Speaker.update query, updatedData, (err, numberAffected, raw) ->
+					callback err, speakerFound?.id
+			else
+				callback err, speakerFound.id
+		else
+			new Speaker(speaker).save (err) ->
+				console.log("New speaker synchronized: #{speaker.firstName} #{speaker.lastName}")
+				callback err, speaker.id
+
+synchronizeDevoxxPresentation = (presentation, callback) ->
+	query = { id: presentation.id, conferenceId: presentation.conferenceId }
+	Presentation.findOne query, (err, presentationFound) ->
+		if err
+			callback err
+		else if presentationFound
+			if utils.isNotSame(presentation, presentationFound, ["summary", "title", "track", "experience", "language", "type", "room"])
+				updatedData =
+					summary: presentation.summary
+					title: presentation.title
+					track: presentation.track
+					experience: presentation.experience
+					language: presentation.language
+					type: presentation.type
+					room: presentation.room
+				Presentation.update query, updatedData, (err, numberAffected, raw) ->
+					callback err, presentationFound?.id
+			else
+				callback err, presentationFound.id
+		else
+			new Presentation(presentation).save (err) ->
+				console.log("New presentation synchronized: #{presentation.title}")
+				callback err, presentation.id
 
 module.exports =
 	synchronize: synchronize

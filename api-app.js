@@ -138,6 +138,10 @@ app.get("/api/v" + config.apiVersion + "/conference/:conferenceId/presentationTy
 
 app.get("/api/v" + config.apiVersion + "/conference/:conferenceId/tracks", conference.tracks);
 
+app.get("/api/v" + config.apiVersion + "/conference/:conferenceId/speakers", conference.speakers);
+
+app.get("/api/v" + config.apiVersion + "/conference/:conferenceId/presentations", conference.presentations);
+
 httpServer = app.listen(app.get('port'));
 
 process.on('SIGTERM', function() {

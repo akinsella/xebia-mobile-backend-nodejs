@@ -6,7 +6,7 @@ mongo = require('../lib/mongo');
 Speaker = new mongo.Schema({
   id: Number,
   conferenceId: Number,
-  lastname: {
+  lastName: {
     type: String,
     "default": '',
     trim: true
@@ -21,17 +21,17 @@ Speaker = new mongo.Schema({
     "default": '',
     trim: true
   },
-  imageURI: {
+  imageURL: {
     type: String,
     "default": '',
     trim: true
   },
-  firstname: {
+  firstName: {
     type: String,
     "default": '',
     trim: true
   },
-  tweethandle: {
+  tweetHandle: {
     type: String,
     "default": '',
     trim: true
