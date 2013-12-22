@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "experienceLevel.js",
+  "sourceRoot": "..",
+  "sources": [
+    "src/model/experienceLevel.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA,IAAA,wCAAA;;AAAA,CAAA,EAAQ,EAAR,EAAQ,OAAA;;AAER,CAFA,EAEsB,CAAA,CAAK,CAAL,SAAtB;CACC,CAAA,EAAA;CAAM,CAAO,EAAN,EAAD;CAAA,CAA0B,EAAX,KAAA;CAAf,CAAoC,EAAN;IAApC;CAAA,CACA,IADA,MACA;CAJD,CAEsB;;AAKtB,CAPA,CAO6D,CAAtC,EAAK,CAAO,SAAZ,EAAA,GAAvB;;AAEA,CATA,EASiB,GAAX,CAAN,aATA"
+}

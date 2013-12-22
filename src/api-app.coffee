@@ -25,6 +25,7 @@ device = require './route/device'
 client = require './route/client'
 vimeo = require './route/vimeo'
 card = require './route/card'
+conference = require './route/conference'
 
 console.log "Application Name: #{config.appname}"
 console.log "Env: #{JSON.stringify config}"
@@ -100,6 +101,9 @@ app.get "/api/v#{config.apiVersion}/cards", card.cards
 app.get "/api/v#{config.apiVersion}/cards/categories", card.categories
 app.get "/api/v#{config.apiVersion}/cards/categories/:id", card.cardsByCategoryId
 app.get "/api/v#{config.apiVersion}/cards/:id", card.cardById
+
+app.get "/api/v#{config.apiVersion}/conference/:conferenceId/experienceLevels", conference.experienceLevels
+app.get "/api/v#{config.apiVersion}/conference/:conferenceId/presentationTypes", conference.presentationTypes
 
 #app.get '/dialog/authorize', oauth2.authorization
 #app.post '/dialog/authorize/decision', oauth2.decision

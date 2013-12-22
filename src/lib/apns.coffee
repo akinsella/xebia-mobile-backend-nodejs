@@ -12,10 +12,15 @@ if config.apns.enabled
 	agent
 		.set('cert file', "#{__dirname}/../certs/xebia-apns-cert.pem")
 		.set('key file', "#{__dirname}/../certs/xebia-apns-key.pem")
-#		.enable('sandbox')
 		.set('expires', '1d')
 		.set('reconnect delay', '1s')
 		.set('cache ttl', '30m')
+
+	if config.apns.devMode
+		console.log("Apns sandbox mode")
+		agent.enable('sandbox')
+	else
+		console.log("Apns production mode !")
 
 	# see error mitigation section
 	agent.on 'message:error', (err, msg) ->

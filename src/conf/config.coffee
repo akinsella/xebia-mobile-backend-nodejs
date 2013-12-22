@@ -13,28 +13,33 @@ if !config
 		processNumber: process.env.INDEX_OF_PROCESS || 0
 		scheduler:
 			syncWordpress:
-				cron: '0 0,30 * * * 1-7'
+				cron: '0 10,30 * * * 1-7'
 #				cron: '0,30 * * * * 1-7'
 				timezone: "Europe/Paris"
 				runOnStart: true
 			syncWordpressPosts:
 #				cron: '0 0,15,30,45 * * * 1-7'
 #				cron: '0,30 * * * * 1-7'
-				cron: '0 0 * * * 1-7'
+				cron: '0 15 * * * 1-7'
 				timezone: "Europe/Paris"
 				runOnStart: true
 			syncTwitter:
-				cron: '0 0,30 * * * 1-7'
+				cron: '45 */10 * * * 1-7'
 #				cron: '0,30 * * * * 1-7'
 				timezone: "Europe/Paris"
 				runOnStart: true
 			syncEventBrite:
-				cron: '0 0,30 * * * 1-7'
+				cron: '12 0 * * * 1-7'
 #				cron: '0,30 * * * * 1-7'
 				timezone: "Europe/Paris"
 				runOnStart: true
 			syncVimeo:
-				cron: '0 0,30 * * * 1-7'
+				cron: '8 0 * * * 1-7'
+#				cron: '0,30 * * * * 1-7'
+				timezone: "Europe/Paris"
+				runOnStart: true
+			syncDevoxxBelgium:
+				cron: '0 30 * * * 1-7'
 #				cron: '0,30 * * * * 1-7'
 				timezone: "Europe/Paris"
 				runOnStart: true
@@ -44,6 +49,7 @@ if !config
 				realm: process.env.AUTH_GOOGLE_REALM
 		apns:
 			enabled: true
+			devMode: process.env.APNS_SANDBOX_ENABLED
 		mongo:
 			dbname: process.env.MONGO_DBNAME
 			hostname: process.env.MONGO_HOSTNAME

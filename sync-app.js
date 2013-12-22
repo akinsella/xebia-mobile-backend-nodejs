@@ -155,6 +155,8 @@ app.get("/sync/vimeo/news", security.ensureAuthenticated, sync.syncVimeoNews);
 
 app["delete"]("/sync/videos", security.ensureAuthenticated, sync.removeVideos);
 
+app.get("/sync/conference/devoxx/belgium", security.ensureAuthenticated, sync.syncDevoxxBelgium);
+
 app.get("/sync/twitter/news", security.ensureAuthenticated, sync.syncTwitterNews);
 
 httpServer = app.listen(app.get('port'));

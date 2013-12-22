@@ -236,17 +236,27 @@ stopWatchCallbak = (_callback) ->
 
 		_callback err, data
 
+isSame = (obj1, obj2, fields) ->
+	for field in fields
+		if obj1[field] != obj2[field]
+			return false
+	true
+
+isNotSame = (obj1, obj2, fields) ->
+	!isSame
 
 module.exports =
-	getData: getData,
-	responseData: responseData,
-	getIfUseCache: getIfUseCache,
-	fetchDataFromUrl: fetchDataFromUrl,
-	getCacheKey: getCacheKey,
-	getUrlToFetch: getUrlToFetch,
-	buildOptions: buildOptions,
-	processRequest: processRequest,
-	getParameterByName: getParameterByName,
-	uid: uid,
+	getData: getData
+	responseData: responseData
+	getIfUseCache: getIfUseCache
+	fetchDataFromUrl: fetchDataFromUrl
+	getCacheKey: getCacheKey
+	getUrlToFetch: getUrlToFetch
+	buildOptions: buildOptions
+	processRequest: processRequest
+	getParameterByName: getParameterByName
+	uid: uid
 	callbackDelayed: callbackDelayed
 	stopWatchCallbak: stopWatchCallbak
+	isSame: isSame
+	isNotSame: isNotSame
