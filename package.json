@@ -10,10 +10,12 @@
   "bugs": {
     "url": "http://github.com/akinsella/xebia-mobile-backend-nodejs/issues"
   },
-  "licenses": [ {
-    "type": "MIT",
-    "url": "http://www.opensource.org/licenses/MIT"
-  } ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/MIT"
+    }
+  ],
   "keywords": [
     "node.js",
     "rest",
@@ -59,9 +61,12 @@
     "newrelic": "*",
     "cron": "*",
     "apnagent": "*",
-	"html-entities": "*"
+    "html-entities": "*"
   },
   "devDependencies": {
+    "should": "*",
+    "mocha": "*",
+    "coffee-script": "~1.6.3",
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.4.3",
     "grunt-contrib-nodeunit": "~0.1.2",

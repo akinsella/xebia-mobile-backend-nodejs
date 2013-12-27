@@ -9,6 +9,9 @@ options =
   pass: config.mongo.password
 
 url = "mongodb://#{config.mongo.hostname}:#{config.mongo.port}/#{config.mongo.dbname}"
+console.log("config: " + JSON.stringify(config))
+console.log("config: " + JSON.stringify(config.mongo))
+console.log("Mong Url: #{url}")
 mongoose.connect url, options
 
 

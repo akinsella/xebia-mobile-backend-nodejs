@@ -6,11 +6,27 @@ _ = require('underscore')._
 
 Cache = require '../lib/cache'
 utils = require '../lib/utils'
+
+Conference = require '../model/conference'
 PresentationType = require '../model/presentationType'
 ExperienceLevel = require '../model/experienceLevel'
 Track = require '../model/track'
 Speaker = require '../model/speaker'
 Presentation = require '../model/presentation'
+Room = require '../model/room'
+ScheduleEntry = require '../model/scheduleEntry'
+
+conferences = (req, res) ->
+	Conference.find().sort("name").exec (err, conferences) ->
+		if err
+			res.json 500, { message: "Server error: #{err.message}" }
+		else
+			conferences = conferences.map (conference) ->
+				conference = conference.toObject()
+				delete conference._id
+				delete conference.__v
+				conference
+			res.json conferences
 
 tracks = (req, res) ->
 	conferenceId = req.params.conferenceId
@@ -83,9 +99,66 @@ presentations = (req, res) ->
 				presentation
 			res.json presentations
 
+rooms = (req, res) ->
+	conferenceId = req.params.conferenceId
+	Room.find({ conferenceId: conferenceId }).sort("name").exec (err, rooms) ->
+		if err
+			res.json 500, { message: "Server error: #{err.message}" }
+		else
+			rooms = rooms.map (room) ->
+				room = room.toObject()
+				delete room._id
+				delete room.__v
+				room
+			res.json rooms
+
+schedule = (req, res) ->
+	conferenceId = req.params.conferenceId
+	ScheduleEntry.find({ conferenceId: conferenceId }).sort("fromTime").exec (err, scheduleEntries) ->
+		if err
+			res.json 500, { message: "Server error: #{err.message}" }
+		else
+			scheduleEntries = scheduleEntries.map (scheduleEntry) ->
+				scheduleEntry = scheduleEntry.toObject()
+				delete scheduleEntry._id
+				delete scheduleEntry.__v
+				scheduleEntry.speakers.forEach (speaker) ->
+					delete speaker._id
+				scheduleEntry.fromTime = moment(scheduleEntry.fromTime).format("YYYY-MM-DD HH:mm:ss")
+				scheduleEntry.toTime = moment(scheduleEntry.toTime).format("YYYY-MM-DD HH:mm:ss")
+				scheduleEntry
+
+			res.json scheduleEntries
+
+scheduleByDate = (req, res) ->
+	conferenceId = req.params.conferenceId
+	date = moment(req.params.date, "YYYY-MM-DD")
+	dateStart = moment(date).hours(0).minutes(0).seconds(0);
+	dateEnd = moment(date).add('days', 1).hours(0).minutes(0).seconds(0);
+
+	ScheduleEntry.find({ conferenceId: conferenceId, fromTime: { $gte: dateStart, $lte: dateEnd }}).sort("fromTime").exec (err, scheduleEntries) ->
+		if err
+			res.json 500, { message: "Server error: #{err.message}" }
+		else
+			scheduleEntries = scheduleEntries.map (scheduleEntry) ->
+				scheduleEntry = scheduleEntry.toObject()
+				delete scheduleEntry._id
+				delete scheduleEntry.__v
+				scheduleEntry.speakers.forEach (speaker) ->
+					delete speaker._id
+				scheduleEntry.fromTime = moment(scheduleEntry.fromTime).format("YYYY-MM-DD HH:mm:ss")
+				scheduleEntry.toTime = moment(scheduleEntry.toTime).format("YYYY-MM-DD HH:mm:ss")
+				scheduleEntry
+
+			res.json scheduleEntries
+
 module.exports =
+	conferences: conferences
 	presentationTypes: presentationTypes
 	experienceLevels: experienceLevels
 	tracks: tracks
 	speakers: speakers
 	presentations: presentations
+	rooms: rooms
+	schedule: schedule
+	scheduleByDate: scheduleByDate

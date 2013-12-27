@@ -102,11 +102,15 @@ app.get "/api/v#{config.apiVersion}/cards/categories", card.categories
 app.get "/api/v#{config.apiVersion}/cards/categories/:id", card.cardsByCategoryId
 app.get "/api/v#{config.apiVersion}/cards/:id", card.cardById
 
-app.get "/api/v#{config.apiVersion}/conference/:conferenceId/experienceLevels", conference.experienceLevels
-app.get "/api/v#{config.apiVersion}/conference/:conferenceId/presentationTypes", conference.presentationTypes
-app.get "/api/v#{config.apiVersion}/conference/:conferenceId/tracks", conference.tracks
-app.get "/api/v#{config.apiVersion}/conference/:conferenceId/speakers", conference.speakers
-app.get "/api/v#{config.apiVersion}/conference/:conferenceId/presentations", conference.presentations
+app.get "/api/v#{config.apiVersion}/conferences", conference.conferences
+app.get "/api/v#{config.apiVersion}/conferences/:conferenceId/experienceLevels", conference.experienceLevels
+app.get "/api/v#{config.apiVersion}/conferences/:conferenceId/presentationTypes", conference.presentationTypes
+app.get "/api/v#{config.apiVersion}/conferences/:conferenceId/tracks", conference.tracks
+app.get "/api/v#{config.apiVersion}/conferences/:conferenceId/speakers", conference.speakers
+app.get "/api/v#{config.apiVersion}/conferences/:conferenceId/presentations", conference.presentations
+app.get "/api/v#{config.apiVersion}/conferences/:conferenceId/rooms", conference.rooms
+app.get "/api/v#{config.apiVersion}/conferences/:conferenceId/schedule", conference.schedule
+app.get "/api/v#{config.apiVersion}/conferences/:conferenceId/schedule/:date", conference.scheduleByDate
 
 #app.get '/dialog/authorize', oauth2.authorization
 #app.post '/dialog/authorize/decision', oauth2.decision

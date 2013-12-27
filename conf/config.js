@@ -58,9 +58,9 @@ if (!config) {
       devMode: process.env.APNS_SANDBOX_ENABLED
     },
     mongo: {
-      dbname: process.env.MONGO_DBNAME,
-      hostname: process.env.MONGO_HOSTNAME,
-      port: process.env.MONGO_PORT,
+      dbname: process.env.MONGO_DBNAME || "xebia-mobile-backend",
+      hostname: process.env.MONGO_HOSTNAME || "localhost",
+      port: process.env.MONGO_PORT || 27017,
       username: process.env.MONGO_USERNAME,
       password: process.env.MONGO_PASSWORD
     },
