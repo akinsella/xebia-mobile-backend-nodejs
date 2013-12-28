@@ -8,8 +8,8 @@ DataSynchronizer = require '../DataSynchronizer'
 
 class DevoxxDataArraySynchronizer extends DataSynchronizer
 
-	constructor: (@name) ->
-		console.log("Instanciating Devoxx Data Array Synchronizer with name: '#{@name}'")
+	constructor: (name) ->
+		console.log("Instanciating Devoxx Data Array Synchronizer with name: '#{name}'")
 		super name
 
 	baseUrl: () -> "http://dev.cfp.devoxx.com:3000"
@@ -35,6 +35,7 @@ class DevoxxDataArraySynchronizer extends DataSynchronizer
 		console.log "Full Url: #{@fullUrl()}"
 		request.get {url: @fullUrl(), json: true}, (error, data, response) =>
 			console.log("Transforming response ...")
+			console.log("response: #{response}")
 			items = @itemTransformer(response)
 			async.map items, @synchronizeItem, callback
 
@@ -52,7 +53,7 @@ class DevoxxDataArraySynchronizer extends DataSynchronizer
 					callback err, itemFound.id
 			else
 				@createStorableItem(item).save (err) ->
-					console.log("New #{name} synchronized: #{item.title}")
+					console.log("New #{@name} synchronized: #{item.title}")
 					callback err, item.id
 
 

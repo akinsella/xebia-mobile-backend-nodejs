@@ -61,12 +61,14 @@
     "newrelic": "*",
     "cron": "*",
     "apnagent": "*",
-    "html-entities": "*"
+    "html-entities": "*",
+	"q": "*"
   },
   "devDependencies": {
     "should": "*",
     "mocha": "*",
     "coffee-script": "~1.6.3",
+	"sinon": "*",
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.4.3",
     "grunt-contrib-nodeunit": "~0.1.2",

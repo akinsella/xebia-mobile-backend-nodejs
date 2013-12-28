@@ -11,7 +11,7 @@ options =
 url = "mongodb://#{config.mongo.hostname}:#{config.mongo.port}/#{config.mongo.dbname}"
 console.log("config: " + JSON.stringify(config))
 console.log("config: " + JSON.stringify(config.mongo))
-console.log("Mong Url: #{url}")
+console.log("Mongo Url: #{url}")
 mongoose.connect url, options
 
 
