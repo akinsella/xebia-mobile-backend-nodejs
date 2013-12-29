@@ -3,13 +3,9 @@
 *.swp
 build
 
-target
-release.properties
-
 *~
 .idea
 node_modules
-tags
 
 .sass-cache
 npm-debug.log
