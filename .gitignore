@@ -2,11 +2,9 @@
 .#*
 *.swp
 build
-
 *~
 .idea
 node_modules
-
 .sass-cache
 npm-debug.log
 cert
