@@ -3,6 +3,7 @@
 .#*
 *.swp
 bin
+build
 
 target
 release.properties
