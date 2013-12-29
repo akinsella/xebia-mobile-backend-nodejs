@@ -1,56 +1,83 @@
 module.exports = function(grunt) {
 
-  grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
-    concat: {
-      options: {
-        separator: ';'
-      },
-      dist: {
-        src: ['src/**/*.js'],
-        dest: 'dist/<%= pkg.name %>.js'
-      }
-    },
-    uglify: {
-      options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
-      },
-      dist: {
-        files: {
-          'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
-        }
-      }
-    },
-    qunit: {
-      files: ['test/**/*.html']
-    },
-    jshint: {
-      files: ['gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
-      options: {
-        laxcomma: true,
-        // options here to override JSHint defaults
-        globals: {
-          jQuery: true,
-          console: true,
-          module: true,
-          document: true
-        }
-      }
-    },
-    watch: {
-      files: ['<%= jshint.files %>'],
-      tasks: ['jshint', 'qunit']
-    }
-  });
+	grunt.loadNpmTasks('grunt-contrib-coffee');
+	grunt.loadNpmTasks('grunt-simple-mocha');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-qunit');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.initConfig({
+		clean:{
+			dev: {
+				src: ["build"]
+			}
+		},
+		copy:{
+			dev:{
+				files: [
+					{
+						expand: true,
+						flatten: false,
+						cwd: 'src/javascript/',
+						src: ['**/*.js'],
+						dest: 'build/'
+					},
+					{
+						expand: true,
+						flatten: false,
+						cwd: 'public/',
+						src: ['**/*'],
+						dest: 'build/public/'
+					}
+				]
+			}
+		},
+		coffee:{
+			dev:{
+				options: {
+					sourceMap: true
+				},
+				expand: true,
+				flatten: false,
+				cwd: 'src/coffee/',
+				src: ['**/*.coffee'],
+				dest: 'build/',
+				ext: '.js'
+			},
+			test:{
+				options: {
+					sourceMap: true
+				},
+				expand: true,
+				flatten: false,
+				cwd: 'test/coffee/',
+				src: ['**/*.coffee'],
+				dest: 'build/test/',
+				ext: '.js'
+			}
+		},
+		simplemocha:{
+			dev:{
+				src:"test/javascript/*.js",
+				options:{
+					reporter: 'spec',
+					slow: 200,
+					timeout: 1000
+				}
+			}
+		},
+		watch:{
+			all:{
+				files:['src/coffee/*', 'test/coffee/*.coffee'],
+				tasks:['buildDev', 'buildTest', 'test']
+			}
+		}
+	});
 
-  grunt.registerTask('test', ['jshint', 'qunit']);
-
-  grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
+	grunt.registerTask('test', 'simplemocha:dev');
+	grunt.registerTask('buildDev', ['copy:dev', 'coffee:dev']);
+	grunt.registerTask('buildTest', 'coffee:test');
+	grunt.registerTask('build', ['buildDev', 'buildTest']);
+	grunt.registerTask('watch', ['build', 'test', 'watch:all']);
 
 };
