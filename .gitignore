@@ -9,7 +9,6 @@ release.properties
 
 *~
 .idea
-package-dev.json
 node_modules
 tags
 
