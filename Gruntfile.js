@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		clean:{
 			dev: {
-				src: ["build", "coverage", "cobertura-coverage.xml"]
+				src: ["build", "coverage"]
 			}
 		},
 		copy:{
@@ -125,6 +125,7 @@ module.exports = function(grunt) {
 					'ISTANBUL_REPORTERS=text-summary,cobertura,lcov ./node_modules/.bin/mocha --reporter mocha-istanbul --timeout 20s --debug build-cov/test',
 					'mv lcov.info coverage',
 					'mv lcov-report coverage',
+					'mv cobertura-coverage.xml coverage',
 					'rm -rf build-cov'
 				].join('&&')
 			}
