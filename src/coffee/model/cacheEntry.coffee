@@ -1,5 +1,6 @@
+pureautoinc  = require 'mongoose-pureautoinc'
+
 mongo = require '../lib/mongo'
-pureautoinc  = require('mongoose-pureautoinc');
 
 CacheEntry = new mongo.Schema(
 	id: Number,

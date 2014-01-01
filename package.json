@@ -62,25 +62,45 @@
     "cron": "*",
     "apnagent": "*",
     "html-entities": "*",
-	"q": "*"
+    "q": "*"
   },
   "devDependencies": {
-    "should": "*",
-    "mocha": "*",
-    "coffee-script": "*",
-	"sinon": "*",
-    "grunt": "*",
-    "grunt-contrib-jshint": "*",
-    "grunt-contrib-uglify": "*",
-    "grunt-contrib-watch": "*",
-	"grunt-contrib-concat": "*",
-	"grunt-contrib-coffee": "*",
-	"grunt-contrib-clean": "*",
-	"grunt-contrib-copy": "*",
-	"grunt-simple-mocha": "*"
+    "should": "2.1.1",
+    "mocha": "1.16.2",
+    "coffee-script": "1.6.3",
+    "sinon": "1.7.3",
+    "grunt": "0.4.2",
+    "istanbul": "0.2.1",
+    "mocha-istanbul": "0.2.0",
+    "coveralls": "2.6.1",
+    "blanket": "*",
+    "grunt-contrib-jshint": "0.8.0",
+    "grunt-contrib-uglify": "0.2.7",
+    "grunt-contrib-watch": "0.5.3",
+    "grunt-contrib-concat": "0.3.0",
+    "grunt-contrib-coffee": "0.7.0",
+    "grunt-contrib-clean": "0.5.0",
+    "grunt-contrib-copy": "0.5.0",
+    "grunt-simple-mocha": "0.4.0",
+    "grunt-mocha-cov": "0.1.1",
+    "grunt-coffeelint": "0.0.8",
+    "grunt-istanbul": "~0.2.4",
+    "grunt-shell": "~0.6.1"
+  },
+  "config": {
+    "blanket": {
+      "pattern": [
+        "build"
+      ]
+    }
   },
   "scripts": {
     "prepublish": "npm prune",
-    "start": "node app"
+    "api": "node build/api-app",
+    "sync": "node build/sy,c-app",
+    "webapp": "node build/web-app",
+    "test": "make test",
+    "coverage": "make coverage",
+    "coveralls": "make coveralls"
   }
 }

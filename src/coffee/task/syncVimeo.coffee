@@ -1,15 +1,15 @@
-utils = require '../lib/utils'
-async = require 'async'
-_ = require('underscore')._
-Video = require "../model/video"
-db = require "."
-moment = require "moment"
-config = require "../conf/config"
-request = require "request"
-apns = require "../lib/apns"
-
 OAuth = require 'oauth'
+async = require 'async'
+moment = require "moment"
+request = require "request"
+_ = require('underscore')._
+
+config = require "../conf/config"
+utils = require '../lib/utils'
+apns = require "../lib/apns"
 Cache = require '../lib/cache'
+db = require "../db"
+Video = require "../model/video"
 
 apiHost = 'http://vimeo.com/api/rest/v2'
 

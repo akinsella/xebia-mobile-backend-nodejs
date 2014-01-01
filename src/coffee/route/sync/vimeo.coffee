@@ -9,7 +9,7 @@ config = require "../../conf/config"
 
 utils = require '../../lib/utils'
 Cache = require '../../lib/cache'
-db = require "../."
+db = require "../../db"
 
 apiHost = 'http://vimeo.com/api/rest/v2'
 

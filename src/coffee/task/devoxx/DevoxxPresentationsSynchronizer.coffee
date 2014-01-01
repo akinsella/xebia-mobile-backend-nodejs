@@ -1,7 +1,6 @@
 _ = require('underscore')._
 
 utils = require '../../lib/utils'
-
 Presentation = require "../../model/presentation"
 DevoxxEventAwareDataArraySynchronizer = require './DevoxxEventAwareDataArraySynchronizer'
 

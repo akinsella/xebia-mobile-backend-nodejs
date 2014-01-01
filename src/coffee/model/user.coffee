@@ -1,5 +1,5 @@
 mongo = require '../lib/mongo'
-pureautoinc  = require('mongoose-pureautoinc');
+pureautoinc  = require 'mongoose-pureautoinc'
 
 User = new mongo.Schema(
 	id: Number,

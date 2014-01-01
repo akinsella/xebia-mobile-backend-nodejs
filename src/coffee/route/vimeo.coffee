@@ -1,7 +1,4 @@
-util = require 'util'
-async = require 'async'
 request = require 'request'
-OAuth = require 'oauth'
 _ = require('underscore')._
 
 Cache = require '../lib/cache'
@@ -61,7 +58,7 @@ videoUrls = (req, res) ->
 				id: 0
 			videoUrls.push videoUrl
 
-		_(videoUrls).each (video) ->
+		videoUrls.forEach (video) ->
 			delete video.profile
 			delete video.origin
 			delete video.availability

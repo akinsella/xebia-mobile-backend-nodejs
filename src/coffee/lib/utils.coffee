@@ -1,9 +1,10 @@
 request = require 'request'
 moment = require 'moment'
-cache = require './cache'
 _ = require('underscore')._
 HtmlEntities = require('html-entities');
 html5Entities = new HtmlEntities.Html5Entities()
+
+cache = require './cache'
 
 removeParameters = (url, parameters) ->
 	for parameter in parameters

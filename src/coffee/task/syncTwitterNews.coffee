@@ -1,15 +1,14 @@
-utils = require '../lib/utils'
 async = require 'async'
-_ = require('underscore')._
-News = require "../model/news"
-db = require "."
-moment = require "moment"
-config = require "../conf/config"
-request = require "request"
-
 OAuth = require 'oauth'
-Cache = require '../lib/cache'
+request = require "request"
+moment = require "moment"
+_ = require('underscore')._
 
+Cache = require '../lib/cache'
+utils = require '../lib/utils'
+db = require "../db"
+News = require "../model/news"
+config = require "../conf/config"
 
 synchronize = () ->
 	callback = (err, news) ->

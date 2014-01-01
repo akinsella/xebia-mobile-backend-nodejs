@@ -1,8 +1,9 @@
+
 utils = require '../lib/utils'
-_ = require('underscore')._
+apns = require "../lib/apns"
+
 Device = require "../model/device"
 Notification = require "../model/notification"
-apns = require "../lib/apns"
 
 #feedback.on "feedback", (devices) ->
 #	_(devices).each (device) ->

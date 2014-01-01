@@ -1,6 +1,5 @@
+
 utils = require '../lib/utils'
-_ = require('underscore')._
-apn = require 'apn'
 Client = require "../model/client"
 
 create = (req, res) ->

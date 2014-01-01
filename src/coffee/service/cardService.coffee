@@ -1,6 +1,5 @@
-utils = require '../lib/utils'
-_ = require('underscore')._
 fs = require 'fs'
+_ = require('underscore')._
 
 cardsData = JSON.parse(fs.readFileSync("#{__dirname}/../data/cards.json", "utf-8"))
 

@@ -1,5 +1,4 @@
-underscore = require 'underscore'
-_ = underscore._
+_ = require('underscore')._
 
 if !config
 	localConfig =
@@ -45,8 +44,8 @@ if !config
 				runOnStart: true
 		auth:
 			google:
-				callbackUrl: process.env.AUTH_GOOGLE_CALLBACK_URL
-				realm: process.env.AUTH_GOOGLE_REALM
+				callbackUrl: process.env.AUTH_GOOGLE_CALLBACK_URL || 'http://localhost'
+				realm: process.env.AUTH_GOOGLE_REALM || 'localhost'
 		apns:
 			enabled: true
 			devMode: process.env.APNS_SANDBOX_ENABLED

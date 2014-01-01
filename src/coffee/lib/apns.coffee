@@ -1,9 +1,9 @@
-config = require '../conf/config'
-utils = require 'utils'
-Device = require './device'
-Notification = require './notification'
-ApnAgent = require 'apnagent'
 _ = require('underscore')._
+ApnAgent = require 'apnagent'
+
+config = require '../conf/config'
+Device = require '../model/device'
+Notification = require '../model/notification'
 
 console.log "Dirname: #{__dirname}"
 

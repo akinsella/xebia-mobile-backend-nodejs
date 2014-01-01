@@ -1,10 +1,9 @@
 #twitter = require 'ntwitter'
-utils = require '../lib/utils'
-request = require 'request'
-_ = require('underscore')._
 OAuth = require 'oauth'
-Cache = require '../lib/cache'
 moment = require 'moment'
+
+utils = require '../lib/utils'
+Cache = require '../lib/cache'
 
 ###
 twit = new twitter({
@@ -81,7 +80,7 @@ user_timeline_authenticated = (req, res) ->
 
 					tweetsShortened = []
 
-					_(tweets).each (tweet) ->
+					tweets.forEach (tweet) ->
 						tweetsShortened.push shortenTweet(tweet)
 
 					jsonData = JSON.stringify(tweetsShortened)
@@ -135,9 +134,9 @@ xebia_timeline = (req, res) ->
 
 fetchTwitterData = (twitterUrl, credentials, req, res) ->
 	processRequest req, res, twitterUrl, credentials, (data, cb) ->
-		_(data).each((tweet) ->
+		data.forEach (tweet) ->
 			shortenTweet(tweet)
-		)
+
 		cb(undefined, data)
 
 
@@ -164,9 +163,9 @@ shortenTweet = (tweet) ->
 	if tweet.entities
 		for eKey, entities of tweet.entities
 			indices = []
-			_(entities).each((entity) ->
+			entities.foreach (entity) ->
 				entity.indices = {start:entity.indices[0], end:entity.indices[1]}
-			)
+
 	if tweet.user
 		for tuKey of tweet.user
 			if !(tuKey in tweetUserProps) then delete tweet.user[tuKey]
@@ -175,9 +174,9 @@ shortenTweet = (tweet) ->
 		if tweet.retweeted_status.entities
 			for eKey, entities of tweet.retweeted_status.entities
 				indices = []
-				_(entities).each((entity) ->
+				entities.forEach (entity) ->
 					entity.indices = {start:entity.indices[0], end:entity.indices[1]}
-				)
+
 
 		for rtKey of tweet.retweeted_status
 			if !(rtKey in retweetedStatusProps) then delete tweet.retweeted_status[rtKey]

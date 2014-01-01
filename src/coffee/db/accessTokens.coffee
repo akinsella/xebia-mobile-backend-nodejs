@@ -1,7 +1,4 @@
-utils = require './utils'
-_ = require('underscore')._
-apn = require 'apn'
-AccessToken = require "./accessToken"
+AccessToken = require "../model/accessToken"
 
 find = (token, done) ->
 	AccessToken.find { token: token }, (err, accessToken) ->

@@ -1,6 +1,7 @@
+passport = require 'passport'
+
 utils = require '../lib/utils'
 security = require '../lib/security'
-passport = require 'passport'
 
 login = passport.authenticate 'local', (req, res) ->
     res.redirect "/"

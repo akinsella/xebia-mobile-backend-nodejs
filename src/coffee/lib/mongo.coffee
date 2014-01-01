@@ -1,6 +1,7 @@
-config = require '../conf/config'
 mongoose = require 'mongoose'
 pureautoinc  = require 'mongoose-pureautoinc'
+
+config = require '../conf/config'
 
 options =
   db: { native_parser: false },

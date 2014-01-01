@@ -3,7 +3,7 @@ util = require "util"
 http = require "http"
 recluster = require "recluster"
 
-cluster = recluster "#{__dirname}/api.js"
+cluster = recluster "#{__dirname}/sync-app"
 cluster.run()
 
 fs.watchFile "package.json", (curr, prev) ->

@@ -1,13 +1,11 @@
 async = require 'async'
 moment = require "moment"
-_ = require('underscore')._
 request = require "request"
+_ = require('underscore')._
 
 config = require "../conf/config"
-
 utils = require '../lib/utils'
-db = require "."
-
+db = require "../db"
 News = require "../model/news"
 Tag = require "../model/tag"
 Category = require "../model/category"

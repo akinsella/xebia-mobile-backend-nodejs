@@ -1,6 +1,5 @@
-utils = require '../lib/utils'
-_ = require('underscore')._
 fs = require 'fs'
+
 config = require '../conf/config'
 Event = require '../model/event'
 
@@ -8,7 +7,7 @@ Event = require '../model/event'
 list = (req, res) ->
 	if config.offlineMode
 		res.charset = 'UTF-8'
-		res.send JSON.parse(fs.readFileSync("#{__dirname}/../data/eventbrite_event.json", "utf-8"))
+		res.send JSON.parse(fs.readFileSync("#{__dirname}/../data/offline/eventbrite_event.json", "utf-8"))
 	else
 		Event.find({}).sort("-startDate").limit(50).exec (err, events) ->
 			if err

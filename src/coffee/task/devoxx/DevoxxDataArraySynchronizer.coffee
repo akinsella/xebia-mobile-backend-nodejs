@@ -1,9 +1,7 @@
 async = require 'async'
-_ = require('underscore')._
 request = require "request"
 
 utils = require '../../lib/utils'
-
 DataSynchronizer = require '../DataSynchronizer'
 
 class DevoxxDataArraySynchronizer extends DataSynchronizer

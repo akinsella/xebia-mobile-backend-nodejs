@@ -1,9 +1,10 @@
-utils = require '../lib/utils'
-_ = require('underscore')._
 jsdom = require 'jsdom'
 async = require 'async'
 fs = require 'fs'
+
 config = require '../conf/config'
+utils = require '../lib/utils'
+
 Tag = require '../model/tag'
 Category = require '../model/category'
 Author = require '../model/author'
@@ -95,7 +96,7 @@ cleanUpPost = (post) ->
 recentPosts = (req, res) ->
 	if config.offlineMode
 		res.charset = 'UTF-8'
-		payload = JSON.parse(fs.readFileSync("#{__dirname}/../data/wp_recent_post.json", "utf-8"))
+		payload = JSON.parse(fs.readFileSync("#{__dirname}/../data/offline/wp_recent_post.json", "utf-8"))
 		res.send payload
 	else
 		limit = 50

@@ -17,20 +17,20 @@ config = require "../../conf/config"
 
 utils = require '../../lib/utils'
 Cache = require '../../lib/cache'
-db = require "../."
-syncWordpressTask = require '.././syncWordpress'
-syncWordpressPostsTask = require '.././syncWordpressPosts'
-syncWordpressNewsTask = require '.././syncWordpressNews'
+db = require "../../db"
+syncWordpressTask = require '../../task/syncWordpress'
+syncWordpressPostsTask = require '../../task/syncWordpressPosts'
+syncWordpressNewsTask = require '../../task/syncWordpressNews'
 
-syncEventBriteTask = require '.././syncEventBrite'
-syncEventBriteNewsTask = require '.././syncEventBriteNews'
+syncEventBriteTask = require '../../task/syncEventBrite'
+syncEventBriteNewsTask = require '../../task/syncEventBriteNews'
 
-syncVimeoTask = require '.././syncVimeo'
-syncVimeoNewsTask = require '.././syncVimeoNews'
+syncVimeoTask = require '../../task/syncVimeo'
+syncVimeoNewsTask = require '../../task/syncVimeoNews'
 
-syncTwitterNewsTask = require '.././syncTwitterNews'
+syncTwitterNewsTask = require '../../task/syncTwitterNews'
 
-syncDevoxxBelgiumTask = require '.././syncDevoxxBelgium'
+syncDevoxxBelgiumTask = require '../../task/syncDevoxxBelgium'
 
 syncWordpress = (req, res) ->
 	syncWordpressTask.synchronize()

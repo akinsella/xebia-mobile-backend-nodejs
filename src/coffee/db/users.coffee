@@ -1,7 +1,4 @@
-utils = require './utils'
-_ = require('underscore')._
-apn = require 'apn'
-User = require "./user"
+User = require "../model/user"
 
 check = require("validator").check
 

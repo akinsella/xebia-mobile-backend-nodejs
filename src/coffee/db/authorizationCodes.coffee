@@ -1,7 +1,4 @@
-utils = require './utils'
-_ = require('underscore')._
-apn = require 'apn'
-AuthorizationCode = require "./authorizationCode"
+AuthorizationCode = require "../model/authorizationCode"
 
 find = (code, done) ->
 	AuthorizationCode.find { code: code }, (err, authorizationCode) ->

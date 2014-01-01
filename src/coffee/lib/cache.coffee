@@ -1,5 +1,6 @@
-CacheEntry = require './cacheEntry'
 moment = require 'moment'
+
+CacheEntry = require '../model/cacheEntry'
 
 get = (key, callback) ->
 	CacheEntry.findOne { key: key }, (err, cacheEntry) ->

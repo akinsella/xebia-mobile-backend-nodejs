@@ -1,0 +1,34 @@
+{
+  "categories": [
+    {
+      "id": "mindset",
+      "label": "Mindset",
+      "color": "#98366D",
+      "backgroundColor": "#8C2A61"
+    },
+    {
+      "id": "code",
+      "label": "Code",
+      "color": "#326DA7",
+      "backgroundColor": "#1B4E80"
+    },
+    {
+      "id": "architecture-design",
+      "label": "Architecture and Design",
+      "color": "#ED7738",
+      "backgroundColor": "#E36E30"
+    },
+    {
+      "id": "process",
+      "label": "Process",
+      "color": "#CA3D38",
+      "backgroundColor": "#BB312C"
+    },
+    {
+      "id": "test",
+      "label": "Test",
+      "color": "#6DC726",
+      "backgroundColor": "#378241"
+    }
+  ]
+}

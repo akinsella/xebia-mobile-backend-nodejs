@@ -1,12 +1,13 @@
-utils = require '../lib/utils'
 async = require 'async'
-_ = require('underscore')._
-Event = require "../model/event"
-db = require "."
-moment = require "moment"
-config = require "../conf/config"
 request = require "request"
+moment = require "moment"
+_ = require('underscore')._
+
+db = require "../db"
+utils = require '../lib/utils'
 apns = require "../lib/apns"
+config = require "../conf/config"
+Event = require "../model/event"
 
 
 eventProps = [

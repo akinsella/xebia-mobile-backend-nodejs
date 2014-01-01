@@ -3,10 +3,11 @@ GoogleStrategy = require('passport-google').Strategy
 BasicStrategy = require('passport-http').BasicStrategy
 ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy
 BearerStrategy = require('passport-http-bearer').Strategy
-User = require './user'
-utils = require '../lib/utils'
-db = require '.'
+
 config = require '../conf/config'
+User = require '../model/user'
+utils = require '../lib/utils'
+db = require '../db'
 
 # Use the GoogleStrategy within Passport.
 #   Strategies in passport require a `validate` function, which accept

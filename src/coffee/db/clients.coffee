@@ -1,7 +1,4 @@
-utils = require './utils'
-_ = require('underscore')._
-apn = require 'apn'
-Client = require "./client"
+Client = require "../model/client"
 
 find = (id, done) ->
 	Client.find { id: id }, (err, client) ->

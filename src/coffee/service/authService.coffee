@@ -1,7 +1,6 @@
 utils = require '../lib/utils'
-_ = require('underscore')._
+db = require "../db"
 User = require "../model/user"
-db = require "."
 
 ROLE_AGENT = "ROLE_AGENT"
 ROLE_SUPER_AGENT = "ROLE_SUPER_AGENT"

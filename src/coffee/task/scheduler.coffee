@@ -1,3 +1,7 @@
+cronJob = require('cron').CronJob
+
+conf = require '../conf/config'
+
 syncWordpress = require './syncWordpress'
 syncWordpressPosts = require './syncWordpressPosts'
 syncWordpressNews = require './syncWordpressNews'
@@ -7,9 +11,6 @@ syncTwitterNews = require './syncTwitterNews'
 syncVimeo = require './syncVimeo'
 syncVimeoNews = require './syncVimeoNews'
 syncDevoxxBelgium = require './syncDevoxxBelgium'
-
-cronJob = require('cron').CronJob
-conf = require '../conf/config'
 
 init = () ->
     console.log "Starting scheduler ..."

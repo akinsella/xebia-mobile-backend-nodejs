@@ -2,6 +2,7 @@
 .#*
 *.swp
 build
+build-cov
 *~
 .idea
 node_modules
@@ -10,3 +11,6 @@ npm-debug.log
 cert
 certs
 newrelic_agent.log
+reports
+cobertura-coverage.xml
+coverage

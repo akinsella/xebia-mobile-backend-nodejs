@@ -1,6 +1,4 @@
 utils = require '../lib/utils'
-_ = require('underscore')._
-apn = require 'apn'
 Device = require "../model/device"
 
 # To be refactored

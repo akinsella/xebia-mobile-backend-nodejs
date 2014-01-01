@@ -1,8 +1,9 @@
-utils = require '../lib/utils'
-_ = require('underscore')._
-cardService = require './cardService'
-config = require '../conf/config'
 fs = require 'fs'
+_ = require('underscore')._
+
+config = require '../conf/config'
+utils = require '../lib/utils'
+cardService = require '../service/cardService'
 
 cards = (req, res) ->
 	res.charset = 'UTF-8'
@@ -14,7 +15,7 @@ categories = (req, res) ->
 	res.charset = 'UTF-8'
 
 	if config.offlineMode
-		res.send JSON.parse(fs.readFileSync("#{__dirname}/../data/essentials_category.json", "utf-8"))
+		res.send JSON.parse(fs.readFileSync("#{__dirname}/../data/offline/essentials_category.json", "utf-8"))
 	else
 		categories = cardService.categories()
 		utils.responseData 200, "", categories, {req: req, res: res}
@@ -23,7 +24,7 @@ cardsByCategoryId = (req, res) ->
 	res.charset = 'UTF-8'
 
 	if config.offlineMode
-		res.send JSON.parse(fs.readFileSync("#{__dirname}/../data/essentials_category_architecture_design.json", "utf-8"))
+		res.send JSON.parse(fs.readFileSync("#{__dirname}/../data/offline/essentials_category_architecture_design.json", "utf-8"))
 	else
 		categoryId = req.params.id
 

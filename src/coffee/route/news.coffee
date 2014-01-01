@@ -1,8 +1,7 @@
-utils = require '../lib/utils'
-News = require '../model/news'
-_ = require('underscore')._
 moment = require('moment')
 
+utils = require '../lib/utils'
+News = require '../model/news'
 
 # To be refactored
 processRequest = (req, res, url, transform) ->

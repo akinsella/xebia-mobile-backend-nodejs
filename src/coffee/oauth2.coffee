@@ -3,6 +3,7 @@ Module dependencies.
 ###
 oauth2orize = require "oauth2orize"
 passport = require "passport"
+
 db = require "./db"
 utils = require "./lib/utils"
 security = require "./lib/security"

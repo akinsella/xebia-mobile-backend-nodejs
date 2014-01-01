@@ -1,21 +1,20 @@
 async = require 'async'
 moment = require "moment"
-_ = require('underscore')._
 request = require "request"
+_ = require('underscore')._
 
 config = require "../conf/config"
 
 utils = require '../lib/utils'
-db = require "."
 apns = require "../lib/apns"
-
+db = require "../db"
+postTransformer = require "../transformer/postTransformer"
 News = require "../model/news"
 Tag = require "../model/tag"
 Category = require "../model/category"
 Author = require "../model/author"
 Post = require "../model/post"
 DetailedPost = require "../model/detailedPost"
-postTransformer = require "./postTransformer"
 
 synchronize = () ->
 	callback = (err, results) ->

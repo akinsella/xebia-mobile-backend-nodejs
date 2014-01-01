@@ -49,7 +49,8 @@ app.configure ->
 		req.forwardedSecure = (req.headers["x-forwarded-proto"] == "https")
 		next()
 
-	app.use express.bodyParser()
+	app.use express.json()
+	app.use express.urlencoded()
 	app.use express.cookieParser()
 
 	app.use express.logger()

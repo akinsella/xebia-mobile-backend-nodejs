@@ -1,12 +1,11 @@
 async = require 'async'
 moment = require "moment"
-_ = require('underscore')._
 request = require "request"
+_ = require('underscore')._
 
 config = require "../conf/config"
-
 utils = require '../lib/utils'
-db = require "."
+db = require "../db"
 
 ExperienceLevel = require "../model/experienceLevel"
 PresentationType = require "../model/presentationType"

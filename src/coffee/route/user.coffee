@@ -1,6 +1,4 @@
 utils = require '../lib/utils'
-_ = require('underscore')._
-apn = require 'apn'
 User = require "../model/user"
 
 create = (req, res) ->

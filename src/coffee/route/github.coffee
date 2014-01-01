@@ -1,5 +1,4 @@
 utils = require '../lib/utils'
-_ = require('underscore')._
 
 # To be refactored
 processRequest = (req, res, url, transform) ->
@@ -36,11 +35,11 @@ repos = (req, res) ->
 # To be refactored
 public_members = (req, res) ->
 	processRequest req, res, "https://api.github.com/orgs/xebia-france/public_members", (data, cb) ->
-		_(data).each((owner) ->
+		data.forEach (owner) ->
 			for oKey of owner
 				if !(oKey in ownerProps) then delete owner[oKey]
 			owner
-		)
+
 		cb(undefined, data)
 
 
