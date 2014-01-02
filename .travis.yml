@@ -4,6 +4,7 @@ node_js:
 services: mongodb
 before_script:
   - npm install -g grunt-cli
+script: grunt cover
 env:
   global:
   - LC_ALL="en_US.UTF-8"
