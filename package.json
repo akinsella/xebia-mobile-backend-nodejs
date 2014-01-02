@@ -100,7 +100,7 @@
     "api": "node build/api-app",
     "sync": "node build/sy,c-app",
     "webapp": "node build/web-app",
-    "test": "make test",
+    "test": "grunt test",
     "coverage": "make coverage",
     "coveralls": "make coveralls"
   }

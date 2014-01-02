@@ -2,7 +2,6 @@ language: node_js
 node_js:
   - 0.10
 services: mongodb
-script: grunt test
 env:
   global:
   - LC_ALL="en_US.UTF-8"
