@@ -1,17 +1,19 @@
 start = new Date()
 
+logger = require 'winston'
+
 config = require './conf/config'
 vimeo = require './route/sync/vimeo'
 sync = require './route/sync'
 
 if config.devMode
-	console.log "Dev Mode enabled."
+	logger.info "Dev Mode enabled."
 
 if config.offlineMode
-	console.log "Offline mode enabled."
+	logger.info "Offline mode enabled."
 
 if config.monitoring.newrelic.apiKey
-	console.log "Initializing NewRelic with apiKey: '#{config.monitoring.newrelic.apiKey}'"
+	logger.info "Initializing NewRelic with apiKey: '#{config.monitoring.newrelic.apiKey}'"
 	newrelic = require 'newrelic'
 
 
@@ -33,8 +35,8 @@ scheduler.init()
 
 requestLogger = require './lib/requestLogger'
 
-console.log "Application Name: #{config.appname}"
-console.log "Env: #{JSON.stringify config}"
+logger.info "Application Name: #{config.appname}"
+logger.info "Env: #{JSON.stringify config}"
 
 
 # Express
@@ -57,7 +59,7 @@ role.use authService.ROLE_ADMIN, authService.checkRoleAdmin
 role.setFailureHandler authService.failureHandler
 
 app.configure ->
-	console.log "Environment: #{app.get('env')}"
+	logger.info "Environment: #{app.get('env')}"
 	app.set 'port', config.port or process.env.PORT or 9000
 
 	app.use (req, res, next) ->
@@ -138,10 +140,10 @@ app.get "/sync/twitter/news", security.ensureAuthenticated, sync.syncTwitterNews
 httpServer = app.listen app.get('port')
 
 process.on 'SIGTERM', ->
-	console.log "Received kill signal (SIGTERM), shutting down gracefully."
+	logger.info "Received kill signal (SIGTERM), shutting down gracefully."
 	gracefullyClosing = true
 	httpServer.close ->
-		console.log "Closed out remaining connections."
+		logger.info "Closed out remaining connections."
 		process.exit()
 
 	setTimeout ->
@@ -153,5 +155,5 @@ process.on 'uncaughtException', (err) ->
 	console.error "An uncaughtException was found, the program will end. #{err}, stacktrace: #{err.stack}"
 	process.exit 1
 
-console.log "Express listening on port: #{app.get('port')}"
-console.log "Started in #{(new Date().getTime() - start.getTime()) / 1000} seconds"
+logger.info "Express listening on port: #{app.get('port')}"
+logger.info "Started in #{(new Date().getTime() - start.getTime()) / 1000} seconds"

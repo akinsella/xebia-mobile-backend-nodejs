@@ -1,24 +1,25 @@
-fs = require "fs"
-util = require "util"
-http = require "http"
-recluster = require "recluster"
+fs = require 'fs'
+util = require 'util'
+http = require 'http'
+recluster = require 'recluster'
+logger = require 'winston'
 
 cluster = recluster "#{__dirname}/web-app"
 cluster.run()
 
 fs.watchFile "package.json", (curr, prev) ->
-	console.log "Package.json changed, reloading cluster..."
+	logger.info "Package.json changed, reloading cluster..."
 	cluster.reload()
 
 process.on "SIGUSR2", ->
-	console.log "Got SIGUSR2, reloading cluster..."
+	logger.info "Got SIGUSR2, reloading cluster..."
 	cluster.reload()
 
-console.log "Spawned cluster, kill -s SIGUSR2 #{process.pid} to reload"
+logger.info "Spawned cluster, kill -s SIGUSR2 #{process.pid} to reload"
 
 ###
 
-console.log "Will monitor port #{port} for heartbeat"
+logger.info "Will monitor port #{port} for heartbeat"
 hostname = process.env.APP_HOSTNAME
 port = process.env.APP_HTTP_PORT
 heartbeatInterval = Number(process.env.HEARTBEAT_INTERVAL or 10) * 1000
@@ -32,7 +33,7 @@ setTimeout(() ->
 			if [200, 302].indexOf(res.statusCode) is -1
 				reloadCluster "[heartbeat] : FAIL with code #{res.statusCode}"
 			else
-				console.log "[heartbeat]:  OK [#{res.statusCode}]"
+				logger.info "[heartbeat]:  OK [#{res.statusCode}]"
 		).on("error", (err) ->
 			reloadCluster " [heartbeat]:  FAIL with #{err.message}"
 		)

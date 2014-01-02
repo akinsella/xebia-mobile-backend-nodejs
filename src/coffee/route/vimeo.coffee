@@ -1,3 +1,4 @@
+logger = require 'winston'
 request = require 'request'
 _ = require('underscore')._
 
@@ -37,7 +38,7 @@ videoUrls = (req, res) ->
 	videoId = req.params.id
 
 	videoConfigUrl = "http://player.vimeo.com/v2/video/#{videoId}/config"
-	console.log "Fetching url: #{videoConfigUrl}"
+	logger.info "Fetching url: #{videoConfigUrl}"
 	request.get { url: videoConfigUrl, json: true }, (error, data, response) ->
 
 		videoUrls = _(response.request.files.codecs.map (codec) ->

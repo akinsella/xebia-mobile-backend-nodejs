@@ -1,3 +1,4 @@
+logger = require 'winston'
 async = require 'async'
 moment = require "moment"
 request = require "request"
@@ -19,30 +20,30 @@ DetailedPost = require "../model/detailedPost"
 synchronize = () ->
 	callback = (err, results) ->
 		if err
-			console.log "Wordpress Synchronization of blog posts ended with error: #{err.message} - Error: #{err}"
+			logger.info "Wordpress Synchronization of blog posts ended with error: #{err.message} - Error: #{err}"
 		else
-			console.log "Wordpress Synchronization of blog posts ended with success ! Post Ids: #{results}"
+			logger.info "Wordpress Synchronization of blog posts ended with success ! Post Ids: #{results}"
 
 	if config.feature.stopWatch
 		callback = utils.stopWatchCallbak callback
 
-	console.log "Start synchronizing Wordpress data ..."
+	logger.info "Start synchronizing Wordpress data ..."
 
 	processWordpressRecentBlogPosts(1, callback, [])
 
 processWordpressRecentBlogPosts = (page, callback, results) ->
-	console.log "Start synchronizing Wordpress blog posts for page: #{page} ..."
+	logger.info "Start synchronizing Wordpress blog posts for page: #{page} ..."
 	request.get {url: "http://blog.xebia.fr/wp-json-api/get_recent_posts?count=25&page=#{page}", json: true}, (error, data, response) ->
 		async.map response.posts, synchronizeWordpressPost, (err, postIds) ->
-			console.log "Synchronized #{results.length} Wordpress posts for page: #{page}. Post Ids: #{postIds}"
+			logger.info "Synchronized #{results.length} Wordpress posts for page: #{page}. Post Ids: #{postIds}"
 
 			async.map postIds, synchronizeWordpressDetailedPost, (err, detailedPostIds) ->
 				if err
-					console.log "Wordpress Synchronization ended with error: #{err.message} - Error: #{err}"
+					logger.info "Wordpress Synchronization ended with error: #{err.message} - Error: #{err}"
 				else
-					console.log "Wordpress Synchronization of blog posts ended with success ! Detailed Post Ids: #{detailedPostIds}"
+					logger.info "Wordpress Synchronization of blog posts ended with success ! Detailed Post Ids: #{detailedPostIds}"
 
-				console.log("Page: #{page}, pages: #{response.pages}")
+				logger.info("Page: #{page}, pages: #{response.pages}")
 				if page < response.pages
 					results.push(detailedPostIds)
 					process.nextTick () ->
@@ -52,7 +53,7 @@ processWordpressRecentBlogPosts = (page, callback, results) ->
 
 
 synchronizeWordpressPost = (post, callback) ->
-	console.log "Checking for post with id: '#{post.id}'"
+	logger.info "Checking for post with id: '#{post.id}'"
 	Post.findOne { id: post.id }, (err, foundPost) ->
 		if err
 			callback err, post.id
@@ -65,13 +66,13 @@ synchronizeWordpressPost = (post, callback) ->
 					postEntry.save (err) ->
 						callback err, postEntry.id
 						if !err
-							console.log "Saved detailed post with id: '#{postEntry.id}'"
+							logger.info "Saved detailed post with id: '#{postEntry.id}'"
 		else
 			callback err, foundPost.id
 
 
 synchronizeWordpressDetailedPost = (postId, callback) ->
-	console.log "Checking for detailed post with id: '#{postId}'"
+	logger.info "Checking for detailed post with id: '#{postId}'"
 	DetailedPost.findOne { id: postId }, (err, foundDetailedPost) ->
 		if err
 			callback err
@@ -91,9 +92,9 @@ synchronizeWordpressDetailedPost = (postId, callback) ->
 							detailedPostEntry.save (err) ->
 								callback err, detailedPostEntry.id
 								if !err
-									console.log "Saved detailed post with id: '#{detailedPostEntry.id}'"
+									logger.info "Saved detailed post with id: '#{detailedPostEntry.id}'"
 									apns.pushToAll "#{detailedPostEntry.title}", () ->
-										console.log "Pushed Notification for blog post with id: '#{detailedPostEntry.id}' and title: '#{detailedPostEntry.title}'"
+										logger.info "Pushed Notification for blog post with id: '#{detailedPostEntry.id}' and title: '#{detailedPostEntry.title}'"
 		else
 			callback err, foundDetailedPost.id
 

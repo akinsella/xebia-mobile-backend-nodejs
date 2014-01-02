@@ -1,4 +1,5 @@
 #twitter = require 'ntwitter'
+logger = require 'winston'
 OAuth = require 'oauth'
 moment = require 'moment'
 
@@ -35,7 +36,7 @@ xebiaFrTweets = []
 # twit.stream('statuses/filter', { track: ['XebiaFR'] }, function(stream) {
 twit.stream 'user', { track: 'XebiaFr' }, (stream) ->
 	stream.on 'data', (data) ->
-		console.log data
+		logger.info data
 
 		tweet = data
 
@@ -45,11 +46,11 @@ twit.stream 'user', { track: 'XebiaFr' }, (stream) ->
 
 	stream.on 'end', (response) ->
 		# Handle a disconnection
-		console.log 'Twitter Stream Connection End: ' + response
+		logger.info 'Twitter Stream Connection End: ' + response
 
 	stream.on 'destroy', (response) ->
 		# Handle a 'silent' disconnection from Twitter, no end/error event fired
-		console.log 'Twitter Stream Connection destroyed: ' + response
+		logger.info 'Twitter Stream Connection destroyed: ' + response
 
 
 #app.get('/twitter/:user', function(req, res) {
@@ -60,16 +61,16 @@ stream_xebiafr = (req, res) ->
 
 user_timeline_authenticated = (req, res) ->
 	user = req.params.user
-	console.log "User: " + user
+	logger.info "User: " + user
 	callback = getParameterByName(req.url, 'callback')
 
 	Cache.get req.url, (err, data) ->
 		if !err && data
-			console.log "[" + req.url + "] A reply is in cache key: '" + utils.getCacheKey(req) + "', returning immediatly the reply"
+			logger.info "[" + req.url + "] A reply is in cache key: '" + utils.getCacheKey(req) + "', returning immediatly the reply"
 			utils.responseData(200, "", data, {  callback: callback, req: req, res: res })
 
 		else
-			console.log "[" + req.url + "] No cached reply found for key: '" + utils.getCacheKey(req) + "'"
+			logger.info "[" + req.url + "] No cached reply found for key: '" + utils.getCacheKey(req) + "'"
 			twit.getUserTimeline "screen_name=" + user + "&contributor_details=false&include_entities=true&include_rts=true&exclude_replies=false&count=50&exclude_replies=false",
 			(error, data) ->
 				if error
@@ -86,7 +87,7 @@ user_timeline_authenticated = (req, res) ->
 					jsonData = JSON.stringify(tweetsShortened)
 
 					Cache.set(utils.getCacheKey(req), jsonData, 60 * 60)
-					console.log "[" + req.url + "] Fetched Response from url: " + jsonData
+					logger.info "[" + req.url + "] Fetched Response from url: " + jsonData
 					callback(200, "", jsonData, {  callback: callback, req: req, res: res })
 
 ###
@@ -109,7 +110,7 @@ processRequest = (req, res, url, credentials, transform) ->
 
 xebia_timeline = (req, res) ->
 	twitterUrl = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=XebiaFR&contributor_details=false&include_entities=true&include_rts=true&exclude_replies=false&count=50&exclude_replies=false"
-	console.log "Twitter Url: #{twitterUrl}"
+	logger.info "Twitter Url: #{twitterUrl}"
 
 	Cache.get('twitter.credentials', (err, credentials) ->
 		if err

@@ -1,3 +1,4 @@
+logger = require 'winston'
 async = require 'async'
 moment = require "moment"
 request = require "request"
@@ -21,14 +22,14 @@ baseUrl = "http://dev.cfp.devoxx.com:3000"
 synchronize = () ->
 	callback = (err, results) ->
 		if err
-			console.log "Devoxx Belgium Synchronization ended with error: #{err.message} - Error: #{err}"
+			logger.info "Devoxx Belgium Synchronization ended with error: #{err.message} - Error: #{err}"
 		else
-			console.log "Devoxx Belgium Synchronization ended with success !"
+			logger.info "Devoxx Belgium Synchronization ended with success !"
 
 	if config.feature.stopWatch
 		callback = utils.stopWatchCallbak callback
 
-	console.log "Start synchronizing Devoxx Belgium data ..."
+	logger.info "Start synchronizing Devoxx Belgium data ..."
 
 	async.parallel [
 		processDevoxxExperienceLevels,
@@ -41,17 +42,17 @@ synchronize = () ->
 	], callback
 
 processDevoxxExperienceLevels = (callback) ->
-    console.log "Start synchronizing Devoxx Experience Levels ..."
+    logger.info "Start synchronizing Devoxx Experience Levels ..."
     request.get {url: "#{baseUrl}/rest/v1/events/#{eventId}/experiencelevels", json: true}, (error, data, response) ->
 	    experienceLevels = _(response).sortBy (experienceLevel) ->
 		    experienceLevel.Name.toUpperCase()
 	    experienceLevels.forEach (experienceLevel) ->
 		    experienceLevel.conferenceId = eventId
 	    async.map experienceLevels, synchronizeDevoxxExperienceLevel, (err, results) ->
-            console.log "Synchronized #{results.length} Experience Levels"
+            logger.info "Synchronized #{results.length} Experience Levels"
 
 processDevoxxPresentationTypes = (callback) ->
-	console.log "Start synchronizing Devoxx Presentation Types ..."
+	logger.info "Start synchronizing Devoxx Presentation Types ..."
 	request.get {url: "#{baseUrl}/rest/v1/events/#{eventId}/presentationtypes", json: true}, (error, data, response) ->
 		presentationTypes = _(response).sortBy (presentationType) ->
 			presentationType.name.toUpperCase()
@@ -59,10 +60,10 @@ processDevoxxPresentationTypes = (callback) ->
 			presentationType.conferenceId = eventId
 			presentationType.descriptionPlainText = utils.htmlToPlainText(presentationType.description)
 		async.map presentationTypes, synchronizeDevoxxPresentationType, (err, results) ->
-			console.log "Synchronized #{results.length} Presentation Types"
+			logger.info "Synchronized #{results.length} Presentation Types"
 
 processDevoxxTracks = (callback) ->
-	console.log "Start synchronizing Devoxx Tracks..."
+	logger.info "Start synchronizing Devoxx Tracks..."
 	request.get {url: "#{baseUrl}/rest/v1/events/#{eventId}/tracks", json: true}, (error, data, response) ->
 		tracks = _(response).sortBy (track) ->
 			track.name.toUpperCase()
@@ -70,10 +71,10 @@ processDevoxxTracks = (callback) ->
 			track.conferenceId = eventId
 			track.descriptionPlainText = utils.htmlToPlainText(track.description)
 		async.map tracks, synchronizeDevoxxTrack, (err, results) ->
-			console.log "Synchronized #{results.length} Tracks"
+			logger.info "Synchronized #{results.length} Tracks"
 
 processDevoxxSpeakers = (callback) ->
-	console.log "Start synchronizing Devoxx Speakers ..."
+	logger.info "Start synchronizing Devoxx Speakers ..."
 	request.get {url: "#{baseUrl}/rest/v1/events/#{eventId}/speakers", json: true}, (error, data, response) ->
 		speakers = _(response).sortBy (speaker) ->
 			"#{speaker.firstName} #{speaker.lastName}".toUpperCase()
@@ -86,10 +87,10 @@ processDevoxxSpeakers = (callback) ->
 			speaker.tweetHandle = speaker.tweethandle
 			delete speaker.tweethandle
 		async.map speakers, synchronizeDevoxxSpeaker, (err, results) ->
-			console.log "Synchronized #{results.length} Speakers"
+			logger.info "Synchronized #{results.length} Speakers"
 
 processDevoxxPresentations = (callback) ->
-	console.log "Start synchronizing Devoxx Presentations ..."
+	logger.info "Start synchronizing Devoxx Presentations ..."
 	request.get {url: "#{baseUrl}/rest/v1/events/#{eventId}/presentations", json: true}, (error, data, response) ->
 		presentations = _(response).sortBy (presentation) ->
 			"#{presentation.title}".toUpperCase()
@@ -106,20 +107,20 @@ processDevoxxPresentations = (callback) ->
 			else
 				presentation.speakers = []
 		async.map presentations, synchronizeDevoxxPresentation, (err, results) ->
-			console.log "Synchronized #{results.length} Presentations"
+			logger.info "Synchronized #{results.length} Presentations"
 
 processDevoxxRooms = (callback) ->
-	console.log "Start synchronizing Devoxx Rooms ..."
+	logger.info "Start synchronizing Devoxx Rooms ..."
 	request.get {url: "#{baseUrl}/rest/v1/events/#{eventId}/schedule/rooms", json: true}, (error, data, response) ->
 		rooms = _(response).sortBy (room) ->
 			"#{room.title}".toUpperCase()
 		rooms.forEach (room) ->
 			room.conferenceId = eventId
 		async.map rooms, synchronizeDevoxxRoom, (err, results) ->
-			console.log "Synchronized #{results.length} Rooms"
+			logger.info "Synchronized #{results.length} Rooms"
 
 processDevoxxSchedule = (callback) ->
-	console.log "Start synchronizing Devoxx Schedule ..."
+	logger.info "Start synchronizing Devoxx Schedule ..."
 	request.get {url: "#{baseUrl}/rest/v1/events/#{eventId}/schedule", json: true}, (error, data, response) ->
 		scheduleEntries = _(response).sortBy (scheduleEntry) ->
 			"#{scheduleEntry.fromTime}"
@@ -150,7 +151,7 @@ processDevoxxSchedule = (callback) ->
 			scheduleEntry.toTime = moment(scheduleEntry.toTime, "YYYY-MM-DD HH:mm:ss.Z")
 
 		async.map scheduleEntries, synchronizeDevoxxScheduleEntry, (err, results) ->
-			console.log "Synchronized #{results.length} Schedule Entries"
+			logger.info "Synchronized #{results.length} Schedule Entries"
 
 synchronizeDevoxxExperienceLevel = (experienceLevel, callback) ->
 	query = { name: experienceLevel.name, conferenceId: experienceLevel.conferenceId }
@@ -162,7 +163,7 @@ synchronizeDevoxxExperienceLevel = (experienceLevel, callback) ->
 			delete experienceLevel.Name
 			new ExperienceLevel(experienceLevel).save (err) ->
 			callback err, experienceLevel.name
-			console.log("New Experience Level synchronised: #{experienceLevel.name}")
+			logger.info("New Experience Level synchronised: #{experienceLevel.name}")
 
 synchronizeDevoxxPresentationType = (presentationType, callback) ->
 	query = { id: presentationType.id, conferenceId: presentationType.conferenceId }
@@ -181,7 +182,7 @@ synchronizeDevoxxPresentationType = (presentationType, callback) ->
 				callback err, presentationTypeFound.id
 		else
 			new PresentationType(presentationType).save (err) ->
-				console.log("New Presentation Type synchronized: #{presentationType.name}")
+				logger.info("New Presentation Type synchronized: #{presentationType.name}")
 				callback err, presentationType.id
 
 synchronizeDevoxxTrack = (track, callback) ->
@@ -201,7 +202,7 @@ synchronizeDevoxxTrack = (track, callback) ->
 				callback err, trackFound.id
 		else
 			new Track(track).save (err) ->
-				console.log("New Track synchronized: #{track.name}")
+				logger.info("New Track synchronized: #{track.name}")
 				callback err, track.id
 
 synchronizeDevoxxSpeaker = (speaker, callback) ->
@@ -224,7 +225,7 @@ synchronizeDevoxxSpeaker = (speaker, callback) ->
 				callback err, speakerFound.id
 		else
 			new Speaker(speaker).save (err) ->
-				console.log("New Speaker synchronized: #{speaker.firstName} #{speaker.lastName}")
+				logger.info("New Speaker synchronized: #{speaker.firstName} #{speaker.lastName}")
 				callback err, speaker.id
 
 synchronizeDevoxxPresentation = (presentation, callback) ->
@@ -248,7 +249,7 @@ synchronizeDevoxxPresentation = (presentation, callback) ->
 				callback err, presentationFound.id
 		else
 			new Presentation(presentation).save (err) ->
-				console.log("New Presentation synchronized: #{presentation.title}")
+				logger.info("New Presentation synchronized: #{presentation.title}")
 				callback err, presentation.id
 
 synchronizeDevoxxRoom = (room, callback) ->
@@ -268,7 +269,7 @@ synchronizeDevoxxRoom = (room, callback) ->
 				callback err, roomFound.id
 		else
 			new Room(room).save (err) ->
-				console.log("New Room synchronized: #{room.name}")
+				logger.info("New Room synchronized: #{room.name}")
 				callback err, room.id
 
 synchronizeDevoxxScheduleEntry = (scheduleEntry, callback) ->
@@ -295,7 +296,7 @@ synchronizeDevoxxScheduleEntry = (scheduleEntry, callback) ->
 				callback err, scheduleEntryFound.id
 		else
 			new ScheduleEntry(scheduleEntry).save (err) ->
-				console.log("New Schedule Entry synchronized: #{scheduleEntry.title}")
+				logger.info("New Schedule Entry synchronized: #{scheduleEntry.title}")
 				callback err, scheduleEntry.id
 
 

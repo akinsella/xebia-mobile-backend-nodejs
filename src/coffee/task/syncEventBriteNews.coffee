@@ -1,3 +1,4 @@
+logger = require 'winston'
 async = require 'async'
 moment = require "moment"
 request = require "request"
@@ -11,14 +12,14 @@ News = require "../model/news"
 synchronize = () ->
 	callback = (err, news) ->
 		if err
-			console.log "EventBrite Synchronization ended with error: #{err.message} - Error: #{err}"
+			logger.info "EventBrite Synchronization ended with error: #{err.message} - Error: #{err}"
 		else
-			console.log "EventBrite Synchronization ended with success ! (#{news.length} events synchronized)"
+			logger.info "EventBrite Synchronization ended with success ! (#{news.length} events synchronized)"
 
 	if config.feature.stopWatch
 		callback = utils.stopWatchCallbak callback
 
-	console.log "Start synchronizing EventBrite entries ..."
+	logger.info "Start synchronizing EventBrite entries ..."
 
 	processEventBriteEntries(callback)
 

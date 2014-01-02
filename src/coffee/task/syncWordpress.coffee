@@ -1,3 +1,4 @@
+logger = require 'winston'
 async = require 'async'
 moment = require "moment"
 request = require "request"
@@ -14,14 +15,14 @@ Author = require "../model/author"
 synchronize = () ->
 	callback = (err, results) ->
 		if err
-			console.log "Wordpress Synchronization ended with error: #{err.message} - Error: #{err}"
+			logger.info "Wordpress Synchronization ended with error: #{err.message} - Error: #{err}"
 		else
-			console.log "Wordpress Synchronization ended with success !"
+			logger.info "Wordpress Synchronization ended with success !"
 
 	if config.feature.stopWatch
 		callback = utils.stopWatchCallbak callback
 
-	console.log "Start synchronizing Wordpress data ..."
+	logger.info "Start synchronizing Wordpress data ..."
 
 	async.parallel [
 		processWordpressTags,
@@ -30,25 +31,25 @@ synchronize = () ->
 	], callback
 
 processWordpressTags = (callback) ->
-	console.log "Start synchronizing Wordpress tags ..."
+	logger.info "Start synchronizing Wordpress tags ..."
 	request.get {url: "http://blog.xebia.fr/wp-json-api/get_tag_index", json: true}, (error, data, response) ->
 		tags = _(response.tags).sortBy((tag) -> tag.title.toUpperCase())
 		async.map tags, synchronizeWordpressTag, (err, results) ->
-			console.log "Synchronized #{results.length} Wordpress tags"
+			logger.info "Synchronized #{results.length} Wordpress tags"
 
 processWordpressCategories = (callback) ->
-	console.log "Start synchronizing Wordpress categories ..."
+	logger.info "Start synchronizing Wordpress categories ..."
 	request.get {url: "http://blog.xebia.fr/wp-json-api/get_category_index", json: true}, (error, data, response) ->
 		categories = _(response.categories).sortBy( (category) -> category.title.toUpperCase())
 		async.map categories, synchronizeWordpressCategory, (err, results) ->
-			console.log "Synchronized #{results.length} Wordpress categories"
+			logger.info "Synchronized #{results.length} Wordpress categories"
 
 processWordpressAuthors = (callback) ->
-	console.log "Start synchronizing Wordpress authors ..."
+	logger.info "Start synchronizing Wordpress authors ..."
 	request.get {url: "http://blog.xebia.fr/wp-json-api/get_author_index", json: true}, (error, data, response) ->
 		authors = _(response.authors).sortBy((author) -> author.name.toUpperCase())
 		async.map authors, synchronizeWordpressAuthor, (err, results) ->
-			console.log "Synchronized #{results.length} Wordpress authors"
+			logger.info "Synchronized #{results.length} Wordpress authors"
 
 
 synchronizeWordpressTag = (tag, callback) ->
@@ -61,7 +62,7 @@ synchronizeWordpressTag = (tag, callback) ->
 			tagEntry = new Tag(tag)
 			tagEntry.save (err) ->
 				callback err, tagEntry.id
-				console.log("New tag synchronised: #{tagEntry.title}")
+				logger.info("New tag synchronised: #{tagEntry.title}")
 		else
 			callback err, tagFound.id
 
@@ -76,7 +77,7 @@ synchronizeWordpressCategory = (category, callback) ->
 			categoryEntry = new Category(category)
 			categoryEntry.save (err) ->
 				callback err, categoryEntry.id
-				console.log("New category synchronised: #{categoryEntry.title}")
+				logger.info("New category synchronised: #{categoryEntry.title}")
 		else
 			callback err, categoryFound.id
 
@@ -92,7 +93,7 @@ synchronizeWordpressAuthor = (author, callback) ->
 			authorEntry = new Author(author)
 			authorEntry.save (err) ->
 				callback err, authorEntry.id
-				console.log("New author synchronised: #{authorEntry.name}")
+				logger.info("New author synchronised: #{authorEntry.name}")
 		else
 			callback err, authorFound.id
 

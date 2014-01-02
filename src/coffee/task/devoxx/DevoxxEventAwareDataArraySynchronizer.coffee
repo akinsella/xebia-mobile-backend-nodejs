@@ -1,9 +1,11 @@
+logger = require 'winston'
+
 DevoxxDataArraySynchronizer = require './DevoxxDataArraySynchronizer'
 
 class DevoxxEventAwareDataArraySynchronizer extends DevoxxDataArraySynchronizer
 
 	constructor: (@name, @eventId) ->
-		console.log("Instanciating Devoxx Event Aware Data Array Synchronizer with name: '#{@name}' and eventId: '#{@eventId}'")
+		logger.info("Instanciating Devoxx Event Aware Data Array Synchronizer with name: '#{@name}' and eventId: '#{@eventId}'")
 		super name
 
 	baseUrl: () ->

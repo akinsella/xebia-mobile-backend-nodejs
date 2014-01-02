@@ -62,7 +62,8 @@
     "cron": "*",
     "apnagent": "*",
     "html-entities": "*",
-    "q": "*"
+    "q": "*",
+    "winston": "~0.7.2"
   },
   "devDependencies": {
     "should": "2.1.1",

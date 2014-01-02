@@ -1,10 +1,12 @@
+logger = require 'winston'
 request = require 'request'
 moment = require 'moment'
 _ = require('underscore')._
-HtmlEntities = require('html-entities');
-html5Entities = new HtmlEntities.Html5Entities()
+HtmlEntities = require 'html-entities'
 
 cache = require './cache'
+
+html5Entities = new HtmlEntities.Html5Entities()
 
 removeParameters = (url, parameters) ->
 	for parameter in parameters
@@ -56,7 +58,7 @@ sendJsonResponse = (options, data) ->
 		options.res.setHeader 'Content-Type', 'application/json'
 
 
-#	console.log "[" + options.url + "] Response sent: #{response}"
+#	logger.info "[" + options.url + "] Response sent: #{response}"
 	options.res.send(response)
 
 
@@ -91,7 +93,7 @@ responseData = (statusCode, statusMessage, data, options) ->
 
 		sendJsonResponse(options, data)
 	else
-		console.log "Status code: #{statusCode}, message: #{statusMessage}"
+		logger.info "Status code: #{statusCode}, message: #{statusMessage}"
 		options.res.send(statusMessage, statusCode)
 
 
@@ -100,14 +102,14 @@ getData = (options) ->
 		if !useCache(options)
 			fetchDataFromUrl(options)
 		else
-			console.log "[#{options.cacheKey}] Cache Key is: #{options.cacheKey}"
-			console.log "Checking if data for cache key [#{options.cacheKey}] is in cache"
+			logger.info "[#{options.cacheKey}] Cache Key is: #{options.cacheKey}"
+			logger.info "Checking if data for cache key [#{options.cacheKey}] is in cache"
 			cache.get options.cacheKey, (err, data) ->
 				if !err && data
-					console.log "[#{options.url}] A reply is in cache key: '#{options.cacheKey}', returning immediatly the reply"
+					logger.info "[#{options.url}] A reply is in cache key: '#{options.cacheKey}', returning immediatly the reply"
 					options.callback(200, "", data, options)
 				else
-					console.log "[#{options.url}] No cached reply found for key: '#{options.cacheKey}'"
+					logger.info "[#{options.url}] No cached reply found for key: '#{options.cacheKey}'"
 					fetchDataFromUrl(options)
 	catch err
 		errorMessage = err.name + ": " + err.message
@@ -123,12 +125,12 @@ processResponse = (options, error, data, response) ->
 		options.callback(404, "Not Found", undefined, options)
 	else
 		contentType = getContentType(response)
-		console.log "[#{options.url}] Http Response - Content-Type: #{contentType}"
-		console.log "[#{options.url}] Http Response - Headers: #{response.headers}"
+		logger.info "[#{options.url}] Http Response - Content-Type: #{contentType}"
+		logger.info "[#{options.url}] Http Response - Headers: #{response.headers}"
 
 		if !isContentTypeJsonOrScript(contentType)
 			errorMessage = "[#{options.url}] Content-Type is not json or javascript: Not caching data and returning response directly"
-			console.log
+			logger.info
 			options.contentType = contentType
 			options.callback(500, "Server Error: #{errorMessage}", undefined, options)
 		else
@@ -145,14 +147,14 @@ putInCacheAndSendResponse = (err, data, options) ->
 		options.callback(400, "Not Found", undefined, options)
 	else
 		jsonData = JSON.stringify(data)
-		console.log "[#{options.url}] Fetched Response from url: #{jsonData.substr(0, 256)}"
+		logger.info "[#{options.url}] Fetched Response from url: #{jsonData.substr(0, 256)}"
 		options.callback(200, "OK", jsonData, options)
 		if useCache(options)
 			cache.set(options.cacheKey, data, if options.cacheTimeout then options.cacheTimeout else 60 * 60)
 
 
 fetchDataFromUrl = (options) ->
-	console.log "[#{options.url}] Fetching data from url"
+	logger.info "[#{options.url}] Fetching data from url"
 
 	if (options.oauth)
 		options.oauth.get options.url, options.credentials.accessToken, options.credentials.accessTokenSecret, (error, data, response) ->
@@ -236,7 +238,7 @@ stopWatchCallbak = (_callback) ->
 	(err, data) ->
 		end = moment()
 		duration = moment.duration(end.diff(start)).asMilliseconds()
-		console.log "Task ended in #{duration} ms"
+		logger.info "Task ended in #{duration} ms"
 
 		_callback err, data
 

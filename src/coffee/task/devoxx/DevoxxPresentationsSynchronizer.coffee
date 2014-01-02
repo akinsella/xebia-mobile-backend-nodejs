@@ -1,3 +1,4 @@
+logger = require 'winston'
 _ = require('underscore')._
 
 utils = require '../../lib/utils'
@@ -7,8 +8,8 @@ DevoxxEventAwareDataArraySynchronizer = require './DevoxxEventAwareDataArraySync
 class DevoxxPresentationsSynchronizer extends DevoxxEventAwareDataArraySynchronizer
 
 	constructor: (eventId) ->
-		console.log("Instanciating Devoxx Presentation Synchronizer with eventId: '#{eventId}'")
-		console.log("eventId: #{eventId}")
+		logger.info("Instanciating Devoxx Presentation Synchronizer with eventId: '#{eventId}'")
+		logger.info("eventId: #{eventId}")
 		super("Presentations", eventId)
 
 	path: () ->

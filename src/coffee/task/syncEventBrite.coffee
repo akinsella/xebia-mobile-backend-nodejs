@@ -1,3 +1,4 @@
+logger = require 'winston'
 async = require 'async'
 request = require "request"
 moment = require "moment"
@@ -25,14 +26,14 @@ venueProps = [
 synchronize = () ->
 	callback = (err, news) ->
 		if err
-			console.log "EventBrite Synchronization ended with error: #{err.message} - Error: #{err}"
+			logger.info "EventBrite Synchronization ended with error: #{err.message} - Error: #{err}"
 		else
-			console.log "EventBrite Synchronization ended with success ! (#{news.length} events synchronized)"
+			logger.info "EventBrite Synchronization ended with success ! (#{news.length} events synchronized)"
 
 	if config.feature.stopWatch
 		callback = utils.stopWatchCallbak callback
 
-	console.log "Start synchronizing EventBrite entries ..."
+	logger.info "Start synchronizing EventBrite entries ..."
 
 	processEventBriteEntries(callback)
 
@@ -58,7 +59,7 @@ synchronizeEvent = (event, callback) ->
 			eventEntry.save (err) ->
 				callback err, eventEntry.id
 				apns.pushToAll "#{eventEntry.title}" , () ->
-					console.log "Pushed notification for new event wth id: '#{eventEntry.id}' and title: '#{eventEntry.title}'"
+					logger.info "Pushed notification for new event wth id: '#{eventEntry.id}' and title: '#{eventEntry.title}'"
 
 		else
 			callback err, foundEvent.id

@@ -1,3 +1,4 @@
+logger = require 'winston'
 async = require 'async'
 request = require "request"
 moment = require "moment"
@@ -11,14 +12,14 @@ News = require "../model/news"
 synchronize = () ->
 	callback = (err, news) ->
 		if err
-			console.log "Wordpress Synchronization ended with error: #{err.message} - Error: #{err}"
+			logger.info "Wordpress Synchronization ended with error: #{err.message} - Error: #{err}"
 		else
-			console.log "Wordpress Synchronization ended with success ! (#{news.length} blog posts synchronized)"
+			logger.info "Wordpress Synchronization ended with success ! (#{news.length} blog posts synchronized)"
 
 	if config.feature.stopWatch
 		callback = utils.stopWatchCallbak callback
 
-	console.log "Start synchronizing Wordpress blog post entries ..."
+	logger.info "Start synchronizing Wordpress blog post entries ..."
 
 	processWordpressRecentBlogPosts(callback)
 

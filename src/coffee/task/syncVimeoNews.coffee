@@ -1,3 +1,4 @@
+logger = require 'winston'
 async = require 'async'
 moment = require "moment"
 request = require "request"
@@ -25,14 +26,14 @@ oauth = new OAuth.OAuth(
 synchronize = () ->
 	callback = (err, news) ->
 		if err
-			console.log "Vimeo Synchronization ended with error: #{err.message} - Error: #{err}"
+			logger.info "Vimeo Synchronization ended with error: #{err.message} - Error: #{err}"
 		else
-			console.log "Vimeo Synchronization ended with success ! (#{news.length} videos synchronized)"
+			logger.info "Vimeo Synchronization ended with success ! (#{news.length} videos synchronized)"
 
 	if config.feature.stopWatch
 		callback = utils.stopWatchCallbak callback
 
-	console.log "Start synchronizing Videos entries ..."
+	logger.info "Start synchronizing Videos entries ..."
 
 	processVideos(callback)
 
@@ -41,13 +42,13 @@ processVideos = (callback) ->
 	url = "#{apiHost}?method=vimeo.videos.getAll&user_id=xebia&sort=newest&page=1&per_page=50&summary_response=true&full_response=false&format=json"
 	Cache.get('vimeo.crendentials', (err, credentials) ->
 		if err
-			console.log "Error getting OAuth request data: #{err}"
+			logger.info "Error getting OAuth request data: #{err}"
 		else if (!credentials)
-			console.log 500, "Error No Credentials stored"
+			logger.info 500, "Error No Credentials stored"
 		else
 		oauth.get url, credentials.accessToken, credentials.accessTokenSecret, (error, data, response) ->
 			if error
-				console.log 500, "Error No Credentials stored: #{error}"
+				logger.info 500, "Error No Credentials stored: #{error}"
 			else
 				data = if data then JSON.parse(data) else data
 				async.map data.videos.video, synchronizeVideoNews, callback

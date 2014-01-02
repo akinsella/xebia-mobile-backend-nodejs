@@ -1,5 +1,6 @@
+logger = require 'winston'
 async = require 'async'
-request = require "request"
+request = require 'request'
 
 utils = require '../../lib/utils'
 DataSynchronizer = require '../DataSynchronizer'
@@ -7,7 +8,7 @@ DataSynchronizer = require '../DataSynchronizer'
 class DevoxxDataArraySynchronizer extends DataSynchronizer
 
 	constructor: (name) ->
-		console.log("Instanciating Devoxx Data Array Synchronizer with name: '#{name}'")
+		logger.info("Instanciating Devoxx Data Array Synchronizer with name: '#{name}'")
 		super name
 
 	baseUrl: () -> "http://dev.cfp.devoxx.com:3000"
@@ -29,17 +30,15 @@ class DevoxxDataArraySynchronizer extends DataSynchronizer
 	modelClass: () -> undefined
 
 	synchronizeData: (callback) =>
-		console.log "Start synchronizing Devoxx Presentations ..."
-		console.log "Full Url: #{@fullUrl()}"
+		logger.info "Start synchronizing Devoxx Presentations ..."
+		logger.info "Full Url: #{@fullUrl()}"
 		request.get {url: @fullUrl(), json: true}, (error, data, response) =>
-			console.log("Transforming response ...")
-			console.log("response: #{response}")
+			logger.info("Transforming response ...")
 			items = @itemTransformer(response)
 			async.map items, @synchronizeItem, callback
 
 
 	synchronizeItem: (item, callback) =>
-		console.log("Processing item with id: #{item.id} ...")
 		@modelClass().findOne @query(item), (err, itemFound) =>
 			if err
 				callback err
@@ -50,8 +49,8 @@ class DevoxxDataArraySynchronizer extends DataSynchronizer
 				else
 					callback err, itemFound.id
 			else
-				@createStorableItem(item).save (err) ->
-					console.log("New #{@name} synchronized: #{item.title}")
+				@createStorableItem(item).save (err) =>
+					logger.info("New #{@name} synchronized: #{item.title}")
 					callback err, item.id
 
 

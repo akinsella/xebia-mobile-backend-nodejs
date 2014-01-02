@@ -1,3 +1,4 @@
+logger = require 'winston'
 cronJob = require('cron').CronJob
 
 conf = require '../conf/config'
@@ -13,7 +14,7 @@ syncVimeoNews = require './syncVimeoNews'
 syncDevoxxBelgium = require './syncDevoxxBelgium'
 
 init = () ->
-    console.log "Starting scheduler ..."
+    logger.info "Starting scheduler ..."
 
     startJob "WordpressPosts", conf.scheduler.syncWordpressPosts, syncWordpressPosts.synchronize
     startJob "WordpressNews", conf.scheduler.syncWordpress, syncWordpressNews.synchronize
@@ -24,10 +25,10 @@ init = () ->
     startJob "VimeoNews", conf.scheduler.syncVimeo, syncVimeoNews.synchronize
     startJob "DevoxxBelgium", conf.scheduler.syncDevoxxBelgium, syncDevoxxBelgium.synchronize
 
-    console.log "Scheduler started ..."
+    logger.info "Scheduler started ..."
 
 startJob = (jobName, syncJobConf, synchronizeFunction) ->
-	console.log "Starting task 'Sync #{jobName}' with cron expression: '#{syncJobConf.cron}', timezone: '#{syncJobConf.timezone}' and RunOnStart: '#{syncJobConf.runOnStart}'"
+	logger.info "Starting task 'Sync #{jobName}' with cron expression: '#{syncJobConf.cron}', timezone: '#{syncJobConf.timezone}' and RunOnStart: '#{syncJobConf.runOnStart}'"
 	syncJob = new cronJob syncJobConf.cron, synchronizeFunction, syncJobConf.runOnStart, syncJobConf.timezone
 	syncJob.start()
 

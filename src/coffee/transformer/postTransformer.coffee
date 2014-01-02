@@ -1,3 +1,4 @@
+logger = require 'winston'
 _ = require('underscore')._
 jsdom = require 'jsdom'
 async = require 'async'
@@ -57,21 +58,21 @@ transformPostContent = (post, cb) ->
 				try
 					post.structuredContent = cleanUpAttributes(processTextElements(mergeSiblingTexts(stringifyChildren(restructureChildren(filterEmptyChildren(mapChildNodes(window.document.body.childNodes, mapChildNode)))))))
 				catch e
-					console.log "Got some error: #{e.message}"
+					logger.info "Got some error: #{e.message}"
 					err = e
-					console.log( err.stack )
+					logger.info( err.stack )
 				cb(err, post)
 				window.close()
 
 processAuthorInformations = (post) ->
 	matches = post.content.match(/\[author.*\]/g)
-	#console.log "Matches: #{matches}"
+	#logger.info "Matches: #{matches}"
 
 	if matches
 		for match in matches
 			try
 				components = (/\[author.*twitter="(.*)".*username="(.*)".*urls="(.*)".*gravatar="(.*)".*lastname="(.*)".*firstname="(.*)".*\]/).exec(match)
-				console.log "Components: #{components}"
+				logger.info "Components: #{components}"
 				twitter = components[1]
 				username = components[2]
 				#		urls = components[3]
@@ -81,11 +82,11 @@ processAuthorInformations = (post) ->
 
 				post.content = post.content.replace(match, "<author username=\"#{username}\" firstname=\"#{firstname}\" lastname=\"#{lastname}\" gravatar=\"#{gravatar}\" twitter=\"#{twitter}\" />")
 			catch e
-				console.log("entering catch block")
-				console.log(e)
-				console.log("leaving catch block")
+				logger.info("entering catch block")
+				logger.info(e)
+				logger.info("leaving catch block")
 			finally
-				console.log("entering and leaving the finally block")
+				logger.info("entering and leaving the finally block")
 
 
 processLanguageInformations = (post) ->

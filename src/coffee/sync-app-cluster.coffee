@@ -1,17 +1,18 @@
-fs = require "fs"
-util = require "util"
-http = require "http"
-recluster = require "recluster"
+fs = require 'fs'
+util = require 'util'
+http = require 'http'
+recluster = require 'recluster'
+logger = require 'winston'
 
 cluster = recluster "#{__dirname}/sync-app"
 cluster.run()
 
 fs.watchFile "package.json", (curr, prev) ->
-	console.log "Package.json changed, reloading cluster..."
+	logger.info "Package.json changed, reloading cluster..."
 	cluster.reload()
 
 process.on "SIGUSR2", ->
-	console.log "Got SIGUSR2, reloading cluster..."
+	logger.info "Got SIGUSR2, reloading cluster..."
 	cluster.reload()
 
-console.log "Spawned cluster, kill -s SIGUSR2 #{process.pid} to reload"
+logger.info "Spawned cluster, kill -s SIGUSR2 #{process.pid} to reload"

@@ -1,14 +1,15 @@
-# the middleware function
+logger = require 'winston'
+
 module.exports = () ->
 	return (req, res, next) ->
-		console.log "---------------------------------------------------------"
-		console.log "Http Request - Url: ", req.url
-		console.log "Http Request - Query: ", req.query
-		console.log "Http Request - Method: ", req.method
-		console.log "Http Request - Headers: ", req.headers
-		console.log "Http Request - Body: ", req.body
-		console.log "Http Request - Raw Body: ", req.rawBody
-		console.log "---------------------------------------------------------"
+		logger.info "---------------------------------------------------------"
+		logger.info "Http Request - Url: ", req.url
+		logger.info "Http Request - Query: ", req.query
+		logger.info "Http Request - Method: ", req.method
+		logger.info "Http Request - Headers: ", req.headers
+		logger.info "Http Request - Body: ", req.body
+		logger.info "Http Request - Raw Body: ", req.rawBody
+		logger.info "---------------------------------------------------------"
 
 		next()
 		return

@@ -1,5 +1,6 @@
 mongoose = require 'mongoose'
 pureautoinc  = require 'mongoose-pureautoinc'
+logger = require 'winston'
 
 config = require '../conf/config'
 
@@ -10,16 +11,16 @@ options =
   pass: config.mongo.password
 
 url = "mongodb://#{config.mongo.hostname}:#{config.mongo.port}/#{config.mongo.dbname}"
-console.log("config: " + JSON.stringify(config))
-console.log("config: " + JSON.stringify(config.mongo))
-console.log("Mongo Url: #{url}")
+logger.info("config: " + JSON.stringify(config))
+logger.info("config: " + JSON.stringify(config.mongo))
+logger.info("Mongo Url: #{url}")
 mongoose.connect url, options
 
 
 client = mongoose.connection
 client.on 'error', console.error.bind(console, 'connection error:')
 client.once 'open', () ->
-	console.log "Connected to MongoBD on url: #{url}"
+	logger.info "Connected to MongoBD on url: #{url}"
 
 pureautoinc.init client
 

@@ -1,3 +1,4 @@
+logger = require 'winston'
 
 utils = require '../lib/utils'
 apns = require "../lib/apns"
@@ -7,13 +8,13 @@ Notification = require "../model/notification"
 
 #feedback.on "feedback", (devices) ->
 #	_(devices).each (device) ->
-#		console.log "Received feedback for deletion on timestamp: #{device.time} for device with token #{device.token}"
+#		logger.info "Received feedback for deletion on timestamp: #{device.time} for device with token #{device.token}"
 #
 #		Device.findOneAndRemove { token: device.token }, (err) ->
 #			if (err)
-#				console.log "Could not remove device with token: #{device.token}."
+#				logger.info "Could not remove device with token: #{device.token}."
 #			else
-#				console.log "Removed device with token: #{device.token}"
+#				logger.info "Removed device with token: #{device.token}"
 
 list = (req, res) ->
 	Notification.find {}, (err, notifications) ->

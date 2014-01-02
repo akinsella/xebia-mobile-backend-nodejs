@@ -1,3 +1,5 @@
+logger = require 'winston'
+
 utils = require '../lib/utils'
 db = require "../db"
 User = require "../model/user"
@@ -11,7 +13,7 @@ ROLE_ANONYMOUS = "ROLE_ANONYMOUS"
 #returning false stops any more rules from being
 #considered
 checkRoleAnonymous = (req, action) ->
-	console.log "User is authenticated: #{req.isAuthenticated()}"
+	logger.info "User is authenticated: #{req.isAuthenticated()}"
 
 	if (!req.isAuthenticated())
 		return action == ROLE_ANONYMOUS

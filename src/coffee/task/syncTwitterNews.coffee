@@ -1,3 +1,4 @@
+logger = require 'winston'
 async = require 'async'
 OAuth = require 'oauth'
 request = require "request"
@@ -13,14 +14,14 @@ config = require "../conf/config"
 synchronize = () ->
 	callback = (err, news) ->
 		if err
-			console.log "Twitter Synchronization ended with error: #{err.message} - Error: #{err}"
+			logger.info "Twitter Synchronization ended with error: #{err.message} - Error: #{err}"
 		else
-			console.log "Twitter Synchronization ended with success ! (#{news.length} tweets synchronized)"
+			logger.info "Twitter Synchronization ended with success ! (#{news.length} tweets synchronized)"
 
 	if config.feature.stopWatch
 		callback = utils.stopWatchCallbak callback
 
-	console.log "Start synchronizing Tweets entries ..."
+	logger.info "Start synchronizing Tweets entries ..."
 
 	processTweets(callback)
 
@@ -41,11 +42,11 @@ oauth2.useAuthorizationHeaderforGET(true)
 
 processTweets = (callback) ->
 	twitterUrl = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=XebiaFR&contributor_details=false&include_entities=true&include_rts=true&exclude_replies=false&count=50&exclude_replies=false"
-	console.log "Twitter Url: #{twitterUrl}"
+	logger.info "Twitter Url: #{twitterUrl}"
 
 	Cache.get('twitter.credentials', (err, credentials) ->
 		if err
-			console.log "No valid twitter credentials: #{err}"
+			logger.info "No valid twitter credentials: #{err}"
 		else if (credentials)
 			oauth2.get twitterUrl, credentials.accessToken, (error, data, response) ->
 				data = if data then JSON.parse(data) else data
@@ -54,11 +55,11 @@ processTweets = (callback) ->
 			oauth2.getOAuthAccessToken('', {'grant_type': 'client_credentials'}, (err, accessToken, refreshToken, results) ->
 				credentials = { accessToken: accessToken }
 				if err
-					console.log "Could not retrieve vimeo credentials"
+					logger.info "Could not retrieve vimeo credentials"
 				else
 					Cache.set('twitter.credentials', credentials, -1, (err) ->
 						if (err)
-							console.log "No stored twitter credentials"
+							logger.info "No stored twitter credentials"
 						else
 							oauth2.get twitterUrl, credentials.accessToken, (error, data, response) ->
 								data = if data then JSON.parse(data) else data
