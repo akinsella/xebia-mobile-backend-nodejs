@@ -15,6 +15,7 @@ describe "Devoxx Presentations Synchronizer", ->
 		sinon.stub(request, 'get').yields(null, {statusCode: 200}, presentations)
 		done()
 
+
 	after (done) ->
 		request.get.restore()
 		done()

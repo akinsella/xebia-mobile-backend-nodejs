@@ -1,3 +1,5 @@
+var path = require("path");
+
 module.exports = function(grunt) {
 
 	grunt.loadNpmTasks('grunt-contrib-coffee');
@@ -5,7 +7,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-mocha-cov');
 	grunt.loadNpmTasks('grunt-coffeelint');
 	grunt.loadNpmTasks('grunt-shell');
 	grunt.loadNpmTasks('grunt-contrib-sass');
@@ -125,10 +126,10 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		simplemocha:{
-			dev:{
+		simplemocha: {
+			dev: {
 				src:"build/test/*.js",
-				options:{
+				options: {
 					reporter: 'spec',
 					slow: 200,
 					timeout: 1000
@@ -137,15 +138,21 @@ module.exports = function(grunt) {
 		},
 		watch: {
 			coffee_dev: {
-				files:['src/coffee/**/*.coffee'],
-				tasks: ["coffee:dev"]
+				files: ['src/coffee/**/*.coffee'],
+				tasks: ["coffee:dev"],
+				options: {
+					spawn: false //important so that the task runs in the same context
+				}
 			},
 			coffee_test: {
-				files:['test/coffee/**/*.coffee'],
-				tasks: ["coffee:test"]
+				files: ['test/coffee/**/*.coffee'],
+				tasks: ["coffee:test"],
+				options: {
+					spawn: false //important so that the task runs in the same context
+				}
 			},
 			copy_dev: {
-				files:['src/javascript/**/*.js', 'data/**/*.*'],
+				files: ['src/javascript/**/*.js', 'data/**/*.*'],
 				tasks: ["copy:dev"]
 			},
 			copy_test: {
@@ -176,14 +183,49 @@ module.exports = function(grunt) {
 					'mv cobertura-coverage.xml coverage',
 					'rm -rf build-cov'
 				].join('&&')
+			},
+			coveralls: {
+				options: {
+					stdout: true
+				},
+				command: 'cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js'
 			}
 		}
 	});
 
-	grunt.registerTask('coverage', ['shell:cover']);
+	grunt.event.on('watch', function(action, filepath, target) {
+
+		console.log("\n");
+		console.log("---------------------------------");
+		console.log("--- Watch Event");
+		console.log("---------------------------------");
+		console.log(" action: " + action);
+		console.log(" filepath: " + filepath);
+		console.log(" target: " + target);
+
+		var config;
+		if (target === 'coffee_dev') {
+			config = grunt.config( "coffee" );
+
+			// Update the files.src to be the path to the modified file (relative to srcDir).
+			config.dev.src = path.relative(config.dev.cwd, filepath);
+			grunt.config("coffee", config);
+		}
+		if (target === 'coffee_test') {
+			config = grunt.config( "coffee" );
+
+			// Update the files.src to be the path to the modified file (relative to srcDir).
+			config.test.src = path.relative(config.test.cwd, filepath);
+			grunt.config("coffee", config);
+		}
+	} );
+
+
+	grunt.registerTask('cover', ['shell:cover']);
+	grunt.registerTask('coveralls', ['cover', 'shell:coveralls']);
 	grunt.registerTask('test', 'simplemocha:dev');
 	grunt.registerTask('buildDev', ['copy:dev', 'copy:public', 'coffee:dev'/*, 'coffeelint:dev'*/]);
 	grunt.registerTask('buildTest', ['copy:test', 'coffee:test'/*, 'coffeelint:test'*/]);
 	grunt.registerTask('build', ['buildDev', 'buildTest']);
-
+	grunt.registerTask('default', ['build', 'watch']);
 };

@@ -60,4 +60,8 @@ class DevoxxPresentationsSynchronizer extends DevoxxEventAwareDataArraySynchroni
 	modelClass: () ->
 		Presentation
 
+	itemTitle: (item) ->
+		"#{item.title}"
+
+
 module.exports = DevoxxPresentationsSynchronizer
