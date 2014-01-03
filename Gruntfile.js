@@ -188,7 +188,7 @@ module.exports = function(grunt) {
 				options: {
 					stdout: true
 				},
-				command: 'cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js'
+				command: 'cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js --verbose'
 			}
 		}
 	});
