@@ -16,9 +16,9 @@ class DevoxxTracksSynchronizer extends DevoxxEventAwareDataArraySynchronizer
 		"/tracks"
 
 	itemTransformer: (tracks) =>
-		tracks = _(tracks).sortBy (track) ->
+		tracks = _(tracks).sortBy (track) =>
 			track.name.toUpperCase()
-		tracks.forEach (track) ->
+		tracks.forEach (track) =>
 			track.conferenceId = @eventId
 			track.descriptionPlainText = utils.htmlToPlainText(track.description)
 		tracks
@@ -30,11 +30,10 @@ class DevoxxTracksSynchronizer extends DevoxxEventAwareDataArraySynchronizer
 		id: presentation.id
 		conferenceId: presentation.conferenceId
 
-
 	updatedData: (track) ->
 		name: track.name
-			description: track.description
-			descriptionPlainText: track.descriptionPlainText
+		description: track.description
+		descriptionPlainText: track.descriptionPlainText
 
 	itemDescription: (track) ->
 		track.name
@@ -44,10 +43,6 @@ class DevoxxTracksSynchronizer extends DevoxxEventAwareDataArraySynchronizer
 
 	modelClass: () ->
 		Track
-
-	itemTitle: (item) ->
-		"#{item.name}"
-
 
 
 module.exports = DevoxxTracksSynchronizer

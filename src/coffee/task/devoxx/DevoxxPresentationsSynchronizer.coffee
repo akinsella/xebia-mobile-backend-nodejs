@@ -16,14 +16,14 @@ class DevoxxPresentationsSynchronizer extends DevoxxEventAwareDataArraySynchroni
 		"/presentations"
 
 	itemTransformer: (presentations) =>
-		presentations = _(presentations).sortBy (presentation) ->
+		presentations = _(presentations).sortBy (presentation) =>
 			"#{presentation.title}".toUpperCase()
 		presentations.forEach (presentation) =>
 			if !presentation.room
 				presentation.room = ""
 			presentation.conferenceId = @eventId
 			if presentation.speakers
-				presentation.speakers.forEach (speaker) ->
+				presentation.speakers.forEach (speaker) =>
 					speaker.id = speaker.speakerId
 					delete speaker.speakerId
 					speaker.name = speaker.speaker
@@ -40,7 +40,6 @@ class DevoxxPresentationsSynchronizer extends DevoxxEventAwareDataArraySynchroni
 	query: (presentation) ->
 		id: presentation.id
 		conferenceId: presentation.conferenceId
-
 
 	updatedData: (presentation) ->
 		summary: presentation.summary
@@ -59,9 +58,6 @@ class DevoxxPresentationsSynchronizer extends DevoxxEventAwareDataArraySynchroni
 
 	modelClass: () ->
 		Presentation
-
-	itemTitle: (item) ->
-		"#{item.title}"
 
 
 module.exports = DevoxxPresentationsSynchronizer

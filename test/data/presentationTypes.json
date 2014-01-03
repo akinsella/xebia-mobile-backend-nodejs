@@ -1,0 +1,32 @@
+[
+	{
+		"id": "CONFERENCE",
+		"description": "<ul>\r\n<li>Each conference talk is 50 minutes long</li>\r\n<li>They're recorded for Parleys.com</li>\r\n<li>Conference speakers receive a full pass.</li>\r\n</ul>",
+		"name": "Conference"
+	},
+	{
+		"id": "UNIVERSITY",
+		"description": "<ul>\r\n<li>University talks are in depth presentations of 3 hours&nbsp; </li>\r\n<li>They are recorded for Parleys.com</li>\r\n<li>University speakers receive a full pass</li>\r\n</ul>",
+		"name": "University"
+	},
+	{
+		"id": "TOOLS_IN_ACTION",
+		"description": "<ul>\r\n<li>Tools in Action are 30 minute presentations demonstrating a programming tool. </li>\r\n</ul>\r\n<ul>\r\n<li>They're recorded for Parleys.com.&nbsp; </li>\r\n</ul>\r\n<ul>\r\n<li>Tools in Action speakers receive a full pass.</li>\r\n</ul>",
+		"name": "Tools in Action"
+	},
+	{
+		"id": "BOF",
+		"description": "<ul>\r\n<li>BOF sessions are 60 minutes long, scheduled in the evening and are informal.</li>\r\n</ul>\r\n<ul>\r\n<li>The BOF sessions are not recorded for Parleys.com</li>\r\n</ul>",
+		"name": "BOF"
+	},
+	{
+		"id": "QUICKIE",
+		"description": "<ul>\r\n<li>Short 15 minute presentations during Lunch breaks </li>\r\n<li>They are not recorded</li>\r\n</ul>",
+		"name": "Quickie"
+	},
+	{
+		"id": "LABS",
+		"description": "<ul>\r\n<li>3 hour hands-on sessions.&nbsp;&nbsp; </li>\r\n<li>They are not recorded for Parleys.com.&nbsp; </li>\r\n<li>Hands-on instructors receive a full pass.</li>\r\n</ul>",
+		"name": "Hands-on Labs"
+	}
+]

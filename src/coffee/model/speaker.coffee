@@ -3,11 +3,11 @@ mongo = require '../lib/mongo'
 Speaker = new mongo.Schema(
 	id: Number
 	conferenceId: Number
+	firstName: {type: String, "default": '', trim: true}
 	lastName: {type: String, "default": '', trim: true}
 	bio: {type: String, "default": '', trim: true}
 	company: {type: String, "default": '', trim: true}
 	imageURL: {type: String, "default": '', trim: true}
-	firstName: {type: String, "default": '', trim: true}
 	tweetHandle: {type: String, "default": '', trim: true}
 	talks: [
 		{

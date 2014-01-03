@@ -20,7 +20,7 @@ describe "Devoxx Tracks Synchronizer", ->
 		done()
 
 
-	it "it should synchronize data", (done) ->
+	it "it should synchronize Tracks", (done) ->
 		Q.nfcall(Track.remove.bind(Track), {})
 			.then () ->
 				synchronizer = new DevoxxTracksSynchronizer(10)

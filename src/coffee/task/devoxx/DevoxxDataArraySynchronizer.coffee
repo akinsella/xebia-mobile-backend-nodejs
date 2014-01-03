@@ -29,8 +29,6 @@ class DevoxxDataArraySynchronizer extends DataSynchronizer
 
 	modelClass: () -> undefined
 
-	itemTitle: (item) -> ""
-
 	synchronizeData: (callback) =>
 		logger.info "Start synchronizing Devoxx Presentations ..."
 		logger.info "Full Url: #{@fullUrl()}"
@@ -52,7 +50,7 @@ class DevoxxDataArraySynchronizer extends DataSynchronizer
 					callback err, itemFound.id
 			else
 				@createStorableItem(item).save (err) =>
-					logger.info("New #{@name} synchronized: #{@itemTitle(item)}")
+					logger.info("New #{@name} synchronized: #{@itemDescription(item)}")
 					callback err, item.id
 
 
