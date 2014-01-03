@@ -4,6 +4,7 @@ node_js:
 services: mongodb
 before_script:
   - npm install -g grunt-cli
+  - grunt clean build
 script: grunt cover
 env:
   global:
