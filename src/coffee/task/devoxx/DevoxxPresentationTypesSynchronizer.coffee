@@ -13,7 +13,7 @@ class DevoxxPresentationTypesSynchronizer extends DevoxxEventAwareDataArraySynch
 		super("PresentationTypes", eventId)
 
 	path: () ->
-		"/presentationTypes"
+		"/presentationtypes"
 
 	itemTransformer: (presentationTypes) =>
 		presentationTypes = _(presentationTypes).sortBy (presentationType) =>
@@ -32,7 +32,7 @@ class DevoxxPresentationTypesSynchronizer extends DevoxxEventAwareDataArraySynch
 	updatedData: (presentationType) ->
 		name: presentationType.name
 		description: presentationType.description
-		descriptionPlainText: presentationType.descriptionPlainText
+		descriptionPlainText: utils.htmlToPlainText(presentationType.description)
 
 	itemDescription: (presentationType) ->
 		presentationType.name

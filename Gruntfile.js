@@ -2,15 +2,6 @@ var path = require("path");
 
 module.exports = function(grunt) {
 
-	grunt.loadNpmTasks('grunt-contrib-coffee');
-	grunt.loadNpmTasks('grunt-simple-mocha');
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-clean');
-	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-coffeelint');
-	grunt.loadNpmTasks('grunt-shell');
-	grunt.loadNpmTasks('grunt-contrib-sass');
-
 	grunt.initConfig({
 		clean:{
 			dev: {
@@ -47,6 +38,17 @@ module.exports = function(grunt) {
 					}
 				]
 			},
+			'certs':{
+				files: [
+					{
+						expand: true,
+						flatten: false,
+						cwd: 'certs/',
+						src: ['xebia-apns.p12', 'xebia-apns-cert.pem', 'xebia-apns-key.pem'],
+						dest: 'build/certs/'
+					}
+				]
+			},
 			test:{
 				files: [
 					{
@@ -59,7 +61,7 @@ module.exports = function(grunt) {
 				]
 			}
 		},
-		coffee:{
+		coffee: {
 			dev:{
 				options: {
 					sourceMap: true
@@ -139,33 +141,29 @@ module.exports = function(grunt) {
 		watch: {
 			coffee_dev: {
 				files: ['src/coffee/**/*.coffee'],
-				tasks: ["coffee:dev"],
+				tasks: ['coffee:dev'],
 				options: {
 					spawn: false //important so that the task runs in the same context
 				}
 			},
 			coffee_test: {
 				files: ['test/coffee/**/*.coffee'],
-				tasks: ["coffee:test"],
+				tasks: ['coffee:test'],
 				options: {
 					spawn: false //important so that the task runs in the same context
 				}
 			},
 			copy_dev: {
 				files: ['src/javascript/**/*.js', 'data/**/*.*'],
-				tasks: ["copy:dev"]
+				tasks: ['copy:dev']
 			},
 			copy_test: {
 				files:['test/data/**/*.*'],
-				tasks: ["copy:test"]
-			},
-			sass_dev: {
-				files:['public/styles/sass/**/*.scss'],
-				tasks: ["sass:dev"]
+				tasks: ['copy:test']
 			},
 			public_dev: {
-				files:['public/**/*.*'],
-				tasks: ["copy:public"]
+				files:['public/**/*.*', 'src/sass/**/*.*'],
+				tasks: ['copy:public', 'sass:dev']
 			}
 		},
 		shell: {                                // Task
@@ -190,7 +188,21 @@ module.exports = function(grunt) {
 				},
 				command: 'cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js'
 			}
+		},
+		notify_hooks: {
+			options: {
+				enabled: false
+			}
 		}
+
+	});
+
+	var notify = require('./node_modules/grunt-notify/lib/notify-lib');
+	grunt.event.on('coffee', function(status, type, message, exception, filepath, firstLine, firstColumn) {
+		notify({
+			title: type + " - " + message,
+			message: exception + " - [" +firstLine + ":" + firstColumn + "] filepath"
+		});
 	});
 
 	grunt.event.on('watch', function(action, filepath, target) {
@@ -220,12 +232,24 @@ module.exports = function(grunt) {
 		}
 	} );
 
+	grunt.loadNpmTasks('grunt-contrib-coffee');
+	grunt.loadNpmTasks('grunt-simple-mocha');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-coffeelint');
+	grunt.loadNpmTasks('grunt-shell');
+	grunt.loadNpmTasks('grunt-contrib-sass');
+//	grunt.loadNpmTasks('grunt-notify');
 
 	grunt.registerTask('cover', ['shell:cover']);
 	grunt.registerTask('coveralls', ['cover', 'shell:coveralls']);
 	grunt.registerTask('test', 'simplemocha:dev');
-	grunt.registerTask('buildDev', ['copy:dev', 'copy:public', 'coffee:dev'/*, 'coffeelint:dev'*/]);
+	grunt.registerTask('buildDev', ['copy:dev', 'copy:public', 'copy:certs', 'coffee:dev'/*, 'coffeelint:dev'*/, 'sass:dev']);
 	grunt.registerTask('buildTest', ['copy:test', 'coffee:test'/*, 'coffeelint:test'*/]);
 	grunt.registerTask('build', ['buildDev', 'buildTest']);
 	grunt.registerTask('default', ['build', 'watch']);
+	grunt.registerTask('default', ['clean', 'build', 'watch']);
+
+//	grunt.task.run('notify_hooks');
 };

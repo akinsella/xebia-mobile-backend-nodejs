@@ -1,0 +1,11 @@
+[
+	{
+		"to": "2014-06-13",
+		"id": 12,
+		"enabled": true,
+		"location": "Business Design Center",
+		"description": "The Devoxx UK annual event.",
+		"name": "Devoxx UK 2014",
+		"from": "2014-06-12"
+	}
+]

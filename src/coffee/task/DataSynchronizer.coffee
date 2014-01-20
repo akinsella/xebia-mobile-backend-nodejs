@@ -3,7 +3,7 @@ logger = require 'winston'
 config = require '../conf/config'
 utils = require '../lib/utils'
 
-class DataArraySynchronizer
+class DataSynchronizer
 	constructor: (@name) ->
 		logger.info("Instanciating Data Synchronizer with name: '#{@name}'")
 
@@ -11,8 +11,10 @@ class DataArraySynchronizer
 		callback = (err, results) =>
 			if err
 				logger.info "#{@name} Synchronization ended with error: #{err.message} - Error: #{err}"
+				done(err)
 			else if !results
 				logger.info "#{@name} Synchronization ended with no data"
+				done(new Error("No data found"))
 			else
 				logger.info "#{@name} Synchronization ended with success (#{results.length} items) !"
 				done(err, results)
@@ -27,4 +29,4 @@ class DataArraySynchronizer
 	synchronizeData: (callback) ->
 		callback(null, null)
 
-module.exports = DataArraySynchronizer
+module.exports = DataSynchronizer

@@ -12,7 +12,7 @@ if !config
 		processNumber: process.env.INDEX_OF_PROCESS || 0
 		scheduler:
 			syncWordpress:
-				cron: '0 10,30 * * * 1-7'
+				cron: '0 10 * * * 1-7'
 #				cron: '0,30 * * * * 1-7'
 				timezone: "Europe/Paris"
 				runOnStart: true
@@ -28,17 +28,17 @@ if !config
 				timezone: "Europe/Paris"
 				runOnStart: true
 			syncEventBrite:
-				cron: '12 0 * * * 1-7'
+				cron: '0 12 * * * 1-7'
 #				cron: '0,30 * * * * 1-7'
 				timezone: "Europe/Paris"
 				runOnStart: true
 			syncVimeo:
-				cron: '8 0 * * * 1-7'
+				cron: '0 8 * * * 1-7'
 #				cron: '0,30 * * * * 1-7'
 				timezone: "Europe/Paris"
 				runOnStart: true
 			syncDevoxxBelgium:
-				cron: '0 30 * * * 1-7'
+				cron: '0 45 * * * 1-7'
 #				cron: '0,30 * * * * 1-7'
 				timezone: "Europe/Paris"
 				runOnStart: true

@@ -9,6 +9,6 @@ class DevoxxEventAwareDataArraySynchronizer extends DevoxxDataArraySynchronizer
 		super name
 
 	baseUrl: () ->
-		"http://dev.cfp.devoxx.com:3000/rest/v1/events/#{@eventId}"
+		"https://cfp.devoxx.com/rest/v1/events/#{@eventId}"
 
 module.exports = DevoxxEventAwareDataArraySynchronizer

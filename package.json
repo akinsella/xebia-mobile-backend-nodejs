@@ -49,7 +49,6 @@
     "mongoose": "*",
     "mongoose-pureautoinc": "*",
     "connect-mongo": "*",
-    "apn": "*",
     "oauth2orize": "*",
     "moment": "*",
     "oauth": "0.9.10",
@@ -74,7 +73,6 @@
     "istanbul": "0.2.1",
     "mocha-istanbul": "0.2.0",
     "coveralls": "2.6.1",
-    "blanket": "*",
     "grunt-contrib-jshint": "0.8.0",
     "grunt-contrib-uglify": "0.2.7",
     "grunt-contrib-watch": "0.5.3",
@@ -86,19 +84,13 @@
     "grunt-coffeelint": "0.0.8",
     "grunt-istanbul": "0.2.4",
     "grunt-shell": "0.6.1",
-    "grunt-contrib-sass": "0.6.0"
-  },
-  "config": {
-    "blanket": {
-      "pattern": [
-        "build"
-      ]
-    }
+    "grunt-contrib-sass": "0.6.0",
+	"grunt-notify": "0.2.17"
   },
   "scripts": {
     "prepublish": "npm prune",
     "api": "node build/api-app",
-    "sync": "node build/sy,c-app",
+    "sync": "node build/sync-app",
     "webapp": "node build/web-app",
     "test": "grunt test",
     "coverage": "make coverage",

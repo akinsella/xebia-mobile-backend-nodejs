@@ -1,21 +1,18 @@
 logger = require 'winston'
 async = require 'async'
-request = require 'request'
+fs = require 'fs'
+util = require 'util'
 
-utils = require '../../lib/utils'
-DataSynchronizer = require '../DataSynchronizer'
+utils = require '../lib/utils'
+DataSynchronizer = require './DataSynchronizer'
 
-class DevoxxDataArraySynchronizer extends DataSynchronizer
+class FileSystemDataSynchronizer extends DataSynchronizer
 
 	constructor: (name) ->
-		logger.info("Instanciating Devoxx Data Array Synchronizer with name: '#{name}'")
+		logger.info("Instanciating File System Data Array Synchronizer with name: '#{name}'")
 		super name
 
-	baseUrl: () -> "https://cfp.devoxx.com"
-
 	path: () -> ""
-
-	fullUrl: () -> "#{@baseUrl()}#{@path()}"
 
 	itemTransformer: (items) -> items
 
@@ -30,13 +27,17 @@ class DevoxxDataArraySynchronizer extends DataSynchronizer
 	modelClass: () -> undefined
 
 	synchronizeData: (callback) =>
-		logger.info "Start synchronizing Devoxx Presentations ..."
-		logger.info "Full Url: #{@fullUrl()}"
-		request.get {url: @fullUrl(), json: true}, (error, data, response) =>
-			logger.info("Transforming response ...")
-			items = @itemTransformer(response)
-			async.map items, @synchronizeItem, callback
-
+		logger.info "Start synchronizing Data ..."
+		logger.info "File path: #{@path()}"
+		fs.readFile @path(), "UTF-8", (err, response) =>
+			if err
+				callback(err)
+			else
+				logger.info("Response: #{response}")
+				response = JSON.parse(response)
+				logger.info("Transforming response ...: #{util.inspect(response)}")
+				items = @itemTransformer(response)
+				async.map items, @synchronizeItem, callback
 
 	synchronizeItem: (item, callback) =>
 		@modelClass().findOne @query(item), (err, itemFound) =>
@@ -54,4 +55,4 @@ class DevoxxDataArraySynchronizer extends DataSynchronizer
 					callback err, item.id
 
 
-module.exports = DevoxxDataArraySynchronizer
+module.exports = FileSystemDataSynchronizer

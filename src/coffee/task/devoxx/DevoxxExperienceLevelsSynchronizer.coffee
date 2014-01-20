@@ -13,7 +13,7 @@ class DevoxxExperienceLevelsSynchronizer extends DevoxxEventAwareDataArraySynchr
 		super("ExperienceLevels", eventId)
 
 	path: () ->
-		"/experienceLevels"
+		"/experiencelevels"
 
 	itemTransformer: (experienceLevels) =>
 		experienceLevels = _(experienceLevels).sortBy (experienceLevel) =>

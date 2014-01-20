@@ -20,6 +20,8 @@ class DevoxxScheduleEntriesSynchronizer extends DevoxxEventAwareDataArraySynchro
 			"#{scheduleEntry.fromTime}"
 		scheduleEntries.forEach (scheduleEntry) =>
 			scheduleEntry.conferenceId = @eventId
+			scheduleEntry.title = if scheduleEntry.title then scheduleEntry.title else ""
+			scheduleEntry.note = if scheduleEntry.note then scheduleEntry.note else ""
 			if scheduleEntry.speakers
 				scheduleEntry.speakers = _(scheduleEntry.speakers).unique()
 				scheduleEntry.speakers.forEach (speaker) =>
@@ -37,7 +39,7 @@ class DevoxxScheduleEntriesSynchronizer extends DevoxxEventAwareDataArraySynchro
 			if scheduleEntry.presentationId && scheduleEntry.title
 				scheduleEntry.presentation =
 					id: scheduleEntry.presentationId
-					title: scheduleEntry.title
+					title: if scheduleEntry.title then scheduleEntry.title else ""
 					uri: scheduleEntry.presentationUri
 			delete scheduleEntry.presentationId
 			delete scheduleEntry.presentationUri
