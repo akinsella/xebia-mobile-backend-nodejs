@@ -20,6 +20,8 @@ class DevoxxSpeakersSynchronizer extends DevoxxEventAwareDataArraySynchronizer
 			"#{speaker.firstName} #{speaker.lastName}".toUpperCase()
 		speakers.forEach (speaker) =>
 			speaker.conferenceId = @eventId
+			speaker.imageURL = speaker.imageURI
+			delete speaker.imageURI
 			speaker.tweetHandle = if speaker.tweethandle then speaker.tweethandle else ""
 			delete speaker.tweethandle
 		speakers
@@ -35,7 +37,7 @@ class DevoxxSpeakersSynchronizer extends DevoxxEventAwareDataArraySynchronizer
 		lastName: speaker.lastName
 		bio: speaker.bio
 		company: speaker.company
-		imageURI: speaker.imageURI
+		imageURL: speaker.imageURL
 		firstName: speaker.firstName
 		tweetHandle: speaker.tweetHandle
 
