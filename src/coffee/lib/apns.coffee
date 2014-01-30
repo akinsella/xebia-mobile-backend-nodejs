@@ -11,8 +11,8 @@ logger.info "Dirname: #{__dirname}"
 if config.apns.enabled
 	agent = new ApnAgent.Agent()
 	agent
-		.set('cert file', "#{__dirname}/../certs/xebia-apns-cert.pem")
-		.set('key file', "#{__dirname}/../certs/xebia-apns-key.pem")
+		.set('cert file', config.apns.certFile)
+		.set('key file', config.apns.keyFile)
 		.set('expires', '1d')
 		.set('reconnect delay', '1s')
 		.set('cache ttl', '30m')

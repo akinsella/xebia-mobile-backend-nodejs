@@ -49,6 +49,8 @@ if !config
 		apns:
 			enabled: true
 			devMode: process.env.APNS_SANDBOX_ENABLED
+			certFile: process.env.APNS_CERT_FILE
+			keyFile: process.env.APNS_KEY_FILE
 		mongo:
 			dbname: process.env.MONGO_DBNAME || "xebia-mobile-backend"
 			hostname: process.env.MONGO_HOSTNAME || "localhost"

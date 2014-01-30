@@ -1,7 +1,7 @@
 {
   "name": "xebia-mobile-backend",
   "description": "Node.js proxy for Xebia mobile applications",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "author": "Alexis Kinsella <alexis.kinsella@gmail.com>",
   "engines": {

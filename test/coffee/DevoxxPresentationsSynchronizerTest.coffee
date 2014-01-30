@@ -20,7 +20,7 @@ describe "Devoxx Presentations Synchronizer", ->
 		request.get.restore()
 		done()
 
-	it "it should synchronize Presentations", (done) ->
+	it "it should synchronize Presentations  ", (done) ->
 		Q.nfcall(Presentation.remove.bind(Presentation), {})
 			.then () ->
 				synchronizer = new DevoxxPresentationsSynchronizer(10)
