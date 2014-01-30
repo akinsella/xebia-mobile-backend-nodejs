@@ -18,7 +18,7 @@ class DevoxxSpeakersSynchronizer extends DevoxxEventAwareDataArraySynchronizer
 	itemTransformer: (speakers) =>
 		speakers = _(speakers).sortBy (speaker) =>
 			"#{speaker.firstName} #{speaker.lastName}".toUpperCase()
-		speakers.forEach (speaker) ->
+		speakers.forEach (speaker) =>
 			speaker.conferenceId = @eventId
 			speaker.tweetHandle = if speaker.tweethandle then speaker.tweethandle else ""
 			delete speaker.tweethandle
