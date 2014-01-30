@@ -1,5 +1,6 @@
 logger = require 'winston'
 _ = require('underscore')._
+moment = require 'moment'
 
 utils = require '../../lib/utils'
 ScheduleEntry = require "../../model/scheduleEntry"
