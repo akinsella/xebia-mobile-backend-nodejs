@@ -20,10 +20,6 @@ class DevoxxFrSpeakersSynchronizer extends DevoxxFrEventAwareDataArraySynchroniz
 			"#{speaker.firstName} #{speaker.lastName}".toUpperCase()
 		speakers.forEach (speaker) =>
 			speaker.conferenceId = @eventId
-			speaker.imageURL = speaker.imageURI
-			delete speaker.imageURI
-			speaker.tweetHandle = if speaker.tweethandle then speaker.tweethandle else ""
-			delete speaker.tweethandle
 		speakers
 
 	compareFields: () ->
