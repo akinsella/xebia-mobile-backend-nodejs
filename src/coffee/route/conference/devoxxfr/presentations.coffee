@@ -46,7 +46,7 @@ fetchPresentations = (callback) ->
 								name: speaker.name
 							room: schedule.room
 							type: schedule.type
-							language: schedule.language
+							language: if schedule.language then schedule.language else ""
 							experience: experience
 							track: schedule.track
 							title: schedule.title

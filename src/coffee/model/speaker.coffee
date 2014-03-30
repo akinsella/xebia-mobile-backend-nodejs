@@ -17,7 +17,7 @@ Speaker = new mongo.Schema(
 			event: {type: String, "default": '', trim: true}
 			track: {type: String, "default": '', trim: true}
 			presentationUri: {type: String, "default": '', trim: true}  # Deprecated
-			presentationId: Number
+			presentationId: String
 		}
 	]
 )
