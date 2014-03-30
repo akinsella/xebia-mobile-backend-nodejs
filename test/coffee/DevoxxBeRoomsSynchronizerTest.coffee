@@ -1,4 +1,4 @@
-DevoxxRoomsSynchronizer = require "../task/devoxx/DevoxxRoomsSynchronizer"
+DevoxxBeRoomsSynchronizer = require "../task/devoxxbe/DevoxxBeRoomsSynchronizer"
 Room = require '../model/room'
 Q = require 'q'
 util = require 'util'
@@ -8,10 +8,10 @@ fs = require 'fs'
 should = require 'should'
 mocha = require 'mocha'
 
-describe "Devoxx Rooms Synchronizer", ->
+describe "DevoxxBe Rooms Synchronizer", ->
 
 	before (done) ->
-		tracks = JSON.parse(fs.readFileSync("#{__dirname}/data/rooms.json", "UTF-8"))
+		tracks = JSON.parse(fs.readFileSync("#{__dirname}/data/devoxxbe/rooms.json", "UTF-8"))
 		sinon.stub(request, 'get').yields(null, {statusCode: 200}, tracks)
 		done()
 
@@ -23,7 +23,7 @@ describe "Devoxx Rooms Synchronizer", ->
 	it "it should synchronize Rooms", (done) ->
 		Q.nfcall(Room.remove.bind(Room), {})
 			.then () ->
-				synchronizer = new DevoxxRoomsSynchronizer(10)
+				synchronizer = new DevoxxBeRoomsSynchronizer(10)
 				Q.nfcall(synchronizer.synchronize)
 			.then (roomIds) ->
 				console.log("Saved #{roomIds.length} rooms")

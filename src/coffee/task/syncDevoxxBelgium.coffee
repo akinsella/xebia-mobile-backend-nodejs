@@ -1,8 +1,8 @@
 logger = require 'winston'
-DevoxxDataSynchronizer = require './devoxx/DevoxxDataSynchronizer'
+DevoxxBeDataSynchronizer = require './devoxxbe/DevoxxBeDataSynchronizer'
 
 synchronize = () ->
-	new DevoxxDataSynchronizer(10).synchronize()
+	new DevoxxBeDataSynchronizer(10).synchronize()
 
 module.exports =
 	synchronize: synchronize

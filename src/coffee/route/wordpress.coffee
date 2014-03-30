@@ -1,5 +1,3 @@
-jsdom = require 'jsdom'
-async = require 'async'
 fs = require 'fs'
 
 config = require '../conf/config'

@@ -1,0 +1,59 @@
+
+[
+	{
+		"id": 1,
+		"conferenceId": 11,
+		"descriptionPlainText": "",
+		"description": "",
+		"name": "Autres formats de conférence"
+	},
+	{
+		"id": 2,
+		"conferenceId": 11,
+		"descriptionPlainText": "",
+		"description": "",
+		"name": "University"
+	},
+	{
+		"id": 3,
+		"conferenceId": 11,
+		"descriptionPlainText": "",
+		"description": "",
+		"name": "Hand's on Labs"
+	},
+	{
+		"id": 4,
+		"conferenceId": 11,
+		"descriptionPlainText": "",
+		"description": "",
+		"name": "Hackaton"
+	},
+	{
+		"id": 5,
+		"conferenceId": 11,
+		"descriptionPlainText": "",
+		"description": "",
+		"name": "Tools-in-Action"
+	},
+	{
+		"id": 6,
+		"conferenceId": 11,
+		"descriptionPlainText": "",
+		"description": "",
+		"name": "Conference"
+	},
+	{
+		"id": 7,
+		"conferenceId": 11,
+		"descriptionPlainText": "",
+		"description": "",
+		"name": "Quickie"
+	},
+	{
+		"id": 8,
+		"conferenceId": 11,
+		"descriptionPlainText": "",
+		"description": "",
+		"name": "BOF (Bird of a Feather)"
+	}
+]

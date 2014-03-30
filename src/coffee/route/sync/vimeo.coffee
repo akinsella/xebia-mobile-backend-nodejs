@@ -1,5 +1,4 @@
 util = require 'util'
-async = require 'async'
 moment = require "moment"
 request = require "request"
 OAuth = require 'oauth'

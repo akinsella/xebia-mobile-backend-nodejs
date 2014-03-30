@@ -1,4 +1,4 @@
-DevoxxSpeakersSynchronizer = require "../task/devoxx/DevoxxSpeakersSynchronizer"
+DevoxxFrSpeakersSynchronizer = require "../task/devoxxfr/DevoxxFrSpeakersSynchronizer"
 Speaker = require '../model/speaker'
 Q = require 'q'
 util = require 'util'
@@ -8,10 +8,10 @@ fs = require 'fs'
 should = require 'should'
 mocha = require 'mocha'
 
-describe "Devoxx Speakers Synchronizer", ->
+describe "DevoxxFr Speakers Synchronizer", ->
 
 	before (done) ->
-		tracks = JSON.parse(fs.readFileSync("#{__dirname}/data/speakers.json", "UTF-8"))
+		tracks = JSON.parse(fs.readFileSync("#{__dirname}/data/devoxxfr/speakers.json", "UTF-8"))
 		sinon.stub(request, 'get').yields(null, {statusCode: 200}, tracks)
 		done()
 
@@ -19,16 +19,15 @@ describe "Devoxx Speakers Synchronizer", ->
 		request.get.restore()
 		done()
 
-
 	it "it should synchronize Speakers", (done) ->
 		Q.nfcall(Speaker.remove.bind(Speaker), {})
-			.then () ->
-				synchronizer = new DevoxxSpeakersSynchronizer(10)
+		.then () ->
+				synchronizer = new DevoxxFrSpeakersSynchronizer(10)
 				Q.nfcall(synchronizer.synchronize)
-			.then (speakerIds) ->
+		.then (speakerIds) ->
 				console.log("Saved #{speakerIds.length} rooms")
 				speakerIds.length.should.greaterThan 0
 				done()
-			.fail (err) ->
+		.fail (err) ->
 				throw err
-			.done()
+		.done()

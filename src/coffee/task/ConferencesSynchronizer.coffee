@@ -33,6 +33,9 @@ class ConferencesSynchronizer extends FileSystemDataSynchronizer
 		enabled: conference.enabled
 		location: conference.location
 		description: conference.description
+		iconUrl: conference.iconUrl
+		logoUrl: conference.logoUrl
+		backgroundUrl: conference.backgroundUrl
 
 	itemDescription: (conference) ->
 		conference.name

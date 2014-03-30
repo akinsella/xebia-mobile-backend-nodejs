@@ -1,4 +1,4 @@
-DevoxxExperienceLevelsSynchronizer = require "../task/devoxx/DevoxxExperienceLevelsSynchronizer"
+DevoxxBeExperienceLevelsSynchronizer = require "../task/devoxxbe/DevoxxBeExperienceLevelsSynchronizer"
 ExperienceLevel = require '../model/experienceLevel'
 Q = require 'q'
 util = require 'util'
@@ -8,10 +8,10 @@ fs = require 'fs'
 should = require 'should'
 mocha = require 'mocha'
 
-describe "Devoxx ExperienceLevels Synchronizer", ->
+describe "DevoxxBe ExperienceLevels Synchronizer", ->
 
 	before (done) ->
-		tracks = JSON.parse(fs.readFileSync("#{__dirname}/data/experienceLevels.json", "UTF-8"))
+		tracks = JSON.parse(fs.readFileSync("#{__dirname}/data/devoxxbe/experienceLevels.json", "UTF-8"))
 		sinon.stub(request, 'get').yields(null, {statusCode: 200}, tracks)
 		done()
 
@@ -23,7 +23,7 @@ describe "Devoxx ExperienceLevels Synchronizer", ->
 	it "it should synchronize ExperienceLevels", (done) ->
 		Q.nfcall(ExperienceLevel.remove.bind(ExperienceLevel), {})
 			.then () ->
-				synchronizer = new DevoxxExperienceLevelsSynchronizer(10)
+				synchronizer = new DevoxxBeExperienceLevelsSynchronizer(10)
 				Q.nfcall(synchronizer.synchronize)
 			.then (experienceLevelIds) ->
 				console.log("Saved #{experienceLevelIds.length} experienceLevels")

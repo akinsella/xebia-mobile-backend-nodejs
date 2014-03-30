@@ -42,6 +42,11 @@ if !config
 #				cron: '0,30 * * * * 1-7'
 				timezone: "Europe/Paris"
 				runOnStart: true
+			syncDevoxxFrance:
+				cron: '0 40 * * * 1-7'
+#				cron: '0,30 * * * * 1-7'
+				timezone: "Europe/Paris"
+				runOnStart: true
 		auth:
 			google:
 				callbackUrl: process.env.AUTH_GOOGLE_CALLBACK_URL || 'http://localhost'

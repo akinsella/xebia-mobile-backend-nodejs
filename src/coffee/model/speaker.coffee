@@ -1,7 +1,7 @@
 mongo = require '../lib/mongo'
 
 Speaker = new mongo.Schema(
-	id: Number
+	id: String
 	conferenceId: Number
 	firstName: {type: String, "default": '', trim: true}
 	lastName: {type: String, "default": '', trim: true}
@@ -9,11 +9,14 @@ Speaker = new mongo.Schema(
 	company: {type: String, "default": '', trim: true}
 	imageURL: {type: String, "default": '', trim: true}
 	tweetHandle: {type: String, "default": '', trim: true}
+	blog: {type: String, "default": '', trim: true}
+	lang: {type: String, "default": '', trim: true}
 	talks: [
 		{
 			title: {type: String, "default": '', trim: true}
 			event: {type: String, "default": '', trim: true}
-			presentationUri: {type: String, "default": '', trim: true}
+			track: {type: String, "default": '', trim: true}
+			presentationUri: {type: String, "default": '', trim: true}  # Deprecated
 			presentationId: Number
 		}
 	]

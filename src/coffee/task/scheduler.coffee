@@ -12,20 +12,22 @@ syncTwitterNews = require './syncTwitterNews'
 syncVimeo = require './syncVimeo'
 syncVimeoNews = require './syncVimeoNews'
 syncDevoxxBelgium = require './syncDevoxxBelgium'
+syncDevoxxFrance = require './syncDevoxxFrance'
 
 init = () ->
-    logger.info "Starting scheduler ..."
+	logger.info "Starting scheduler ..."
 
-    startJob "WordpressPosts", conf.scheduler.syncWordpressPosts, syncWordpressPosts.synchronize
-    startJob "WordpressNews", conf.scheduler.syncWordpress, syncWordpressNews.synchronize
-    startJob "EventBrite", conf.scheduler.syncVimeo, syncEventBrite.synchronize
-    startJob "EventBriteNews", conf.scheduler.syncEventBrite, syncEventBriteNews.synchronize
-    startJob "TwitterNews", conf.scheduler.syncTwitter, syncTwitterNews.synchronize
-    startJob "Vimeo", conf.scheduler.syncVimeo, syncVimeo.synchronize
-    startJob "VimeoNews", conf.scheduler.syncVimeo, syncVimeoNews.synchronize
-    startJob "DevoxxBelgium", conf.scheduler.syncDevoxxBelgium, syncDevoxxBelgium.synchronize
+	startJob "WordpressPosts", conf.scheduler.syncWordpressPosts, syncWordpressPosts.synchronize
+	startJob "WordpressNews", conf.scheduler.syncWordpress, syncWordpressNews.synchronize
+	startJob "EventBrite", conf.scheduler.syncVimeo, syncEventBrite.synchronize
+	startJob "EventBriteNews", conf.scheduler.syncEventBrite, syncEventBriteNews.synchronize
+	startJob "TwitterNews", conf.scheduler.syncTwitter, syncTwitterNews.synchronize
+	startJob "Vimeo", conf.scheduler.syncVimeo, syncVimeo.synchronize
+	startJob "VimeoNews", conf.scheduler.syncVimeo, syncVimeoNews.synchronize
+	startJob "DevoxxBelgium", conf.scheduler.syncDevoxxBelgium, syncDevoxxBelgium.synchronize
+	startJob "DevoxxFrance", conf.scheduler.syncDevoxxFrance, syncDevoxxFrance.synchronize
 
-    logger.info "Scheduler started ..."
+logger.info "Scheduler started ..."
 
 startJob = (jobName, syncJobConf, synchronizeFunction) ->
 	logger.info "Starting task 'Sync #{jobName}' with cron expression: '#{syncJobConf.cron}', timezone: '#{syncJobConf.timezone}' and RunOnStart: '#{syncJobConf.runOnStart}'"

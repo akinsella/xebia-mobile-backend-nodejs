@@ -1,0 +1,164 @@
+
+[
+	{
+		"id": "hall",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "Espace d'exposition"
+	},
+	{
+		"id": "other_room",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "Other room"
+	},
+	{
+		"id": "seine_a",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "Seine A"
+	},
+	{
+		"id": "seine_b",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "Seine B"
+	},
+	{
+		"id": "seine_c",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "Seine C"
+	},
+	{
+		"id": "auditorium",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "Auditorium"
+	},
+	{
+		"id": "el_ab",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "Ella Fitzgerald AB"
+	},
+	{
+		"id": "la_ab",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "Louis Armstrong AB"
+	},
+	{
+		"id": "la_cd",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "Louis Armstrong CD"
+	},
+	{
+		"id": "md_a",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "Miles Davis A"
+	},
+	{
+		"id": "md_b",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "Miles Davis B"
+	},
+	{
+		"id": "md_c",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "Miles Davis C"
+	},
+	{
+		"id": "foyer_bas",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "Foyer bas"
+	},
+	{
+		"id": "el_ab_th",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "E.Fitzgerald AB"
+	},
+	{
+		"id": "la_ab_th",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "L.Armstrong AB"
+	},
+	{
+		"id": "la_cd_th",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "L.Armstrong CD"
+	},
+	{
+		"id": "md_a_th",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "M.Davis A"
+	},
+	{
+		"id": "md_b_th",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "M.Davis B"
+	},
+	{
+		"id": "md_c_th",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "M.Davis C"
+	},
+	{
+		"id": "duke",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "Duke Ellington-CodeStory"
+	},
+	{
+		"id": "el_ab_full",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "Ella Fitzgerald"
+	},
+	{
+		"id": "md_full",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "M.Davis"
+	},
+	{
+		"id": "foyer_labo",
+		"capacity": 0,
+		"conferenceId": 11,
+		"locationName": "Marriot",
+		"name": "Labo"
+	}
+]

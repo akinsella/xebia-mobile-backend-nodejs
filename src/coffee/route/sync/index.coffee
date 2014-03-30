@@ -31,6 +31,7 @@ syncVimeoNewsTask = require '../../task/syncVimeoNews'
 syncTwitterNewsTask = require '../../task/syncTwitterNews'
 
 syncDevoxxBelgiumTask = require '../../task/syncDevoxxBelgium'
+syncDevoxxFranceTask = require '../../task/syncDevoxxFrance'
 
 syncWordpress = (req, res) ->
 	syncWordpressTask.synchronize()
@@ -67,6 +68,10 @@ syncTwitterNews = (req, res) ->
 syncDevoxxBelgium = (req, res) ->
 	syncDevoxxBelgiumTask.synchronize()
 	res.send 200, "Started sync for devoxx belgium data"
+
+syncDevoxxFrance = (req, res) ->
+	syncDevoxxFranceTask.synchronize()
+	res.send 200, "Started sync for devoxx france data"
 
 
 removeBlogData = (req, res) ->
@@ -133,6 +138,7 @@ module.exports =
 	syncEventBriteNews: syncEventBriteNews
 	syncTwitterNews: syncTwitterNews
 	syncDevoxxBelgium: syncDevoxxBelgium
+	syncDevoxxFrance: syncDevoxxFrance
 	removeVideos: removeVideos
 	removeEvents: removeEvents
 	removeBlogPosts: removeBlogPosts

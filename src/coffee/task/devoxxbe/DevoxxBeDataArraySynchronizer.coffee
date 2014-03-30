@@ -5,10 +5,10 @@ request = require 'request'
 utils = require '../../lib/utils'
 DataSynchronizer = require '../DataSynchronizer'
 
-class DevoxxDataArraySynchronizer extends DataSynchronizer
+class DevoxxBeDataArraySynchronizer extends DataSynchronizer
 
 	constructor: (name) ->
-		logger.info("Instanciating Devoxx Data Array Synchronizer with name: '#{name}'")
+		logger.info("Instanciating DevoxxBe Data Array Synchronizer with name: '#{name}'")
 		super name
 
 	baseUrl: () -> "https://cfp.devoxx.com"
@@ -30,7 +30,7 @@ class DevoxxDataArraySynchronizer extends DataSynchronizer
 	modelClass: () -> undefined
 
 	synchronizeData: (callback) =>
-		logger.info "Start synchronizing Devoxx Presentations ..."
+		logger.info "Start synchronizing DevoxxBe #{@name} ..."
 		logger.info "Full Url: #{@fullUrl()}"
 		request.get {url: @fullUrl(), json: true}, (error, data, response) =>
 			logger.info("Transforming response ...")
@@ -54,4 +54,4 @@ class DevoxxDataArraySynchronizer extends DataSynchronizer
 					callback err, item.id
 
 
-module.exports = DevoxxDataArraySynchronizer
+module.exports = DevoxxBeDataArraySynchronizer

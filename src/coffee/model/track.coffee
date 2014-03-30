@@ -1,7 +1,7 @@
 mongo = require '../lib/mongo'
 
 Track = new mongo.Schema(
-	id: Number
+	id: String
 	conferenceId: Number
 	name: {type: String, "default": '', trim: true}
 	description: {type: String, "default": '', trim: true}

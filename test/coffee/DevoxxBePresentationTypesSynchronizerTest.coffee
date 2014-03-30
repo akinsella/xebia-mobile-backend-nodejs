@@ -1,4 +1,4 @@
-DevoxxPresentationTypesSynchronizer = require "../task/devoxx/DevoxxPresentationTypesSynchronizer"
+DevoxxBePresentationTypesSynchronizer = require "../task/devoxxbe/DevoxxBePresentationTypesSynchronizer"
 PresentationType = require '../model/presentationType'
 Q = require 'q'
 util = require 'util'
@@ -8,10 +8,10 @@ fs = require 'fs'
 should = require 'should'
 mocha = require 'mocha'
 
-describe "Devoxx PresentationTypes Synchronizer", ->
+describe "DevoxxBe PresentationTypes Synchronizer", ->
 
 	before (done) ->
-		tracks = JSON.parse(fs.readFileSync("#{__dirname}/data/presentationTypes.json", "UTF-8"))
+		tracks = JSON.parse(fs.readFileSync("#{__dirname}/data/devoxxbe/presentationTypes.json", "UTF-8"))
 		sinon.stub(request, 'get').yields(null, {statusCode: 200}, tracks)
 		done()
 
@@ -23,7 +23,7 @@ describe "Devoxx PresentationTypes Synchronizer", ->
 	it "it should synchronize PresentationTypes", (done) ->
 		Q.nfcall(PresentationType.remove.bind(PresentationType), {})
 			.then () ->
-				synchronizer = new DevoxxPresentationTypesSynchronizer(10)
+				synchronizer = new DevoxxBePresentationTypesSynchronizer(10)
 				Q.nfcall(synchronizer.synchronize)
 			.then (presentationTypeIds) ->
 				console.log("Saved #{presentationTypeIds.length} presentationTypes")

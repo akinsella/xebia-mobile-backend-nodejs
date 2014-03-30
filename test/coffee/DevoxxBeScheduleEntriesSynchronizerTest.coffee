@@ -1,4 +1,4 @@
-DevoxxScheduleEntriesSynchronizer = require "../task/devoxx/DevoxxScheduleEntriesSynchronizer"
+DevoxxBeScheduleEntriesSynchronizer = require "../task/devoxxbe/DevoxxBeScheduleEntriesSynchronizer"
 ScheduleEntry = require '../model/scheduleEntry'
 Q = require 'q'
 util = require 'util'
@@ -8,10 +8,10 @@ fs = require 'fs'
 should = require 'should'
 mocha = require 'mocha'
 
-describe "Devoxx ScheduleEntries Synchronizer", ->
+describe "DevoxxBe ScheduleEntries Synchronizer", ->
 
 	before (done) ->
-		tracks = JSON.parse(fs.readFileSync("#{__dirname}/data/schedule.json", "UTF-8"))
+		tracks = JSON.parse(fs.readFileSync("#{__dirname}/data/devoxxbe/schedule.json", "UTF-8"))
 		sinon.stub(request, 'get').yields(null, {statusCode: 200}, tracks)
 		done()
 
@@ -23,7 +23,7 @@ describe "Devoxx ScheduleEntries Synchronizer", ->
 	it "it should synchronize ScheduleEntries", (done) ->
 		Q.nfcall(ScheduleEntry.remove.bind(ScheduleEntry), {})
 			.then () ->
-				synchronizer = new DevoxxScheduleEntriesSynchronizer(10)
+				synchronizer = new DevoxxBeScheduleEntriesSynchronizer(10)
 				Q.nfcall(synchronizer.synchronize)
 			.then (scheduleEntryIds) ->
 				console.log("Saved #{scheduleEntryIds.length} scheduleEntries")

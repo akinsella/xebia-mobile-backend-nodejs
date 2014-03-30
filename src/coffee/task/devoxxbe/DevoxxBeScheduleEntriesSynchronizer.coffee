@@ -4,12 +4,12 @@ moment = require 'moment'
 
 utils = require '../../lib/utils'
 ScheduleEntry = require "../../model/scheduleEntry"
-DevoxxEventAwareDataArraySynchronizer = require './DevoxxEventAwareDataArraySynchronizer'
+DevoxxBeEventAwareDataArraySynchronizer = require './DevoxxBeEventAwareDataArraySynchronizer'
 
-class DevoxxScheduleEntriesSynchronizer extends DevoxxEventAwareDataArraySynchronizer
+class DevoxxBeScheduleEntriesSynchronizer extends DevoxxBeEventAwareDataArraySynchronizer
 
 	constructor: (eventId) ->
-		logger.info("Instanciating Devoxx ScheduleEntries Synchronizer with eventId: '#{eventId}'")
+		logger.info("Instanciating DevoxxBe ScheduleEntries Synchronizer with eventId: '#{eventId}'")
 		logger.info("eventId: #{eventId}")
 		super("ScheduleEntries", eventId)
 
@@ -76,4 +76,4 @@ class DevoxxScheduleEntriesSynchronizer extends DevoxxEventAwareDataArraySynchro
 		ScheduleEntry
 
 
-module.exports = DevoxxScheduleEntriesSynchronizer
+module.exports = DevoxxBeScheduleEntriesSynchronizer

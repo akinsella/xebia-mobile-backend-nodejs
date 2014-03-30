@@ -8,6 +8,9 @@ Conference = new mongo.Schema(
 	description: {type: String, "default": '', trim: true}
 	name: {type: String, "default": '', trim: true}
 	from: {type: String, "default": '', trim: true}
+	iconUrl: {type: String, "default": '', trim: true}
+	logoUrl: {type: String, "default": '', trim: true}
+	backgroundUrl: {type: String, "default": '', trim: true}
 )
 
 conferenceModel = mongo.client.model 'Conference', Conference

@@ -1,7 +1,7 @@
 mongo = require '../lib/mongo'
 
 ExperienceLevel = new mongo.Schema(
-	name: {type: String, "default": '', trim: true}
+	name: String
 	conferenceId: Number
 )
 

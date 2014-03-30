@@ -3,12 +3,12 @@ _ = require('underscore')._
 
 utils = require '../../lib/utils'
 PresentationType = require "../../model/presentationType"
-DevoxxEventAwareDataArraySynchronizer = require './DevoxxEventAwareDataArraySynchronizer'
+DevoxxFrEventAwareDataArraySynchronizer = require './DevoxxFrEventAwareDataArraySynchronizer'
 
-class DevoxxPresentationTypesSynchronizer extends DevoxxEventAwareDataArraySynchronizer
+class DevoxxFrPresentationTypesSynchronizer extends DevoxxFrEventAwareDataArraySynchronizer
 
 	constructor: (eventId) ->
-		logger.info("Instanciating Devoxx PresentationTypes Synchronizer with eventId: '#{eventId}'")
+		logger.info("Instanciating DevoxxFr PresentationTypes Synchronizer with eventId: '#{eventId}'")
 		logger.info("eventId: #{eventId}")
 		super("PresentationTypes", eventId)
 
@@ -32,7 +32,7 @@ class DevoxxPresentationTypesSynchronizer extends DevoxxEventAwareDataArraySynch
 	updatedData: (presentationType) ->
 		name: presentationType.name
 		description: presentationType.description
-		descriptionPlainText: utils.htmlToPlainText(presentationType.description)
+		descriptionPlainText: presentationType.descriptionPlainText
 
 	itemDescription: (presentationType) ->
 		presentationType.name
@@ -44,4 +44,4 @@ class DevoxxPresentationTypesSynchronizer extends DevoxxEventAwareDataArraySynch
 		PresentationType
 
 
-module.exports = DevoxxPresentationTypesSynchronizer
+module.exports = DevoxxFrPresentationTypesSynchronizer

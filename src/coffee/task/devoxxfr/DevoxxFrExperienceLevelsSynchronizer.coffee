@@ -3,24 +3,22 @@ _ = require('underscore')._
 
 utils = require '../../lib/utils'
 ExperienceLevel = require "../../model/experienceLevel"
-DevoxxEventAwareDataArraySynchronizer = require './DevoxxEventAwareDataArraySynchronizer'
+DevoxxFrEventAwareDataArraySynchronizer = require './DevoxxFrEventAwareDataArraySynchronizer'
 
-class DevoxxExperienceLevelsSynchronizer extends DevoxxEventAwareDataArraySynchronizer
+class DevoxxFrExperienceLevelsSynchronizer extends DevoxxFrEventAwareDataArraySynchronizer
 
 	constructor: (eventId) ->
-		logger.info("Instanciating Devoxx ExperienceLevels Synchronizer with eventId: '#{eventId}'")
+		logger.info("Instanciating DevoxxFr ExperienceLevels Synchronizer with eventId: '#{eventId}'")
 		logger.info("eventId: #{eventId}")
 		super("ExperienceLevels", eventId)
 
 	path: () ->
-		"/experiencelevels"
+		"/experienceLevels"
 
 	itemTransformer: (experienceLevels) =>
 		experienceLevels = _(experienceLevels).sortBy (experienceLevel) =>
-			experienceLevel.Name.toUpperCase()
+			"#{experienceLevel.name}".toUpperCase()
 		experienceLevels.forEach (experienceLevel) =>
-			experienceLevel.name = experienceLevel.Name
-			delete experienceLevel.Name
 			experienceLevel.conferenceId = @eventId
 		experienceLevels
 
@@ -44,4 +42,4 @@ class DevoxxExperienceLevelsSynchronizer extends DevoxxEventAwareDataArraySynchr
 		ExperienceLevel
 
 
-module.exports = DevoxxExperienceLevelsSynchronizer
+module.exports = DevoxxFrExperienceLevelsSynchronizer

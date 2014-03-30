@@ -1,11 +1,29 @@
 [
 	{
-		"to": "2014-06-13",
+		"id": 10,
+		"enabled": true,
+		"name": "Devoxx 2013",
+		"description": "The annual Devoxx conference in Antwerp, Belgium.",
+		"from": "2013-11-11",
+		"to": "2013-11-15",
+		"location": "MetroPolis"
+	},
+	{
 		"id": 12,
 		"enabled": true,
-		"location": "Business Design Center",
 		"description": "The Devoxx UK annual event.",
 		"name": "Devoxx UK 2014",
-		"from": "2014-06-12"
+		"from": "2014-06-12",
+		"to": "2014-06-13",
+		"location": "Business Design Center"
+	},
+	{
+		"id": 11,
+		"enabled": true,
+		"name": "Devoxx FR 2014",
+		"description": "Devoxx France 2014, 16 au 18 avril 2014",
+		"from": "2014-04-16",
+		"to": "2014-04-18",
+		"location": "Hôtel Marriott ParisRive Gauche"
 	}
 ]

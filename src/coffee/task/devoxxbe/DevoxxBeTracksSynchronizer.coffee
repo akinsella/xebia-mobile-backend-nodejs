@@ -3,12 +3,12 @@ _ = require('underscore')._
 
 utils = require '../../lib/utils'
 Track = require "../../model/track"
-DevoxxEventAwareDataArraySynchronizer = require './DevoxxEventAwareDataArraySynchronizer'
+DevoxxBeEventAwareDataArraySynchronizer = require './DevoxxBeEventAwareDataArraySynchronizer'
 
-class DevoxxTracksSynchronizer extends DevoxxEventAwareDataArraySynchronizer
+class DevoxxBeTracksSynchronizer extends DevoxxBeEventAwareDataArraySynchronizer
 
 	constructor: (eventId) ->
-		logger.info("Instanciating Devoxx Tracks Synchronizer with eventId: '#{eventId}'")
+		logger.info("Instanciating DevoxxBe Tracks Synchronizer with eventId: '#{eventId}'")
 		logger.info("eventId: #{eventId}")
 		super("Tracks", eventId)
 
@@ -45,4 +45,4 @@ class DevoxxTracksSynchronizer extends DevoxxEventAwareDataArraySynchronizer
 		Track
 
 
-module.exports = DevoxxTracksSynchronizer
+module.exports = DevoxxBeTracksSynchronizer

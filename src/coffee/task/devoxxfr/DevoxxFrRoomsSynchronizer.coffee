@@ -3,17 +3,17 @@ _ = require('underscore')._
 
 utils = require '../../lib/utils'
 Room = require "../../model/room"
-DevoxxEventAwareDataArraySynchronizer = require './DevoxxEventAwareDataArraySynchronizer'
+DevoxxFrEventAwareDataArraySynchronizer = require './DevoxxFrEventAwareDataArraySynchronizer'
 
-class DevoxxRoomsSynchronizer extends DevoxxEventAwareDataArraySynchronizer
+class DevoxxFrRoomsSynchronizer extends DevoxxFrEventAwareDataArraySynchronizer
 
 	constructor: (eventId) ->
-		logger.info("Instanciating Devoxx Rooms Synchronizer with eventId: '#{eventId}'")
+		logger.info("Instanciating DevoxxFr Rooms Synchronizer with eventId: '#{eventId}'")
 		logger.info("eventId: #{eventId}")
 		super("Rooms", eventId)
 
 	path: () ->
-		"/schedule/rooms"
+		"/rooms"
 
 	itemTransformer: (rooms) =>
 		rooms = _(rooms).sortBy (room) =>
@@ -44,4 +44,4 @@ class DevoxxRoomsSynchronizer extends DevoxxEventAwareDataArraySynchronizer
 		Room
 
 
-module.exports = DevoxxRoomsSynchronizer
+module.exports = DevoxxFrRoomsSynchronizer

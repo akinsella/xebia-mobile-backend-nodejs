@@ -1,0 +1,58 @@
+[
+	{
+		"id": 1,
+		"conferenceId": 11,
+		"descriptionPlainText": "",
+		"description": "",
+		"name": "Cloud, Big Data, NoSQL"
+	},
+	{
+		"id": 2,
+		"conferenceId": 11,
+		"descriptionPlainText": "",
+		"description": "",
+		"name": "Future<Devoxx>"
+	},
+	{
+		"id": 3,
+		"conferenceId": 11,
+		"descriptionPlainText": "",
+		"description": "",
+		"name": "Java SE, Java EE"
+	},
+	{
+		"id": 4,
+		"conferenceId": 11,
+		"descriptionPlainText": "",
+		"description": "",
+		"name": "Agilité, DevOps"
+	},
+	{
+		"id": 5,
+		"conferenceId": 11,
+		"descriptionPlainText": "",
+		"description": "",
+		"name": "Web, HTML5"
+	},
+	{
+		"id": 6,
+		"conferenceId": 11,
+		"descriptionPlainText": "",
+		"description": "",
+		"name": "Langages alternatifs"
+	},
+	{
+		"id": 7,
+		"conferenceId": 11,
+		"descriptionPlainText": "",
+		"description": "",
+		"name": "Mobile"
+	},
+	{
+		"id": 8,
+		"conferenceId": 11,
+		"descriptionPlainText": "",
+		"description": "",
+		"name": "Startup & Innovation"
+	}
+]

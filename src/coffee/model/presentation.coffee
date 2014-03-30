@@ -1,7 +1,7 @@
 mongo = require '../lib/mongo'
 
 Presentation = new mongo.Schema(
-	id: Number
+	id: String
 	conferenceId: Number
 	summary: {type: String, "default": '', trim: true}
 	title: {type: String, "default": '', trim: true}
@@ -12,7 +12,7 @@ Presentation = new mongo.Schema(
 	room: {type: String, "default": '', trim: true}
 	speakers: [
 		{
-			id: Number
+			id: String
 			uri: {type: String, "default": '', trim: true}
 			name: {type: String, "default": '', trim: true}
 		}

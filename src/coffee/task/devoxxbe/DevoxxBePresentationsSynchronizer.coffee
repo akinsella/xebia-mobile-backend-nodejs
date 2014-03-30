@@ -3,12 +3,12 @@ _ = require('underscore')._
 
 utils = require '../../lib/utils'
 Presentation = require "../../model/presentation"
-DevoxxEventAwareDataArraySynchronizer = require './DevoxxEventAwareDataArraySynchronizer'
+DevoxxBeEventAwareDataArraySynchronizer = require './DevoxxBeEventAwareDataArraySynchronizer'
 
-class DevoxxPresentationsSynchronizer extends DevoxxEventAwareDataArraySynchronizer
+class DevoxxBePresentationsSynchronizer extends DevoxxBeEventAwareDataArraySynchronizer
 
 	constructor: (eventId) ->
-		logger.info("Instanciating Devoxx Presentation Synchronizer with eventId: '#{eventId}'")
+		logger.info("Instanciating DevoxxBe Presentation Synchronizer with eventId: '#{eventId}'")
 		logger.info("eventId: #{eventId}")
 		super("Presentations", eventId)
 
@@ -60,4 +60,4 @@ class DevoxxPresentationsSynchronizer extends DevoxxEventAwareDataArraySynchroni
 		Presentation
 
 
-module.exports = DevoxxPresentationsSynchronizer
+module.exports = DevoxxBePresentationsSynchronizer
