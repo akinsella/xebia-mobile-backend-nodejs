@@ -20,7 +20,7 @@ class ConferencesSynchronizer extends FileSystemDataSynchronizer
 		conferences
 
 	compareFields: () ->
-		["name", "capacity", "locationName"]
+		["name", "capacity", "from", "to", "enabled", "location", "description", "iconUrl", "logoUrl", "backgroundUrl"]
 
 	query: (conference) ->
 		id: conference.id
