@@ -3,9 +3,9 @@ mongo = require '../lib/mongo'
 Room = new mongo.Schema(
 	id: String
 	conferenceId: Number
-	name: {type: String, "default": '', trim: true}
+	name: { type: String, "default": '', trim: true }
 	capacity: Number
-	locationName: {type: String, "default": '', trim: true}
+	locationName: { type: String, "default": '', trim: true }
 )
 
 roomModel = mongo.client.model 'Room', Room

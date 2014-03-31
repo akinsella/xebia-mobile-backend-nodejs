@@ -1,3 +1,4 @@
+fs = require 'fs'
 util = require 'util'
 async = require 'async'
 request = require 'request'
@@ -17,6 +18,8 @@ Presentation = require '../model/presentation'
 Room = require '../model/room'
 ScheduleEntry = require '../model/scheduleEntry'
 Vote = require '../model/vote'
+
+roomsWithBeacons = JSON.parse(fs.readFileSync("#{__dirname}/../data/roomsWithBeacons.json"))
 
 conferences = (req, res) ->
 	Conference.find().sort("name").exec (err, conferences) ->
@@ -161,6 +164,12 @@ rooms = (req, res) ->
 				room = room.toObject()
 				delete room._id
 				delete room.__v
+
+				roomWithBeacons = _(roomsWithBeacons).find (roomWithBeacons) ->
+					roomWithBeacons.conferenceId == room.conferenceId && roomWithBeacons.roomId == room.id
+				if roomWithBeacons
+					room.beacons = roomWithBeacons.beacons
+
 				room
 			res.json rooms
 
