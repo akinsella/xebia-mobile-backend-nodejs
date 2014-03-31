@@ -16,6 +16,7 @@ Speaker = require '../model/speaker'
 Presentation = require '../model/presentation'
 Room = require '../model/room'
 ScheduleEntry = require '../model/scheduleEntry'
+Vote = require '../model/vote'
 
 conferences = (req, res) ->
 	Conference.find().sort("name").exec (err, conferences) ->
@@ -28,6 +29,56 @@ conferences = (req, res) ->
 				delete conference.__v
 				conference
 			res.json conferences
+
+
+storeVote = (req, res) ->
+	if req.get('content-type') != 'application/json'
+		res.json 500, { message: "Server error: content-type 'application/json' is missing" }
+	else if req.body == undefined
+		res.json 500, { message: "Server error: json body required" }
+	else
+		conferenceId = req.params.conferenceId
+		if (_.isArray(req.body))
+			votes = req.body
+				.filter (vote) ->
+					!vote.conferenceId || Number(vote.conferenceId) == Number(conferenceId)
+				.map (vote) ->
+					vote.conferenceId = conferenceId
+					vote.date = moment(vote.date, "YYYY-MM-DD HH:mm:ss")
+					new Vote(vote)
+			Vote.create votes, (err) ->
+				if (err)
+					res.json 500, { message: "Server error: #{err.message}" }
+				else
+					res.json 201, votes.map (vote) ->
+						vote = vote.toObject()
+						delete vote.__v
+						delete vote._id
+						vote
+		else
+			vote = req.body
+			if vote.conferenceId && Number(vote.conferenceId) != Number(conferenceId)
+				res.json 500, { message: "Server error: conferenceId is not matching: '#{vote.conferenceId}' != '#{conferenceId}'" }
+			else
+				vote.date = moment(vote.date, "YYYY-MM-DD HH:mm:ss")
+				vote = new Vote(vote)
+				vote.save (err) ->
+					if (err)
+						res.json 500, { message: "Server error: #{err.message}" }
+					else
+						vote = vote.toObject()
+						delete vote.__v
+						delete vote._id
+						res.json 201, vote
+
+
+votes = (req, res) ->
+	conferenceId = req.params.conferenceId
+	Vote.find { conferenceId: conferenceId }, (err, votes) ->
+		if err
+			res.json 500, { message: "Server error: #{err.message}" }
+		else
+			res.json votes
 
 tracks = (req, res) ->
 	conferenceId = req.params.conferenceId
@@ -163,3 +214,5 @@ module.exports =
 	rooms: rooms
 	schedule: schedule
 	scheduleByDate: scheduleByDate
+	storeVote: storeVote
+	votes: votes

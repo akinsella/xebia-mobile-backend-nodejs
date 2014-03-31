@@ -33,8 +33,7 @@ removeById = (req, res) ->
 		return
 
 module.exports =
-	create : create,
-	list : list,
-	findById : findById,
-	create : create,
+	create : create
+	list : list
+	findById : findById
 	removeById : removeById
