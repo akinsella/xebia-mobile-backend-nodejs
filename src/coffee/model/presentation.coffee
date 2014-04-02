@@ -10,6 +10,8 @@ Presentation = new mongo.Schema(
 	language: {type: String, "default": '', trim: true}
 	type: {type: String, "default": '', trim: true}
 	room: {type: String, "default": '', trim: true}
+	fromTime: Date
+	toTime: Date
 	speakers: [
 		{
 			id: String

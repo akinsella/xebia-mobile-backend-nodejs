@@ -50,6 +50,8 @@ fetchPresentations = (callback) ->
 							experience: experience
 							track: schedule.track
 							title: schedule.title
+							fromTime: schedule.fromTime
+							toTime: schedule.toTime
 							summary: schedule.summary
 
 			presentations = presentations.map (presentation) -> _.extend({ id: ++uid }, presentation)

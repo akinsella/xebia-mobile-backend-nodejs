@@ -23,7 +23,7 @@ class DevoxxFrPresentationsSynchronizer extends DevoxxFrEventAwareDataArraySynch
 		presentations
 
 	compareFields: () ->
-		["summary", "title", "track", "experience", "language", "type", "room"]
+		["summary", "title", "track", "experience", "language", "type", "room", "fromTime", "toTime"]
 
 	query: (presentation) ->
 		id: presentation.id
@@ -37,6 +37,9 @@ class DevoxxFrPresentationsSynchronizer extends DevoxxFrEventAwareDataArraySynch
 		language: presentation.language
 		type: presentation.type
 		room: presentation.room
+		fromTime: presentation.fromTime
+		toTime: presentation.toTime
+
 
 	itemDescription: (presentation) ->
 		presentation.title
