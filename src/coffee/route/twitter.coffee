@@ -164,7 +164,7 @@ shortenTweet = (tweet) ->
 	if tweet.entities
 		for eKey, entities of tweet.entities
 			indices = []
-			entities.foreach (entity) ->
+			entities.forEach (entity) ->
 				entity.indices = {start:entity.indices[0], end:entity.indices[1]}
 
 	if tweet.user
