@@ -69,16 +69,19 @@ fetchSchedules = (callback) ->
 			else
 				if response.statusCode == 304
 					logger.info("Schedules have not change, use those in cache ...")
-					cachedSchedules = cachedSchedules.map (schedule) ->
+					cachedSchedules.links.map (schedule) ->
 						schedule.day = url.parse(schedule.href).pathname.removeLastSlash().split("/").last()
 					async.map cachedSchedules.links, fetchSchedule, (err, schedules) ->
 						callback(err, mapSchedules(schedules))
 				else
 					logger.info("Schedules has change or were never fetched, put it in cache ...")
+					fetchedSchedules.etag = response.headers["etag"]
 					cache.set schedulesCacheKey, fetchedSchedules, 3600, (err) ->
 						if err
 							callback(err)
 						else
+							fetchedSchedules.links.map (schedule) ->
+								schedule.day = url.parse(schedule.href).pathname.removeLastSlash().split("/").last()
 							async.map fetchedSchedules.links, fetchSchedule, (err, schedules) ->
 								callback(err, mapSchedules(schedules))
 

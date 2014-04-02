@@ -53,6 +53,7 @@ fetchSpeakers = (callback) ->
 						callback(err, mapSpeakers(speakers))
 				else
 					logger.info("Speakers has change or were never fetched, put it in cache ...")
+					fetchedSpeakers.etag = response.headers["etag"]
 					cache.set speakersCacheKey, fetchedSpeakers, 3600, (err) ->
 						if err
 							callback(err)
