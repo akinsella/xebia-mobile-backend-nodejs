@@ -107,8 +107,8 @@ app.get "/api/v#{config.apiVersion}/cards/categories/:id", card.cardsByCategoryI
 app.get "/api/v#{config.apiVersion}/cards/:id", card.cardById
 
 app.get "/api/v#{config.apiVersion}/conferences", conference.conferences
-app.post "/api/v#{config.apiVersion}/conferences/:conferenceId/vote", conference.storeVote
-app.get "/api/v#{config.apiVersion}/conferences/:conferenceId/votes", conference.votes
+app.post "/api/v#{config.apiVersion}/conferences/:conferenceId/rating", conference.storeRating
+app.get "/api/v#{config.apiVersion}/conferences/:conferenceId/ratings", conference.ratings
 app.get "/api/v#{config.apiVersion}/conferences/:conferenceId/experienceLevels", conference.experienceLevels
 app.get "/api/v#{config.apiVersion}/conferences/:conferenceId/presentationTypes", conference.presentationTypes
 app.get "/api/v#{config.apiVersion}/conferences/:conferenceId/tracks", conference.tracks

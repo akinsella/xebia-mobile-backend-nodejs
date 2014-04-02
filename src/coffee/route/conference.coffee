@@ -4,7 +4,7 @@ async = require 'async'
 request = require 'request'
 OAuth = require 'oauth'
 _ = require('underscore')._
-moment = require 'moment'
+moment = require('moment-timezone')
 
 Cache = require '../lib/cache'
 utils = require '../lib/utils'
@@ -17,7 +17,7 @@ Speaker = require '../model/speaker'
 Presentation = require '../model/presentation'
 Room = require '../model/room'
 ScheduleEntry = require '../model/scheduleEntry'
-Vote = require '../model/vote'
+Rating = require '../model/rating'
 
 roomsWithBeacons = JSON.parse(fs.readFileSync("#{__dirname}/../data/roomsWithBeacons.json"))
 
@@ -34,54 +34,60 @@ conferences = (req, res) ->
 			res.json conferences
 
 
-storeVote = (req, res) ->
-	if req.get('content-type') != 'application/json'
+storeRating = (req, res) ->
+	if req.get('content-type').indexOf('application/json') < 0
 		res.json 500, { message: "Server error: content-type 'application/json' is missing" }
 	else if req.body == undefined
 		res.json 500, { message: "Server error: json body required" }
 	else
 		conferenceId = req.params.conferenceId
 		if (_.isArray(req.body))
-			votes = req.body
-				.filter (vote) ->
-					!vote.conferenceId || Number(vote.conferenceId) == Number(conferenceId)
-				.map (vote) ->
-					vote.conferenceId = conferenceId
-					vote.date = moment(vote.date, "YYYY-MM-DD HH:mm:ss")
-					new Vote(vote)
-			Vote.create votes, (err) ->
+			ratings = req.body
+				.filter (rating) ->
+					!rating.conferenceId || Number(rating.conferenceId) == Number(conferenceId)
+				.map (rating) ->
+					rating.conferenceId = conferenceId
+					rating.date = moment(rating.date, "YYYY-MM-DD HH:mm:ssZZ", "Europe/Paris")
+					new Rating(rating)
+			Rating.create ratings, (err) ->
 				if (err)
 					res.json 500, { message: "Server error: #{err.message}" }
 				else
-					res.json 201, votes.map (vote) ->
-						vote = vote.toObject()
-						delete vote.__v
-						delete vote._id
-						vote
+					res.json 201, ratings.map (rating) ->
+						rating = rating.toObject()
+						rating.date = moment(rating.date).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ssZZ")
+						delete rating.__v
+						delete rating._id
+						rating
 		else
-			vote = req.body
-			if vote.conferenceId && Number(vote.conferenceId) != Number(conferenceId)
-				res.json 500, { message: "Server error: conferenceId is not matching: '#{vote.conferenceId}' != '#{conferenceId}'" }
+			rating = req.body
+			if rating.conferenceId && Number(rating.conferenceId) != Number(conferenceId)
+				res.json 500, { message: "Server error: conferenceId is not matching: '#{rating.conferenceId}' != '#{conferenceId}'" }
 			else
-				vote.date = moment(vote.date, "YYYY-MM-DD HH:mm:ss")
-				vote = new Vote(vote)
-				vote.save (err) ->
+				rating.date = moment(rating.date, "YYYY-MM-DD HH:mm:ssZZ", "Europe/Paris")
+				rating = new Rating(rating)
+				rating.save (err) ->
 					if (err)
 						res.json 500, { message: "Server error: #{err.message}" }
 					else
-						vote = vote.toObject()
-						delete vote.__v
-						delete vote._id
-						res.json 201, vote
+						rating = rating.toObject()
+						rating.date = moment(rating.date).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ssZZ")
+						delete rating.__v
+						delete rating._id
+						res.json 201, rating
 
 
-votes = (req, res) ->
+ratings = (req, res) ->
 	conferenceId = req.params.conferenceId
-	Vote.find { conferenceId: conferenceId }, (err, votes) ->
+	Rating.find { conferenceId: conferenceId }, (err, fetchedRatings) ->
 		if err
 			res.json 500, { message: "Server error: #{err.message}" }
 		else
-			res.json votes
+			res.json fetchedRatings.map (rating) ->
+				rating = rating.toObject()
+				delete rating.__v
+				delete rating._id
+				rating
 
 tracks = (req, res) ->
 	conferenceId = req.params.conferenceId
@@ -223,5 +229,5 @@ module.exports =
 	rooms: rooms
 	schedule: schedule
 	scheduleByDate: scheduleByDate
-	storeVote: storeVote
-	votes: votes
+	storeRating: storeRating
+	ratings: ratings

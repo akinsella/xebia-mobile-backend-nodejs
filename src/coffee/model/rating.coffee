@@ -2,20 +2,20 @@ pureautoinc  = require 'mongoose-pureautoinc'
 
 mongo = require '../lib/mongo'
 
-Vote = new mongo.Schema(
+Rating = new mongo.Schema(
 	deviceId: String
 	conferenceId: Number
 	date: {type: Date, required:true, index:true}
-	vote: Number
+	rating: Number
 	presentationId: String
 )
 
-voteModel = mongo.client.model 'Vote', Vote
+ratingModel = mongo.client.model 'Rating', Rating
 
-Vote.plugin(pureautoinc.plugin, {
-	model: 'Vote',
+Rating.plugin(pureautoinc.plugin, {
+	model: 'Rating',
 	field: 'id'
 });
 
-module.exports = voteModel
+module.exports = ratingModel
 
