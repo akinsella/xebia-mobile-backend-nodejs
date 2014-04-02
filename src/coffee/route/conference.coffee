@@ -157,6 +157,8 @@ presentations = (req, res) ->
 					delete speaker._id
 				presentation.tags.forEach (tag) ->
 					delete tag._id
+				presentation.fromTime = moment(presentation.fromTime).format("YYYY-MM-DD HH:mm:ss")
+				presentation.toTime = moment(presentation.toTime).format("YYYY-MM-DD HH:mm:ss")
 				presentation
 			res.json presentations
 
