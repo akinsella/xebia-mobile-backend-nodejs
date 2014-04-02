@@ -1,8 +1,1 @@
-[{
-	"roomId": "seine_a",
-	"conferenceId": 11,
-	"beacons":[
-		{ "uuid": "B9407F30-F5F8-466E-AFF9-25556B57FE6D" },
-		{ "uuid": "A58271F9-E1E4-577D-13A6-4A8A43EFA23B" }
-	]
-}]
+[]
