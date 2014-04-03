@@ -31,7 +31,7 @@ conferences = (req, res) ->
 				delete conference._id
 				delete conference.__v
 				conference
-			res.json conferences
+			res.jsonp conferences
 
 
 storeRating = (req, res) ->
@@ -53,7 +53,7 @@ storeRating = (req, res) ->
 				if (err)
 					res.json 500, { message: "Server error: #{err.message}" }
 				else
-					res.json 201, ratings.map (rating) ->
+					res.jsonp 201, ratings.map (rating) ->
 						rating = rating.toObject()
 						rating.date = moment(rating.date).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ssZZ")
 						delete rating.__v
@@ -74,7 +74,7 @@ storeRating = (req, res) ->
 						rating.date = moment(rating.date).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ssZZ")
 						delete rating.__v
 						delete rating._id
-						res.json 201, rating
+						res.jsonp 201, rating
 
 
 ratings = (req, res) ->
@@ -83,7 +83,7 @@ ratings = (req, res) ->
 		if err
 			res.json 500, { message: "Server error: #{err.message}" }
 		else
-			res.json fetchedRatings.map (rating) ->
+			res.jsonp fetchedRatings.map (rating) ->
 				rating = rating.toObject()
 				delete rating.__v
 				delete rating._id
@@ -100,7 +100,7 @@ tracks = (req, res) ->
 				delete track._id
 				delete track.__v
 				track
-			res.json tracks
+			res.jsonp tracks
 
 presentationTypes = (req, res) ->
 	conferenceId = req.params.conferenceId
@@ -113,7 +113,7 @@ presentationTypes = (req, res) ->
 				delete presentationType._id
 				delete presentationType.__v
 				presentationType
-			res.json presentationTypes
+			res.jsonp presentationTypes
 
 experienceLevels = (req, res) ->
 	conferenceId = req.params.conferenceId
@@ -126,7 +126,7 @@ experienceLevels = (req, res) ->
 				delete experienceLevel._id
 				delete experienceLevel.__v
 				experienceLevel
-			res.json experienceLevels
+			res.jsonp experienceLevels
 
 speakers = (req, res) ->
 	conferenceId = req.params.conferenceId
@@ -141,7 +141,7 @@ speakers = (req, res) ->
 				speaker.talks.forEach (talk) ->
 					delete talk._id
 				speaker
-			res.json speakers
+			res.jsonp speakers
 
 presentations = (req, res) ->
 	conferenceId = req.params.conferenceId
@@ -160,7 +160,7 @@ presentations = (req, res) ->
 				presentation.fromTime = moment(presentation.fromTime).format("YYYY-MM-DD HH:mm:ss")
 				presentation.toTime = moment(presentation.toTime).format("YYYY-MM-DD HH:mm:ss")
 				presentation
-			res.json presentations
+			res.jsonp presentations
 
 rooms = (req, res) ->
 	conferenceId = req.params.conferenceId
@@ -179,7 +179,7 @@ rooms = (req, res) ->
 					room.beacons = roomWithBeacons.beacons
 
 				room
-			res.json rooms
+			res.jsonp rooms
 
 schedule = (req, res) ->
 	conferenceId = req.params.conferenceId
@@ -197,7 +197,7 @@ schedule = (req, res) ->
 				scheduleEntry.toTime = moment(scheduleEntry.toTime).format("YYYY-MM-DD HH:mm:ss")
 				scheduleEntry
 
-			res.json scheduleEntries
+			res.jsonp scheduleEntries
 
 scheduleByDate = (req, res) ->
 	conferenceId = req.params.conferenceId
@@ -219,7 +219,7 @@ scheduleByDate = (req, res) ->
 				scheduleEntry.toTime = moment(scheduleEntry.toTime).format("YYYY-MM-DD HH:mm:ss")
 				scheduleEntry
 
-			res.json scheduleEntries
+			res.jsonp scheduleEntries
 
 module.exports =
 	conferences: conferences
