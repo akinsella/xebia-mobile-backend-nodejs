@@ -37,7 +37,7 @@ fetchRooms = (callback) ->
 			rooms = _.uniq(
 				schedule.map (schedule) ->
 					id: schedule.roomId
-					capacity: 0
+					capacity: if schedule.roomCapacity then schedule.roomCapacity else 0
 					conferenceId: eventId
 					locationName: locationName
 					name: schedule.room

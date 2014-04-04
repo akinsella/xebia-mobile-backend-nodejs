@@ -115,6 +115,7 @@ mapSchedules = (schedules) ->
 							note: ""
 							roomId: slot.roomId
 							room: slot.roomName
+							roomCapacity: slot.roomCapacity
 							kind: "Talk"
 							type: slot.talk.talkType
 							code: slot.slotId
@@ -135,6 +136,7 @@ mapSchedules = (schedules) ->
 							note: ""
 							roomId: slot.roomId
 							room: slot.roomName
+							roomCapacity: slot.roomCapacity
 							kind: "Break"
 							type: slot.break.id
 							code: slot.slotId
