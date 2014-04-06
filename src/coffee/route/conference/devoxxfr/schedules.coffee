@@ -120,6 +120,7 @@ mapSchedules = (schedules) ->
 							type: slot.talk.talkType
 							code: slot.slotId
 							title: slot.talk.title
+							language: slot.talk.lang
 							track: slot.talk.track
 							summary: slot.talk.summary
 						else
@@ -134,6 +135,7 @@ mapSchedules = (schedules) ->
 								[]
 							partnerSlot: false
 							note: ""
+							language: ""
 							roomId: slot.roomId
 							room: slot.roomName
 							roomCapacity: slot.roomCapacity
