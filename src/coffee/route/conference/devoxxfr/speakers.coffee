@@ -68,22 +68,25 @@ mapSpeakers = (speakers) ->
 		speakers
 	else
 		speakers.map (speaker) ->
-			id: speaker.uuid
-			conferenceId: eventId
-			talks: speaker.acceptedTalks.map (talk) ->
-				presentationId: talk.id
-				presentationUri: (_(talk.links).find (link) -> link.rel == "http://cfp.devoxx.fr/api/profile/talk").href
-				title: talk.title
-				event: talk.talkType
-				track: talk.track
-			firstName: speaker.firstName
-			lastName: speaker.lastName
-			company: speaker.company
-			bio: speaker.bio
-			imageURL: speaker.avatarURL
-			tweetHandle: speaker.twitter
-			lang: speaker.lang
-			blog: speaker.blog
+			if !speaker
+				speaker
+			else
+				id: speaker.uuid
+				conferenceId: eventId
+				talks: speaker.acceptedTalks.map (talk) ->
+					presentationId: talk.id
+					presentationUri: (_(talk.links).find (link) -> link.rel == "http://cfp.devoxx.fr/api/profile/talk").href
+					title: talk.title
+					event: talk.talkType
+					track: talk.track
+				firstName: speaker.firstName
+				lastName: speaker.lastName
+				company: speaker.company
+				bio: speaker.bio
+				imageURL: speaker.avatarURL
+				tweetHandle: speaker.twitter
+				lang: speaker.lang
+				blog: speaker.blog
 
 
 

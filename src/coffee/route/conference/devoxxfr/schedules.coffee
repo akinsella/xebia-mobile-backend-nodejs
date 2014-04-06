@@ -97,64 +97,67 @@ mapSchedules = (schedules, speakers) ->
 	else
 		_.flatten(
 			schedules.map (schedule) ->
-				schedule.slots
-					.filter (slot) ->
-						slot.talk || slot.break
-					.map (slot) ->
-						if slot.talk
-							conferenceId: eventId
-							fromTime: moment(slot.fromTimeMillis).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
-							id: slot.talk.id
-							toTime: moment(slot.toTimeMillis).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
-							presentation:
+				if !schedule
+					schedule
+				else
+					schedule.slots
+						.filter (slot) ->
+							slot.talk || slot.break
+						.map (slot) ->
+							if slot.talk
+								conferenceId: eventId
+								fromTime: moment(slot.fromTimeMillis).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
 								id: slot.talk.id
-								uri: ""
+								toTime: moment(slot.toTimeMillis).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
+								presentation:
+									id: slot.talk.id
+									uri: ""
+									title: slot.talk.title
+								speakers:
+									slot.talk.speakers.map (speaker) ->
+										speakerId = url.parse(speaker.link.href).pathname.removeLastSlash().split("/").last()
+										foundSpeaker = _(speakers).find (speaker) ->
+											speaker.id == speakerId
+										speaker =
+											id: speakerId
+											uri: ""
+											name: speaker.name
+										if foundSpeaker
+											speaker.imageURL = foundSpeaker.imageURL
+										speaker
+								partnerSlot: false
+								note: ""
+								roomId: slot.roomId
+								room: slot.roomName
+								roomCapacity: slot.roomCapacity
+								kind: "Talk"
+								type: slot.talk.talkType
+								code: slot.slotId
 								title: slot.talk.title
-							speakers:
-								slot.talk.speakers.map (speaker) ->
-									speakerId = url.parse(speaker.link.href).pathname.removeLastSlash().split("/").last()
-									foundSpeaker = _(speakers).find (speaker) ->
-										speaker.id == speakerId
-									speaker =
-										id: speakerId
-										uri: ""
-										name: speaker.name
-									if foundSpeaker
-										speaker.imageURL = foundSpeaker.imageURL
-									speaker
-							partnerSlot: false
-							note: ""
-							roomId: slot.roomId
-							room: slot.roomName
-							roomCapacity: slot.roomCapacity
-							kind: "Talk"
-							type: slot.talk.talkType
-							code: slot.slotId
-							title: slot.talk.title
-							language: slot.talk.lang
-							track: slot.talk.track
-							summary: slot.talk.summary
-						else
-							conferenceId: eventId
-							fromTime: moment(slot.fromTimeMillis).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
-							id: slot.slotId
-							toTime: moment(slot.toTimeMillis).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
-							presentation:
-								uri: ""
-								title: ""
-							speakers:
-								[]
-							partnerSlot: false
-							note: ""
-							language: ""
-							roomId: slot.roomId
-							room: slot.roomName
-							roomCapacity: slot.roomCapacity
-							kind: "Break"
-							type: slot.break.id
-							code: slot.slotId
-							title: slot.break.nameFR
-							track: ""
+								language: slot.talk.lang
+								track: slot.talk.track
+								summary: slot.talk.summary
+							else
+								conferenceId: eventId
+								fromTime: moment(slot.fromTimeMillis).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
+								id: slot.slotId
+								toTime: moment(slot.toTimeMillis).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
+								presentation:
+									uri: ""
+									title: ""
+								speakers:
+									[]
+								partnerSlot: false
+								note: ""
+								language: ""
+								roomId: slot.roomId
+								room: slot.roomName
+								roomCapacity: slot.roomCapacity
+								kind: "Break"
+								type: slot.break.id
+								code: slot.slotId
+								title: slot.break.nameFR
+								track: ""
 		)
 
 
