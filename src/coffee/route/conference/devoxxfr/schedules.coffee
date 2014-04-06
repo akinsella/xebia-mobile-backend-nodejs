@@ -12,7 +12,7 @@ moment = require 'moment-timezone'
 
 cache = require '../../../lib/cache'
 utils = require '../../../lib/utils'
-
+speakers = require './speakers'
 
 
 ##################################################################################
@@ -56,38 +56,42 @@ schedules = (req, res) ->
 fetchSchedules = (callback) ->
 	schedulesCacheKey = "conference-#{eventId}-schedules"
 
-	cache.get schedulesCacheKey, (err, cachedSchedules) ->
-		headers = { "Accept-language": "fr-FR", "User-Agent": userAgent }
-		if !err && cachedSchedules && cachedSchedules.etag
-			headers["If-None-Match"] = cachedSchedules.etag
+	speakers.fetchSpeakers (err, fetchedSpeakers) ->
+		if err
+			callback(err)
+		else
+			cache.get schedulesCacheKey, (err, cachedSchedules) ->
+				headers = { "Accept-language": "fr-FR", "User-Agent": userAgent }
+				if !err && cachedSchedules && cachedSchedules.etag
+					headers["If-None-Match"] = cachedSchedules.etag
 
-		schedulesURL = "#{baseUrl}/schedules"
-		logger.info("Fetching info for schedules with url: #{schedulesURL}")
-		request.get { url: schedulesURL, json: true, headers: headers }, (error, response, fetchedSchedules) ->
-			if error
-				callback(error)
-			else
-				if response.statusCode == 304
-					logger.info("Schedules have not change, use those in cache ...")
-					cachedSchedules.links.map (schedule) ->
-						schedule.day = url.parse(schedule.href).pathname.removeLastSlash().split("/").last()
-					async.map cachedSchedules.links, fetchSchedule, (err, schedules) ->
-						callback(err, mapSchedules(schedules))
-				else
-					logger.info("Schedules has change or were never fetched, put it in cache ...")
-					fetchedSchedules.etag = response.headers["etag"]
-					cache.set schedulesCacheKey, fetchedSchedules, 3600, (err) ->
-						if err
-							callback(err)
-						else
-							fetchedSchedules.links.map (schedule) ->
+				schedulesURL = "#{baseUrl}/schedules"
+				logger.info("Fetching info for schedules with url: #{schedulesURL}")
+				request.get { url: schedulesURL, json: true, headers: headers }, (error, response, fetchedSchedules) ->
+					if error
+						callback(error)
+					else
+						if response.statusCode == 304
+							logger.info("Schedules have not change, use those in cache ...")
+							cachedSchedules.links.map (schedule) ->
 								schedule.day = url.parse(schedule.href).pathname.removeLastSlash().split("/").last()
-							async.map fetchedSchedules.links, fetchSchedule, (err, schedules) ->
-								callback(err, mapSchedules(schedules))
+							async.map cachedSchedules.links, fetchSchedule, (err, schedules) ->
+								callback(err, mapSchedules(schedules, fetchedSpeakers))
+						else
+							logger.info("Schedules has change or were never fetched, put it in cache ...")
+							fetchedSchedules.etag = response.headers["etag"]
+							cache.set schedulesCacheKey, fetchedSchedules, 3600, (err) ->
+								if err
+									callback(err)
+								else
+									fetchedSchedules.links.map (schedule) ->
+										schedule.day = url.parse(schedule.href).pathname.removeLastSlash().split("/").last()
+									async.map fetchedSchedules.links, fetchSchedule, (err, schedules) ->
+										callback(err, mapSchedules(schedules, fetchedSpeakers))
 
 
 
-mapSchedules = (schedules) ->
+mapSchedules = (schedules, speakers) ->
 	if !schedules
 		schedules
 	else
@@ -108,9 +112,16 @@ mapSchedules = (schedules) ->
 								title: slot.talk.title
 							speakers:
 								slot.talk.speakers.map (speaker) ->
-									id: url.parse(speaker.link.href).pathname.removeLastSlash().split("/").last()
-									uri: ""
-									name: speaker.name
+									speakerId = url.parse(speaker.link.href).pathname.removeLastSlash().split("/").last()
+									foundSpeaker = _(speakers).find (speaker) ->
+										speaker.id == speakerId
+									speaker =
+										id: speakerId
+										uri: ""
+										name: speaker.name
+									if foundSpeaker
+										speaker.imageURL = foundSpeaker.imageURL
+									speaker
 							partnerSlot: false
 							note: ""
 							roomId: slot.roomId
