@@ -150,7 +150,7 @@ categoryPosts = (req, res) ->
 datePosts = (req, res) ->
 	year = req.params.year
 	month = req.params.month
-	processRequest req, res, "#{baseUrl}/wp-json-api/get_date_posts_sync_data/?date=#{year}#{month}$&count=1000"
+	processRequest req, res, "#{baseUrl}/wp-json-api/get_date_posts_sync_data/?date=#{year}#{month}&count=1000"
 
 module.exports =
 	tags : tags,

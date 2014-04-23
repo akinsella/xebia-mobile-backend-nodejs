@@ -69,22 +69,27 @@ app.configure 'production', () ->
 	app.use express.errorHandler()
 
 
-speakers = require './route/conference/devoxxfr/speakers'
-schedules = require './route/conference/devoxxfr/schedules'
-presentationTypes = require './route/conference/devoxxfr/presentationTypes'
-experienceLevels = require './route/conference/devoxxfr/experienceLevels'
-rooms = require './route/conference/devoxxfr/rooms'
-tracks = require './route/conference/devoxxfr/tracks'
-presentations = require './route/conference/devoxxfr/presentations'
+devoxxfrSpeakers = require './route/conference/devoxxfr/speakers'
+devoxxfrSchedule = require './route/conference/devoxxfr/schedules'
+devoxxfrPresentationTypes = require './route/conference/devoxxfr/presentationTypes'
+devoxxfrExperienceLevels = require './route/conference/devoxxfr/experienceLevels'
+devoxxfrRooms = require './route/conference/devoxxfr/rooms'
+devoxxfrTracks = require './route/conference/devoxxfr/tracks'
+devoxxfrPresentations = require './route/conference/devoxxfr/presentations'
+
+mixitSpeakers = require './route/conference/mixit/speakers'
 
 
-app.get "/mashup/conferences/11/speakers", speakers.speakers
-app.get "/mashup/conferences/11/schedule", schedules.schedules
-app.get "/mashup/conferences/11/presentationTypes", presentationTypes.presentationTypes
-app.get "/mashup/conferences/11/experienceLevels", experienceLevels.experienceLevels
-app.get "/mashup/conferences/11/rooms", rooms.rooms
-app.get "/mashup/conferences/11/tracks", tracks.tracks
-app.get "/mashup/conferences/11/presentations", presentations.presentations
+
+app.get "/mashup/conferences/11/speakers", devoxxfrSpeakers.speakers
+app.get "/mashup/conferences/11/schedule", devoxxfrSchedule.schedules
+app.get "/mashup/conferences/11/presentationTypes", devoxxfrPresentationTypes.presentationTypes
+app.get "/mashup/conferences/11/experienceLevels", devoxxfrExperienceLevels.experienceLevels
+app.get "/mashup/conferences/11/rooms", devoxxfrRooms.rooms
+app.get "/mashup/conferences/11/tracks", devoxxfrTracks.tracks
+app.get "/mashup/conferences/11/presentations", devoxxfrPresentations.presentations
+
+app.get "/mashup/conferences/13/speakers", mixitSpeakers.speakers
 
 
 httpServer = app.listen app.get('port')
