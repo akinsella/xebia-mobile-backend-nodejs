@@ -4,48 +4,67 @@
 
 logger = require 'winston'
 _ = require('underscore')._
-
-schedules = require './schedules'
-
+async = require 'async'
+request = require 'request'
+url = require 'url'
+moment = require 'moment-timezone'
+Q = require 'q'
 
 ##################################################################################
 # Constants
 ##################################################################################
 
-eventId = 11
+eventId = 13
+talksURL = "http://www.mix-it.fr/api/talks"
+lightningTalksURL = "http://www.mix-it.fr/api/lightningtalks"
+
 
 ##################################################################################
 # Schedules
 ##################################################################################
 
 tracks = (req, res) ->
-	fetchTracks (err, track) ->
-		res.json track unless err
-		res.send 500, err.message if err
+	Q.spread [
+		Q.nfcall(fetchTalks)
+		Q.nfcall(fetchLightningTalks)
+	], (fetchedTalks, fetchedLightningTalks) ->
+		for talk in fetchedLightningTalks
+			fetchedTalks.push talk
+
+		tracks = _(fetchedTalks)
+			.uniq()
+			.filter (track) ->
+				track != "" && track != undefined
+			.map (track) ->
+				id: if track then track.toUpperCase().replace(/\ /g, "_") else ""
+				conferenceId: eventId
+				descriptionPlainText: ""
+				description: ""
+				name: track.name
+
+		res.json tracks
+	.fail (err) ->
+		logger.info "Error - Message: #{err}"
+	.done()
 
 
-
-fetchTracks = (callback) ->
-	uid = 0
-	schedules.fetchSchedules (err, schedule) ->
-		if err
-			callback(err)
+fetchTalks = (callback) ->
+	request.get { url: talksURL, json: true }, (error, response, fetchedTalks) ->
+		if error
+			callback(error)
 		else
-			tracks = _.uniq(
-					schedule
-						.map (schedule) ->
-							conferenceId: eventId
-							descriptionPlainText: ""
-							description: ""
-							name: schedule.track
-						.filter (track) -> track.name
-				, (track) -> track.name)
+			callback undefined, fetchedTalks.map (talk) ->
+				talk.track
 
-			tracks = tracks.map (track) -> _.extend({ id: ++uid }, track)
 
-			callback(undefined, tracks)
+fetchLightningTalks = (callback) ->
+	request.get { url: lightningTalksURL, json: true }, (error, response, fetchedTalks) ->
+		if error
+			callback(error)
+		else
+			callback undefined, fetchedTalks.map (talk) ->
+				talk.track ? talk.track = "default"
 
 
 module.exports =
 	tracks: tracks
-	fetchTracks: fetchTracks
