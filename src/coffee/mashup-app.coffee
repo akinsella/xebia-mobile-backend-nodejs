@@ -1,6 +1,7 @@
 start = new Date()
 
 logger = require 'winston'
+Q = require 'q'
 
 config = require './conf/config'
 
@@ -78,7 +79,8 @@ devoxxfrTracks = require './route/conference/devoxxfr/tracks'
 devoxxfrPresentations = require './route/conference/devoxxfr/presentations'
 
 mixitSpeakers = require './route/conference/mixit/speakers'
-
+mixitSchedule = require './route/conference/mixit/schedules'
+mixitRooms = require './route/conference/mixit/rooms'
 
 
 app.get "/mashup/conferences/11/speakers", devoxxfrSpeakers.speakers
@@ -90,6 +92,8 @@ app.get "/mashup/conferences/11/tracks", devoxxfrTracks.tracks
 app.get "/mashup/conferences/11/presentations", devoxxfrPresentations.presentations
 
 app.get "/mashup/conferences/13/speakers", mixitSpeakers.speakers
+app.get "/mashup/conferences/13/schedule", mixitSchedule.schedules
+app.get "/mashup/conferences/13/rooms", mixitRooms.rooms
 
 
 httpServer = app.listen app.get('port')

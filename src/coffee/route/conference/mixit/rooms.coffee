@@ -4,18 +4,19 @@
 
 logger = require 'winston'
 _ = require('underscore')._
-
-schedules = require './schedules'
-
-
+async = require 'async'
+request = require 'request'
+url = require 'url'
+moment = require 'moment-timezone'
+Q = require 'q'
 
 ##################################################################################
 # Constants
 ##################################################################################
 
-eventId = 11
-locationName = "Marriot"
-
+eventId = 13
+talksURL = "http://www.mix-it.fr/api/talks"
+lightningTalksURL = "http://www.mix-it.fr/api/lightningtalks"
 
 
 ##################################################################################
@@ -23,29 +24,47 @@ locationName = "Marriot"
 ##################################################################################
 
 rooms = (req, res) ->
-	fetchRooms (err, room) ->
-		res.json room unless err
-		res.send 500, err.message if err
+	Q.spread [
+		Q.nfcall(fetchTalks)
+		Q.nfcall(fetchLightningTalks)
+	], (fetchedTalks, fetchedLightningTalks) ->
+		for talk in fetchedLightningTalks
+			fetchedTalks.push talk
+
+		rooms = _(fetchedTalks)
+			.uniq()
+			.filter (room) ->
+				room != "" || room != undefined
+			.map (room) ->
+				id: if room then room.toUpperCase().replace(/\ /g, "_") else ""
+				capacity: 0
+				conferenceId: eventId
+				locationName: ""
+				name: room
+
+		res.json rooms
+	.fail (err) ->
+		logger.info "Error - Message: #{err}"
+	.done()
 
 
-
-fetchRooms = (callback) ->
-	schedules.fetchSchedules (err, schedule) ->
-		if err
-			callback(err)
+fetchTalks = (callback) ->
+	request.get { url: talksURL, json: true }, (error, response, fetchedTalks) ->
+		if error
+			callback(error)
 		else
-			rooms = _.uniq(
-				schedule.map (schedule) ->
-					id: schedule.roomId
-					capacity: if schedule.roomCapacity then schedule.roomCapacity else 0
-					conferenceId: eventId
-					locationName: locationName
-					name: schedule.room
-			, (room) -> room.id)
+			callback undefined, fetchedTalks.map (talk) ->
+				talk.room
 
-			callback(undefined, rooms)
+
+fetchLightningTalks = (callback) ->
+	request.get { url: lightningTalksURL, json: true }, (error, response, fetchedTalks) ->
+		if error
+			callback(error)
+		else
+			callback undefined, fetchedTalks.map (talk) ->
+				talk.room
 
 
 module.exports =
 	rooms: rooms
-	fetchRooms: fetchRooms

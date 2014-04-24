@@ -8,20 +8,16 @@ async = require 'async'
 request = require 'request'
 Q = require 'q'
 
-cache = require '../../../lib/cache'
-utils = require '../../../lib/utils'
-
 
 
 ##################################################################################
 # Constants
 ##################################################################################
 
-eventId = 11
+eventId = 13
 speakersURL = "http://www.mix-it.fr/api/members/speakers"
 talksURL = "http://www.mix-it.fr/api/talks"
 lightningTalksURL = "http://www.mix-it.fr/api/lightningtalks"
-userAgent =	"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.3 Safari/534.53.10"
 
 
 
@@ -31,8 +27,8 @@ userAgent =	"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3
 
 speakers = (req, res) ->
 	Q.spread [
-		Q.nfcall(fetchSpeakers),
-		Q.nfcall(fetchTalks),
+		Q.nfcall(fetchSpeakers)
+		Q.nfcall(fetchTalks)
 		Q.nfcall(fetchLightningTalks)
 	], (fetchedSpeakers, fetchedTalks, fetchedLightningTalks) ->
 		for talk in fetchedLightningTalks
@@ -107,4 +103,3 @@ mapTalk = (talk) ->
 
 module.exports =
 	speakers: speakers
-	fetchSpeakers: fetchSpeakers
