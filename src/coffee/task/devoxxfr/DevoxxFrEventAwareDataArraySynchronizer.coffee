@@ -9,7 +9,7 @@ class DevoxxFrEventAwareDataArraySynchronizer extends DevoxxFrDataArraySynchroni
 		super name, conferenceName, year
 
 	baseUrl: () ->
-#		"http://backend.mobile.xebia.io/mashup/conferences/#{@conferenceName}/#{@year}"
-		"http://dev.xebia.fr:8001/mashup/conferences/#{@conferenceName}/#{@year}"
+		"http://backend.mobile.xebia.io/mashup/conferences/#{@conferenceName}/#{@year}"
+#		"http://dev.xebia.fr:8001/mashup/conferences/#{@conferenceName}/#{@year}"
 
 module.exports = DevoxxFrEventAwareDataArraySynchronizer
