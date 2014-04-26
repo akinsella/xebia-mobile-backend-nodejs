@@ -30,7 +30,7 @@ interestsURL = "http://www.mix-it.fr/api/interests"
 schedules = (req, res) ->
 	Q.spread [
 		Q.nfcall(fetchTalks, talksURL)
-		Q.nfcall(fetchTalks, lightningTalksURL)
+#		Q.nfcall(fetchTalks, lightningTalksURL)
 		Q.nfcall(fetchSpeakers)
 		Q.nfcall(fetchInterests)
 	], (fetchedTalks, fetchedLightningTalks, fetchedSpeakers, fetchedInterests) ->

@@ -29,7 +29,7 @@ speakers = (req, res) ->
 	Q.spread [
 		Q.nfcall(fetchSpeakers)
 		Q.nfcall(fetchTalks, talksURL)
-		Q.nfcall(fetchTalks, lightningTalksURL)
+#		Q.nfcall(fetchTalks, lightningTalksURL)
 	], (fetchedSpeakers, fetchedTalks, fetchedLightningTalks) ->
 		for talk in fetchedLightningTalks
 			fetchedTalks.push talk
