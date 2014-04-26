@@ -37,7 +37,7 @@
 	},
 	{
 		"id": 13,
-		"enabled": false,
+		"enabled": true,
 		"description": "MixIT",
 		"name": "MixIT 2014",
 		"from": "2014-04-29",
