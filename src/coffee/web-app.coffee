@@ -76,6 +76,9 @@ app.configure ->
 	logger.info "Environment: #{app.get('env')}"
 	app.set 'port', config.port or process.env.PORT or 9000
 
+	app.disable "x-powered-by"
+
+
 #	app.use connectDomain()
 	app.use (req, res, next) ->
 		return next() unless gracefullyClosing
@@ -95,15 +98,16 @@ app.configure ->
 	app.use express.cookieParser()
 
 	app.use express.session(
-		secret: process.env.SESSION_SECRET,
-		maxAge: new Date(Date.now() + 3600000),
+		secret: process.env.SESSION_SECRET
+		maxAge: new Date(Date.now() + 3600000)
+		key: "sessionId"
 		store: new MongoStore(
-			db: config.mongo.dbname,
-			host: config.mongo.hostname,
-			port: config.mongo.port,
-			username: config.mongo.username,
-			password: config.mongo.password,
-			collection: "sessions",
+			db: config.mongo.dbname
+			host: config.mongo.hostname
+			port: config.mongo.port
+			username: config.mongo.username
+			password: config.mongo.password
+			collection: "sessions"
 			auto_reconnect: true
 		)
 	)

@@ -32,6 +32,7 @@ gracefullyClosing = false
 app.configure ->
 	logger.info "Environment: #{app.get('env')}"
 	app.set 'port', config.port or process.env.PORT or 8000
+	app.disable "x-powered-by"
 
 #	app.use connectDomain()
 	app.use (req, res, next) ->
