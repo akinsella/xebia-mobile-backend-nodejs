@@ -65,17 +65,43 @@ syncTwitterNews = (req, res) ->
 	syncVimeoNewsTask.synchronize()
 	res.send 200, "Started sync for Twitter news"
 
-syncDevoxxBelgium = (req, res) ->
+
+syncDevoxx10 = (req, res) ->
+	syncDevoxxBelgiumTask.synchronize(1, 2010)()
+	res.send 200, "Started sync for Devoxx 2010 data"
+
+syncDevoxx11 = (req, res) ->
+	syncDevoxxBelgiumTask.synchronize(4, 2011)()
+	res.send 200, "Started sync for Devoxx 2011 data"
+
+syncDevoxx12 = (req, res) ->
+	syncDevoxxBelgiumTask.synchronize(7, 2012)()
+	res.send 200, "Started sync for Devoxx 2012 data"
+
+syncDevoxx13 = (req, res) ->
 	syncDevoxxBelgiumTask.synchronize(10, 2013)()
-	res.send 200, "Started sync for Devoxx Belgium data"
+	res.send 200, "Started sync for Devoxx 2013 data"
 
-syncDevoxxFrance = (req, res) ->
+syncDevoxxFR12 = (req, res) ->
+	syncDevoxxBelgiumTask.synchronize(6, 2013)()
+	res.send 200, "Started sync for Devoxx France 2012 data"
+syncDevoxxFR13 = (req, res) ->
+	syncDevoxxBelgiumTask.synchronize(8, 2013)()
+	res.send 200, "Started sync for Devoxx France 2013 data"
+syncDevoxxFR14 = (req, res) ->
 	syncDevoxxFranceTask.synchronize(11, "devoxxfr", 2014)()
-	res.send 200, "Started sync for Devoxx France data"
+	res.send 200, "Started sync for Devoxx France 2014 data"
 
-syncMixIT = (req, res) ->
+syncDevoxxUK13 = (req, res) ->
+	syncDevoxxBelgiumTask.synchronize(9, 2014)()
+	res.send 200, "Started sync for Devoxx Uk 2013 data"
+syncDevoxxUK14 = (req, res) ->
+	syncDevoxxBelgiumTask.synchronize(12, 2014)()
+	res.send 200, "Started sync for Devoxx Uk 2014 data"
+
+syncMixIT14 = (req, res) ->
 	syncDevoxxFranceTask.synchronize(13, "mixit", 2014)()
-	res.send 200, "Started sync for MixIT data"
+	res.send 200, "Started sync for Mix-IT 2014 data"
 
 
 removeBlogData = (req, res) ->
@@ -141,9 +167,16 @@ module.exports =
 	syncEventBrite: syncEventBrite
 	syncEventBriteNews: syncEventBriteNews
 	syncTwitterNews: syncTwitterNews
-	syncDevoxxBelgium: syncDevoxxBelgium
-	syncDevoxxFrance: syncDevoxxFrance
-	syncMixIT: syncMixIT
+	syncDevoxx10: syncDevoxx10
+	syncDevoxx11: syncDevoxx11
+	syncDevoxx12: syncDevoxx12
+	syncDevoxx13: syncDevoxx13
+	syncDevoxxFR12: syncDevoxxFR12
+	syncDevoxxFR13: syncDevoxxFR13
+	syncDevoxxFR14: syncDevoxxFR14
+	syncDevoxxUK13: syncDevoxxUK13
+	syncDevoxxUK14: syncDevoxxUK14
+	syncMixIT: syncMixIT14
 	removeVideos: removeVideos
 	removeEvents: removeEvents
 	removeBlogPosts: removeBlogPosts

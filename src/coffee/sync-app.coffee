@@ -81,16 +81,16 @@ app.configure ->
 	app.use requestLogger()
 	app.use express.cookieParser()
 	app.use express.session(
-		secret: process.env.SESSION_SECRET,
+		secret: process.env.SESSION_SECRET
 		key: "sessionId"
-		maxAge: new Date(Date.now() + 3600000),
+		maxAge: new Date(Date.now() + 3600000)
 		store: new MongoStore(
-			db: config.mongo.dbname,
-			host: config.mongo.hostname,
-			port: config.mongo.port,
-			username: config.mongo.username,
-			password: config.mongo.password,
-			collection: "sessions",
+			db: config.mongo.dbname
+			host: config.mongo.hostname
+			port: config.mongo.port
+			username: config.mongo.username
+			password: config.mongo.password
+			collection: "sessions"
 			auto_reconnect: true
 		)
 	)
@@ -135,8 +135,18 @@ app.get "/sync/vimeo", security.ensureAuthenticated, sync.syncVimeo
 app.get "/sync/vimeo/news", security.ensureAuthenticated, sync.syncVimeoNews
 app.delete "/sync/videos", security.ensureAuthenticated, sync.removeVideos
 
-app.get "/sync/conferences/devoxxbe/2013", security.ensureAuthenticated, sync.syncDevoxxBelgium
-app.get "/sync/conferences/devoxxfr/2014", security.ensureAuthenticated, sync.syncDevoxxFrance
+app.get "/sync/conferences/devoxx/2010", security.ensureAuthenticated, sync.syncDevoxx10
+app.get "/sync/conferences/devoxx/2011", security.ensureAuthenticated, sync.syncDevoxx11
+app.get "/sync/conferences/devoxx/2012", security.ensureAuthenticated, sync.syncDevoxx12
+app.get "/sync/conferences/devoxx/2013", security.ensureAuthenticated, sync.syncDevoxx13
+
+app.get "/sync/conferences/devoxxfr/2012", security.ensureAuthenticated, sync.syncDevoxxFR12
+app.get "/sync/conferences/devoxxfr/2013", security.ensureAuthenticated, sync.syncDevoxxFR13
+app.get "/sync/conferences/devoxxfr/2014", security.ensureAuthenticated, sync.syncDevoxxFR14
+
+app.get "/sync/conferences/devoxxuk/2013", security.ensureAuthenticated, sync.syncDevoxxUK13
+app.get "/sync/conferences/devoxxuk/2014", security.ensureAuthenticated, sync.syncDevoxxUK14
+
 app.get "/sync/conferences/mixit/2014", security.ensureAuthenticated, sync.syncMixIT
 
 app.get "/sync/twitter/news", security.ensureAuthenticated, sync.syncTwitterNews

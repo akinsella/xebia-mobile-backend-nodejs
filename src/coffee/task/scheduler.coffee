@@ -25,9 +25,16 @@ init = () ->
 	startJob "TwitterNews", conf.scheduler.syncTwitter, syncTwitterNews.synchronize
 	startJob "Vimeo", conf.scheduler.syncVimeo, syncVimeo.synchronize
 	startJob "VimeoNews", conf.scheduler.syncVimeo, syncVimeoNews.synchronize
-	startJob "DevoxxBelgium 2013", conf.scheduler.syncDevoxxBelgium, syncDevoxxBelgium.synchronize(10, 2013)
-	startJob "DevoxxFrance 2014", conf.scheduler.syncDevoxxFrance, syncDevoxxFrance.synchronize(11, "devoxxfr", 2014)
-	startJob "MixIT 2014", conf.scheduler.syncMixIT, syncMixIT.synchronize(13, "mixit", 2014)
+#	startJob "Devoxx Belgium 2010", conf.scheduler.syncDevoxxBelgium, syncDevoxxBelgium.synchronize(1, 2010)
+#	startJob "Devoxx Belgium 2011", conf.scheduler.syncDevoxxBelgium, syncDevoxxBelgium.synchronize(4, 2011)
+#	startJob "Devoxx France 2012", conf.scheduler.syncDevoxxBelgium, syncDevoxxBelgium.synchronize(6, 2012)
+#	startJob "Devoxx Belgium 2012", conf.scheduler.syncDevoxxBelgium, syncDevoxxBelgium.synchronize(7, 2012)
+#	startJob "Devoxx France 2013", conf.scheduler.syncDevoxxBelgium, syncDevoxxBelgium.synchronize(8, 2013)
+#	startJob "Devoxx Uk 2013", conf.scheduler.syncDevoxxBelgium, syncDevoxxBelgium.synchronize(9, 2013)
+#	startJob "Devoxx Belgium 2013", conf.scheduler.syncDevoxxBelgium, syncDevoxxBelgium.synchronize(10, 2013)
+#	startJob "Devoxx France 2014", conf.scheduler.syncDevoxxFrance, syncDevoxxFrance.synchronize(11, "devoxxfr", 2014)
+#	startJob "Devoxx Uk 2014", conf.scheduler.syncDevoxxFrance, syncDevoxxFrance.synchronize(11, "devoxxfr", 2014)
+#	startJob "Mix-IT 2014", conf.scheduler.syncMixIT, syncMixIT.synchronize(13, "mixit", 2014)
 
 logger.info "Scheduler started ..."
 
