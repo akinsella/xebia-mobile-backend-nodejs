@@ -28,8 +28,8 @@ lightningTalksURL = "http://www.mix-it.fr/api/lightningtalks"
 speakers = (req, res) ->
 	Q.spread [
 		Q.nfcall(fetchSpeakers)
-		Q.nfcall(fetchTalks)
-		Q.nfcall(fetchLightningTalks)
+		Q.nfcall(fetchTalks, talksURL)
+		Q.nfcall(fetchTalks, lightningTalksURL)
 	], (fetchedSpeakers, fetchedTalks, fetchedLightningTalks) ->
 		for talk in fetchedLightningTalks
 			fetchedTalks.push talk
@@ -60,23 +60,13 @@ fetchSpeakers = (callback) ->
 				mapSpeaker(speaker)
 
 
-fetchTalks = (callback) ->
+fetchTalks = (talksURL, callback) ->
 	request.get { url: talksURL, json: true }, (error, response, fetchedTalks) ->
 		if error
 			callback(error)
 		else
 			callback undefined, fetchedTalks.map (talk) ->
 				mapTalk(talk)
-
-
-fetchLightningTalks = (callback) ->
-	request.get { url: lightningTalksURL, json: true }, (error, response, fetchedTalks) ->
-		if error
-			callback(error)
-		else
-			callback undefined, fetchedTalks.map (talk) ->
-				mapTalk(talk)
-
 
 mapSpeaker = (speaker) ->
 	if !speaker

@@ -25,8 +25,8 @@ lightningTalksURL = "http://www.mix-it.fr/api/lightningtalks"
 
 tracks = (req, res) ->
 	Q.spread [
-		Q.nfcall(fetchTalks)
-		Q.nfcall(fetchLightningTalks)
+		Q.nfcall(fetchTalks, talksURL)
+		Q.nfcall(fetchTalks, lightningTalksURL)
 	], (fetchedTalks, fetchedLightningTalks) ->
 		for talk in fetchedLightningTalks
 			fetchedTalks.push talk
@@ -36,11 +36,11 @@ tracks = (req, res) ->
 			.filter (track) ->
 				track != "" && track != undefined
 			.map (track) ->
-				id: if track then track.toUpperCase().replace(/\ /g, "_") else ""
+				id: track.toUpperCase().replace(/[\ \-]/g, "_")
 				conferenceId: eventId
 				descriptionPlainText: ""
 				description: ""
-				name: track.name
+				name: track
 
 		res.json tracks
 	.fail (err) ->
@@ -48,22 +48,13 @@ tracks = (req, res) ->
 	.done()
 
 
-fetchTalks = (callback) ->
+fetchTalks = (talksURL, callback) ->
 	request.get { url: talksURL, json: true }, (error, response, fetchedTalks) ->
 		if error
 			callback(error)
 		else
 			callback undefined, fetchedTalks.map (talk) ->
-				talk.track
-
-
-fetchLightningTalks = (callback) ->
-	request.get { url: lightningTalksURL, json: true }, (error, response, fetchedTalks) ->
-		if error
-			callback(error)
-		else
-			callback undefined, fetchedTalks.map (talk) ->
-				talk.track ? talk.track = "default"
+				talk.track ?= "Mix-IT"
 
 
 module.exports =

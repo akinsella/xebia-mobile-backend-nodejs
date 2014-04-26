@@ -7,10 +7,10 @@ DevoxxFrEventAwareDataArraySynchronizer = require './DevoxxFrEventAwareDataArray
 
 class DevoxxFrSpeakersSynchronizer extends DevoxxFrEventAwareDataArraySynchronizer
 
-	constructor: (eventId) ->
-		logger.info("Instanciating DevoxxFr Speakers Synchronizer with eventId: '#{eventId}'")
+	constructor: (eventId, conferenceName, year) ->
+		logger.info("Instanciating #{conferenceName} #{year} Speakers Synchronizer with eventId: '#{eventId}'")
 		logger.info("eventId: #{eventId}")
-		super("Speakers", eventId)
+		super("Speakers", eventId, conferenceName, year)
 
 	path: () ->
 		"/speakers"

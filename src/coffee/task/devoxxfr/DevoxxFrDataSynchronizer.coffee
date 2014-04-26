@@ -16,31 +16,31 @@ DevoxxFrScheduleEntriesSynchronizer = require './DevoxxFrScheduleEntriesSynchron
 
 class DevoxxFrDataSynchronizer extends DataSynchronizer
 
-	constructor: (@eventId) ->
-		super "Instanciating DevoxxFr Data Synchronizer for eventId: #{@eventId}"
+	constructor: (@eventId, @conferenceName, @year) ->
+		super "Instanciating #{@conferenceName} #{@year} Data Synchronizer for eventId: #{@eventId}"
 
 	synchronizeData: (callback) =>
 		logger.info "Start synchronizing Devoxx data ..."
-		callback = (err, results) ->
+		callback = (err, results) =>
 			if err
-				logger.info "DevoxxFr Synchronization ended with error: #{err.message} - Error: #{err}"
+				logger.info "#{@conferenceName} #{@year} Synchronization ended with error: #{err.message} - Error: #{err}"
 			else
-				logger.info "DevoxxFr Synchronization ended with success with #{results.length} results !"
+				logger.info "#{@conferenceName} #{@year} Synchronization ended with success with #{results.length} results !"
 
 		if config.feature.stopWatch
 			callback = utils.stopWatchCallbak callback
 
-		logger.info "Start synchronizing Devoxx data ..."
+		logger.info "Start synchronizing  #{@conferenceName} #{@year} data ..."
 
 		async.parallel([
 			new ConferencesSynchronizer().synchronize,
-			new DevoxxFrExperienceLevelsSynchronizer(@eventId).synchronize,
-			new DevoxxFrPresentationTypesSynchronizer(@eventId).synchronize,
-			new DevoxxFrTracksSynchronizer(@eventId).synchronize,
-			new DevoxxFrSpeakersSynchronizer(@eventId).synchronize,
-			new DevoxxFrPresentationsSynchronizer(@eventId).synchronize,
-			new DevoxxFrRoomsSynchronizer(@eventId).synchronize,
-			new DevoxxFrScheduleEntriesSynchronizer(@eventId).synchronize
+			new DevoxxFrExperienceLevelsSynchronizer(@eventId, @conferenceName, @year).synchronize,
+			new DevoxxFrPresentationTypesSynchronizer(@eventId, @conferenceName, @year).synchronize,
+			new DevoxxFrTracksSynchronizer(@eventId, @conferenceName, @year).synchronize,
+			new DevoxxFrSpeakersSynchronizer(@eventId, @conferenceName, @year).synchronize,
+			new DevoxxFrPresentationsSynchronizer(@eventId, @conferenceName, @year).synchronize,
+			new DevoxxFrRoomsSynchronizer(@eventId, @conferenceName, @year).synchronize,
+			new DevoxxFrScheduleEntriesSynchronizer(@eventId, @conferenceName, @year).synchronize
 		], callback)
 
 

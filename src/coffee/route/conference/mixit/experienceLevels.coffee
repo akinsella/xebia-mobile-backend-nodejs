@@ -3,6 +3,20 @@
 ##################################################################################
 
 logger = require 'winston'
+_ = require('underscore')._
+async = require 'async'
+request = require 'request'
+url = require 'url'
+moment = require 'moment-timezone'
+Q = require 'q'
+
+##################################################################################
+# Constants
+##################################################################################
+
+eventId = 13
+talksURL = "http://www.mix-it.fr/api/talks"
+lightningTalksURL = "http://www.mix-it.fr/api/lightningtalks"
 
 
 ##################################################################################
@@ -10,16 +24,38 @@ logger = require 'winston'
 ##################################################################################
 
 experienceLevels = (req, res) ->
-	fetchExperienceLevels (err, presentationType) ->
-		res.json presentationType unless err
-		res.send 500, err.message if err
+	Q.spread [
+		Q.nfcall(fetchTalks, talksURL)
+		Q.nfcall(fetchTalks, lightningTalksURL)
+	], (fetchedTalks, fetchedLightningTalks) ->
+		for talk in fetchedLightningTalks
+			fetchedTalks.push talk
+
+		experienceLevels = _(fetchedTalks)
+		.uniq()
+		.filter (experienceLevel) ->
+			experienceLevel != "" && experienceLevel != undefined
+		.map (experienceLevel) ->
+			id: experienceLevel.toUpperCase().replace(/[\ \-]/g, "_")
+			conferenceId: eventId
+			descriptionPlainText: ""
+			description: ""
+			name: experienceLevel
+
+		res.json experienceLevels
+	.fail (err) ->
+		logger.info "Error - Message: #{err}"
+	.done()
 
 
-
-fetchExperienceLevels = (callback) ->
-	callback(undefined, [])
+fetchTalks = (talksURL, callback) ->
+	request.get { url: talksURL, json: true }, (error, response, fetchedTalks) ->
+		if error
+			callback(error)
+		else
+			callback undefined, fetchedTalks.map (talk) ->
+				talk.level
 
 
 module.exports =
 	experienceLevels: experienceLevels
-	fetchExperienceLevels: fetchExperienceLevels

@@ -12,39 +12,35 @@ if !config
 		processNumber: process.env.INDEX_OF_PROCESS || 0
 		scheduler:
 			syncWordpress:
-				cron: '0 10 * * * 1-7'
-#				cron: '0,30 * * * * 1-7'
+				cron: '0 5 * * * 1-7'
 				timezone: "Europe/Paris"
 				runOnStart: true
 			syncWordpressPosts:
-#				cron: '0 0,15,30,45 * * * 1-7'
-#				cron: '0,30 * * * * 1-7'
-				cron: '0 15 * * * 1-7'
+				cron: '0 10 * * * 1-7'
 				timezone: "Europe/Paris"
 				runOnStart: true
 			syncTwitter:
-				cron: '45 */10 * * * 1-7'
-#				cron: '0,30 * * * * 1-7'
+				cron: '30 */10 * * * 1-7'
 				timezone: "Europe/Paris"
 				runOnStart: true
 			syncEventBrite:
-				cron: '0 12 * * * 1-7'
-#				cron: '0,30 * * * * 1-7'
+				cron: '0 30 */2 * * 1-7'
 				timezone: "Europe/Paris"
 				runOnStart: true
 			syncVimeo:
-				cron: '0 8 * * * 1-7'
-#				cron: '0,30 * * * * 1-7'
-				timezone: "Europe/Paris"
-				runOnStart: true
-			syncDevoxxBelgium:
-				cron: '0 45 * * * 1-7'
-#				cron: '0,30 * * * * 1-7'
+				cron: '0 35 20 * * 1-7'
 				timezone: "Europe/Paris"
 				runOnStart: true
 			syncDevoxxFrance:
-				cron: '0 40 * * * 1-7'
-#				cron: '0,30 * * * * 1-7'
+				cron: '0 45 20 * * 1-7'
+				timezone: "Europe/Paris"
+				runOnStart: true
+			syncDevoxxBelgium:
+				cron: '0 50 20 * * 1-7'
+				timezone: "Europe/Paris"
+				runOnStart: true
+			syncMixIT:
+				cron: '0 55 20 * * 1-7'
 				timezone: "Europe/Paris"
 				runOnStart: true
 		auth:

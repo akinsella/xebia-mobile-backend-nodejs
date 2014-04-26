@@ -29,8 +29,8 @@ interestsURL = "http://www.mix-it.fr/api/interests"
 
 schedules = (req, res) ->
 	Q.spread [
-		Q.nfcall(fetchTalks)
-		Q.nfcall(fetchLightningTalks)
+		Q.nfcall(fetchTalks, talksURL)
+		Q.nfcall(fetchTalks, lightningTalksURL)
 		Q.nfcall(fetchSpeakers)
 		Q.nfcall(fetchInterests)
 	], (fetchedTalks, fetchedLightningTalks, fetchedSpeakers, fetchedInterests) ->
@@ -67,23 +67,13 @@ fetchSpeakers = (callback) ->
 				mapSpeaker(speaker)
 
 
-fetchTalks = (callback) ->
+fetchTalks = (talksURL, callback) ->
 	request.get { url: talksURL, json: true }, (error, response, fetchedTalks) ->
 		if error
 			callback(error)
 		else
 			callback undefined, fetchedTalks.map (talk) ->
 				mapTalk(talk)
-
-
-fetchLightningTalks = (callback) ->
-	request.get { url: lightningTalksURL, json: true }, (error, response, fetchedTalks) ->
-		if error
-			callback(error)
-		else
-			callback undefined, fetchedTalks.map (talk) ->
-				mapTalk(talk)
-
 
 fetchInterests = (callback) ->
 	request.get { url: interestsURL, json: true }, (error, response, fetchedInterests) ->
@@ -106,14 +96,14 @@ mapTalk = (talk) ->
 		note: ""
 		language: talk.language
 		roomId: if talk.room then talk.room.toUpperCase().replace(/\ /g, "_") else ""
-		room: talk.room
+		room: talk.room ?= ""
 		roomCapacity: 0
-		kind: talk.format
-		type: talk.format
+		kind: talk.format ?= ""
+		type: talk.format ?= ""
 		code: talk.id
 		title: talk.title
-		track: ""
-		level: talk.level
+		track: talk.track ?= "Mix-IT"
+		experience: talk.level ?= ""
 		speakers: talk.speakers
 		interests: talk.interests
 

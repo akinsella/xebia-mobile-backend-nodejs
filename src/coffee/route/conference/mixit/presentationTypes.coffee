@@ -4,17 +4,19 @@
 
 logger = require 'winston'
 _ = require('underscore')._
-
-schedules = require './schedules'
-
-
+async = require 'async'
+request = require 'request'
+url = require 'url'
+moment = require 'moment-timezone'
+Q = require 'q'
 
 ##################################################################################
 # Constants
 ##################################################################################
 
-eventId = 11
-
+eventId = 13
+talksURL = "http://www.mix-it.fr/api/talks"
+lightningTalksURL = "http://www.mix-it.fr/api/lightningtalks"
 
 
 ##################################################################################
@@ -22,35 +24,38 @@ eventId = 11
 ##################################################################################
 
 presentationTypes = (req, res) ->
-	fetchPresentationTypes (err, presentationType) ->
-		res.json presentationType unless err
-		res.send 500, err.message if err
+	Q.spread [
+		Q.nfcall(fetchTalks, talksURL)
+		Q.nfcall(fetchTalks, lightningTalksURL)
+	], (fetchedTalks, fetchedLightningTalks) ->
+		for talk in fetchedLightningTalks
+			fetchedTalks.push talk
+
+		presentationTypes = _(fetchedTalks)
+			.uniq()
+			.filter (presentationType) ->
+				presentationType != "" && presentationType != undefined
+			.map (presentationType) ->
+				id: presentationType.toUpperCase().replace(/[\ \-]/g, "_")
+				conferenceId: eventId
+				descriptionPlainText: ""
+				description: ""
+				name: presentationType
+
+		res.json presentationTypes
+	.fail (err) ->
+		logger.info "Error - Message: #{err}"
+	.done()
 
 
-
-fetchPresentationTypes = (callback) ->
-	uid = 0
-	schedules.fetchSchedules (err, schedule) ->
-		if err
-			callback(err)
+fetchTalks = (talksURL, callback) ->
+	request.get { url: talksURL, json: true }, (error, response, fetchedTalks) ->
+		if error
+			callback(error)
 		else
-			presentationTypes = _.uniq(
-					schedule
-						.filter (schedule) ->
-							schedule.type not in ['dej', 'lunch', 'coffee', 'chgt']
-						.map (schedule) ->
-							conferenceId: eventId
-							descriptionPlainText: ""
-							description: ""
-							name: schedule.type
-				, (presentationType) -> presentationType.name)
-
-
-			presentationTypes = presentationTypes.map (presentationType) -> _.extend({ id: ++uid }, presentationType)
-
-			callback(undefined, presentationTypes)
+			callback undefined, fetchedTalks.map (talk) ->
+				talk.format
 
 
 module.exports =
 	presentationTypes: presentationTypes
-	fetchPresentationTypes: fetchPresentationTypes

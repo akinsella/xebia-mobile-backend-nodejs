@@ -13,6 +13,7 @@ syncVimeo = require './syncVimeo'
 syncVimeoNews = require './syncVimeoNews'
 syncDevoxxBelgium = require './syncDevoxxBelgium'
 syncDevoxxFrance = require './syncDevoxxFrance'
+syncMixIT = syncDevoxxFrance
 
 init = () ->
 	logger.info "Starting scheduler ..."
@@ -24,8 +25,9 @@ init = () ->
 	startJob "TwitterNews", conf.scheduler.syncTwitter, syncTwitterNews.synchronize
 	startJob "Vimeo", conf.scheduler.syncVimeo, syncVimeo.synchronize
 	startJob "VimeoNews", conf.scheduler.syncVimeo, syncVimeoNews.synchronize
-	startJob "DevoxxBelgium", conf.scheduler.syncDevoxxBelgium, syncDevoxxBelgium.synchronize
-	startJob "DevoxxFrance", conf.scheduler.syncDevoxxFrance, syncDevoxxFrance.synchronize
+	startJob "DevoxxBelgium 2013", conf.scheduler.syncDevoxxBelgium, syncDevoxxBelgium.synchronize(10, 2013)
+	startJob "DevoxxFrance 2014", conf.scheduler.syncDevoxxFrance, syncDevoxxFrance.synchronize(11, "devoxxfr", 2014)
+	startJob "MixIT 2014", conf.scheduler.syncMixIT, syncMixIT.synchronize(13, "mixit", 2014)
 
 logger.info "Scheduler started ..."
 

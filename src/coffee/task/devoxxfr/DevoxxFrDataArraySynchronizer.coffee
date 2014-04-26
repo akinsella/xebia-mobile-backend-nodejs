@@ -7,9 +7,9 @@ DataSynchronizer = require '../DataSynchronizer'
 
 class DevoxxFrDataArraySynchronizer extends DataSynchronizer
 
-	constructor: (name) ->
-		logger.info("Instanciating DevoxxFr Data Array Synchronizer with name: '#{name}'")
-		super name
+	constructor: (name, @conferenceName, @year) ->
+		logger.info("Instanciating #{@conferenceName} #{@year} Data Array Synchronizer with name: '#{name}'")
+		super name, conferenceName, year
 
 	baseUrl: () -> "http://dev.xebia.fr:8001"
 
@@ -30,7 +30,7 @@ class DevoxxFrDataArraySynchronizer extends DataSynchronizer
 	modelClass: () -> undefined
 
 	synchronizeData: (callback) =>
-		logger.info "Start synchronizing DevoxxFr Presentations ..."
+		logger.info "Start synchronizing #{@conferenceName} #{@year} Presentations ..."
 		logger.info "Full Url: #{@fullUrl()}"
 		request.get {url: @fullUrl(), json: true}, (error, data, response) =>
 			logger.info("Transforming response ...")

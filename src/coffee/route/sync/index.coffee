@@ -35,43 +35,47 @@ syncDevoxxFranceTask = require '../../task/syncDevoxxFrance'
 
 syncWordpress = (req, res) ->
 	syncWordpressTask.synchronize()
-	res.send 200, "Started sync for wordpress data"
+	res.send 200, "Started sync for Wordpress data"
 
 syncWordpressPosts = (req, res) ->
 	syncWordpressPostsTask.synchronize()
-	res.send 200, "Started sync for wordpress posts"
+	res.send 200, "Started sync for Wordpress posts"
 
 syncWordpressNews = (req, res) ->
 	syncWordpressNewsTask.synchronize()
-	res.send 200, "Started sync for wordpress news"
+	res.send 200, "Started sync for Wordpress news"
 
 syncEventBrite = (req, res) ->
 	syncEventBriteTask.synchronize()
-	res.send 200, "Started sync for eventbrite"
+	res.send 200, "Started sync for EventBrite"
 
 syncEventBriteNews = (req, res) ->
 	syncEventBriteNewsTask.synchronize()
-	res.send 200, "Started sync for eventbrite news"
+	res.send 200, "Started sync for EventBrite news"
 
 syncVimeo = (req, res) ->
 	syncVimeoTask.synchronize()
-	res.send 200, "Started sync for vimeo"
+	res.send 200, "Started sync for Vimeo"
 
 syncVimeoNews = (req, res) ->
 	syncVimeoNewsTask.synchronize()
-	res.send 200, "Started sync for vimeo news"
+	res.send 200, "Started sync for Vimeo news"
 
 syncTwitterNews = (req, res) ->
 	syncVimeoNewsTask.synchronize()
-	res.send 200, "Started sync for twitter news"
+	res.send 200, "Started sync for Twitter news"
 
 syncDevoxxBelgium = (req, res) ->
-	syncDevoxxBelgiumTask.synchronize()
-	res.send 200, "Started sync for devoxx belgium data"
+	syncDevoxxBelgiumTask.synchronize(10, 2013)()
+	res.send 200, "Started sync for Devoxx Belgium data"
 
 syncDevoxxFrance = (req, res) ->
-	syncDevoxxFranceTask.synchronize()
-	res.send 200, "Started sync for devoxx france data"
+	syncDevoxxFranceTask.synchronize(11, "devoxxfr", 2014)()
+	res.send 200, "Started sync for Devoxx France data"
+
+syncMixIT = (req, res) ->
+	syncDevoxxFranceTask.synchronize(13, "mixit", 2014)()
+	res.send 200, "Started sync for MixIT data"
 
 
 removeBlogData = (req, res) ->
@@ -139,6 +143,7 @@ module.exports =
 	syncTwitterNews: syncTwitterNews
 	syncDevoxxBelgium: syncDevoxxBelgium
 	syncDevoxxFrance: syncDevoxxFrance
+	syncMixIT: syncMixIT
 	removeVideos: removeVideos
 	removeEvents: removeEvents
 	removeBlogPosts: removeBlogPosts

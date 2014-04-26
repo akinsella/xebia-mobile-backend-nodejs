@@ -25,8 +25,8 @@ lightningTalksURL = "http://www.mix-it.fr/api/lightningtalks"
 
 rooms = (req, res) ->
 	Q.spread [
-		Q.nfcall(fetchTalks)
-		Q.nfcall(fetchLightningTalks)
+		Q.nfcall(fetchTalks, talksURL)
+		Q.nfcall(fetchTalks, lightningTalksURL)
 	], (fetchedTalks, fetchedLightningTalks) ->
 		for talk in fetchedLightningTalks
 			fetchedTalks.push talk
@@ -34,9 +34,9 @@ rooms = (req, res) ->
 		rooms = _(fetchedTalks)
 			.uniq()
 			.filter (room) ->
-				room != "" || room != undefined
+				room != "" && room != undefined
 			.map (room) ->
-				id: if room then room.toUpperCase().replace(/\ /g, "_") else ""
+				id: room.toUpperCase().replace(/[\ \-]/g, "_")
 				capacity: 0
 				conferenceId: eventId
 				locationName: ""
@@ -48,17 +48,8 @@ rooms = (req, res) ->
 	.done()
 
 
-fetchTalks = (callback) ->
+fetchTalks = (talksURL, callback) ->
 	request.get { url: talksURL, json: true }, (error, response, fetchedTalks) ->
-		if error
-			callback(error)
-		else
-			callback undefined, fetchedTalks.map (talk) ->
-				talk.room
-
-
-fetchLightningTalks = (callback) ->
-	request.get { url: lightningTalksURL, json: true }, (error, response, fetchedTalks) ->
 		if error
 			callback(error)
 		else

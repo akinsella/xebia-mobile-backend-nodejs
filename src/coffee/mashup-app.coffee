@@ -82,21 +82,26 @@ mixitSpeakers = require './route/conference/mixit/speakers'
 mixitSchedule = require './route/conference/mixit/schedules'
 mixitRooms = require './route/conference/mixit/rooms'
 mixitTracks = require './route/conference/mixit/tracks'
+mixitPresentationTypes = require './route/conference/mixit/presentationTypes'
+mixitExperienceLevels = require './route/conference/mixit/experienceLevels'
+mixitPresentations = require './route/conference/mixit/presentations'
 
 
-app.get "/mashup/conferences/11/speakers", devoxxfrSpeakers.speakers
-app.get "/mashup/conferences/11/schedule", devoxxfrSchedule.schedules
-app.get "/mashup/conferences/11/presentationTypes", devoxxfrPresentationTypes.presentationTypes
-app.get "/mashup/conferences/11/experienceLevels", devoxxfrExperienceLevels.experienceLevels
-app.get "/mashup/conferences/11/rooms", devoxxfrRooms.rooms
-app.get "/mashup/conferences/11/tracks", devoxxfrTracks.tracks
-app.get "/mashup/conferences/11/presentations", devoxxfrPresentations.presentations
+app.get "/mashup/conferences/devoxxfr/2014/speakers", devoxxfrSpeakers.speakers
+app.get "/mashup/conferences/devoxxfr/2014/schedule", devoxxfrSchedule.schedules
+app.get "/mashup/conferences/devoxxfr/2014/presentationTypes", devoxxfrPresentationTypes.presentationTypes
+app.get "/mashup/conferences/devoxxfr/2014/experienceLevels", devoxxfrExperienceLevels.experienceLevels
+app.get "/mashup/conferences/devoxxfr/2014/rooms", devoxxfrRooms.rooms
+app.get "/mashup/conferences/devoxxfr/2014/tracks", devoxxfrTracks.tracks
+app.get "/mashup/conferences/devoxxfr/2014/presentations", devoxxfrPresentations.presentations
 
-app.get "/mashup/conferences/13/speakers", mixitSpeakers.speakers
-app.get "/mashup/conferences/13/schedule", mixitSchedule.schedules
-app.get "/mashup/conferences/13/rooms", mixitRooms.rooms
-app.get "/mashup/conferences/13/tracks", mixitTracks.tracks
-
+app.get "/mashup/conferences/mixit/2014/speakers", mixitSpeakers.speakers
+app.get "/mashup/conferences/mixit/2014/schedule", mixitSchedule.schedules
+app.get "/mashup/conferences/mixit/2014/presentationTypes", mixitPresentationTypes.presentationTypes
+app.get "/mashup/conferences/mixit/2014/experienceLevels", mixitExperienceLevels.experienceLevels
+app.get "/mashup/conferences/mixit/2014/rooms", mixitRooms.rooms
+app.get "/mashup/conferences/mixit/2014/tracks", mixitTracks.tracks
+app.get "/mashup/conferences/mixit/2014/presentations", mixitPresentations.presentations
 
 httpServer = app.listen app.get('port')
 

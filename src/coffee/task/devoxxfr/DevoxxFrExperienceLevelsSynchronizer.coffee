@@ -7,10 +7,10 @@ DevoxxFrEventAwareDataArraySynchronizer = require './DevoxxFrEventAwareDataArray
 
 class DevoxxFrExperienceLevelsSynchronizer extends DevoxxFrEventAwareDataArraySynchronizer
 
-	constructor: (eventId) ->
-		logger.info("Instanciating DevoxxFr ExperienceLevels Synchronizer with eventId: '#{eventId}'")
+	constructor: (eventId, conferenceName, year) ->
+		logger.info("Instanciating #{conferenceName} #{year} ExperienceLevels Synchronizer with eventId: '#{eventId}'")
 		logger.info("eventId: #{eventId}")
-		super("ExperienceLevels", eventId)
+		super("ExperienceLevels", eventId, conferenceName, year)
 
 	path: () ->
 		"/experienceLevels"

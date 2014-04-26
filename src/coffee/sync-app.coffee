@@ -133,8 +133,9 @@ app.get "/sync/vimeo", security.ensureAuthenticated, sync.syncVimeo
 app.get "/sync/vimeo/news", security.ensureAuthenticated, sync.syncVimeoNews
 app.delete "/sync/videos", security.ensureAuthenticated, sync.removeVideos
 
-app.get "/sync/conference/devoxx/belgium", security.ensureAuthenticated, sync.syncDevoxxBelgium
-app.get "/sync/conference/devoxx/france", security.ensureAuthenticated, sync.syncDevoxxFrance
+app.get "/sync/conferences/devoxxbe/2013", security.ensureAuthenticated, sync.syncDevoxxBelgium
+app.get "/sync/conferences/devoxxfr/2014", security.ensureAuthenticated, sync.syncDevoxxFrance
+app.get "/sync/conferences/mixit/2014", security.ensureAuthenticated, sync.syncMixIT
 
 app.get "/sync/twitter/news", security.ensureAuthenticated, sync.syncTwitterNews
 
