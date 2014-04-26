@@ -17,6 +17,7 @@ Q = require 'q'
 ##################################################################################
 
 eventId = 13
+firstDay = "2014-04-29"
 speakersURL = "http://www.mix-it.fr/api/members/speakers"
 talksURL = "http://www.mix-it.fr/api/talks"
 lightningTalksURL = "http://www.mix-it.fr/api/lightningtalks"
@@ -94,8 +95,8 @@ mapTalk = (talk) ->
 		experience: talk.level ?= ""
 		track: talk.track ?= "Mix-IT"
 		title: talk.title
-		fromTime: moment(talk.start).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
-		toTime: moment(talk.end).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
+		fromTime: moment(talk.start ?= firstDay).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
+		toTime: moment(talk.end ?= firstDay).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
 		summary: talk.description
 
 mapSpeaker = (speaker) ->
