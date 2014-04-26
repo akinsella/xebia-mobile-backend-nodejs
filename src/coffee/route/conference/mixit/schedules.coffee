@@ -17,7 +17,8 @@ Q = require 'q'
 ##################################################################################
 
 eventId = 13
-firstDay = "2014-04-29"
+defaultFromTime = "2014-04-29T09:30:00.000+02:00"
+defaultToTime = "2014-04-30T18:00:00.000+02:00"
 speakersURL = "http://www.mix-it.fr/api/members/speakers"
 talksURL = "http://www.mix-it.fr/api/talks"
 lightningTalksURL = "http://www.mix-it.fr/api/lightningtalks"
@@ -87,8 +88,8 @@ mapTalk = (talk) ->
 	else
 		id: talk.id
 		conferenceId: eventId
-		fromTime: moment(talk.start ?= firstDay).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
-		toTime: moment(talk.end ?= firstDay).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
+		fromTime: moment(talk.start ?= defaultFromTime).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
+		toTime: moment(talk.end ?= defaultToTime).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
 		partnerSlot: false
 		note: ""
 		language: talk.language
