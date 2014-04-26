@@ -26,10 +26,7 @@ lightningTalksURL = "http://www.mix-it.fr/api/lightningtalks"
 rooms = (req, res) ->
 	Q.spread [
 		Q.nfcall(fetchTalks, talksURL)
-#		Q.nfcall(fetchTalks, lightningTalksURL)
-	], (fetchedTalks, fetchedLightningTalks) ->
-		for talk in fetchedLightningTalks
-			fetchedTalks.push talk
+	], (fetchedTalks) ->
 
 		rooms = _(fetchedTalks)
 			.uniq()
