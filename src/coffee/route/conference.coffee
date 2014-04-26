@@ -22,7 +22,7 @@ Rating = require '../model/rating'
 roomsWithBeacons = JSON.parse(fs.readFileSync("#{__dirname}/../data/roomsWithBeacons.json"))
 
 conferences = (req, res) ->
-	Conference.find().sort("name").exec (err, conferences) ->
+	Conference.find().sort("-from").exec (err, conferences) ->
 		if err
 			res.json 500, { message: "Server error: #{err.message}" }
 		else
