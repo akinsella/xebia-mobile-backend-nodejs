@@ -61,7 +61,7 @@
 	},
 	{
 		"id": 9,
-		"enabled": false,
+		"enabled": true,
 		"description": "The Devoxx UK annual event.",
 		"name": "DevoxxUK 2013",
 		"from": "2013-06-12",
