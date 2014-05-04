@@ -70,9 +70,9 @@ post = (req, res) ->
 		else if !post
 			res.json 404, { message: "Not Found" }
 		else
-			res.json {
+			res.json
 				post: cleanUpPost(post)
-			}
+
 
 cleanUpPost = (post) ->
 	post = post.toObject()
@@ -114,14 +114,17 @@ recentPosts = (req, res) ->
 				if err
 					res.json 500, { message: "Server error: #{err.message}" }
 				else
-					posts = posts.map (post) -> cleanUpPost(post)
-					res.json {
+					posts = posts.map (post) ->
+						post = cleanUpPost(post)
+						delete post.comments
+						delete post.attachments
+						post
+					res.json
 						page:page + 1
 						count:limit
 						pages:pages
 						total:total
 						posts:posts
-					}
 		)
 
 authorPosts = (req, res) ->
@@ -131,9 +134,8 @@ authorPosts = (req, res) ->
 			res.json 500, { message: "Server error: #{err.message}" }
 		else
 			posts = posts.map (post) -> cleanUpPost(post)
-			res.json {
+			res.json
 				posts:posts
-			}
 
 tagPosts = (req, res) ->
 	tagId = req.params.id
@@ -142,9 +144,8 @@ tagPosts = (req, res) ->
 			res.json 500, { message: "Server error: #{err.message}" }
 		else
 			posts = posts.map (post) -> cleanUpPost(post)
-			res.json {
+			res.json
 				posts:posts
-			}
 
 categoryPosts = (req, res) ->
 	categoryId = req.params.id
@@ -153,9 +154,8 @@ categoryPosts = (req, res) ->
 			res.json 500, { message: "Server error: #{err.message}" }
 		else
 			posts = posts.map (post) -> cleanUpPost(post)
-			res.json {
+			res.json
 				posts:posts
-			}
 
 datePosts = (req, res) ->
 	year = req.params.year
@@ -163,13 +163,13 @@ datePosts = (req, res) ->
 	processRequest req, res, "#{baseUrl}/wp-json-api/get_date_posts_sync_data/?date=#{year}#{month}&count=1000"
 
 module.exports =
-	tags : tags,
-	categories : categories,
-	authors : authors,
-	dates : dates,
-	recentPosts: recentPosts,
-	post : post,
-	authorPosts : authorPosts,
-	tagPosts : tagPosts,
-	categoryPosts : categoryPosts,
+	tags : tags
+	categories : categories
+	authors : authors
+	dates : dates
+	recentPosts: recentPosts
+	post : post
+	authorPosts : authorPosts
+	tagPosts : tagPosts
+	categoryPosts : categoryPosts
 	datePosts : datePosts
