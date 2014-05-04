@@ -108,7 +108,7 @@ recentPosts = (req, res) ->
 
 		Post.count({}, (error, count) ->
 			total = count
-			pages = if total % limit == 0 then total / limit else total / limit + 1
+			pages = total / limit
 			pages = Math.ceil(pages)
 			Post.find({}).sort("-date").skip(limit * page).limit(limit).exec (err, posts) ->
 				if err
@@ -116,6 +116,7 @@ recentPosts = (req, res) ->
 				else
 					posts = posts.map (post) -> cleanUpPost(post)
 					res.json {
+						page:page + 1
 						count:limit
 						pages:pages
 						total:total
