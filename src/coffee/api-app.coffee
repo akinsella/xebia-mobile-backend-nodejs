@@ -84,6 +84,7 @@ app.get "/api/v#{config.apiVersion}/timeline", news.listUnfiltered
 app.post "/api/v#{config.apiVersion}/devices/register", device.register
 
 app.get "/api/v#{config.apiVersion}/blog/posts/recent", wordpress.recentPosts
+app.get "/api/v#{config.apiVersion}/blog/posts/recent/:page", wordpress.recentPosts
 app.get "/api/v#{config.apiVersion}/blog/posts/:id", wordpress.post
 app.get "/api/v#{config.apiVersion}/blog/authors", wordpress.authors
 app.get "/api/v#{config.apiVersion}/blog/authors/:id/posts", wordpress.authorPosts

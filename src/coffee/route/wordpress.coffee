@@ -97,11 +97,20 @@ recentPosts = (req, res) ->
 		payload = JSON.parse(fs.readFileSync("#{__dirname}/../data/offline/wp_recent_post.json", "utf-8"))
 		res.send payload
 	else
-		limit = 50
+		page =  if utils.isNumber(req.params.page) then req.params.page - 1 else 0
+		page = Math.floor(page)
+		page = Math.max(0, page)
+
+		limit = if utils.isNumber(req.query.limit) then req.query.limit else 50
+		limit = Math.floor(limit)
+		limit = Math.max(limit, 10)
+		limit = Math.min(limit, 100)
+
 		Post.count({}, (error, count) ->
 			total = count
-			pages = if total % 50 == 0 then total / limit else total / limit + 1
-			Post.find({}).sort("-date").limit(limit).exec (err, posts) ->
+			pages = if total % limit == 0 then total / limit else total / limit + 1
+			pages = Math.ceil(pages)
+			Post.find({}).sort("-date").skip(limit * page).limit(limit).exec (err, posts) ->
 				if err
 					res.json 500, { message: "Server error: #{err.message}" }
 				else

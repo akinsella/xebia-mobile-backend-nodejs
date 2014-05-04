@@ -86,6 +86,9 @@ useCache = (options) ->
 	!options.forceNoCache
 
 
+isNumber = (n) ->
+	!isNaN(parseFloat(n)) && isFinite(n)
+
 responseData = (statusCode, statusMessage, data, options) ->
 	if statusCode >= 200 && statusCode <= 299
 		if options.contentType
@@ -274,3 +277,4 @@ module.exports =
 	isSame: isSame
 	isNotSame: isNotSame
 	htmlToPlainText: htmlToPlainText
+	isNumber: isNumber
