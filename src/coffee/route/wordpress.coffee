@@ -53,15 +53,6 @@ categories = (req, res) ->
 				category
 			res.json categories
 
-dates = (req, res) ->
-	processRequest req, res, "#{baseUrl}/wp-json-api/get_date_index?count=1000", (data, cb) ->
-		delete data.status
-		delete data.permalinks
-		for key, value of data.tree
-			data[key] = value
-		delete data.tree
-		cb(undefined, data)
-
 post = (req, res) ->
 	postId = req.params.id
 	DetailedPost.findOne { id: postId}, (err, post) ->
@@ -157,19 +148,12 @@ categoryPosts = (req, res) ->
 			res.json
 				posts:posts
 
-datePosts = (req, res) ->
-	year = req.params.year
-	month = req.params.month
-	processRequest req, res, "#{baseUrl}/wp-json-api/get_date_posts_sync_data/?date=#{year}#{month}&count=1000"
-
 module.exports =
 	tags : tags
 	categories : categories
 	authors : authors
-	dates : dates
 	recentPosts: recentPosts
 	post : post
 	authorPosts : authorPosts
 	tagPosts : tagPosts
 	categoryPosts : categoryPosts
-	datePosts : datePosts

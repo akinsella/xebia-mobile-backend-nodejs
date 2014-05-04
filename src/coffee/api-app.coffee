@@ -92,8 +92,6 @@ app.get "/api/v#{config.apiVersion}/blog/tags", wordpress.tags
 app.get "/api/v#{config.apiVersion}/blog/tags/:id/posts", wordpress.tagPosts
 app.get "/api/v#{config.apiVersion}/blog/categories", wordpress.categories
 app.get "/api/v#{config.apiVersion}/blog/categories/:id/posts", wordpress.categoryPosts
-app.get "/api/v#{config.apiVersion}/blog/dates", wordpress.dates
-app.get "/api/v#{config.apiVersion}/blog/:year/:month/posts", wordpress.datePosts
 
 app.get "/api/v#{config.apiVersion}/twitter/timeline", twitter.xebia_timeline
 
