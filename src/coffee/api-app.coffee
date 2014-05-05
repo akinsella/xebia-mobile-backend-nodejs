@@ -143,3 +143,5 @@ process.on 'uncaughtException', (err) ->
 
 logger.info "Express listening on port: #{app.get('port')}"
 logger.info "Started in #{(new Date().getTime() - start.getTime()) / 1000} seconds"
+
+require './lib/apns'

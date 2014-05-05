@@ -59,9 +59,11 @@ push = (req, res) ->
 	notificationId = req.params.id
 	apns.pushNotificationToAll notificationId, (err) ->
 		if err
-			utils.responseData(500, "Error: #{err}", "{}", { req:req, res:res })
+			res.json 500,
+				name: err.name
+				message: err.mesage
 		else
-			utils.responseData(200, "Ok", "{}", { req:req, res:res })
+			res.send 200
 
 
 module.exports =

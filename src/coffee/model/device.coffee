@@ -1,22 +1,23 @@
 mongo = require '../lib/mongo'
 
-pureautoinc  = require 'mongoose-pureautoinc'
+pureautoinc = require 'mongoose-pureautoinc'
 
 Device = new mongo.Schema(
-  id: Number,
-  udid: {type : String, "default" : '', trim : true},
-  token: {type : String, "default" : '', trim : true},
-  deviceModel: {type : String, "default" : '', trim : true},
-  systemVersion: {type : String, "default" : '', trim : true},
-  createAt: { type : Date, "default" : Date.now },
-  lastModified: { type : Date, "default" : Date.now }
+	id: Number,
+	udid: { type: String, "default": '', trim: true },
+	token: { type: String, "default": '', trim: true },
+	active: { type: Boolean, "default": true },
+	deviceModel: { type: String, "default": '', trim: true },
+	systemVersion: { type: String, "default": '', trim: true },
+	createAt: { type: Date, "default": Date.now },
+	lastModified: { type: Date, "default": Date.now }
 )
 
 deviceModel = mongo.client.model 'Device', Device
 
 Device.plugin(pureautoinc.plugin, {
-    model: 'Device',
-    field: 'id'
+	model: 'Device',
+	field: 'id'
 });
 
 module.exports = deviceModel
