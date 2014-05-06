@@ -49,7 +49,7 @@ if !config
 				realm: process.env.AUTH_GOOGLE_REALM || 'localhost'
 		apns:
 			enabled: true
-			devMode: process.env.APNS_SANDBOX_ENABLED
+			devMode: process.env.APNS_SANDBOX_ENABLED == "true"
 			certFile: process.env.APNS_CERT_FILE
 			keyFile: process.env.APNS_KEY_FILE
 		mongo:
