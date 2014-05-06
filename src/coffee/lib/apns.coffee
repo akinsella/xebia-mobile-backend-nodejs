@@ -56,24 +56,33 @@ else
 
 			# This error occurs when Apple reports an issue parsing the message.
 			when "GatewayNotificationError"
-				logger.info "[APNS][message:error][#{err.name}] Error message: '#{err.message}'"
+				logger.info "[APNS][message:error][#{err.name}] Error code: '#{err.code}', message: '#{err.message}'"
 
 				# The err.code is the number that Apple reports.
 				# Example: 8 means the token supplied is invalid or not subscribed
 				# to notifications for your application.
 				if err.code == 8
-					logger.info "[APNS][message:error][#{err.name}] Device token: #{msg.device().toString()}"
+					logger.info "[APNS][message:error][#{err.name}] Device with token '#{msg.device().toString()}'"
 
 			# In production you should flag this token as invalid and not
 			# send any futher messages to it until you confirm validity
 
 			# This happens when apnagent has a problem encoding the message for transfer
 			when "SerializationError"
-				logger.info "[APNS][message:error][#{err.name}] Error message: #{err.message}"
+				logger.info "[APNS][message:error][#{err.name}] Error code: '#{err.code}', Error message: '#{err.message}'"
 
 			# unlikely, but could occur if trying to send over a dead socket
+			when "GatewayMessageError"
+				logger.info "[APNS][message:error][#{err.name}] Error code: '#{err.code}', Error message: '#{err.message}' for device with token '#{msg.device().toString()}'}'"
+				disableDeviceWithToken msg.device().toString(), (error, numberAffected) ->
+					if error
+						logger.info "[APNS] Had an error when trying to disabled device with token '#{token}' - Error message: '#{error.message}'"
+					else if numberAffected == 0
+						logger.info "[APNS] Could not disabled active device with token '#{token}'"
+					else
+						logger.info "[APNS] Device token with token: '#{token}' was disabled due to error with name '#{err.name}' and code '#{err.code}'"
 			else
-				logger.info "[APNS][message:error][#{err.name}] Error message: #{err.message}"
+				logger.info "[APNS][message:error][#{err.name}] Error code: '#{err.code}', Error message: '#{err.message}'"
 
 	# connect needed to start message processing
 	agent.connect (err) ->
@@ -122,13 +131,21 @@ else
 				logger.info "[APNS][Feedback] Could not found active device with token : '#{token}'"
 				done()
 			else
-				Device.update { token: token, active: true }, { active: false }, (err, numberAffected, raw) ->
-					if err
-						logger.info "[APNS][Feedback] Had an error when trying to disabled device with token : '#{token}' - Error message: #{err.message}"
+				disableDeviceWithToken token, (error, numberAffected) ->
+					if error
+						logger.info "[APNS][Feedback] Had an error when trying to disabled device with token : '#{token}' - Error message: #{error.message}"
 						done()
 					else if numberAffected == 0
 						logger.info "[APNS][Feedback] Could not disabled active device with token : '#{token}'"
 						done()
+					else
+						logger.info "[APNS] Device token with token: '#{token}' was disabled due to error with name '#{err.name}' and code '#{err.code}'"
+						done()
+
+disableDeviceWithToken = (token, callback) ->
+	Device.update { token: token, active: true }, { active: false }, (err, numberAffected, raw) ->
+		callback err, numberAffected
+
 
 pushToAll = (message, cb) ->
 	if !config.apns.enabled
