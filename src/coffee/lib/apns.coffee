@@ -73,8 +73,9 @@ else
 
 			# unlikely, but could occur if trying to send over a dead socket
 			when "GatewayMessageError"
-				logger.info "[APNS][message:error][#{err.name}] Error code: '#{err.code}', Error message: '#{err.message}' for device with token '#{msg.device().toString()}'}'"
-				disableDeviceWithToken msg.device().toString(), (error, numberAffected) ->
+				token = msg.device().toString()
+				logger.info "[APNS][message:error][#{err.name}] Error code: '#{err.code}', Error message: '#{err.message}' for device with token '#{token}'}'"
+				disableDeviceWithToken token, (error, numberAffected) ->
 					if error
 						logger.info "[APNS] Had an error when trying to disabled device with token '#{token}' - Error message: '#{error.message}'"
 					else if numberAffected == 0
