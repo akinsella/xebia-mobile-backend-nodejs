@@ -48,7 +48,7 @@ if !config
 				callbackUrl: process.env.AUTH_GOOGLE_CALLBACK_URL || 'http://localhost'
 				realm: process.env.AUTH_GOOGLE_REALM || 'localhost'
 		apns:
-			enabled: true
+			enabled: process.env.APNS_ENABLED == "true"
 			devMode: process.env.APNS_SANDBOX_ENABLED == "true"
 			certFile: process.env.APNS_CERT_FILE
 			keyFile: process.env.APNS_KEY_FILE

@@ -14,7 +14,7 @@ Notification = require '../model/notification'
 logger.info "Dirname: #{__dirname}"
 
 if !config.apns.enabled
-	logger.info "[APNS] Apns is enabled"
+	logger.info "[APNS] Apns is disabled"
 	agent = {}
 	feedback = {}
 else

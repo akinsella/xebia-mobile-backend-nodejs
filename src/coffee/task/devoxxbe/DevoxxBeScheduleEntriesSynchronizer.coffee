@@ -44,8 +44,8 @@ class DevoxxBeScheduleEntriesSynchronizer extends DevoxxBeEventAwareDataArraySyn
 					uri: scheduleEntry.presentationUri
 			delete scheduleEntry.presentationId
 			delete scheduleEntry.presentationUri
-			scheduleEntry.fromTime = moment(scheduleEntry.fromTime, "YYYY-MM-DD HH:mm:ss.Z")
-			scheduleEntry.toTime = moment(scheduleEntry.toTime, "YYYY-MM-DD HH:mm:ss.Z")
+			scheduleEntry.fromTime = moment(scheduleEntry.fromTime, "YYYY-MM-DD HH:mm:ss.S")
+			scheduleEntry.toTime = moment(scheduleEntry.toTime, "YYYY-MM-DD HH:mm:ss.S")
 		scheduleEntries
 
 	compareFields: () ->
