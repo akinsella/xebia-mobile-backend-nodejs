@@ -157,8 +157,12 @@ presentations = (req, res) ->
 					delete speaker._id
 				presentation.tags.forEach (tag) ->
 					delete tag._id
-				presentation.fromTime = moment(presentation.fromTime).format("YYYY-MM-DD HH:mm:ss")
-				presentation.toTime = moment(presentation.toTime).format("YYYY-MM-DD HH:mm:ss")
+				if conferenceId == "12"
+					presentation.fromTime = moment(presentation.fromTime).tz("Europe/London").format("YYYY-MM-DD HH:mm:ss")
+					presentation.toTime = moment(presentation.toTime).tz("Europe/London").format("YYYY-MM-DD HH:mm:ss")
+				else
+					presentation.fromTime = moment(presentation.fromTime).format("YYYY-MM-DD HH:mm:ss")
+					presentation.toTime = moment(presentation.toTime).format("YYYY-MM-DD HH:mm:ss")
 				presentation
 			res.jsonp presentations
 
@@ -193,8 +197,12 @@ schedule = (req, res) ->
 				delete scheduleEntry.__v
 				scheduleEntry.speakers.forEach (speaker) ->
 					delete speaker._id
-				scheduleEntry.fromTime = moment(scheduleEntry.fromTime).format("YYYY-MM-DD HH:mm:ss")
-				scheduleEntry.toTime = moment(scheduleEntry.toTime).format("YYYY-MM-DD HH:mm:ss")
+				if conferenceId == "12"
+					scheduleEntry.fromTime = moment(scheduleEntry.fromTime).tz("Europe/London").format("YYYY-MM-DD HH:mm:ss")
+					scheduleEntry.toTime = moment(scheduleEntry.toTime).tz("Europe/London").format("YYYY-MM-DD HH:mm:ss")
+				else
+					scheduleEntry.fromTime = moment(scheduleEntry.fromTime).format("YYYY-MM-DD HH:mm:ss")
+					scheduleEntry.toTime = moment(scheduleEntry.toTime).format("YYYY-MM-DD HH:mm:ss")
 				scheduleEntry
 
 			res.jsonp scheduleEntries
@@ -215,8 +223,12 @@ scheduleByDate = (req, res) ->
 				delete scheduleEntry.__v
 				scheduleEntry.speakers.forEach (speaker) ->
 					delete speaker._id
-				scheduleEntry.fromTime = moment(scheduleEntry.fromTime).format("YYYY-MM-DD HH:mm:ss")
-				scheduleEntry.toTime = moment(scheduleEntry.toTime).format("YYYY-MM-DD HH:mm:ss")
+				if conferenceId == "12"
+					scheduleEntry.fromTime = moment(scheduleEntry.fromTime).tz("Europe/London").format("YYYY-MM-DD HH:mm:ss")
+					scheduleEntry.toTime = moment(scheduleEntry.toTime).tz("Europe/London").format("YYYY-MM-DD HH:mm:ss")
+				else
+					scheduleEntry.fromTime = moment(scheduleEntry.fromTime).format("YYYY-MM-DD HH:mm:ss")
+					scheduleEntry.toTime = moment(scheduleEntry.toTime).format("YYYY-MM-DD HH:mm:ss")
 				scheduleEntry
 
 			res.jsonp scheduleEntries
