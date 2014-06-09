@@ -158,8 +158,8 @@ presentations = (req, res) ->
 				presentation.tags.forEach (tag) ->
 					delete tag._id
 				if conferenceId == "12"
-					presentation.fromTime = moment(presentation.fromTime).tz("Europe/London").format("YYYY-MM-DD HH:mm:ss")
-					presentation.toTime = moment(presentation.toTime).tz("Europe/London").format("YYYY-MM-DD HH:mm:ss")
+					presentation.fromTime = moment(presentation.fromTime).tz("Europe/Paris").add("h", 1).format("YYYY-MM-DD HH:mm:ss")
+					presentation.toTime = moment(presentation.toTime).tz("Europe/Paris").add("h", 1).format("YYYY-MM-DD HH:mm:ss")
 				else
 					presentation.fromTime = moment(presentation.fromTime).format("YYYY-MM-DD HH:mm:ss")
 					presentation.toTime = moment(presentation.toTime).format("YYYY-MM-DD HH:mm:ss")
@@ -198,8 +198,8 @@ schedule = (req, res) ->
 				scheduleEntry.speakers.forEach (speaker) ->
 					delete speaker._id
 				if conferenceId == "12"
-					scheduleEntry.fromTime = moment(scheduleEntry.fromTime).tz("Europe/London").format("YYYY-MM-DD HH:mm:ss")
-					scheduleEntry.toTime = moment(scheduleEntry.toTime).tz("Europe/London").format("YYYY-MM-DD HH:mm:ss")
+					scheduleEntry.fromTime = moment(scheduleEntry.fromTime).tz("Europe/Paris").add("h", 1).format("YYYY-MM-DD HH:mm:ss")
+					scheduleEntry.toTime = moment(scheduleEntry.toTime).tz("Europe/Paris").add("h", 1).format("YYYY-MM-DD HH:mm:ss")
 				else
 					scheduleEntry.fromTime = moment(scheduleEntry.fromTime).format("YYYY-MM-DD HH:mm:ss")
 					scheduleEntry.toTime = moment(scheduleEntry.toTime).format("YYYY-MM-DD HH:mm:ss")
@@ -224,8 +224,8 @@ scheduleByDate = (req, res) ->
 				scheduleEntry.speakers.forEach (speaker) ->
 					delete speaker._id
 				if conferenceId == "12"
-					scheduleEntry.fromTime = moment(scheduleEntry.fromTime).tz("Europe/London").format("YYYY-MM-DD HH:mm:ss")
-					scheduleEntry.toTime = moment(scheduleEntry.toTime).tz("Europe/London").format("YYYY-MM-DD HH:mm:ss")
+					scheduleEntry.fromTime = moment(scheduleEntry.fromTime).tz("Europe/Paris").add("h", 1).format("YYYY-MM-DD HH:mm:ss")
+					scheduleEntry.toTime = moment(scheduleEntry.toTime).tz("Europe/Paris").add("h", 1).format("YYYY-MM-DD HH:mm:ss")
 				else
 					scheduleEntry.fromTime = moment(scheduleEntry.fromTime).format("YYYY-MM-DD HH:mm:ss")
 					scheduleEntry.toTime = moment(scheduleEntry.toTime).format("YYYY-MM-DD HH:mm:ss")
