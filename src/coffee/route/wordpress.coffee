@@ -95,7 +95,7 @@ recentPosts = (req, res) ->
 		limit = if utils.isNumber(req.query.limit) then req.query.limit else 50
 		limit = Math.floor(limit)
 		limit = Math.max(limit, 10)
-		limit = Math.min(limit, 100)
+		limit = Math.min(limit, 10000)
 
 		Post.count({}, (error, count) ->
 			total = count
