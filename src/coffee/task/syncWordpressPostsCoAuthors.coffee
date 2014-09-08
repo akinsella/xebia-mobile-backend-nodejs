@@ -59,68 +59,61 @@ synchronizeWordpressPost = (post, callback) ->
 		logger.info "Skipping post with id: '#{post.id}', no co-authors"
 		callback()
 	else
-		async.waterfall [
-			(cb) ->
-				Post.findOne { id: post.id }, cb
-
-			(foundPost, cb) ->
-				if foundPost && foundPost.coAuthors.length == 0
-					foundPost.remove cb
-				else
-					cb(undefined, undefined)
-
-			(removedPost, cb) ->
-				if !removedPost
-					cb(undefined, undefined)
-				else
-					postTransformer.transformPost post, (err, transformedPost) ->
-						if err
-							cb(err, undefined)
-						else
-							postEntry = new Post(transformedPost)
-							postEntry.save (err) ->
-								cb(err, postEntry.id)
-								if !err
-									logger.info "Updated post co-authors with id: '#{postEntry.id}'"
-
-		], callback
+		Post.findOne { id: post.id }, (err, foundPost) ->
+			if err
+				callback err
+			else if foundPost && foundPost.coAuthors.length == 0
+				foundPost.remove (err) ->
+					if err
+						callback err
+					else
+						postTransformer.transformPost post, (err, transformedPost) ->
+							if err
+								callback(err)
+							else
+								postEntry = new Post(transformedPost)
+								postEntry.save (err) ->
+									if err
+										callback(err)
+									else
+										logger.info "Updated post co-authors with id: '#{postEntry.id}'"
+										callback(err, postEntry.id)
+			else
+				callback()
 
 
 synchronizeWordpressDetailedPost = (postId, callback) ->
 	logger.info "Checking for detailed post with id: '#{postId}'"
 
-	async.waterfall [
-		(cb) ->
-			DetailedPost.findOne { id: postId }, cb
+	DetailedPost.findOne { id: postId }, (err, foundDetailedPost) ->
+		if err
+			callback err
+		else if foundDetailedPost
+			foundDetailedPost.remove (err) ->
+				if err
+					callback err
+				else
+					request.get {url: "http://blog.xebia.fr/wp-json-api/get_post?post_id=#{postId}", json: true}, (error, data, response) ->
+						if error
+							callback(error)
+						else if !response
+							callback(new Error("No detailed post with id: #{postId}"))
+						else
+							detailedPost = response.post
+							postTransformer.transformPost detailedPost, (err, detailedPost) ->
+								if err
+									cb(err, undefined)
+								else
+									detailedPostEntry = new DetailedPost(detailedPost)
+									detailedPostEntry.save (err) ->
+										if err
+											callback(err)
+										else
+											logger.info "Updated detailed post co-authors with id: '#{detailedPostEntry.id}'"
+											callback(err, detailedPostEntry.id)
+		else
+			callback()
 
-		(foundDetailedPost, cb) ->
-			if foundDetailedPost
-				foundDetailedPost.remove cb
-			else
-				cb(undefined, undefined)
-
-		(removedDetailedPost, cb) ->
-			if !removedDetailedPost
-				cb(undefined, undefined)
-			else
-				request.get {url: "http://blog.xebia.fr/wp-json-api/get_post?post_id=#{postId}", json: true}, (error, data, response) ->
-					if error
-						cb(error, undefined)
-					else if !response
-						cb(new Error("No detailed post with id: #{postId}"), undefined)
-					else
-						detailedPost = response.post
-						postTransformer.transformPost detailedPost, (err, detailedPost) ->
-							if err
-								cb(err, undefined)
-							else
-								detailedPostEntry = new DetailedPost(detailedPost)
-								detailedPostEntry.save (err) ->
-									cb(err, detailedPostEntry.id)
-									if !err
-										logger.info "Updated detailed post co-authors with id: '#{detailedPostEntry.id}'"
-
-	], callback
 
 
 module.exports =
