@@ -7,7 +7,6 @@ _ = require('underscore')._
 config = require "../conf/config"
 
 utils = require '../lib/utils'
-apns = require "../lib/apns"
 db = require "../db"
 postTransformer = require "../transformer/postTransformer"
 News = require "../model/news"
@@ -37,7 +36,8 @@ processWordpressRecentBlogPosts = (page, callback, results) ->
 		async.map response.posts, synchronizeWordpressPost, (err, postIds) ->
 			logger.info "Synchronized #{results.length} Wordpress posts for page: #{page}. Post Ids: #{postIds}"
 
-			async.map postIds, synchronizeWordpressDetailedPost, (err, detailedPostIds) ->
+			filteredPostIds = postIds.filter((postId) -> postId != undefined)
+			async.map filteredPostIds, synchronizeWordpressDetailedPost, (err, detailedPostIds) ->
 				if err
 					logger.info "Wordpress Synchronization ended with error: #{err.message} - Error: #{err}"
 				else
@@ -54,49 +54,74 @@ processWordpressRecentBlogPosts = (page, callback, results) ->
 
 synchronizeWordpressPost = (post, callback) ->
 	logger.info "Checking for post with id: '#{post.id}'"
-	Post.findOne { id: post.id }, (err, foundPost) ->
-		if err
-			callback err, post.id
-		else if !foundPost
-			postTransformer.transformPost post, (err, post) ->
-				if err
-					callback err, post.id
+
+	if post.co_authors.length == 0
+		logger.info "Skipping post with id: '#{post.id}', no co-authors"
+		callback()
+	else
+		async.waterfall [
+			(cb) ->
+				Post.findOne { id: post.id }, cb
+
+			(foundPost, cb) ->
+				if foundPost && foundPost.coAuthors.length == 0
+					foundPost.remove cb
 				else
-					postEntry = new Post(post)
-					postEntry.save (err) ->
-						callback err, postEntry.id
-						if !err
-							logger.info "Saved detailed post with id: '#{postEntry.id}'"
-		else
-			callback err, foundPost.id
+					cb(undefined, undefined)
+
+			(removedPost, cb) ->
+				if !removedPost
+					cb(undefined, undefined)
+				else
+					postTransformer.transformPost post, (err, transformedPost) ->
+						if err
+							cb(err, undefined)
+						else
+							postEntry = new Post(transformedPost)
+							postEntry.save (err) ->
+								cb(err, postEntry.id)
+								if !err
+									logger.info "Updated post co-authors with id: '#{postEntry.id}'"
+
+		], callback
 
 
 synchronizeWordpressDetailedPost = (postId, callback) ->
 	logger.info "Checking for detailed post with id: '#{postId}'"
-	DetailedPost.findOne { id: postId }, (err, foundDetailedPost) ->
-		if err
-			callback err
-		else if !foundDetailedPost
-			request.get {url: "http://blog.xebia.fr/wp-json-api/get_post?post_id=#{postId}", json: true}, (error, data, response) ->
-				if error
-					callback error, postId
-				else if !response
-					callback new Error("No detailed post with id: #{postId}")
-				else
-					detailedPost = response.post
-					postTransformer.transformPost detailedPost, (err, detailedPost) ->
-						if err
-							callback err, response.post.id
-						else
-							detailedPostEntry = new DetailedPost(detailedPost)
-							detailedPostEntry.save (err) ->
-								callback err, detailedPostEntry.id
-								if !err
-									logger.info "Saved detailed post with id: '#{detailedPostEntry.id}'"
-									apns.pushToAll "#{detailedPostEntry.title}", () ->
-										logger.info "Pushed Notification for blog post with id: '#{detailedPostEntry.id}' and title: '#{detailedPostEntry.title}'"
-		else
-			callback err, foundDetailedPost.id
+
+	async.waterfall [
+		(cb) ->
+			DetailedPost.findOne { id: postId }, cb
+
+		(foundDetailedPost, cb) ->
+			if foundDetailedPost
+				foundDetailedPost.remove cb
+			else
+				cb(undefined, undefined)
+
+		(removedDetailedPost, cb) ->
+			if !removedDetailedPost
+				cb(undefined, undefined)
+			else
+				request.get {url: "http://blog.xebia.fr/wp-json-api/get_post?post_id=#{postId}", json: true}, (error, data, response) ->
+					if error
+						cb(error, undefined)
+					else if !response
+						cb(new Error("No detailed post with id: #{postId}"), undefined)
+					else
+						detailedPost = response.post
+						postTransformer.transformPost detailedPost, (err, detailedPost) ->
+							if err
+								cb(err, undefined)
+							else
+								detailedPostEntry = new DetailedPost(detailedPost)
+								detailedPostEntry.save (err) ->
+									cb(err, detailedPostEntry.id)
+									if !err
+										logger.info "Updated detailed post co-authors with id: '#{detailedPostEntry.id}'"
+
+	], callback
+
 
 module.exports =
 	synchronize: synchronize

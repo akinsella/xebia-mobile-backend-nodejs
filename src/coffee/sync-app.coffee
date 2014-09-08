@@ -122,6 +122,7 @@ app.get "/sync/vimeo/oauth", vimeo.auth
 app.get "/sync/vimeo/oauth/callback", vimeo.callback
 
 app.get "/sync/wordpress", security.ensureAuthenticated, sync.syncWordpress
+app.get "/sync/wordpress/posts/co-authors", security.ensureAuthenticated, sync.syncWordpressPostsCoAuthors
 app.get "/sync/wordpress/posts", security.ensureAuthenticated, sync.syncWordpressPosts
 app.get "/sync/wordpress/news", security.ensureAuthenticated, sync.syncWordpressNews
 app.delete "/sync/wordpress/data", security.ensureAuthenticated, sync.removeBlogData

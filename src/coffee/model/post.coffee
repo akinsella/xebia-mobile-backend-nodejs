@@ -38,6 +38,16 @@ Post = new mongo.Schema(
 		url: {type: String, "default": '', trim: true},
 		description: {type: String, "default": '', trim: true}
 	}],
+	coAuthors:[{
+		id: Number,
+		slug: {type: String, "default": '', trim: true},
+		name: {type: String, "default": '', trim: true},
+		firstName: {type: String, "default": '', trim: true},
+		lastName: {type: String, "default": '', trim: true},
+		nickname: {type: String, "default": '', trim: true},
+		url: {type: String, "default": '', trim: true},
+		description: {type: String, "default": '', trim: true}
+	}],
 	comments: [{
 		id: Number,
 		name: {type: String, "default": '', trim: true},

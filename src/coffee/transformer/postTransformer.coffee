@@ -29,8 +29,15 @@ transformPost = (post, cb) ->
 		tag.postCount = tag.post_count
 		delete tag.post_count
 	post.authors = [post.author]
+	post.coAuthors = post.co_authors
 	delete post.author
 	for author in post.authors
+		author.firstName = author.first_name
+		delete author.firstname
+		author.lastName = author.last_name
+		delete author.last_name
+	delete post.co_authors
+	for author in post.coAuthors
 		author.firstName = author.first_name
 		delete author.firstname
 		author.lastName = author.last_name

@@ -1,4 +1,5 @@
 fs = require 'fs'
+_ = require 'underscore'
 
 config = require '../conf/config'
 utils = require '../lib/utils'
@@ -71,7 +72,15 @@ cleanUpPost = (post) ->
 	delete post.__v
 	post.tags.forEach (tag) -> delete tag._id
 	post.categories.forEach (category) -> delete category._id
+
 	post.authors.forEach (author) -> delete author._id
+	if post.coAuthors
+		post.coAuthors = _(post.coAuthors).filter (author) -> author != null
+		post.coAuthors.forEach (author) ->
+			if author
+				delete author._id
+	else
+		post.coAuthors = []
 	post.attachments.forEach (attachment) -> delete attachment._id
 	post.comments.forEach (comment) -> delete comment._id
 	if post.structuredContent

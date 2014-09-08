@@ -20,6 +20,7 @@ Cache = require '../../lib/cache'
 db = require "../../db"
 syncWordpressTask = require '../../task/syncWordpress'
 syncWordpressPostsTask = require '../../task/syncWordpressPosts'
+syncWordpressPostsCoAuthorsTask = require '../../task/syncWordpressPostsCoAuthors'
 syncWordpressNewsTask = require '../../task/syncWordpressNews'
 
 syncEventBriteTask = require '../../task/syncEventBrite'
@@ -38,8 +39,12 @@ syncWordpress = (req, res) ->
 	res.send 200, "Started sync for Wordpress data"
 
 syncWordpressPosts = (req, res) ->
-	syncWordpressPostsTask.synchronize()
+	syncWordpressPostsCoAuthorsTask.synchronize()
 	res.send 200, "Started sync for Wordpress posts"
+
+syncWordpressPostsCoAuthors = (req, res) ->
+	syncWordpressPostsCoAuthorsTask.synchronize()
+	res.send 200, "Started sync for Wordpress co-authors posts"
 
 syncWordpressNews = (req, res) ->
 	syncWordpressNewsTask.synchronize()
@@ -161,6 +166,7 @@ removeVideos = (req, res) ->
 module.exports =
 	syncWordpress: syncWordpress
 	syncWordpressPosts: syncWordpressPosts
+	syncWordpressPostsCoAuthors: syncWordpressPostsCoAuthors
 	syncWordpressNews: syncWordpressNews
 	syncVimeo: syncVimeo
 	syncVimeoNews: syncVimeoNews
