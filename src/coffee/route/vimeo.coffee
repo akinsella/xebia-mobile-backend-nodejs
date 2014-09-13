@@ -37,7 +37,7 @@ video = (req, res) ->
 videoUrls = (req, res) ->
 	videoId = req.params.id
 
-	videoConfigUrl = "http://player.vimeo.com/v2/video/#{videoId}/config"
+	videoConfigUrl = "http://player.vimeo.com/video/#{videoId}/config"
 	logger.info "Fetching url: #{videoConfigUrl}"
 	request.get { url: videoConfigUrl, json: true }, (error, data, response) ->
 
