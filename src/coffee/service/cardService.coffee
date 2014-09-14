@@ -1,7 +1,7 @@
 fs = require 'fs'
 _ = require('underscore')._
 
-cardsData = JSON.parse(fs.readFileSync("#{__dirname}/../data/cards.json", "utf-8"))
+cardsData = JSON.parse(fs.readFileSync("#{__dirname}/../data/cards-v2.json", "utf-8"))
 
 categoriesData =
 		categories: _.chain(cardsData.cards).pluck("category").uniq(false, (category) -> category.id).value()
