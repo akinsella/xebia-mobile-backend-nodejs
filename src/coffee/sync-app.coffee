@@ -140,6 +140,7 @@ app.get "/sync/conferences/devoxx/2010", security.ensureAuthenticated, sync.sync
 app.get "/sync/conferences/devoxx/2011", security.ensureAuthenticated, sync.syncDevoxx11
 app.get "/sync/conferences/devoxx/2012", security.ensureAuthenticated, sync.syncDevoxx12
 app.get "/sync/conferences/devoxx/2013", security.ensureAuthenticated, sync.syncDevoxx13
+app.get "/sync/conferences/devoxx/2014", security.ensureAuthenticated, sync.syncDevoxx14
 
 app.get "/sync/conferences/devoxxfr/2012", security.ensureAuthenticated, sync.syncDevoxxFR12
 app.get "/sync/conferences/devoxxfr/2013", security.ensureAuthenticated, sync.syncDevoxxFR13
