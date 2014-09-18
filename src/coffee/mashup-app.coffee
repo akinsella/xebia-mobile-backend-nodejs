@@ -79,6 +79,14 @@ devoxxfrRooms = require './route/conference/devoxxfr/rooms'
 devoxxfrTracks = require './route/conference/devoxxfr/tracks'
 devoxxfrPresentations = require './route/conference/devoxxfr/presentations'
 
+devoxxSpeakers = require './route/conference/devoxx/speakers'
+devoxxSchedule = require './route/conference/devoxx/schedules'
+devoxxPresentationTypes = require './route/conference/devoxx/presentationTypes'
+devoxxExperienceLevels = require './route/conference/devoxx/experienceLevels'
+devoxxRooms = require './route/conference/devoxx/rooms'
+devoxxTracks = require './route/conference/devoxx/tracks'
+devoxxPresentations = require './route/conference/devoxx/presentations'
+
 mixitSpeakers = require './route/conference/mixit/speakers'
 mixitSchedule = require './route/conference/mixit/schedules'
 mixitRooms = require './route/conference/mixit/rooms'
@@ -95,6 +103,14 @@ app.get "/mashup/conferences/devoxxfr/2014/experienceLevels", devoxxfrExperience
 app.get "/mashup/conferences/devoxxfr/2014/rooms", devoxxfrRooms.rooms
 app.get "/mashup/conferences/devoxxfr/2014/tracks", devoxxfrTracks.tracks
 app.get "/mashup/conferences/devoxxfr/2014/presentations", devoxxfrPresentations.presentations
+
+app.get "/mashup/conferences/devoxxbe/2014/speakers", devoxxSpeakers.speakers
+app.get "/mashup/conferences/devoxxbe/2014/schedule", devoxxSchedule.schedules
+app.get "/mashup/conferences/devoxxbe/2014/presentationTypes", devoxxPresentationTypes.presentationTypes
+app.get "/mashup/conferences/devoxxbe/2014/experienceLevels", devoxxExperienceLevels.experienceLevels
+app.get "/mashup/conferences/devoxxbe/2014/rooms", devoxxRooms.rooms
+app.get "/mashup/conferences/devoxxbe/2014/tracks", devoxxTracks.tracks
+app.get "/mashup/conferences/devoxxbe/2014/presentations", devoxxPresentations.presentations
 
 app.get "/mashup/conferences/mixit/2014/speakers", mixitSpeakers.speakers
 app.get "/mashup/conferences/mixit/2014/schedule", mixitSchedule.schedules

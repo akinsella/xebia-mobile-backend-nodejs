@@ -8,12 +8,12 @@ DevoxxFrEventAwareDataArraySynchronizer = require './DevoxxFrEventAwareDataArray
 class DevoxxFrPresentationTypesSynchronizer extends DevoxxFrEventAwareDataArraySynchronizer
 
 	constructor: (eventId, conferenceName, year) ->
-		logger.info("Instanciating #{conferenceName} #{year} PresentationTypes Synchronizer with eventId: '#{eventId}'")
+		logger.info("Instantiating #{conferenceName} #{year} PresentationTypes Synchronizer with eventId: '#{eventId}'")
 		logger.info("eventId: #{eventId}")
 		super("PresentationTypes", eventId, conferenceName, year)
 
 	path: () ->
-		"/presentationtypes"
+		"/presentationTypes"
 
 	itemTransformer: (presentationTypes) =>
 		presentationTypes = _(presentationTypes).sortBy (presentationType) =>
