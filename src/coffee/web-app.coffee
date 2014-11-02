@@ -150,7 +150,7 @@ app.post '/login', auth.login
 app.get '/login', auth.loginForm
 app.get '/logout', auth.logout
 
-app.get '/auth/google', passport.authenticate('google', { failureRedirect: '/#/login' })
+app.get '/auth/google', passport.authenticate('google', { scope: 'https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile', failureRedirect: '/#/login' })
 app.get '/auth/google/callback', passport.authenticate('google', { failureRedirect: '/#/login' }), auth.authGoogleCallback
 
 

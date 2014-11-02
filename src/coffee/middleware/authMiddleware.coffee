@@ -1,5 +1,5 @@
 passport = require 'passport'
-GoogleStrategy = require('passport-google').Strategy
+GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 BasicStrategy = require('passport-http').BasicStrategy
 ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy
 BearerStrategy = require('passport-http-bearer').Strategy
@@ -14,10 +14,10 @@ db = require '../db'
 #   credentials (in this case, an OpenID identifier and profile), and invoke a
 #   callback with a user object.
 GoogleStrategy = new GoogleStrategy({
-		returnURL: config.auth.google.callbackUrl,
-		realm: config.auth.google.realm,
-		stateless: true
-	}, (identifier, profile, done) =>
+		clientID: config.auth.google.clientId,
+		clientSecret: config.auth.google.clientSecret,
+		callbackURL: config.auth.google.callbackUrl
+	}, (accessToken, refreshToken, identifier, profile, done) =>
 		# asynchronous verification, for effect...
 		process.nextTick () =>
 
@@ -32,9 +32,9 @@ GoogleStrategy = new GoogleStrategy({
 				else if (user)
 					user.firstName = profile.name.givenName
 					user.lastName = profile.name.familyName
-					user.gender = profile.gender
-					user.googleId = utils.getParameterByName(profile.identifier, "id")
-					user.avatarUrl = if profile.photos then profile.photos[0].value else "images/avatar_placeholder.png"
+					user.gender = profile._json.gender
+					user.googleId = profile.id
+					user.avatarUrl = if profile._json.picture then profile._json.picture else "images/avatar_placeholder.png"
 					user.role = if profile.emails[0].value == "akinsella@xebia.fr" then "ROLE_ADMIN" else "ROLE_USER"
 					user.save (err) ->
 						done(err, profile)
@@ -43,9 +43,9 @@ GoogleStrategy = new GoogleStrategy({
 						email:profile.emails[0].value
 						firstName: profile.name.givenName
 						lastName: profile.name.familyName
-						gender: profile.gender
-						avatarUrl:  if profile.photos then profile.photos[0].value else "images/avatar_placeholder.png"
-						googleId:utils.getParameterByName(profile.identifier, "id")
+						gender: profile._json.gender
+						avatarUrl:  if profile._json.picture then profile._json.picture else "images/avatar_placeholder.png"
+						googleId: profile.id
 						role: if profile.emails[0].value == "akinsella@xebia.fr" then "ROLE_ADMIN" else "ROLE_USER"
 					)
 					user.save (err) ->

@@ -63,7 +63,7 @@ failureHandler = (req, res, action) ->
 #   have a database of user records, the complete Google profile is serialized
 #   and deserialized.
 serializeUser = (user, done) =>
-	googleId = utils.getParameterByName(user.identifier, "id")
+	googleId = user.id
 	done(null, googleId)
 
 deserializeUser = (id, done) =>

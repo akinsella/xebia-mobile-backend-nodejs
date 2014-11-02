@@ -45,8 +45,9 @@ if !config
 				runOnStart: true
 		auth:
 			google:
+				clientId: process.env.AUTH_GOOGLE_CLIENT_ID
+				clientSecret: process.env.AUTH_GOOGLE_CLIENT_SECRET
 				callbackUrl: process.env.AUTH_GOOGLE_CALLBACK_URL || 'http://localhost'
-				realm: process.env.AUTH_GOOGLE_REALM || 'localhost'
 		apns:
 			enabled: process.env.APNS_ENABLED == "true"
 			devMode: process.env.APNS_SANDBOX_ENABLED == "true"
