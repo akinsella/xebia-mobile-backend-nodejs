@@ -119,16 +119,28 @@
 		"logoUrl": "http://blog.xebia.fr/images/mixit-2014-logo.png",
 		"backgroundUrl": "http://blog.xebia.fr/images/mixit-2014-background.png"
 	},
-	{
-		"id": 14,
-		"enabled": true,
-		"description": "Devoxx 2014",
-		"name": "Devoxx 2014",
-		"from": "2014-11-10",
-		"to": "2014-11-14",
-		"location": "Antwerp - MetroPolis",
-		"iconUrl": "http://blog.xebia.fr/images/devoxx-2014-icon.png",
-		"logoUrl": "http://blog.xebia.fr/images/devoxx-2014-logo.png",
-		"backgroundUrl": "http://blog.xebia.fr/images/devoxx-2014-background.png"
-	}
+  {
+	"id": 14,
+	"enabled": true,
+	"description": "Devoxx 2014",
+	"name": "Devoxx 2014",
+	"from": "2014-11-10",
+	"to": "2014-11-14",
+	"location": "Antwerp - MetroPolis",
+	"iconUrl": "http://blog.xebia.fr/images/devoxx-2014-icon.png",
+	"logoUrl": "http://blog.xebia.fr/images/devoxx-2014-logo.png",
+	"backgroundUrl": "http://blog.xebia.fr/images/devoxx-2014-background.png"
+  },
+  {
+	"id": 15,
+	"enabled": true,
+	"description": "DevoxxFR 2015",
+	"name": "Devoxx 2015",
+	"from": "2015-04-08",
+	"to": "2015-04-10",
+	"location": "Paris - Palais des congrès",
+	"iconUrl": "http://blog.xebia.fr/images/devoxx-2015-icon.png",
+	"logoUrl": "http://blog.xebia.fr/images/devoxx-2015-logo.png",
+	"backgroundUrl": "http://blog.xebia.fr/images/devoxx-2015-background.png"
+  }
 ]

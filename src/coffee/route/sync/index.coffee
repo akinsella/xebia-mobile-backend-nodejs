@@ -101,6 +101,9 @@ syncDevoxxFR13 = (req, res) ->
 syncDevoxxFR14 = (req, res) ->
 	syncDevoxxFranceTask.synchronize(11, "devoxxfr", 2014)()
 	res.send 200, "Started sync for Devoxx France 2014 data"
+syncDevoxxFR15 = (req, res) ->
+	syncDevoxxFranceTask.synchronize(15, "devoxxfr", 2015)()
+	res.send 200, "Started sync for Devoxx France 2015 data"
 
 syncDevoxxUK13 = (req, res) ->
 	syncDevoxxBelgiumTask.synchronize(9, 2014)()
@@ -186,6 +189,7 @@ module.exports =
 	syncDevoxxFR12: syncDevoxxFR12
 	syncDevoxxFR13: syncDevoxxFR13
 	syncDevoxxFR14: syncDevoxxFR14
+	syncDevoxxFR15: syncDevoxxFR15
 	syncDevoxxUK13: syncDevoxxUK13
 	syncDevoxxUK14: syncDevoxxUK14
 	syncMixIT: syncMixIT14

@@ -104,6 +104,16 @@ app.get "/mashup/conferences/devoxxfr/2014/rooms", devoxxfrRooms.rooms
 app.get "/mashup/conferences/devoxxfr/2014/tracks", devoxxfrTracks.tracks
 app.get "/mashup/conferences/devoxxfr/2014/presentations", devoxxfrPresentations.presentations
 
+
+app.get "/mashup/conferences/devoxxfr/2015/speakers", devoxxfrSpeakers.speakers
+app.get "/mashup/conferences/devoxxfr/2015/schedule", devoxxfrSchedule.schedules
+app.get "/mashup/conferences/devoxxfr/2015/presentationTypes", devoxxfrPresentationTypes.presentationTypes
+app.get "/mashup/conferences/devoxxfr/2015/experienceLevels", devoxxfrExperienceLevels.experienceLevels
+app.get "/mashup/conferences/devoxxfr/2015/rooms", devoxxfrRooms.rooms
+app.get "/mashup/conferences/devoxxfr/2015/tracks", devoxxfrTracks.tracks
+app.get "/mashup/conferences/devoxxfr/2015/presentations", devoxxfrPresentations.presentations
+
+
 app.get "/mashup/conferences/devoxxbe/2014/speakers", devoxxSpeakers.speakers
 app.get "/mashup/conferences/devoxxbe/2014/schedule", devoxxSchedule.schedules
 app.get "/mashup/conferences/devoxxbe/2014/presentationTypes", devoxxPresentationTypes.presentationTypes

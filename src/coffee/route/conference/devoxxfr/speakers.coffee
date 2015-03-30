@@ -17,7 +17,7 @@ utils = require '../../../lib/utils'
 # Constants
 ##################################################################################
 
-eventId = 11
+eventId = 15
 baseUrl = "http://cfp.devoxx.fr/api/conferences/devoxxFR2014"
 userAgent =	"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.3 Safari/534.53.10"
 
