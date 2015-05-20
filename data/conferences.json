@@ -139,6 +139,7 @@
 	"from": "2015-04-08",
 	"to": "2015-04-10",
 	"location": "Paris - Palais des congrès",
+<<<<<<< HEAD
 	"iconUrl": "http://blog.xebia.fr/images/devoxx-2015-icon.png",
 	"logoUrl": "http://blog.xebia.fr/images/devoxx-2015-logo.png",
 	"backgroundUrl": "http://blog.xebia.fr/images/devoxx-2015-background.png"
@@ -154,5 +155,10 @@
 	"iconUrl": "http://blog.xebia.fr/images/devoxxuk-2015-icon.png",
 	"logoUrl": "http://blog.xebia.fr/images/devoxxuk-2015-logo.png",
 	"backgroundUrl": "http://blog.xebia.fr/images/devoxxuk-2015-background.png"
+=======
+	"iconUrl": "http://blog.xebia.fr/images/devoxxfr-2015-icon.png",
+	"logoUrl": "http://blog.xebia.fr/images/devoxxfr-2015-logo.png",
+	"backgroundUrl": "http://blog.xebia.fr/images/devoxxfr-2015-background.png"
+>>>>>>> cae01054bbd5ddd383a956d28356e8fc6dd72211
   }
 ]
