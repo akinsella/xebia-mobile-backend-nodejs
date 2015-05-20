@@ -16,7 +16,7 @@ class DevoxxFrTracksSynchronizer extends DevoxxFrEventAwareDataArraySynchronizer
 		"/tracks"
 
 	itemTransformer: (tracks) =>
-		logger.info "Tracks: #{tracks}"
+		logger.info "Tracks: #{JSON.stringify(tracks)}"
 		tracks = _(tracks).sortBy (track) =>
 			"#{track.name}".toUpperCase()
 		tracks.forEach (track) =>

@@ -13,8 +13,8 @@ schedules = require './schedules'
 # Constants
 ##################################################################################
 
-eventId = 15
-locationName = "Marriot"
+eventId = 16
+locationName = "London - Business Design Centre"
 
 
 

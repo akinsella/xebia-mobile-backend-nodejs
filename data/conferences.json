@@ -66,7 +66,7 @@
 		"name": "DevoxxUK 2013",
 		"from": "2013-06-12",
 		"to": "2013-06-13",
-		"location": "Business Design Center",
+		"location": "Business Design Centre",
 		"iconUrl": "http://blog.xebia.fr/images/devoxxuk-2013-icon.png",
 		"logoUrl": "http://blog.xebia.fr/images/devoxxuk-2013-logo.png",
 		"backgroundUrl": "http://blog.xebia.fr/images/devoxxuk-2013-background.png"
@@ -102,7 +102,7 @@
 		"name": "DevoxxUK 2014",
 		"from": "2014-06-12",
 		"to": "2014-06-13",
-		"location": "Business Design Center",
+		"location": "Business Design Centre",
 		"iconUrl": "http://blog.xebia.fr/images/devoxxuk-2014-icon.png",
 		"logoUrl": "http://blog.xebia.fr/images/devoxxuk-2014-logo.png",
 		"backgroundUrl": "http://blog.xebia.fr/images/devoxxuk-2014-background.png"
@@ -142,5 +142,17 @@
 	"iconUrl": "http://blog.xebia.fr/images/devoxx-2015-icon.png",
 	"logoUrl": "http://blog.xebia.fr/images/devoxx-2015-logo.png",
 	"backgroundUrl": "http://blog.xebia.fr/images/devoxx-2015-background.png"
+  },
+  {
+	"id": 16,
+	"enabled": true,
+	"description": "DevoxxUK 2015",
+	"name": "Devoxx 2015",
+	"from": "2015-06-17",
+	"to": "2015-06-19",
+	"location": "London - Business Design Centre",
+	"iconUrl": "http://blog.xebia.fr/images/devoxxuk-2015-icon.png",
+	"logoUrl": "http://blog.xebia.fr/images/devoxxuk-2015-logo.png",
+	"backgroundUrl": "http://blog.xebia.fr/images/devoxxuk-2015-background.png"
   }
 ]

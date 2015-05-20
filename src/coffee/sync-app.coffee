@@ -149,6 +149,7 @@ app.get "/sync/conferences/devoxxfr/2015", security.ensureAuthenticated, sync.sy
 
 app.get "/sync/conferences/devoxxuk/2013", security.ensureAuthenticated, sync.syncDevoxxUK13
 app.get "/sync/conferences/devoxxuk/2014", security.ensureAuthenticated, sync.syncDevoxxUK14
+app.get "/sync/conferences/devoxxuk/2015", security.ensureAuthenticated, sync.syncDevoxxUK15
 
 app.get "/sync/conferences/mixit/2014", security.ensureAuthenticated, sync.syncMixIT
 

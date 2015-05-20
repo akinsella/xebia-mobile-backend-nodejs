@@ -36,8 +36,8 @@ if !String.prototype.removeLastSlash
 # Constants
 ##################################################################################
 
-eventId = 15
-baseUrl = "http://cfp.devoxx.fr/api/conferences/DevoxxFR2015"
+eventId = 16
+baseUrl = "http://cfp.devoxx.co.uk/api/conferences/DevoxxUK2015"
 userAgent =	"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.3 Safari/534.53.10"
 
 
