@@ -41,6 +41,7 @@ class DevoxxFrSpeakersSynchronizer extends DevoxxFrEventAwareDataArraySynchroniz
 		"#{speaker.firstName} #{speaker.lastName}"
 
 	createStorableItem: (speaker) ->
+		logger.info("Speaker: #{speaker}")
 		new Speaker(speaker)
 
 	modelClass: () ->

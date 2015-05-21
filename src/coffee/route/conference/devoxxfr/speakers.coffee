@@ -75,7 +75,7 @@ mapSpeakers = (speakers) ->
 				conferenceId: eventId
 				talks: speaker.acceptedTalks.map (talk) ->
 					presentationId: talk.id
-					presentationUri: (_(talk.links).find (link) -> link.rel == "http://cfp.devoxx.fr/api/profile/talk").href
+					presentationUri: (_(talk.links).find (link) -> link.rel == "http://cfp.devoxx.fr/api/profile/talk")?.href
 					title: talk.title
 					event: talk.talkType
 					track: talk.track
