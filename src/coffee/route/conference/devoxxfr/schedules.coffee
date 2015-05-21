@@ -102,9 +102,9 @@ mapSchedules = (schedules) ->
 						.map (slot) ->
 							if slot.talk
 								conferenceId: eventId
-								fromTime: moment(slot.fromTimeMillis).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
+								fromTime: moment(slot.fromTimeMillis).tz("Europe/London").format("YYYY-MM-DD HH:mm:ss")
 								id: slot.talk.id
-								toTime: moment(slot.toTimeMillis).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
+								toTime: moment(slot.toTimeMillis).tz("Europe/London").format("YYYY-MM-DD HH:mm:ss")
 								presentation:
 									id: slot.talk.id
 									uri: ""
@@ -128,9 +128,9 @@ mapSchedules = (schedules) ->
 								summary: slot.talk.summary
 							else
 								conferenceId: eventId
-								fromTime: moment(slot.fromTimeMillis).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
+								fromTime: moment(slot.fromTimeMillis).tz("Europe/London").format("YYYY-MM-DD HH:mm:ss")
 								id: slot.slotId
-								toTime: moment(slot.toTimeMillis).tz("Europe/Paris").format("YYYY-MM-DD HH:mm:ss")
+								toTime: moment(slot.toTimeMillis).tz("Europe/London").format("YYYY-MM-DD HH:mm:ss")
 								presentation:
 									uri: ""
 									title: ""
